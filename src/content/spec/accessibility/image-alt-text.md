@@ -13,7 +13,7 @@ sources:
     url: "https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html"
     publisher: "W3C"
   - title: "Accessibility Checker — Image Missing Alternative Text"
-    url: "https://equalizedigital.com/accessibility-checker/documentation/image-missing-alternative-text/"
+    url: "https://equalizedigital.com/accessibility-checker/missing-alternative-text/"
     publisher: "Equalize Digital"
   - title: "W3C WAI — Alt Decision Tree"
     url: "https://www.w3.org/WAI/tutorials/images/decision-tree/"

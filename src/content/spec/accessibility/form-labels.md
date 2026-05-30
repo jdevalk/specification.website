@@ -16,7 +16,7 @@ sources:
     url: "https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html"
     publisher: "W3C"
   - title: "Accessibility Checker — Missing Form Label"
-    url: "https://equalizedigital.com/accessibility-checker/documentation/missing-form-label/"
+    url: "https://equalizedigital.com/accessibility-checker/empty-missing-form-label/"
     publisher: "Equalize Digital"
   - title: "WP Accessibility — Web Forms"
     url: "https://wpaccessibility.org/"

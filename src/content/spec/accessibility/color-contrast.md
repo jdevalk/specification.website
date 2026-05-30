@@ -19,7 +19,7 @@ sources:
     url: "https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html"
     publisher: "W3C"
   - title: "Accessibility Checker — Low Contrast"
-    url: "https://equalizedigital.com/accessibility-checker/documentation/low-contrast/"
+    url: "https://equalizedigital.com/accessibility-checker/insufficient-color-contrast/"
     publisher: "Equalize Digital"
 ---
 
