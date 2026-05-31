@@ -7,7 +7,7 @@ status: recommended
 order: 10
 appliesTo: [all]
 relatedSlugs: [lang-attribute, locale-content, rtl-support, international-url-structure, sitemap-hreflang, localised-metadata, language-switcher, avoid-auto-geo-redirects]
-updated: "2026-05-29T18:54:03.000Z"
+updated: "2026-05-31T00:00:00.000Z"
 sources:
   - title: "Google Search Central — Localized versions of your pages"
     url: "https://developers.google.com/search/docs/specialized/international/localized-versions"
@@ -63,3 +63,4 @@ A sitemap entry covers all alternates of a URL in one place:
 - Forgetting the self-reference. Google then ignores the whole cluster.
 - Mixing `hreflang` declarations in HTML, headers and sitemaps — pick one source of truth.
 - Setting `hreflang` on canonicalised-away pages. Each alternate should be the canonical URL of its locale.
+- Dropping `x-default` once two or more locales exist. Some setups emit it only when a single alternate is present, which is backwards — `x-default` is the fallback for exactly the multi-locale case where no `hreflang` matches the visitor.
