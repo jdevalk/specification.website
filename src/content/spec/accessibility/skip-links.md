@@ -3,7 +3,7 @@ title: "Skip links"
 slug: skip-links
 category: accessibility
 summary: "A 'skip to main content' link as the first focusable element lets keyboard and screen-reader users jump past repeated navigation on every page."
-status: recommended
+status: required
 order: 60
 appliesTo: [all]
 relatedSlugs: [keyboard-navigation, semantic-html, focus-indicators]
