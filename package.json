@@ -33,7 +33,7 @@
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20260529.1",
+    "@cloudflare/workers-types": "^4.20260601.1",
     "pagefind": "^1.5.2",
     "sharp": "^0.34.5"
   }
