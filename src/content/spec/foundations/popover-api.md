@@ -21,6 +21,9 @@ sources:
   - title: "Open UI — Popover explainer"
     url: "https://open-ui.org/components/popover.research.explainer/"
     publisher: "Open UI"
+  - title: "Using CSS anchor positioning"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Anchor_positioning/Using"
+    publisher: "MDN"
 ---
 
 ## What it is
@@ -42,7 +45,7 @@ The Popover API turns any element into a top-layer overlay using three HTML attr
 
 The `auto` value gives you light-dismiss (click outside to close) and auto-close on Escape. `manual` requires an explicit dismiss control. `hint` is for tooltip-style transient overlays that close when another `hint` opens.
 
-CSS hooks: `:popover-open` matches an open popover, `::backdrop` styles the layer behind it, and `popover-position` (where supported) declaratively anchors a popover to its trigger.
+CSS hooks: `:popover-open` matches an open popover, `::backdrop` styles the layer behind it, and `position-anchor` (where supported) declaratively anchors a popover to its trigger.
 
 ## Why it matters
 
