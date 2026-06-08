@@ -6,8 +6,8 @@ summary: "A standard text file at /.well-known/security.txt tells security resea
 status: recommended
 order: 40
 appliesTo: [all]
-relatedSlugs: [well-known-uris-overview, https-tls, hsts]
-updated: "2026-05-29T09:13:20.000Z"
+relatedSlugs: [well-known-overview, https-tls, hsts]
+updated: "2026-06-08T12:00:00.000Z"
 sources:
   - title: "RFC 9116 — A File Format to Aid in Security Vulnerability Disclosure"
     url: "https://www.rfc-editor.org/rfc/rfc9116"
@@ -15,9 +15,9 @@ sources:
   - title: "securitytxt.org"
     url: "https://securitytxt.org/"
     publisher: "securitytxt.org"
-  - title: "MDN — Well-known URIs"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Well-Known_URIs"
-    publisher: "MDN"
+  - title: "RFC 8615 — Well-Known Uniform Resource Identifiers (URIs)"
+    url: "https://www.rfc-editor.org/rfc/rfc8615"
+    publisher: "IETF"
 ---
 
 ## What it is
