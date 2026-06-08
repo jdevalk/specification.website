@@ -26,10 +26,10 @@
     "assets": "node scripts/generate-assets.mjs"
   },
   "dependencies": {
-    "@astrojs/mdx": "^6.0.1",
+    "@astrojs/mdx": "^6.0.2",
     "@astrojs/rss": "^4.0.18",
     "@tailwindcss/vite": "^4.3.0",
-    "astro": "^6.4.2",
+    "astro": "^6.4.4",
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
