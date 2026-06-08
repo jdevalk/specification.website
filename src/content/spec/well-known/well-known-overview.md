@@ -6,8 +6,8 @@ summary: "The /.well-known/ path prefix is a standardised place to publish site-
 status: recommended
 order: 10
 appliesTo: [all]
-relatedSlugs: [change-password, openid-configuration, webfinger, apple-app-site-association, assetlinks-json, nodeinfo, api-catalog]
-updated: "2026-05-29T10:18:46.000Z"
+relatedSlugs: [change-password, openid-configuration, webfinger, apple-app-site-association, assetlinks-json, nodeinfo, api-catalog, webauthn]
+updated: "2026-06-08T12:00:00.000Z"
 sources:
   - title: "RFC 8615 — Well-Known Uniform Resource Identifiers (URIs)"
     url: "https://www.rfc-editor.org/rfc/rfc8615"
