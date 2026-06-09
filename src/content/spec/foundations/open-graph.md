@@ -7,7 +7,7 @@ status: recommended
 order: 100
 appliesTo: [all]
 relatedSlugs: [title, meta-description, canonical-url, favicons, localised-metadata]
-updated: "2026-06-08T00:00:00.000Z"
+updated: "2026-06-09T00:00:00.000Z"
 sources:
   - title: "The Open Graph protocol"
     url: "https://ogp.me/"
@@ -15,9 +15,6 @@ sources:
   - title: "A Guide to Sharing for Webmasters"
     url: "https://developers.facebook.com/docs/sharing/webmasters/"
     publisher: "Meta"
-  - title: "MDN — The Open Graph protocol"
-    url: "https://developer.mozilla.org/en-US/docs/Web/OpenGraph"
-    publisher: "MDN"
   - title: "X — About Cards"
     url: "https://developer.x.com/en/docs/x-for-websites/cards/overview/abouts-cards"
     publisher: "X"

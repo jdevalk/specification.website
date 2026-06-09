@@ -7,10 +7,10 @@ status: recommended
 order: 10
 appliesTo: [all]
 relatedSlugs: [lang-attribute, locale-content, rtl-support, international-url-structure, sitemap-hreflang, localised-metadata, language-switcher, avoid-auto-geo-redirects]
-updated: "2026-05-31T00:00:00.000Z"
+updated: "2026-06-09T00:00:00.000Z"
 sources:
   - title: "Google Search Central — Localized versions of your pages"
-    url: "https://developers.google.com/search/docs/specialized/international/localized-versions"
+    url: "https://developers.google.com/search/docs/specialty/international/localized-versions"
     publisher: "Google Search Central"
   - title: "BCP 47 — Tags for Identifying Languages"
     url: "https://www.rfc-editor.org/info/bcp47"
