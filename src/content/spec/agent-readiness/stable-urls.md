@@ -6,7 +6,7 @@ summary: "URLs are public contracts. Once published, they should keep working. B
 status: required
 order: 50
 appliesTo: [all]
-relatedSlugs: [agent-readiness-overview, robots-txt, structured-data-for-agents]
+relatedSlugs: [agent-readiness-overview, robots-txt, structured-data-for-agents, conditional-requests]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
   - title: "Cool URIs don't change"

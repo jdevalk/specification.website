@@ -242,11 +242,12 @@ function homepageOgSvg(topicCount) {
 
 // Pill (rounded rect + centred text). Returns SVG fragment plus computed width.
 function pill({ x, y, label, fg, bg, border, fontSize = 22 }) {
-  const padX = 20;
+  const padX = 24;
   // Approx char width for sans bold at given font size. Calibrated for the
   // ALL-CAPS labels we use here — caps-heavy bold text rasterises wider than
-  // a mixed-case 0.58 ratio would suggest.
-  const charW = fontSize * 0.66;
+  // a mixed-case 0.58 ratio would suggest, and underestimating it leaves the
+  // text cramped against the pill edges.
+  const charW = fontSize * 0.76;
   const textW = label.length * charW;
   const w = Math.round(textW + padX * 2);
   const h = Math.round(fontSize * 1.8);

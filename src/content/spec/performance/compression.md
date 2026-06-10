@@ -6,7 +6,7 @@ summary: "Compress text responses with brotli where supported, gzip everywhere e
 status: required
 order: 60
 appliesTo: [all]
-relatedSlugs: [cache-control, http3, compression-dictionary-transport]
+relatedSlugs: [cache-control, http3, conditional-requests, compression-dictionary-transport]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
   - title: "RFC 7932 — Brotli Compressed Data Format"

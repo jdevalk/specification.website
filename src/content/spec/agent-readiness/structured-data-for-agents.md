@@ -7,7 +7,7 @@ status: recommended
 order: 60
 appliesTo: [all]
 relatedSlugs: [agent-readiness-overview, llms-txt, stable-urls, schemamap]
-updated: "2026-05-29T14:13:42.000Z"
+updated: "2026-06-10T00:00:00.000Z"
 sources:
   - title: "schema.org"
     url: "https://schema.org/"
@@ -65,7 +65,7 @@ Pick the types that match your pages. Common ones:
 
 - `Article`, `BlogPosting`, `NewsArticle` for editorial content.
 - `Product` with `Offer`, `AggregateRating`, `Review` for commerce.
-- `FAQPage` and `Question` for Q&A content.
+- `FAQPage` and `Question` for Q&A content. (Google retired FAQ as a *search* rich result in 2026; the markup stays valid, but no answer engine has confirmed it favours the JSON-LD over the rendered Q&A, so mark up genuine visible Q&A only — not as a "GEO" lever.)
 - `Person`, `Organization` for entity pages, used as nested references everywhere else.
 - `Event`, `Recipe`, `HowTo`, `JobPosting`, `LocalBusiness` for vertical-specific pages.
 - `BreadcrumbList` for breadcrumb trails.

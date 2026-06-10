@@ -7,20 +7,20 @@ status: recommended
 order: 100
 appliesTo: [all]
 relatedSlugs: [breadcrumbs, heading-hierarchy, xml-sitemaps, canonical-url, schemamap, server-side-rendering]
-updated: "2026-05-29T14:13:42.000Z"
+updated: "2026-06-10T00:00:00.000Z"
 sources:
   - title: "Schema.org"
     url: "https://schema.org/"
     publisher: "schema.org"
+  - title: "FAQPage (FAQ) structured data"
+    url: "https://developers.google.com/search/docs/appearance/structured-data/faqpage"
+    publisher: "Google Search Central"
   - title: "Introduction to structured data markup in Google Search"
     url: "https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data"
     publisher: "Google Search Central"
   - title: "JSON-LD 1.1 Specification"
     url: "https://www.w3.org/TR/json-ld11/"
     publisher: "W3C"
-  - title: "Yoast — What is structured data?"
-    url: "https://yoast.com/what-is-structured-data/"
-    publisher: "Yoast"
 ---
 
 ## What it is
@@ -53,7 +53,7 @@ Microdata and RDFa are also accepted, but JSON-LD is the de facto standard becau
 
 Two audiences read it heavily:
 
-- **Search engines** use structured data to power rich results (article cards, breadcrumbs, FAQ accordions, product carousels, knowledge-panel facts). Without it, you get a plain blue link.
+- **Search engines** use structured data to power rich results (article cards, breadcrumbs, product carousels, knowledge-panel facts). Without it, you get a plain blue link.
 - **AI agents and answer engines** rely on it as the ground truth for facts they may quote. A `Person` schema with a `sameAs` linking to your verified profiles is the cleanest way to assert identity.
 
 It is also the most stable contract between a publisher and the rest of the web. The HTML can change; the JSON-LD describes meaning.
@@ -67,7 +67,7 @@ Stick to a small set of well-supported types:
 - **`BreadcrumbList`** — on every page that has a breadcrumb trail.
 - **`Article`** or **`BlogPosting`** — for articles, with `headline`, `datePublished`, `dateModified`, `author`, `image`.
 - **`Product`**, **`Offer`**, **`AggregateRating`** — for e-commerce, where eligibility is strict.
-- **`FAQPage`** — only when the page genuinely has a Q-and-A list visible to users. Google has restricted FAQ rich results to authoritative publishers; do not stuff fake FAQs.
+- **`FAQPage`** — only when the page genuinely has a Q-and-A list visible to users. Note that Google [retired the FAQ rich result in 2026](https://developers.google.com/search/docs/appearance/structured-data/faqpage): `FAQPage` is still valid schema.org vocabulary, but it no longer produces a Google search feature, and no answer engine has confirmed it favours the markup over rendered HTML — so add it for genuine visible content, not for SERP or "GEO" gain. Never stuff fake FAQs. ([Further reading](https://joost.blog/faq-schema-cycle/) on why the format was abused into deprecation, and the proposed `FAQSection` type for Q-and-A that is a *section* of a page rather than its main entity.)
 
 Rules:
 

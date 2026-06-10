@@ -7,19 +7,19 @@ status: recommended
 order: 95
 appliesTo: [all]
 relatedSlugs: [core-web-vitals, preload-prefetch-preconnect, view-transitions, http3, resource-hints, no-vary-search]
-updated: "2026-05-29T19:23:20.283Z"
+updated: "2026-06-10T00:00:00.000Z"
 sources:
   - title: "MDN — Speculation Rules API"
     url: "https://developer.mozilla.org/en-US/docs/Web/API/Speculation_Rules_API"
     publisher: "MDN"
-  - title: "WICG — Speculation Rules"
-    url: "https://wicg.github.io/nav-speculation/speculation-rules.html"
-    publisher: "W3C / WICG"
+  - title: "WHATWG HTML — Speculative loading"
+    url: "https://html.spec.whatwg.org/multipage/speculative-loading.html#speculative-loading"
+    publisher: "WHATWG"
   - title: "Chrome for Developers — Speculation Rules"
     url: "https://developer.chrome.com/docs/web-platform/prerender-pages"
     publisher: "Google"
-  - title: "web.dev — Speculation rules API"
-    url: "https://web.dev/articles/speculation-rules"
+  - title: "web.dev — Prefetching, prerendering, and service worker precaching"
+    url: "https://web.dev/learn/performance/prefetching-prerendering-precaching"
     publisher: "web.dev"
 ---
 

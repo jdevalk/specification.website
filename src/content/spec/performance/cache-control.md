@@ -6,7 +6,7 @@ summary: "Cache-Control tells browsers and CDNs how long to keep a response. Use
 status: required
 order: 50
 appliesTo: [all]
-relatedSlugs: [compression, core-web-vitals, no-vary-search, compression-dictionary-transport]
+relatedSlugs: [compression, core-web-vitals, no-vary-search, conditional-requests, compression-dictionary-transport]
 updated: "2026-06-08T20:15:00.000Z"
 sources:
   - title: "RFC 9111 — HTTP Caching"
@@ -74,7 +74,7 @@ or, for highly dynamic pages:
 Cache-Control: no-store
 ```
 
-Pair with `ETag` so revalidation is cheap.
+Pair with a validator so revalidation is cheap — see [conditional requests](/spec/performance/conditional-requests/).
 
 **Per-user content — private.** Anything personalised needs `private` to prevent shared caches from leaking one user's data to another.
 

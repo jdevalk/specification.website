@@ -7,7 +7,7 @@ status: optional
 order: 60
 appliesTo: [all]
 relatedSlugs: [well-known-overview, apple-app-site-association]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-06-09T11:30:00.000Z"
 sources:
   - title: "Digital Asset Links — Verify Android App Links"
     url: "https://developer.android.com/training/app-links/verify-android-applinks"
@@ -22,7 +22,7 @@ sources:
 
 ## What it is
 
-`assetlinks.json` is Google's equivalent of Apple's AASA file. It is a JSON document published at `/.well-known/assetlinks.json` that declares which Android applications are allowed to act on behalf of your web domain. Android verifies this file before honouring App Links and several credential-sharing features.
+`assetlinks.json` is Google's equivalent of Apple's [AASA file](/spec/well-known/apple-app-site-association/). It is a JSON document published at `/.well-known/assetlinks.json` that declares which Android applications are allowed to act on behalf of your web domain. Android verifies this file before honouring App Links and several credential-sharing features.
 
 The format is defined by the **Digital Asset Links** protocol, which is also used for cross-app verification and SmartLock.
 
@@ -55,7 +55,7 @@ Publish a JSON array. Each entry declares one relation between your site and one
 
 Rules:
 
-- The path is **exactly** `/.well-known/assetlinks.json`. The `.json` extension is required here (unlike Apple's AASA).
+- The path is **exactly** `/.well-known/assetlinks.json`. The `.json` extension is required here (unlike Apple's [AASA](/spec/well-known/apple-app-site-association/), which has no extension).
 - Serve as **`Content-Type: application/json`** over **HTTPS**.
 - Respond with **`200 OK`** directly. No redirects.
 - The file must be **publicly readable**, with no authentication and no aggressive bot rules.
