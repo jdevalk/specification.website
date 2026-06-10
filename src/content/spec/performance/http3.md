@@ -6,7 +6,7 @@ summary: "Serve over HTTP/2 at minimum and HTTP/3 where you can. Multiplexing el
 status: recommended
 order: 90
 appliesTo: [all]
-relatedSlugs: [cache-control, compression, preload-prefetch-preconnect]
+relatedSlugs: [cache-control, compression, preload-prefetch-preconnect, compression-dictionary-transport]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
   - title: "RFC 9114 — HTTP/3"
