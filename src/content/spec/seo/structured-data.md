@@ -67,7 +67,7 @@ Stick to a small set of well-supported types:
 - **`BreadcrumbList`** — on every page that has a breadcrumb trail.
 - **`Article`** or **`BlogPosting`** — for articles, with `headline`, `datePublished`, `dateModified`, `author`, `image`.
 - **`Product`**, **`Offer`**, **`AggregateRating`** — for e-commerce, where eligibility is strict.
-- **`FAQPage`** — only when the page genuinely has a Q-and-A list visible to users. Note that Google [retired the FAQ rich result in 2026](https://developers.google.com/search/docs/appearance/structured-data/faqpage): `FAQPage` is still valid schema.org vocabulary and answer engines still read it, but it no longer produces a Google search feature, so add it for genuine visible content, not for SERP gain. Never stuff fake FAQs.
+- **`FAQPage`** — only when the page genuinely has a Q-and-A list visible to users. Note that Google [retired the FAQ rich result in 2026](https://developers.google.com/search/docs/appearance/structured-data/faqpage): `FAQPage` is still valid schema.org vocabulary, but it no longer produces a Google search feature, and no answer engine has confirmed it favours the markup over rendered HTML — so add it for genuine visible content, not for SERP or "GEO" gain. Never stuff fake FAQs. ([Further reading](https://joost.blog/faq-schema-cycle/) on why the format was abused into deprecation, and the proposed `FAQSection` type for Q-and-A that is a *section* of a page rather than its main entity.)
 
 Rules:
 
