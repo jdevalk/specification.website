@@ -6,7 +6,7 @@ summary: "Tell browsers who is allowed to embed your pages in an iframe. Use CSP
 status: required
 order: 60
 appliesTo: [all]
-relatedSlugs: [content-security-policy, x-content-type-options, permissions-policy]
+relatedSlugs: [content-security-policy, x-content-type-options, permissions-policy, cross-origin-isolation]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
   - title: "OWASP — Clickjacking Defense Cheat Sheet"
