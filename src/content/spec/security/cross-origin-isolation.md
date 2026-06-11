@@ -27,24 +27,24 @@ sources:
 
 Three response headers that control how your documents and resources relate to other origins:
 
-- **`Cross-Origin-Opener-Policy` (COOP)** severs the `window.opener` link between your page and the page that opened it (or one you open), placing your document in its own browsing context group.
-- **`Cross-Origin-Resource-Policy` (CORP)** tells the browser which origins are allowed to embed a resource — your images, scripts, fonts — as a `no-cors` subresource.
-- **`Cross-Origin-Embedder-Policy` (COEP)** requires every subresource your document loads to opt in (via CORP or CORS).
+- **`Cross-Origin-Opener-Policy` (COOP)** severs the `window.opener` link between your page and the page that opened it, placing your document in its own browsing context group. Values: `unsafe-none` (default), `same-origin-allow-popups`, `same-origin`, and the newer `noopener-allow-popups`.
+- **`Cross-Origin-Resource-Policy` (CORP)** tells the browser which origins may embed a resource — your images, scripts, fonts — as a `no-cors` subresource. Values: `same-origin`, `same-site`, `cross-origin`.
+- **`Cross-Origin-Embedder-Policy` (COEP)** requires every subresource your document loads to opt in via CORP or CORS. Values: `unsafe-none`, `require-corp`, `credentialless`.
 
 ```http
 Cross-Origin-Opener-Policy: same-origin
 Cross-Origin-Resource-Policy: same-site
 ```
 
-COOP accepts `unsafe-none` (the default), `same-origin-allow-popups`, `same-origin`, and the newer `noopener-allow-popups`. CORP accepts `same-origin`, `same-site`, or `cross-origin`. COEP accepts `unsafe-none`, `require-corp`, or `credentialless`.
-
 ## Why it matters
 
-A page you open with `window.open()`, or one that opened you, keeps a live `opener` handle. That handle is the entry point for tabnabbing and a family of cross-window side-channel ("XS-Leaks") attacks that infer cross-origin state. COOP cuts the handle, so an attacker window cannot reach back into yours.
+When a user follows a link off your site — or arrives on your site from someone else's link — the two pages can keep a live connection through the `window.opener` handle. A malicious page can abuse that connection: the moment the user's attention is elsewhere, it can silently swap the tab it opened to a pixel-perfect fake of your login screen (a "tabnabbing" attack), or quietly probe which sites the user is signed in to. The user notices nothing and types their password into the impostor. COOP cuts that connection, so a page on another origin can no longer reach back into yours.
 
-CORP defends the other direction: it stops other sites from pulling your authenticated resources into their pages as a side channel, a key mitigation against Spectre-style memory disclosure.
+CORP guards your resources from the opposite direction, and the threat it answers needs a word of background. **Spectre** is a family of processor flaws, disclosed in 2018, that let code read areas of memory it should never be allowed to see — including data belonging to _other_ websites that happen to be running in the same browser process. A page could exploit it to read your signed-in user's private data — their email, their account balance — without ever making a normal request for it. The browser's defence is to keep each origin's data out of processes that have no business touching it; CORP is how a resource declares "only my own site may embed me," so it is never pulled into an attacker's process in the first place. ([web.dev — Why you need cross-origin isolation](https://web.dev/articles/why-coop-coep) explains the attack and the fix in depth.)
 
-Together with COEP, COOP `same-origin` also unlocks **cross-origin isolation** (`crossOriginIsolated === true`), the precondition for powerful APIs like `SharedArrayBuffer` and unthrottled high-resolution timers.
+The practical payoff is high and the cost is near zero: setting COOP and CORP closes off a whole category of invisible cross-site snooping — no consent prompt, no broken functionality, no measurable performance hit. The user is simply safer and never has to know the headers exist.
+
+Setting COOP `same-origin` together with COEP additionally unlocks **cross-origin isolation** (`crossOriginIsolated === true`) — the browser's confirmation that your page is fully walled off from other origins. Only once that holds will the browser hand your page the powerful, isolation-gated APIs such as `SharedArrayBuffer` and unthrottled high-resolution timers.
 
 This site ships `Cross-Origin-Opener-Policy: same-origin` and `Cross-Origin-Resource-Policy: same-site` on every response — see [`public/_headers`](https://github.com/jdevalk/specification.website/blob/main/public/_headers).
 
