@@ -13,9 +13,14 @@ pages_build_output_dir = "./dist"
 
 # Analytics Engine datasets for the /admin/stats dashboard.
 # AGENT_LOG is written by functions/_shared/bot-detect.ts (crawler traffic);
+# REPORT_LOG is written by functions/reports.ts (browser Reporting API uploads);
 # MCP_LOG is written by mcp/src/index.ts in the separate Worker
-# (mcp.specification.website). The dashboard queries both at the account
+# (mcp.specification.website). The dashboard queries all at the account
 # level via the Cloudflare Analytics Engine SQL API.
 [[analytics_engine_datasets]]
 binding = "AGENT_LOG"
 dataset = "sw_agent_log"
+
+[[analytics_engine_datasets]]
+binding = "REPORT_LOG"
+dataset = "sw_report_log"

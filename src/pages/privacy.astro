@@ -2,7 +2,7 @@
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import Breadcrumbs from "~/components/Breadcrumbs.astro";
 
-const updated = "2026-06-09";
+const updated = "2026-06-16";
 ---
 
 <BaseLayout
@@ -134,8 +134,7 @@ const updated = "2026-06-09";
         analytics.
       </p>
       <p>
-        We do record aggregate request metadata for two non-human traffic
-        streams in
+        We do record aggregate request metadata for three request streams in
         <a
           href="https://developers.cloudflare.com/analytics/analytics-engine/"
           rel="external">Cloudflare Analytics Engine</a
@@ -160,12 +159,25 @@ const updated = "2026-06-09";
           arguments, client name/version, protocol version, country, and
           User-Agent (truncated). No IP address is stored.
         </li>
+        <li>
+          <strong>Browser policy reports:</strong> the site uses the <a
+            href="/spec/security/reporting-endpoints/">Reporting API</a
+          >, so your browser may POST a structured report when a page violates a
+          security policy (for example a Content Security Policy block) or uses a
+          deprecated browser feature. We record the report type, the path it
+          occurred on, the directive or feature involved, and the User-Agent
+          (truncated). This fires only on a policy violation — never on an
+          ordinary page view — and carries no cookie, no identifier, and no IP
+          address.
+        </li>
       </ul>
       <p>
-        Neither stream covers ordinary browser visits. Both are kept to
-        understand which agents use the spec and the MCP server, and how. The
-        data lives in Cloudflare's Analytics Engine under our account; retention
-        follows Cloudflare's defaults.
+        None of these streams tracks your browsing: the first two are non-human
+        traffic, and the third fires only when a policy is violated. They are
+        kept to understand which agents use the spec and the MCP server, and to
+        catch security-policy and deprecation regressions. The data lives in
+        Cloudflare's Analytics Engine under our account; retention follows
+        Cloudflare's defaults.
       </p>
 
       <h2 id="content-hosting">GitHub</h2>

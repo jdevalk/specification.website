@@ -1,0 +1,133 @@
+// Collector for the W3C Reporting API.
+//
+// The `Reporting-Endpoints` header in public/_headers points both the
+// `csp-endpoint` and `default` endpoints at /reports, so visitors' browsers
+// POST batched JSON reports here — CSP and COOP/COEP violations, plus
+// deprecation, intervention, and crash reports that have no header of their
+// own. We record one aggregate row per report to the REPORT_LOG Analytics
+// Engine dataset (sw_report_log), which /admin/stats reads.
+//
+// Mirrors functions/_shared/bot-detect.ts in spirit: it never throws and never
+// blocks. Any parse or write failure still returns 204. No IP address, no
+// cookies, and no URL query strings are stored — only the fields below.
+
+type Env = {
+  REPORT_LOG?: AnalyticsEngineDataset;
+};
+
+interface ReportBody {
+  [key: string]: unknown;
+}
+
+interface ReportItem {
+  type?: string;
+  url?: string;
+  user_agent?: string;
+  body?: ReportBody;
+}
+
+const MAX = 300; // cap every stored string
+const MAX_REPORTS = 50; // cap rows written per POST
+
+function trunc(v: unknown, n = MAX): string {
+  return String(v ?? "").slice(0, n);
+}
+
+// Strip query and fragment so tokens that ride along in a URL are never stored.
+function pathOnly(v: unknown): string {
+  const s = String(v ?? "");
+  if (!s) return "";
+  try {
+    const u = new URL(s);
+    return (u.origin + u.pathname).slice(0, MAX);
+  } catch {
+    return s.split(/[?#]/)[0].slice(0, MAX);
+  }
+}
+
+// Normalise the two wire formats into a flat array of report items:
+//   application/reports+json → a JSON array of {type, url, user_agent, body}
+//   application/csp-report    → a single {"csp-report": {...}} object (legacy)
+function parseReports(raw: string): ReportItem[] {
+  if (!raw) return [];
+  let json: unknown;
+  try {
+    json = JSON.parse(raw);
+  } catch {
+    return [];
+  }
+  if (Array.isArray(json)) return json as ReportItem[];
+  if (json && typeof json === "object") {
+    const obj = json as Record<string, unknown>;
+    if (obj["csp-report"]) {
+      return [{ type: "csp-violation", body: obj["csp-report"] as ReportBody }];
+    }
+    return [obj as ReportItem];
+  }
+  return [];
+}
+
+// Reporting API bodies are camelCase; legacy CSP reports are kebab-case.
+// Read whichever is present.
+function pick(body: ReportBody, ...keys: string[]): string {
+  for (const k of keys) {
+    const v = body[k];
+    if (v !== undefined && v !== null && v !== "") return String(v);
+  }
+  return "";
+}
+
+function writeReport(
+  dataset: AnalyticsEngineDataset,
+  r: ReportItem,
+  country: string,
+  reqUA: string,
+): void {
+  const type = trunc(r.type || "unknown", 64);
+  const body: ReportBody = r.body && typeof r.body === "object" ? r.body : {};
+  const docUrl = pathOnly(r.url || pick(body, "documentURL", "document-uri"));
+  const directive = trunc(
+    pick(body, "effectiveDirective", "violatedDirective", "effective-directive", "id", "featureId"),
+    96,
+  );
+  const blocked = pathOnly(pick(body, "blockedURL", "blocked-uri", "sourceFile", "source-file"));
+  const disposition = trunc(pick(body, "disposition"), 16);
+  const message = trunc(pick(body, "message", "reason"));
+  const ua = trunc(r.user_agent || reqUA, 200);
+
+  dataset.writeDataPoint({
+    blobs: [
+      type, // blob1
+      docUrl, // blob2
+      directive, // blob3
+      blocked, // blob4
+      disposition, // blob5
+      message, // blob6
+      country, // blob7
+      ua, // blob8
+    ],
+    indexes: [type],
+  });
+}
+
+// Only POST is meaningful; other methods get an automatic 405 from the Pages
+// runtime because no other handler is exported.
+export const onRequestPost: PagesFunction<Env> = async (context) => {
+  const { request, env } = context;
+  try {
+    const dataset = env.REPORT_LOG;
+    if (dataset) {
+      const reports = parseReports(await request.text());
+      const cf = (request as Request & { cf?: IncomingRequestCfProperties }).cf;
+      const country = cf?.country || "";
+      const reqUA = request.headers.get("user-agent") || "";
+      for (const r of reports.slice(0, MAX_REPORTS)) {
+        writeReport(dataset, r, country, reqUA);
+      }
+    }
+  } catch {
+    // Never break: the browser's reporting agent ignores the response anyway.
+  }
+  // 204 No Content — acknowledge receipt; there is nothing to return.
+  return new Response(null, { status: 204 });
+};

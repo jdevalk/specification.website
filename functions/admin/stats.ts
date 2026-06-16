@@ -15,6 +15,7 @@ type Env = {
 
 const AGENT = "sw_agent_log";
 const MCP = "sw_mcp_log";
+const REPORT = "sw_report_log";
 
 interface AeRow {
   [key: string]: string | number | null;
@@ -133,6 +134,37 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     mcp_recent: `
       SELECT timestamp AS time, blob10 AS surface, blob1 AS method, blob2 AS tool, blob3 AS args, blob9 AS error
       FROM ${MCP}
+      WHERE timestamp > NOW() - INTERVAL '30' DAY
+      ORDER BY time DESC LIMIT 100
+    `,
+    // --- Browser policy reports (Reporting API) ---------------------------
+    report_hourly: `
+      SELECT toStartOfHour(timestamp) AS hour, SUM(_sample_interval) AS count
+      FROM ${REPORT}
+      WHERE timestamp > NOW() - INTERVAL '1' DAY
+      GROUP BY hour ORDER BY hour ASC
+    `,
+    report_types24h: `
+      SELECT index1 AS type, SUM(_sample_interval) AS count
+      FROM ${REPORT}
+      WHERE timestamp > NOW() - INTERVAL '1' DAY
+      GROUP BY type ORDER BY count DESC LIMIT 50
+    `,
+    report_types7d: `
+      SELECT index1 AS type, SUM(_sample_interval) AS count
+      FROM ${REPORT}
+      WHERE timestamp > NOW() - INTERVAL '7' DAY
+      GROUP BY type ORDER BY count DESC LIMIT 50
+    `,
+    report_directives7d: `
+      SELECT blob3 AS directive, SUM(_sample_interval) AS count
+      FROM ${REPORT}
+      WHERE blob3 != '' AND timestamp > NOW() - INTERVAL '7' DAY
+      GROUP BY directive ORDER BY count DESC LIMIT 50
+    `,
+    report_recent: `
+      SELECT timestamp AS time, index1 AS type, blob2 AS path, blob3 AS directive, blob4 AS blocked, blob5 AS disposition
+      FROM ${REPORT}
       WHERE timestamp > NOW() - INTERVAL '30' DAY
       ORDER BY time DESC LIMIT 100
     `,
@@ -455,6 +487,11 @@ function renderDashboard(results: QueryResults, errors: QueryErrors): string {
       .map((r) => String(r.surface || ""))
       .filter(Boolean),
   );
+  const reportTypes = new Set(
+    rowsOrEmpty(results.report_recent)
+      .map((r) => String(r.type || ""))
+      .filter(Boolean),
+  );
 
   return `<!doctype html>
 <html lang="en">
@@ -521,6 +558,7 @@ function renderDashboard(results: QueryResults, errors: QueryErrors): string {
   <div class="section-nav tabs" data-tabs="sections">
     <button type="button" class="tab active" data-tab="section-crawlers">Crawlers</button>
     <button type="button" class="tab" data-tab="section-mcp">MCP / A2A usage</button>
+    <button type="button" class="tab" data-tab="section-reports">Browser reports</button>
   </div>
 
   <div id="section-crawlers" class="tab-pane">
@@ -685,6 +723,54 @@ function renderDashboard(results: QueryResults, errors: QueryErrors): string {
               v === "1"
                 ? '<span class="err-flag" title="returned an error">error</span>'
                 : "",
+          },
+        },
+      )}
+    </div>
+  </div>
+
+  <div id="section-reports" class="tab-pane" hidden>
+    <div class="stats-row">
+      ${statCard("Reports 24h", sumCounts(results.report_types24h))}
+      ${statCard("Reports 7d", sumCounts(results.report_types7d))}
+      ${statCard("Distinct types 7d", rowsOrEmpty(results.report_types7d).length)}
+    </div>
+
+    <div class="cols">
+      <div>
+        <h2>Reports per hour — last 24h</h2>
+        ${renderHourLineChart(rowsOrEmpty(results.report_hourly), "#f59e0b", "Browser policy reports per hour, last 24h")}
+      </div>
+      <div>
+        <h2>Report types — last 7d</h2>
+        ${renderTable(["type", "count"], rowsOrEmpty(results.report_types7d), countCol)}
+      </div>
+    </div>
+
+    <h2>Top CSP directives — last 7d</h2>
+    ${renderTable(["directive", "count"], rowsOrEmpty(results.report_directives7d), countCol)}
+
+    <h2>Recent reports — last 30d</h2>
+    <div class="filter-row" data-filter-for="report-recent-table">
+      <select data-col="1">
+        <option value="">All types</option>
+        ${[...reportTypes]
+          .sort((a, b) => a.localeCompare(b))
+          .map((t) => `<option value="${esc(t)}">${esc(t)}</option>`)
+          .join("")}
+      </select>
+      <input type="search" data-col="2" placeholder="Filter path…" autocomplete="off" spellcheck="false">
+      <span class="filter-stats" data-filter-stats></span>
+    </div>
+    <div id="report-recent-table">
+      ${renderTable(
+        ["time", "type", "path", "directive", "blocked", "disposition"],
+        rowsOrEmpty(results.report_recent),
+        {
+          formatters: {
+            time: (v) => esc(String(v).slice(5, 16)),
+            path: (v) => `<span class="path">${esc(v)}</span>`,
+            blocked: (v) => `<span class="path">${esc(v)}</span>`,
           },
         },
       )}

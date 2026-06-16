@@ -15,7 +15,8 @@
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' 'sha256-N74AzU+1FxvXAWIxrP2zNCBUxV949ZHOXXqjTvbusx0=' 'sha256-UU9xsfeOKmx3D7Lk33alkWn1rIjk46pD684u4pupy4o=' https://plausible.io; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://plausible.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' 'sha256-N74AzU+1FxvXAWIxrP2zNCBUxV949ZHOXXqjTvbusx0=' 'sha256-UU9xsfeOKmx3D7Lk33alkWn1rIjk46pD684u4pupy4o=' https://plausible.io; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://plausible.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; report-to csp-endpoint; upgrade-insecure-requests
+  Reporting-Endpoints: csp-endpoint="/reports", default="/reports"
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-site
   X-Frame-Options: DENY

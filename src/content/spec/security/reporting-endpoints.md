@@ -41,6 +41,8 @@ A strict Content Security Policy, cross-origin isolation, or a tight Permissions
 
 It is also the only channel for several report types that exist nowhere else: **deprecation** reports warn you that an API your site depends on is being removed from browsers, and **crash** and **intervention** reports tell you when the browser killed or throttled your page. That turns a strict policy from a deploy-and-pray gamble into something you can roll out behind report-only mode, watch, and tighten with evidence.
 
+This site ships `Reporting-Endpoints: csp-endpoint="/reports", default="/reports"` and wires its Content Security Policy to it with `report-to csp-endpoint` — see [`public/_headers`](https://github.com/jdevalk/specification.website/blob/main/public/_headers). A small same-origin collector ([`functions/reports.ts`](https://github.com/jdevalk/specification.website/blob/main/functions/reports.ts)) records the aggregate report type, path, and directive — no IP address, no cookies, no URL query strings.
+
 ## How to implement
 
 1. Send `Reporting-Endpoints` on HTML responses, naming at least a `default` endpoint and any policy-specific ones you need.
