@@ -5,7 +5,7 @@ category: well-known
 summary: "A JSON document at /.well-known/webauthn lists the origins allowed to use passkeys scoped to a single Relying Party ID. It enables WebAuthn Related Origin Requests — one passkey shared across several domains you own. Only applicable if the site uses passkeys across more than one origin."
 status: optional
 appliesTo: [all]
-relatedSlugs: [well-known-overview, change-password, https-tls]
+relatedSlugs: [well-known-overview, change-password, https-tls, accessible-authentication]
 order: 25
 updated: "2026-06-08T12:00:00.000Z"
 sources:

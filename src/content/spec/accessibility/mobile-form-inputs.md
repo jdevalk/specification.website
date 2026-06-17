@@ -6,7 +6,7 @@ summary: "On a phone, the right input type, inputmode, and enterkeyhint summon t
 status: recommended
 order: 150
 appliesTo: [all]
-relatedSlugs: [form-labels, form-errors, touch-target-size, meta-viewport]
+relatedSlugs: [form-labels, form-errors, touch-target-size, meta-viewport, accessible-authentication]
 updated: "2026-06-08T00:00:00.000Z"
 sources:
   - title: "HTML Living Standard — The inputmode attribute"

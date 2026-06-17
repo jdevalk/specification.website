@@ -6,7 +6,7 @@ summary: "Every form control needs a programmatically associated label. A placeh
 status: required
 order: 30
 appliesTo: [all]
-relatedSlugs: [form-errors, aria-usage, mobile-form-inputs]
+relatedSlugs: [form-errors, aria-usage, mobile-form-inputs, accessible-authentication]
 updated: "2026-05-29T10:57:27.000Z"
 sources:
   - title: "WCAG 3.3.2 — Labels or Instructions (Level A)"
