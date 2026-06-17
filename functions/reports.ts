@@ -87,10 +87,19 @@ function writeReport(
   const body: ReportBody = r.body && typeof r.body === "object" ? r.body : {};
   const docUrl = pathOnly(r.url || pick(body, "documentURL", "document-uri"));
   const directive = trunc(
-    pick(body, "effectiveDirective", "violatedDirective", "effective-directive", "id", "featureId"),
+    pick(
+      body,
+      "effectiveDirective",
+      "violatedDirective",
+      "effective-directive",
+      "id",
+      "featureId",
+    ),
     96,
   );
-  const blocked = pathOnly(pick(body, "blockedURL", "blocked-uri", "sourceFile", "source-file"));
+  const blocked = pathOnly(
+    pick(body, "blockedURL", "blocked-uri", "sourceFile", "source-file"),
+  );
   const disposition = trunc(pick(body, "disposition"), 16);
   const message = trunc(pick(body, "message", "reason"));
   const ua = trunc(r.user_agent || reqUA, 200);
