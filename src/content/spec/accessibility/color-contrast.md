@@ -9,7 +9,7 @@ appliesTo: [all]
 relatedSlugs: [focus-indicators, semantic-html]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
-  - title: "WCAG 2.4.3 — Contrast (Minimum) (Level AA)"
+  - title: "WCAG 1.4.3 — Contrast (Minimum) (Level AA)"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html"
     publisher: "W3C"
   - title: "WCAG 1.4.6 — Contrast (Enhanced) (Level AAA)"

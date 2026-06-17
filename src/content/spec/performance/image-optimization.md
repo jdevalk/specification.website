@@ -13,7 +13,7 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img"
     publisher: "MDN"
   - title: "web.dev — Use modern image formats"
-    url: "https://web.dev/articles/uses-webp-images"
+    url: "https://web.dev/articles/serve-images-webp"
     publisher: "web.dev"
   - title: "web.dev — Serve responsive images"
     url: "https://web.dev/articles/serve-responsive-images"

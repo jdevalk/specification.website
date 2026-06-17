@@ -9,8 +9,8 @@ appliesTo: [all]
 relatedSlugs: [theme-color, open-graph, html-lang]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
-  - title: "MDN — Link types: icon"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/icon"
+  - title: "MDN — The <link> element (rel=icon)"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/link"
     publisher: "MDN"
   - title: "HTML Living Standard — Link type: icon"
     url: "https://html.spec.whatwg.org/multipage/links.html#rel-icon"
