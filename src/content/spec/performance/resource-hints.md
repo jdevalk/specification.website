@@ -7,7 +7,7 @@ status: recommended
 order: 100
 appliesTo: [all]
 relatedSlugs: [preload-prefetch-preconnect, font-loading, critical-css]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-06-18T00:00:00.000Z"
 sources:
   - title: "W3C — Resource Hints"
     url: "https://www.w3.org/TR/resource-hints/"
@@ -19,7 +19,7 @@ sources:
     url: "https://web.dev/articles/preload-critical-assets"
     publisher: "web.dev"
   - title: "MDN — rel=modulepreload"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/modulepreload"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/rel/modulepreload"
     publisher: "MDN"
 ---
 

@@ -7,7 +7,7 @@ status: recommended
 order: 40
 appliesTo: [all]
 relatedSlugs: [resource-hints, core-web-vitals, font-loading]
-updated: "2026-05-29T20:27:54.000Z"
+updated: "2026-06-18T00:00:00.000Z"
 sources:
   - title: "MDN — <link>: The External Resource Link element"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link"
@@ -19,7 +19,7 @@ sources:
     url: "https://web.dev/articles/preconnect-and-dns-prefetch"
     publisher: "web.dev"
   - title: "MDN — rel=preload"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/preload"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/rel/preload"
     publisher: "MDN"
 ---
 

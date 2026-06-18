@@ -7,13 +7,13 @@ status: recommended
 order: 70
 appliesTo: [all]
 relatedSlugs: [title, meta-description, open-graph, no-vary-search]
-updated: "2026-05-29T12:14:17.000Z"
+updated: "2026-06-18T00:00:00.000Z"
 sources:
   - title: "RFC 6596 — The Canonical Link Relation"
     url: "https://www.rfc-editor.org/rfc/rfc6596"
     publisher: "IETF"
   - title: "MDN — rel=canonical"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/rel/canonical"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/rel#canonical"
     publisher: "MDN"
   - title: "Google — Consolidate duplicate URLs with canonicals"
     url: "https://developers.google.com/search/docs/crawling-indexing/consolidate-duplicate-urls"
