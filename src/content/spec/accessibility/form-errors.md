@@ -6,7 +6,7 @@ summary: "When a form submission fails, errors must be identified in text, assoc
 status: required
 order: 110
 appliesTo: [all]
-relatedSlugs: [form-labels, aria-usage, color-contrast, mobile-form-inputs, accessible-authentication]
+relatedSlugs: [form-labels, aria-usage, color-contrast, mobile-form-inputs, accessible-authentication, redundant-entry]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
   - title: "WCAG 3.3.1 — Error Identification (Level A)"
