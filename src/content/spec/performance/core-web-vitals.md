@@ -6,7 +6,7 @@ summary: "Core Web Vitals measure loading, responsiveness, and visual stability.
 status: required
 order: 10
 appliesTo: [all]
-relatedSlugs: [image-optimization, critical-css, lazy-loading, server-side-rendering]
+relatedSlugs: [image-optimization, critical-css, lazy-loading, server-side-rendering, server-timing]
 updated: "2026-05-29T20:27:54.000Z"
 sources:
   - title: "web.dev — Web Vitals"
