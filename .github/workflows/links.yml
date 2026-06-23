@@ -60,9 +60,9 @@ jobs:
   #     w3.org/validator.w3.org/securityheaders.com sit behind a Cloudflare JS
   #     challenge (403 "Just a moment…"); developers.facebook.com 400s bots;
   #     github.com web requests are persistently 429'd from the shared GitHub
-  #     Actions runner IP regardless of validity (the rate-limit window outlasts
-  #     the retry loop below), so the whole host is skipped — verify github
-  #     citations by hand when adding them; the a2a endpoint is POST-only (405);
+  #     Actions runner IP regardless of validity, so the whole host is skipped —
+  #     verify github citations by hand when adding them; the a2a endpoint is
+  #     POST-only (405);
   #     developer.android.com connection-resets headless clients ([0]); and
   #     example.com is the reserved illustration domain used in prose samples.
   #     These are excluded so a red run means real rot, not bot-blocking. Genuine
@@ -71,6 +71,9 @@ jobs:
     name: External links
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
+    # Safety net: a single upstream returning a large retry-after can stall
+    # linkinator's --retry. Bound the whole job so it fails fast rather than hang.
+    timeout-minutes: 10
     steps:
       - uses: actions/checkout@v6
 
@@ -97,17 +100,5 @@ jobs:
             sleep 1
           done
           [ -n "$up" ] || { echo "::error::preview server did not start"; exit 1; }
-          # Retry the whole crawl: GitHub's burst-limit 429s omit a retry-after
-          # header (so linkinator's own --retry can't catch them) and hit a
-          # random link each run. A genuinely dead URL fails every attempt and
-          # stays red; a transient flake clears on a re-run.
-          ok=
-          for attempt in 1 2 3; do
-            if npx --yes linkinator@6 http://localhost:4321 \
-                 --config linkinator.config.json; then
-              ok=1; break
-            fi
-            echo "::warning::link check attempt $attempt failed — retrying in 20s"
-            sleep 20
-          done
-          [ -n "$ok" ] || { echo "::error::link check failed after 3 attempts"; exit 1; }
+          npx --yes linkinator@6 http://localhost:4321 \
+            --config linkinator.config.json
