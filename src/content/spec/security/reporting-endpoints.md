@@ -6,7 +6,7 @@ summary: "A response header that names HTTP endpoints to which the browser POSTs
 status: recommended
 order: 35
 appliesTo: [all]
-relatedSlugs: [content-security-policy, cross-origin-isolation, permissions-policy, monitoring-uptime]
+relatedSlugs: [content-security-policy, cross-origin-isolation, permissions-policy, monitoring-uptime, trusted-types]
 updated: "2026-06-16T00:00:00.000Z"
 sources:
   - title: "Reporting API"
