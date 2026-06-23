@@ -1,20 +1,20 @@
 // Trusted Types default policy.
 //
 // Worked example for /spec/security/trusted-types/. The site's CSP can carry
-//   require-trusted-types-for 'script'; trusted-types default
-// and, once enforcing, every string assigned to a DOM injection sink (innerHTML,
-// outerHTML, document.write, …) must be a TrustedHTML value or the browser throws.
+//   require-trusted-types-for 'script'; trusted-types default dompurify
+// and, once enforcing, every string assigned to a DOM injection sink must be a
+// trusted typed value or the browser throws.
 //
-// Our own scripts never touch those sinks, but the Pagefind search UI
-// (/pagefind/pagefind-ui.js) builds its entire results list with innerHTML — 11
-// assignments — so without a policy, enforcing Trusted Types would break search.
+// Our own scripts touch no sinks, but the Pagefind search bundle does, in two ways:
+//   - pagefind-ui.js builds its results list with innerHTML (TrustedHTML sink).
+//   - pagefind.js loads its own JS/WASM chunks by assigning a script URL
+//     (TrustedScriptURL sink).
 // A *default* policy is the only thing that can cover Pagefind, because its
-// bundled code assigns raw strings and cannot opt into a named policy itself.
+// bundled code assigns raw strings/URLs and cannot opt into a named policy itself.
+// So the default policy implements both createHTML and createScriptURL.
 //
-// The policy runs every such string through DOMPurify, which strips scripts and
-// event handlers while preserving the structural markup Pagefind emits
-// (<a>, <p>, <mark> highlights, lists). Loaded before any other script in
-// <head> so the policy exists before Pagefind mounts.
+// (DOMPurify registers its own policy named "dompurify"; the trusted-types
+// allowlist in _headers names it too.)
 (function () {
   if (!window.trustedTypes || !window.trustedTypes.createPolicy) return; // unsupported browser: nothing to enforce
   if (typeof window.DOMPurify === "undefined") {
@@ -26,8 +26,22 @@
   }
   try {
     window.trustedTypes.createPolicy("default", {
+      // HTML sinks (Pagefind results UI): sanitise, keeping its a/p/mark/list markup.
       createHTML: function (input) {
         return window.DOMPurify.sanitize(input);
+      },
+      // Script-URL sinks (Pagefind loading its own JS/WASM): allow same-origin
+      // URLs only. script-src 'self' is the backstop; this just stops a
+      // cross-origin URL ever reaching a script-loading sink.
+      createScriptURL: function (input) {
+        try {
+          if (new URL(input, document.baseURI).origin === location.origin) {
+            return input;
+          }
+        } catch {
+          /* malformed URL — fall through to the throw below */
+        }
+        throw new TypeError("[trusted-types] blocked script URL: " + input);
       },
     });
   } catch (e) {
