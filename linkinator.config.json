@@ -18,8 +18,7 @@
     "^https?://equalizedigital\\.com/",
     "^https?://developer\\.android\\.com/",
     "^https?://(www\\.)?example\\.com/",
-    "^https?://github\\.com/jdevalk/specification\\.website",
-    "^https?://github\\.com/[^/]+/[^/]+/edit/",
+    "^https?://github\\.com/",
     "^https?://mcp\\.specification\\.website/a2a/"
   ]
 }

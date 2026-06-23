@@ -59,10 +59,10 @@ jobs:
   #   - skip[]: hosts that hard-block any headless checker and can never pass —
   #     w3.org/validator.w3.org/securityheaders.com sit behind a Cloudflare JS
   #     challenge (403 "Just a moment…"); developers.facebook.com 400s bots;
-  #     github.com /edit/ links and our own jdevalk/specification.website repo
-  #     self-links are per-page chrome that 429 under GitHub's burst limit (not
-  #     citations — third-party github repos stay checked); the a2a endpoint is
-  #     POST-only (405);
+  #     github.com web requests are persistently 429'd from the shared GitHub
+  #     Actions runner IP regardless of validity (the rate-limit window outlasts
+  #     the retry loop below), so the whole host is skipped — verify github
+  #     citations by hand when adding them; the a2a endpoint is POST-only (405);
   #     developer.android.com connection-resets headless clients ([0]); and
   #     example.com is the reserved illustration domain used in prose samples.
   #     These are excluded so a red run means real rot, not bot-blocking. Genuine
