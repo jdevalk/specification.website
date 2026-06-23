@@ -71,6 +71,14 @@ const finalJsonLd = jsonLd
         pattern documented in /spec/foundations/color-scheme/. */
     }
     <script is:inline>(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t);var m=document.createElement("meta");m.name="theme-color";m.id="theme-color-meta";m.content=t==="dark"?"#0e0e13":"#15803d";document.head.appendChild(m)}catch(e){}})();</script>
+    {
+      /* Trusted Types default policy, registered before any other script so it
+        exists before Pagefind's search UI mounts. DOMPurify (self-hosted, vendored
+        by scripts/generate-assets.mjs) backs it. Worked example for
+        /spec/security/trusted-types/. Both are script-src 'self'. */
+    }
+    <script is:inline src="/vendor/purify.min.js"></script>
+    <script is:inline src="/trusted-types-policy.js"></script>
     <HeadMeta
       title={title}
       description={description}

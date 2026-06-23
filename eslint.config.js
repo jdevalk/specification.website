@@ -14,6 +14,7 @@ export default [
       ".astro/",
       "node_modules/",
       "public/pagefind/",
+      "public/vendor/",
       "mcp/",
       ".github/skills/",
       ".claude/",

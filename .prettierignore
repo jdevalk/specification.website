@@ -3,6 +3,7 @@ dist/
 .astro/
 node_modules/
 public/pagefind/
+public/vendor/
 
 # Generated binary/text assets
 public/og/

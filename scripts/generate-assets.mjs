@@ -618,4 +618,19 @@ console.log(
   `  wrote ${marketingPages.length} marketing OG images → /og/<slug>.png`,
 );
 
+// Vendor third-party runtime libraries we want self-hosted (script-src 'self').
+// DOMPurify backs the Trusted Types default policy (see public/trusted-types-policy.js)
+// so the strict CSP can require trusted values without pulling in a remote script.
+const vendorOut = join(out, "vendor");
+await mkdir(vendorOut, { recursive: true });
+const dompurifySrc = join(
+  root,
+  "node_modules",
+  "dompurify",
+  "dist",
+  "purify.min.js",
+);
+await writeFile(join(vendorOut, "purify.min.js"), await readFile(dompurifySrc));
+console.log("  vendored DOMPurify → /vendor/purify.min.js");
+
 console.log("Done.");
