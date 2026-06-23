@@ -13,7 +13,7 @@ sources:
     url: "https://gdpr-info.eu/art-5-gdpr/"
     publisher: "EU GDPR"
   - title: "ICO — Data minimisation"
-    url: "https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-protection-principles/a-guide-to-the-data-protection-principles/the-principles/data-minimisation/"
+    url: "https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/data-protection-principles/a-guide-to-the-data-protection-principles/data-minimisation/"
     publisher: "ICO"
   - title: "EDPB Guidelines 4/2019 on Article 25 Data Protection by Design and by Default"
     url: "https://edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-42019-article-25-data-protection-design-and_en"

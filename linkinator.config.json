@@ -1,9 +1,25 @@
 {
   "recurse": true,
+  "concurrency": 25,
+  "timeout": 30000,
+  "retry": true,
+  "retryErrors": true,
+  "retryErrorsCount": 3,
   "skip": [
     "^https?://(www\\.)?linkedin\\.com",
     "^https?://(www\\.)?twitter\\.com",
     "^https?://(www\\.)?x\\.com",
-    "^https?://(www\\.)?facebook\\.com"
+    "^https?://(www\\.)?facebook\\.com",
+    "^https?://developers\\.facebook\\.com",
+    "^https?://(www\\.)?w3\\.org/",
+    "^https?://validator\\.w3\\.org/",
+    "^https?://securityheaders\\.com/",
+    "^https?://(www\\.)?internetsociety\\.org/",
+    "^https?://equalizedigital\\.com/",
+    "^https?://developer\\.android\\.com/",
+    "^https?://(www\\.)?example\\.com/",
+    "^https?://github\\.com/jdevalk/specification\\.website",
+    "^https?://github\\.com/[^/]+/[^/]+/edit/",
+    "^https?://mcp\\.specification\\.website/a2a/"
   ]
 }

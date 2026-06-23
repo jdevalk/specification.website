@@ -56,7 +56,7 @@ This supersedes the older `<link rel="prerender">` hint, which has been removed 
 - **Improved INP and LCP on the next page.** Because the work is already done, the metrics on the destination page record near-zero delay.
 - **Declarative.** No JavaScript event handlers, no IntersectionObserver, no custom hover-detection — the browser implements the heuristics.
 
-Cross-site prerender is gated on Chrome's [No-Vary-Search](https://developer.chrome.com/blog/no-vary-search) and additional restrictions; same-site is the realistic target for most sites.
+Cross-site prerender is gated on [No-Vary-Search](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/No-Vary-Search) and additional restrictions; same-site is the realistic target for most sites.
 
 ## How to implement
 

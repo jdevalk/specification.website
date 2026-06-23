@@ -18,9 +18,9 @@ sources:
   - title: "MDN — Render-blocking resources"
     url: "https://developer.mozilla.org/en-US/docs/Glossary/Render_blocking"
     publisher: "MDN"
-  - title: "web.dev — Eliminate render-blocking resources"
-    url: "https://web.dev/articles/render-blocking-resources"
-    publisher: "web.dev"
+  - title: "Chrome for Developers — Eliminate render-blocking resources"
+    url: "https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources"
+    publisher: "Google"
 ---
 
 ## What it is

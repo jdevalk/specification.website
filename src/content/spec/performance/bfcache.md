@@ -18,8 +18,8 @@ sources:
   - title: "MDN — bfcache"
     url: "https://developer.mozilla.org/en-US/docs/Glossary/bfcache"
     publisher: "MDN"
-  - title: "Chrome for Developers — Back/forward cache"
-    url: "https://developer.chrome.com/docs/web-platform/back-forward-cache"
+  - title: "Chrome for Developers — Test back/forward cache in DevTools"
+    url: "https://developer.chrome.com/docs/devtools/application/back-forward-cache"
     publisher: "Google"
 ---
 

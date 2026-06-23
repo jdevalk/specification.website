@@ -15,8 +15,8 @@ sources:
   - title: "draft-meunier-web-bot-auth-architecture"
     url: "https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture"
     publisher: "IETF"
-  - title: "draft-meunier-web-bot-auth-http-signature"
-    url: "https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-http-signature"
+  - title: "draft-meunier-http-message-signatures-directory"
+    url: "https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory"
     publisher: "IETF"
   - title: "Cloudflare — Forget IPs: using cryptography to verify bot and agent traffic"
     url: "https://blog.cloudflare.com/web-bot-auth/"
@@ -27,7 +27,7 @@ sources:
 
 Web Bot Auth is an emerging convention that lets a bot prove its identity cryptographically on every request, using the standard [HTTP Message Signatures](https://www.rfc-editor.org/rfc/rfc9421) mechanism from RFC 9421. Instead of guessing whether a request really comes from OpenAI's crawler by inspecting the user-agent string and looking up reverse DNS, the server reads a `Signature` header, fetches the bot's public key from a published key directory, and verifies the signature.
 
-The proposal lives in two IETF drafts: [draft-meunier-web-bot-auth-architecture](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture) describes the trust model and discovery; [draft-meunier-web-bot-auth-http-signature](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-http-signature) profiles RFC 9421 for bot use. Cloudflare ships verification at the network edge, and a growing list of major crawlers sign their traffic.
+The proposal lives in two IETF drafts: [draft-meunier-web-bot-auth-architecture](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture) describes the trust model and discovery; [draft-meunier-http-message-signatures-directory](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory) profiles RFC 9421 for bot use and defines the published key directory. Cloudflare ships verification at the network edge, and a growing list of major crawlers sign their traffic.
 
 ## Why it matters
 

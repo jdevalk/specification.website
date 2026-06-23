@@ -21,8 +21,8 @@ sources:
   - title: "Chrome for Developers — Cross-document view transitions"
     url: "https://developer.chrome.com/docs/web-platform/view-transitions/cross-document"
     publisher: "Google"
-  - title: "WebKit — View Transitions"
-    url: "https://webkit.org/blog/16557/view-transitions/"
+  - title: "WebKit — Cross-document view transitions for every website"
+    url: "https://webkit.org/blog/16967/two-lines-of-cross-document-view-transitions-code-you-can-use-on-every-website-today/"
     publisher: "WebKit"
 ---
 

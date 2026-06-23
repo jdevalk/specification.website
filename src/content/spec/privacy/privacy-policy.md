@@ -16,7 +16,7 @@ sources:
     url: "https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/individual-rights/the-right-to-be-informed/"
     publisher: "ICO"
   - title: "EDPB Guidelines on Transparency under Regulation 2016/679"
-    url: "https://edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-transparency-under-regulation-2016679_en"
+    url: "https://www.edpb.europa.eu/our-work-tools/our-documents/guidelines/transparency_en"
     publisher: "EDPB"
 ---
 

@@ -15,8 +15,8 @@ sources:
   - title: "MDN — scrollbar-gutter"
     url: "https://developer.mozilla.org/en-US/docs/Web/CSS/scrollbar-gutter"
     publisher: "MDN"
-  - title: "web.dev — Prevent layout shifts with scrollbar-gutter"
-    url: "https://web.dev/articles/scrollbar-gutter"
+  - title: "web.dev — scrollbar-gutter and scrollbar-width are Baseline Newly available"
+    url: "https://web.dev/blog/baseline-scrollbar-props"
     publisher: "Google"
 ---
 

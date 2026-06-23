@@ -15,8 +15,8 @@ sources:
   - title: "WP Accessibility Knowledge Base"
     url: "https://wpaccessibility.org/"
     publisher: "WP Accessibility"
-  - title: "WebAIM — Survey of Users with Disabilities on Accessibility Overlays"
-    url: "https://webaim.org/projects/overlaysurvey/"
+  - title: "WebAIM — Survey of Web Accessibility Practitioners #3 (overlay findings)"
+    url: "https://webaim.org/blog/practitioners-survey-3/"
     publisher: "WebAIM"
   - title: "Equalize Digital — Accessibility Checker documentation"
     url: "https://equalizedigital.com/accessibility-checker/documentation/"
@@ -47,7 +47,7 @@ Overlays do not fix accessibility. They frequently make it worse:
 - They are now a litigation magnet. More than 1,000 ADA web-accessibility lawsuits in the US in 2023 named sites that used an overlay; some named the overlay vendor as a co-defendant.
 - Under the EU Web Accessibility Directive and the European Accessibility Act, public-sector bodies and many private services must publish an accessibility statement based on the real state of the site. An overlay does not change that state.
 
-The Overlay Fact Sheet, signed by more than 800 accessibility professionals including most of the field's recognised experts, recommends against them outright. WebAIM's survey of users with disabilities found that the large majority who had encountered overlays rated them as unhelpful or actively harmful.
+The Overlay Fact Sheet, signed by more than 800 accessibility professionals including most of the field's recognised experts, recommends against them outright. WebAIM's survey of accessibility practitioners found that the large majority who had encountered overlays rated them as unhelpful or actively harmful — a verdict even stronger among respondents with disabilities.
 
 ## What to do instead
 

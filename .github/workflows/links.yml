@@ -51,6 +51,22 @@ jobs:
   # Blocking: runs daily and on demand. A failed run signals rotted external
   # links that need fixing. Kept off PRs so a flaky upstream (IETF / W3C / MDN
   # rate-limiting, upstream outages) can't block merges — only the daily sweep.
+  #
+  # Noise control lives in linkinator.config.json:
+  #   - retry / retryErrors: re-attempt 429s (honouring retry-after) and 5xx,
+  #     so transient rate-limits and blips don't fail the run.
+  #   - concurrency 25: gentler crawl, fewer self-inflicted 429s.
+  #   - skip[]: hosts that hard-block any headless checker and can never pass —
+  #     w3.org/validator.w3.org/securityheaders.com sit behind a Cloudflare JS
+  #     challenge (403 "Just a moment…"); developers.facebook.com 400s bots;
+  #     github.com /edit/ links and our own jdevalk/specification.website repo
+  #     self-links are per-page chrome that 429 under GitHub's burst limit (not
+  #     citations — third-party github repos stay checked); the a2a endpoint is
+  #     POST-only (405);
+  #     developer.android.com connection-resets headless clients ([0]); and
+  #     example.com is the reserved illustration domain used in prose samples.
+  #     These are excluded so a red run means real rot, not bot-blocking. Genuine
+  #     404s on these hosts won't be auto-caught — verify them by hand when citing.
   external:
     name: External links
     if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'

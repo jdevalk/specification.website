@@ -15,9 +15,9 @@ sources:
   - title: "Let's Encrypt — CAA"
     url: "https://letsencrypt.org/docs/caa/"
     publisher: "Let's Encrypt"
-  - title: "MDN — DNS — CAA records"
-    url: "https://developer.mozilla.org/en-US/docs/Glossary/CAA_record"
-    publisher: "MDN"
+  - title: "RFC 8657 — CAA Record Extensions for Account URI and ACME Method Binding"
+    url: "https://www.rfc-editor.org/rfc/rfc8657"
+    publisher: "IETF"
 ---
 
 ## What it is
