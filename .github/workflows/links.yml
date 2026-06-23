@@ -97,5 +97,17 @@ jobs:
             sleep 1
           done
           [ -n "$up" ] || { echo "::error::preview server did not start"; exit 1; }
-          npx --yes linkinator@6 http://localhost:4321 \
-            --config linkinator.config.json
+          # Retry the whole crawl: GitHub's burst-limit 429s omit a retry-after
+          # header (so linkinator's own --retry can't catch them) and hit a
+          # random link each run. A genuinely dead URL fails every attempt and
+          # stays red; a transient flake clears on a re-run.
+          ok=
+          for attempt in 1 2 3; do
+            if npx --yes linkinator@6 http://localhost:4321 \
+                 --config linkinator.config.json; then
+              ok=1; break
+            fi
+            echo "::warning::link check attempt $attempt failed — retrying in 20s"
+            sleep 20
+          done
+          [ -n "$ok" ] || { echo "::error::link check failed after 3 attempts"; exit 1; }
