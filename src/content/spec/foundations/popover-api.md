@@ -45,7 +45,7 @@ The Popover API turns any element into a top-layer overlay using three HTML attr
 
 The `auto` value gives you light-dismiss (click outside to close) and auto-close on Escape. `manual` requires an explicit dismiss control. `hint` is for tooltip-style transient overlays that close when another `hint` opens.
 
-CSS hooks: `:popover-open` matches an open popover, `::backdrop` styles the layer behind it, and CSS **Anchor Positioning** (`position-anchor`, `anchor()`) can position a popover relative to its trigger where supported.
+CSS hooks: `:popover-open` matches an open popover, `::backdrop` styles the layer behind it, and [CSS **Anchor Positioning**](/spec/foundations/anchor-positioning/) (`position-anchor`, `anchor()`) can position a popover relative to its trigger where supported.
 
 ## Why it matters
 
