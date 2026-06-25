@@ -19,7 +19,7 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Evolution_of_HTTP"
     publisher: "MDN"
   - title: "MDN — Alt-Svc"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Alt-Svc"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Alt-Svc"
     publisher: "MDN"
 ---
 

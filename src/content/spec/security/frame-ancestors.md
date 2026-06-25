@@ -13,10 +13,10 @@ sources:
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Clickjacking_Defense_Cheat_Sheet.html"
     publisher: "OWASP"
   - title: "MDN — CSP: frame-ancestors"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-ancestors"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/frame-ancestors"
     publisher: "MDN"
   - title: "MDN — X-Frame-Options"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Frame-Options"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Frame-Options"
     publisher: "MDN"
 ---
 

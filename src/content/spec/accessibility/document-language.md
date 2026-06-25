@@ -19,7 +19,7 @@ sources:
     url: "https://equalizedigital.com/accessibility-checker/documentation/missing-language-declaration/"
     publisher: "Equalize Digital"
   - title: "MDN — The lang global attribute"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/lang"
     publisher: "MDN"
 ---
 

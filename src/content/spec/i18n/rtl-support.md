@@ -16,7 +16,7 @@ sources:
     url: "https://www.w3.org/International/articles/inline-bidi-markup/"
     publisher: "W3C"
   - title: "MDN — CSS logical properties and values"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_logical_properties_and_values"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Logical_properties_and_values"
     publisher: "MDN"
 ---
 

@@ -13,7 +13,7 @@ sources:
     url: "https://www.w3.org/TR/permissions-policy/"
     publisher: "W3C"
   - title: "MDN — Permissions-Policy"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Permissions-Policy"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Permissions-Policy"
     publisher: "MDN"
   - title: "web.dev — Permissions Policy"
     url: "https://developer.chrome.com/docs/privacy-security/permissions-policy"

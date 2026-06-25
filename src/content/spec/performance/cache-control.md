@@ -16,13 +16,13 @@ sources:
     url: "https://www.rfc-editor.org/rfc/rfc5861"
     publisher: "IETF"
   - title: "MDN — Cache-Control"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control"
     publisher: "MDN"
   - title: "MDN — HTTP caching"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching"
     publisher: "MDN"
   - title: "MDN — Vary"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Vary"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Vary"
     publisher: "MDN"
 ---
 

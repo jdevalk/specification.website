@@ -16,7 +16,7 @@ sources:
     url: "https://www.w3.org/TR/css-contain-2/#using-cv-hidden"
     publisher: "W3C"
   - title: "MDN — hidden global attribute"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/hidden"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/hidden"
     publisher: "MDN"
   - title: "Chrome for Developers — hidden=until-found and the beforematch event"
     url: "https://developer.chrome.com/articles/hidden-until-found"

@@ -16,7 +16,7 @@ sources:
     url: "https://www.w3.org/International/questions/qa-html-language-declarations"
     publisher: "W3C"
   - title: "MDN — The lang global attribute"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/lang"
     publisher: "MDN"
 ---
 
