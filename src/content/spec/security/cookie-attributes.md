@@ -13,7 +13,7 @@ sources:
     url: "https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis"
     publisher: "IETF"
   - title: "MDN — Set-Cookie"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Set-Cookie"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie"
     publisher: "MDN"
   - title: "OWASP — Session Management Cheat Sheet"
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html"

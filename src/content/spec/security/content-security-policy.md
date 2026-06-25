@@ -13,7 +13,7 @@ sources:
     url: "https://www.w3.org/TR/CSP3/"
     publisher: "W3C"
   - title: "MDN — Content-Security-Policy"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy"
     publisher: "MDN"
   - title: "OWASP — Content Security Policy Cheat Sheet"
     url: "https://cheatsheetseries.owasp.org/cheatsheets/Content_Security_Policy_Cheat_Sheet.html"

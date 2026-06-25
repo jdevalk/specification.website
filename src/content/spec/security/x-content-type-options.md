@@ -10,7 +10,7 @@ relatedSlugs: [content-security-policy, frame-ancestors, referrer-policy]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
   - title: "MDN — X-Content-Type-Options"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Content-Type-Options"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-Content-Type-Options"
     publisher: "MDN"
   - title: "Fetch Standard — MIME type checks"
     url: "https://fetch.spec.whatwg.org/#x-content-type-options-header"

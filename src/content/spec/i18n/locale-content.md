@@ -16,7 +16,7 @@ sources:
     url: "https://www.w3.org/International/articlelist#locales"
     publisher: "W3C"
   - title: "MDN — Accept-Language header"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Accept-Language"
     publisher: "MDN"
 ---
 

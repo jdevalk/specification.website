@@ -13,7 +13,7 @@ sources:
     url: "https://www.rfc-editor.org/rfc/rfc6797"
     publisher: "IETF"
   - title: "MDN — Strict-Transport-Security"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Strict-Transport-Security"
     publisher: "MDN"
   - title: "HSTS Preload List Submission"
     url: "https://hstspreload.org/"

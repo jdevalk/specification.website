@@ -13,7 +13,7 @@ sources:
     url: "https://wicg.github.io/nav-speculation/no-vary-search.html"
     publisher: "WICG"
   - title: "MDN — No-Vary-Search"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/No-Vary-Search"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/No-Vary-Search"
     publisher: "MDN"
   - title: "Chrome Status — No-Vary-Search"
     url: "https://chromestatus.com/feature/5202380930678784"

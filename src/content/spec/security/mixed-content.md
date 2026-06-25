@@ -19,7 +19,7 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content"
     publisher: "MDN"
   - title: "MDN — CSP: upgrade-insecure-requests"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/upgrade-insecure-requests"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/upgrade-insecure-requests"
     publisher: "MDN"
 ---
 

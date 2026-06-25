@@ -16,7 +16,7 @@ sources:
     url: "https://www.iana.org/assignments/well-known-uris/well-known-uris.xhtml"
     publisher: "IANA"
   - title: "MDN — Well-known URIs"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers"
     publisher: "MDN"
 ---
 

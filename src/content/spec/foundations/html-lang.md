@@ -13,7 +13,7 @@ sources:
     url: "https://html.spec.whatwg.org/multipage/dom.html#the-lang-and-xml:lang-attributes"
     publisher: "WHATWG"
   - title: "MDN — HTML lang global attribute"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/lang"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/lang"
     publisher: "MDN"
   - title: "BCP 47 — Tags for Identifying Languages"
     url: "https://www.rfc-editor.org/info/bcp47"

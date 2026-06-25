@@ -13,7 +13,7 @@ sources:
     url: "https://www.w3.org/TR/referrer-policy/"
     publisher: "W3C"
   - title: "MDN — Referrer-Policy"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Referrer-Policy"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Referrer-Policy"
     publisher: "MDN"
   - title: "web.dev — A new default Referrer-Policy for Chrome"
     url: "https://web.dev/articles/referrer-best-practices"
