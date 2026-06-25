@@ -6,7 +6,7 @@ summary: "Self-host WOFF2 fonts, subset them, set font-display: swap so text is 
 status: recommended
 order: 70
 appliesTo: [all]
-relatedSlugs: [preload-prefetch-preconnect, critical-css, core-web-vitals]
+relatedSlugs: [preload-prefetch-preconnect, critical-css, core-web-vitals, text-wrap]
 updated: "2026-05-29T20:27:54.000Z"
 sources:
   - title: "MDN — @font-face"

@@ -6,7 +6,7 @@ summary: "Tells the browser which colour schemes your page is designed for. Prev
 status: recommended
 order: 95
 appliesTo: [all]
-relatedSlugs: [theme-color, favicons, pwa-manifest, forced-colors]
+relatedSlugs: [theme-color, favicons, pwa-manifest, forced-colors, text-wrap]
 updated: "2026-05-29T17:40:31.000Z"
 sources:
   - title: "HTML Living Standard — Standard metadata names: color-scheme"

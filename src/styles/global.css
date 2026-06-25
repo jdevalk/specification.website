@@ -113,6 +113,10 @@ body {
   margin-bottom: 0.75rem;
   letter-spacing: -0.01em;
   scroll-margin-top: 7rem;
+  /* Even out short heading wraps so they don't strand a lone word.
+     Falls back to normal wrapping where unsupported. See
+     /spec/foundations/text-wrap/. */
+  text-wrap: balance;
 }
 .prose-spec > :first-child,
 .prose-spec h2:first-child,
@@ -126,6 +130,7 @@ body {
   margin-top: 1.75rem;
   margin-bottom: 0.5rem;
   scroll-margin-top: 7rem;
+  text-wrap: balance;
 }
 .prose-spec h4 {
   font-size: 1rem;
@@ -136,6 +141,9 @@ body {
 }
 .prose-spec p {
   margin-bottom: 1rem;
+  /* Avoid orphans on the last line of body copy where supported;
+     ignored otherwise. See /spec/foundations/text-wrap/. */
+  text-wrap: pretty;
 }
 .prose-spec ul,
 .prose-spec ol {
