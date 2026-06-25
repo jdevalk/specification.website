@@ -47,7 +47,7 @@ p {
 
 - **Readability.** A heading that wraps "Balanced text\nwrapping" reads better than one that leaves "wrapping" stranded alone. Avoiding orphans and ragged breaks is a typographic baseline print has always had.
 - **No manual line breaks.** The common workaround — `<br>` or `&nbsp;` to force "good" wrapping — breaks the moment the viewport, font, or translated string changes. `balance` adapts to whatever width it is given.
-- **It is free and safe.** Unsupported browsers ignore the declaration and fall back to normal wrapping. There is no polyfill, no JavaScript, and no layout to repair.
+- **It degrades safely.** Unsupported browsers ignore the declaration and fall back to normal wrapping. There is no polyfill, no JavaScript, and no layout to repair. `balance` is also cheap — browsers cap it to a handful of lines — though `pretty` is not (see below).
 
 This site ships it: `text-wrap: balance` on spec headings and `text-wrap: pretty` on body paragraphs, in [`global.css`](https://github.com/jdevalk/specification.website/blob/main/src/styles/global.css).
 
@@ -57,11 +57,14 @@ Apply `balance` to short, heading-like elements and `pretty` to flowing prose. S
 
 Reserve `balance` for short blocks — the browser stops balancing past its line cap, so using it on long paragraphs does nothing useful. Use `pretty` for the long stuff.
 
+Unlike `balance`, `pretty` is not free: it deliberately trades layout speed for typography, running a slower algorithm with no line cap, so the cost scales with how much text it touches. That is a fine trade for genuine body copy, but think before blanket-applying it to every text node on the page — scope it to your prose containers rather than a bare `*` or `p` selector across the whole document.
+
 ## Common mistakes
 
 - **`balance` on long body text.** Past the browser's line cap it is a no-op, and where it does apply to long blocks it can cost layout performance. Keep it for headings and other short runs.
 - **Keeping old `<br>` hacks.** Manual breaks fight the browser's balancing and produce double breaks at some widths. Remove them once you adopt `text-wrap`.
 - **Expecting `pretty` everywhere.** Engine support for `pretty` trails `balance`; treat it as a progressive enhancement, never as something a layout depends on.
+- **Applying `pretty` indiscriminately.** It runs a slower wrapping algorithm by design, and unlike `balance` it has no line cap, so applying it site-wide carries a real layout cost. Reserve it for actual body copy; do not hang it off a universal selector.
 
 ## Verification
 
