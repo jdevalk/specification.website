@@ -16,7 +16,7 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Anchor_positioning/Using"
     publisher: "MDN"
   - title: "MDN — anchor-name"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/anchor-name"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/anchor-name"
     publisher: "MDN"
   - title: "Introducing the CSS anchor positioning API"
     url: "https://developer.chrome.com/blog/anchor-positioning-api"
