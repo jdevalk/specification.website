@@ -6,7 +6,7 @@ summary: "Whenever a control receives keyboard focus, the page must show a clear
 status: required
 order: 50
 appliesTo: [all]
-relatedSlugs: [keyboard-navigation, color-contrast]
+relatedSlugs: [keyboard-navigation, color-contrast, inert-attribute]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
   - title: "WCAG 2.4.7 — Focus Visible (Level AA)"
