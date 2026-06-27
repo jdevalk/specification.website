@@ -6,7 +6,7 @@ summary: "A 'skip to main content' link as the first focusable element lets keyb
 status: required
 order: 60
 appliesTo: [all]
-relatedSlugs: [keyboard-navigation, semantic-html, focus-indicators]
+relatedSlugs: [keyboard-navigation, semantic-html, focus-indicators, inert-attribute]
 updated: "2026-06-08T00:00:00.000Z"
 sources:
   - title: "WCAG 2.4.1 — Bypass Blocks (Level A)"
