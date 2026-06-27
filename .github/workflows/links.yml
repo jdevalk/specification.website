@@ -45,28 +45,12 @@ jobs:
             sleep 1
           done
           [ -n "$up" ] || { echo "::error::preview server did not start"; exit 1; }
-          # linkinator@6's CLI runs `await main()` at the top level; on newer Node
-          # the event loop can empty while that await is still pending, aborting the
-          # crawl with exit 13 ("unsettled top-level await") after fetching only /.
-          # That's a tooling crash, not a broken link — real breakage exits 1. Pin
-          # the exact version so an upstream 6.x patch can't shift the behaviour, and
-          # retry *only* on the exit-13 crash, never on a genuine finding. See #58.
-          attempt=1
-          max=3
-          while :; do
-            set +e
-            npx --yes linkinator@6.3.0 http://localhost:4321 \
-              --recurse --skip "^https?://(?!localhost)"
-            code=$?
-            set -e
-            [ "$code" -eq 0 ] && break
-            if [ "$code" -eq 13 ] && [ "$attempt" -lt "$max" ]; then
-              echo "::warning::linkinator crashed with exit 13 (unsettled top-level await); retrying ($attempt/$max)"
-              attempt=$((attempt + 1))
-              continue
-            fi
-            exit "$code"
-          done
+          # Drive linkinator through its programmatic API (scripts/check-links.mjs),
+          # NOT the `npx linkinator` CLI: the CLI's top-level `await main()` exits 13
+          # ("unsettled top-level await") on Node 22 after fetching only /, a
+          # deterministic crash that can't be retried away (see #58). The pinned
+          # devDependency keeps the version stable. Real broken links exit 1.
+          node scripts/check-links.mjs http://localhost:4321 --internal
 
   # Blocking: runs daily and on demand. A failed run signals rotted external
   # links that need fixing. Kept off PRs so a flaky upstream (IETF / W3C / MDN
@@ -120,21 +104,7 @@ jobs:
             sleep 1
           done
           [ -n "$up" ] || { echo "::error::preview server did not start"; exit 1; }
-          # Same exit-13 foot-gun as the internal job (see #58): pin the exact
-          # version and retry only on the top-level-await crash, not on real rot.
-          attempt=1
-          max=3
-          while :; do
-            set +e
-            npx --yes linkinator@6.3.0 http://localhost:4321 \
-              --config linkinator.config.json
-            code=$?
-            set -e
-            [ "$code" -eq 0 ] && break
-            if [ "$code" -eq 13 ] && [ "$attempt" -lt "$max" ]; then
-              echo "::warning::linkinator crashed with exit 13 (unsettled top-level await); retrying ($attempt/$max)"
-              attempt=$((attempt + 1))
-              continue
-            fi
-            exit "$code"
-          done
+          # Same exit-13 foot-gun as the internal job (see #58): drive linkinator
+          # through its API rather than the crashing CLI. The config file's skip
+          # list, retry and concurrency settings are honoured by the API too.
+          node scripts/check-links.mjs http://localhost:4321 --config linkinator.config.json
