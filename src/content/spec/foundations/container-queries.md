@@ -70,4 +70,4 @@ Treat it as progressive enhancement: write a sensible single-column default, the
 
 - Resize a _container_ (drag a sidebar, not the window) and confirm the component reflows at its own breakpoints.
 - DevTools marks query containers with a badge and shows which `@container` rules match.
-- Baseline: size container queries have been Baseline (widely available) since February 2023; style queries reached Baseline (newly available) in May 2026 — keep the non-queried layout usable where style queries are unsupported.
+- Baseline: size container queries have been Baseline since February 2023 (and are now widely available); style queries reached Baseline (newly available) in May 2026 — keep the non-queried layout usable where style queries are unsupported.
