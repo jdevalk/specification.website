@@ -6,7 +6,7 @@ summary: "Tether tooltips, menus, and popovers to the element that triggers them
 status: recommended
 order: 140
 appliesTo: [all]
-relatedSlugs: [popover-api, native-interactive-elements, scroll-driven-animations]
+relatedSlugs: [popover-api, native-interactive-elements, scroll-driven-animations, container-queries]
 updated: "2026-06-24T00:00:00.000Z"
 sources:
   - title: "CSS Anchor Positioning Module Level 1"

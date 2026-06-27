@@ -6,7 +6,7 @@ summary: "On mobile, 100vh is taller than the screen because it ignores the brow
 status: recommended
 order: 135
 appliesTo: [all]
-relatedSlugs: [core-web-vitals, scrollbar-gutter, meta-viewport, view-transitions]
+relatedSlugs: [core-web-vitals, scrollbar-gutter, meta-viewport, view-transitions, container-queries]
 updated: "2026-06-08T00:00:00.000Z"
 sources:
   - title: "CSS Values and Units Module Level 4 — Viewport-relative lengths"
