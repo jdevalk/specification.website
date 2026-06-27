@@ -22,7 +22,7 @@ sources:
 
 ## What it is
 
-`inert` is a boolean global attribute that makes an element and all of its descendants non-interactive. An inert subtree cannot receive focus, cannot be clicked, is skipped by the tab order, is removed from the accessibility tree, and is ignored by find-in-page. It is defined in the WHATWG HTML Standard and has been Baseline Widely Available across browsers since April 2023.
+`inert` is a boolean global attribute that makes an element and all of its descendants non-interactive. An inert subtree cannot receive focus, cannot be clicked, is skipped by the tab order, and is removed from the accessibility tree; in supporting browsers its text is also skipped by find-in-page. It is defined in the WHATWG HTML Standard and has been Baseline across browsers since April 2023.
 
 The canonical use is managing background content. When a modal dialog, slide-out menu, or off-canvas panel is open, everything behind it should be genuinely unreachable — not merely greyed out, but inert to the keyboard and to assistive technology.
 
@@ -61,4 +61,4 @@ Mark the container that should become unreachable, and clear it when the content
 
 - Open each overlay and press Tab repeatedly: focus must cycle only within the active region and never reach a background control.
 - With a screen reader running, background landmarks and headings should not be announced while the overlay is open.
-- Use find-in-page — text inside an inert subtree must not be found.
+- Use find-in-page — in Chrome and Firefox, text inside an inert subtree is skipped (Safari does not yet honour this, so do not rely on it as the only barrier).
