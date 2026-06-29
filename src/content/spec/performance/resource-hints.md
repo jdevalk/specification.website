@@ -6,7 +6,7 @@ summary: "Five resource hints — dns-prefetch, preconnect, preload, moduleprelo
 status: recommended
 order: 100
 appliesTo: [all]
-relatedSlugs: [preload-prefetch-preconnect, font-loading, critical-css]
+relatedSlugs: [preload-prefetch-preconnect, early-hints, font-loading, critical-css]
 updated: "2026-06-18T00:00:00.000Z"
 sources:
   - title: "W3C — Resource Hints"

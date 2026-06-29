@@ -6,7 +6,7 @@ summary: "Resource hints let you tell the browser what is coming. Preload the LC
 status: recommended
 order: 40
 appliesTo: [all]
-relatedSlugs: [resource-hints, core-web-vitals, font-loading]
+relatedSlugs: [resource-hints, early-hints, core-web-vitals, font-loading]
 updated: "2026-06-18T00:00:00.000Z"
 sources:
   - title: "MDN — <link>: The External Resource Link element"
