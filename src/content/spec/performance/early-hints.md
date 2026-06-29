@@ -38,7 +38,7 @@ Link: </style.css>; rel=preload; as=style
 ...
 ```
 
-This is the request-header counterpart to the `<link rel>` hints described in [resource hints](/spec/performance/resource-hints/): same `rel` keywords, delivered over the wire instead of waiting in the document head.
+This is the over-the-wire counterpart to the `<link rel>` hints described in [resource hints](/spec/performance/resource-hints/): same `rel` keywords, sent ahead of the response instead of waiting in the document head.
 
 ## Why it matters
 
