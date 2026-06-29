@@ -124,7 +124,14 @@ function writeReport(
     pick(body, "blockedURL", "blocked-uri", "sourceFile", "source-file"),
   );
   const disposition = trunc(pick(body, "disposition"), 16);
-  const message = trunc(pick(body, "message", "reason"));
+  // Deprecation/intervention/crash reports carry a human `message`/`reason`.
+  // CSP violations don't — their detail rides in `sample` (camelCase, Reporting
+  // API) or `script-sample` (kebab, legacy csp-report): the rejected Trusted
+  // Types policy name, or the first ~40 chars of the blocked inline content.
+  // Browsers cap `sample` themselves; keep whichever field is present.
+  const message = trunc(
+    pick(body, "message", "reason", "sample", "script-sample"),
+  );
   const ua = trunc(r.user_agent || reqUA, 200);
 
   dataset.writeDataPoint({
@@ -134,7 +141,7 @@ function writeReport(
       directive, // blob3
       blocked, // blob4
       disposition, // blob5
-      message, // blob6
+      message, // blob6 — message/reason, or CSP sample (policy name / blocked snippet)
       country, // blob7
       ua, // blob8
     ],

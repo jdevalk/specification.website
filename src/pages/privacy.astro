@@ -2,7 +2,7 @@
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import Breadcrumbs from "~/components/Breadcrumbs.astro";
 
-const updated = "2026-06-16";
+const updated = "2026-06-29";
 ---
 
 <BaseLayout
@@ -165,10 +165,11 @@ const updated = "2026-06-16";
           >, so your browser may POST a structured report when a page violates a
           security policy (for example a Content Security Policy block) or uses
           a deprecated browser feature. We record the report type, the path it
-          occurred on, the directive or feature involved, and the User-Agent
-          (truncated). This fires only on a policy violation — never on an
-          ordinary page view — and carries no cookie, no identifier, and no IP
-          address.
+          occurred on, the directive or feature involved, a short detail sample
+          the browser provides (such as the rejected policy name or a truncated
+          snippet of the blocked content), and the User-Agent (truncated). This
+          fires only on a policy violation — never on an ordinary page view —
+          and carries no cookie, no identifier, and no IP address.
         </li>
       </ul>
       <p>

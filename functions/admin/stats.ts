@@ -181,7 +181,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
       GROUP BY directive ORDER BY count DESC LIMIT 50
     `,
     report_recent: `
-      SELECT timestamp AS time, index1 AS type, blob2 AS path, blob3 AS directive, blob4 AS blocked, blob5 AS disposition
+      SELECT timestamp AS time, index1 AS type, blob2 AS path, blob3 AS directive, blob4 AS blocked, blob5 AS disposition, blob6 AS detail
       FROM ${REPORT}
       WHERE ${REPORT_FIRST_PARTY} AND timestamp > NOW() - INTERVAL '30' DAY
       ORDER BY time DESC LIMIT 100
@@ -853,13 +853,22 @@ function renderDashboard(results: QueryResults, errors: QueryErrors): string {
     </div>
     <div id="report-recent-table">
       ${renderTable(
-        ["time", "type", "path", "directive", "blocked", "disposition"],
+        [
+          "time",
+          "type",
+          "path",
+          "directive",
+          "blocked",
+          "disposition",
+          "detail",
+        ],
         rowsOrEmpty(results.report_recent),
         {
           formatters: {
             time: (v) => esc(String(v).slice(5, 16)),
             path: (v) => `<span class="path">${esc(v)}</span>`,
             blocked: (v) => `<span class="path">${esc(v)}</span>`,
+            detail: (v) => `<span class="path">${esc(v)}</span>`,
           },
         },
       )}
