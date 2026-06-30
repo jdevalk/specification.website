@@ -64,6 +64,7 @@ These mirror `CONTRIBUTING.md`. Enforce them in your own writing and when review
 4. **British English.** "colour", "behaviour", "internationalisation", "licence" (noun).
 5. **Section structure.** `## What it is`, `## Why it matters`, `## How to implement`, `## Common mistakes`, `## Verification`. Last two are optional if they would not add value.
 6. **Length.** 250–500 words of body content. Be useful, not padded.
+7. **Inline cross-links must carry the right category.** A spec page's URL is `/spec/<category>/<slug>/`, and the category is the directory the `.md` lives in — _not_ always the category of the page you're linking from. When you hand-write an inline link to another spec page, confirm its directory (`ls src/content/spec/*/<slug>.md`) before writing the path; do not assume the target shares the current page's category. (`relatedSlugs` is safe — the route resolver looks up each slug's real category — but raw Markdown links are not checked at authoring time, only by the **Internal links** CI job, which 404s on a wrong-category path.)
 
 ## Architecture quick reference
 

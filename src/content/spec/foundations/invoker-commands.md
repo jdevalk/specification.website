@@ -47,7 +47,7 @@ The built-in commands cover the common overlay patterns: `show-popover`, `hide-p
 - **Less JavaScript for common patterns.** Opening a popover or closing a dialog no longer needs a click handler. The relationship lives in markup the browser understands.
 - **Accessibility comes for free.** The control is a real `<button>`, so keyboard activation, focus, and the exposed relationship are handled natively. There is no ARIA to add or to drift out of sync.
 - **Custom commands are properly delegated.** A `--name` command dispatches a single typed event from a real button, replacing ad-hoc `onclick` wiring with one consistent mechanism — and you can read `event.source` to know which button invoked it.
-- **It composes with the platform.** Invoker commands pair directly with the Popover API, `<dialog>`, and [native interactive elements](/spec/foundations/native-interactive-elements/) rather than re-implementing their behaviour in script.
+- **It composes with the platform.** Invoker commands pair directly with the Popover API, `<dialog>`, and [native interactive elements](/spec/accessibility/native-interactive-elements/) rather than re-implementing their behaviour in script.
 
 ## How to implement
 
