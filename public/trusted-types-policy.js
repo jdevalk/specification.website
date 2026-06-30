@@ -6,7 +6,7 @@
 // trusted typed value or the browser throws.
 //
 // Our own scripts touch no sinks, but the Pagefind search bundle does, in two ways:
-//   - pagefind-ui.js builds its results list with innerHTML (TrustedHTML sink).
+//   - pagefind-component-ui.js builds its results UI with innerHTML (TrustedHTML sink).
 //   - pagefind.js loads its own JS/WASM chunks by assigning a script URL
 //     (TrustedScriptURL sink).
 // A *default* policy is the only thing that can cover Pagefind, because its

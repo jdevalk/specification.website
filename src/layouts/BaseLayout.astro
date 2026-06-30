@@ -149,45 +149,25 @@ const finalJsonLd = jsonLd
     </main>
     <SiteFooter />
 
-    <dialog
-      id="search-overlay"
-      class="search-overlay"
-      aria-label="Search the specification"
-    >
-      <div class="search-overlay__inner">
-        <div class="search-overlay__bar">
-          <span class="text-xs font-medium tracking-wide text-ink-500 uppercase"
-            >Search</span
-          >
-          <button
-            type="button"
-            data-search-close
-            class="rounded-md p-1 text-ink-500 hover:bg-ink-100 hover:text-ink-700"
-            aria-label="Close search"
-          >
-            <svg
-              aria-hidden="true"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              ><path d="M18 6 6 18M6 6l12 12"></path></svg
-            >
-          </button>
-        </div>
-        <div id="search-overlay-mount"></div>
-        <div class="search-overlay__foot">
-          <span><kbd>esc</kbd> close</span>
-          <span><kbd>↑</kbd> <kbd>↓</kbd> navigate</span>
-          <span><kbd>↵</kbd> open</span>
-        </div>
-      </div>
-    </dialog>
-    <script src="/search-overlay.js" type="text/javascript" defer></script>
+    {
+      /* Global ⌘K search modal — Pagefind Component UI. Inert until
+        /search.js lazy-loads the component bundle on first open; the
+        `:not(:defined)` rule in global.css keeps it hidden until then. */
+    }
+    <pagefind-config excerpt-length="30"></pagefind-config>
+    <pagefind-modal id="search-modal" reset-on-close>
+      <pagefind-modal-header>
+        <pagefind-input placeholder="Search the spec…"></pagefind-input>
+      </pagefind-modal-header>
+      <pagefind-modal-body>
+        <pagefind-summary></pagefind-summary>
+        <pagefind-results max-results="8" max-sub-results="3"></pagefind-results>
+      </pagefind-modal-body>
+      <pagefind-modal-footer>
+        <pagefind-keyboard-hints></pagefind-keyboard-hints>
+      </pagefind-modal-footer>
+    </pagefind-modal>
+    <script src="/search.js" type="text/javascript" defer></script>
     <script src="/theme-toggle.js" type="text/javascript" defer></script>
     <script src="/webmcp.js" type="text/javascript" defer></script>
   </body>

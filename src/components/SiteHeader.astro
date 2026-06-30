@@ -68,7 +68,7 @@ const { pathname } = Astro.url;
             class="inline-flex h-6 cursor-pointer items-center gap-1.5 rounded-full border border-ink-300 bg-ink-100 px-3 text-xs font-medium text-ink-700 hover:border-ink-400 hover:text-ink-900"
             aria-label="Open search (Command-K)"
             aria-haspopup="dialog"
-            aria-controls="search-overlay"
+            aria-controls="search-modal"
           >
             <svg
               aria-hidden="true"
@@ -98,8 +98,30 @@ const { pathname } = Astro.url;
       /* Mobile controls (< md) — theme toggle next to the hamburger. <details>
         gives the menu a no-JS, no-CSP fallback. */
     }
-    <div class="flex items-center gap-3 md:hidden">
+    <div class="flex items-center gap-4 md:hidden">
       <ThemeToggle />
+      <button
+        type="button"
+        data-search-trigger
+        class="grid h-10 w-10 cursor-pointer place-items-center rounded-md border border-ink-200 text-ink-700 hover:border-ink-300"
+        aria-label="Open search"
+        aria-haspopup="dialog"
+        aria-controls="search-modal"
+      >
+        <svg
+          aria-hidden="true"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><circle cx="11" cy="11" r="7"></circle><path d="m21 21-3.5-3.5"
+          ></path></svg
+        >
+      </button>
       <details class="mobile-menu">
         <summary
           class="grid h-10 w-10 cursor-pointer place-items-center rounded-md border border-ink-200 text-ink-700 hover:border-ink-300"

@@ -9,7 +9,7 @@ import Breadcrumbs from "~/components/Breadcrumbs.astro";
   ogImage="/og/search.png"
 >
   <Fragment slot="head">
-    <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+    <link rel="stylesheet" href="/pagefind/pagefind-component-ui.css" />
   </Fragment>
 
   <div class="mx-auto max-w-3xl px-4 py-10">
@@ -30,7 +30,21 @@ import Breadcrumbs from "~/components/Breadcrumbs.astro";
       </p>
     </header>
 
-    <div id="search" class="mt-8" aria-label="Search spec pages"></div>
+    {
+      /* Inline Pagefind Component UI search, on a dedicated `page` instance so
+        it stays independent of the global ⌘K modal (which uses `default`). */
+    }
+    <div id="search" class="mt-8">
+      <pagefind-config instance="page" excerpt-length="30"></pagefind-config>
+      <pagefind-input instance="page" placeholder="Search the spec…" autofocus
+      ></pagefind-input>
+      <pagefind-summary instance="page" class="mt-4 block"></pagefind-summary>
+      <pagefind-results
+        instance="page"
+        max-results="10"
+        max-sub-results="3"
+        class="mt-2 block"></pagefind-results>
+    </div>
 
     <noscript>
       <p
@@ -46,7 +60,8 @@ import Breadcrumbs from "~/components/Breadcrumbs.astro";
     </noscript>
 
     <!-- Pagefind: external scripts, no inline JS, no CSP nonces needed. -->
-    <script src="/pagefind/pagefind-ui.js" type="text/javascript"></script>
-    <script src="/search-init.js" type="text/javascript" defer></script>
+    <script src="/pagefind/pagefind-component-ui.js" type="module" is:inline
+    ></script>
+    <script src="/search-page.js" type="text/javascript" defer></script>
   </div>
 </BaseLayout>

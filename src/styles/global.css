@@ -333,78 +333,89 @@ body {
   overflow-y: auto;
 }
 
-/* ⌘K search overlay */
-.search-overlay {
-  border: 0;
-  padding: 0;
-  background: transparent;
-  width: min(640px, calc(100vw - 2rem));
-  /* Dynamic viewport units keep the overlay inside the visible area as the
-     mobile browser chrome shows and hides. See /spec/performance/dynamic-viewport-units/. */
-  max-height: 80dvh;
-  margin: 6dvh auto auto;
-  /* Keep the fixed overlay clear of the home indicator when it runs tall. */
-  padding-bottom: env(safe-area-inset-bottom);
-  color: var(--color-ink-800);
+/* Pagefind Component UI — global ⌘K modal (default instance) and the inline
+   /search/ page (page instance). The components render in the light DOM and
+   read these --pf-* custom properties, so mapping them to our design tokens
+   themes the whole thing. The component ships its own --pf-* defaults on :root
+   in the linked pagefind-component-ui.css, which loads after this file, so we
+   select on `html[lang]` (always present, specificity 0,1,1) to outrank its
+   plain `:root` (0,0,1) and `[data-pf-theme]` (0,1,0) rules regardless of load
+   order. One block covers both themes because the ink scale flips via
+   light-dark(). */
+html[lang] {
+  --pf-font: var(--font-sans);
+  --pf-background: var(--color-ink-50);
+  --pf-text: var(--color-ink-800);
+  --pf-text-secondary: var(--color-ink-600);
+  --pf-text-muted: var(--color-ink-500);
+  --pf-border: var(--color-ink-200);
+  --pf-border-focus: var(--color-accent-600);
+  --pf-outline-focus: var(--color-accent-600);
+  --pf-hover: var(--color-ink-100);
+  /* Matched terms in result excerpts render as bold text coloured with --pf-mark
+     (transparent background), so this must be a readable accent, not a wash.
+     Reuse the site's accent-text token, which stays legible in both schemes. */
+  --pf-mark: var(--link-color);
+  --pf-border-radius: 0.5rem;
+  --pf-modal-backdrop: rgba(0, 0, 0, 0.55);
+  /* Dynamic viewport units keep the modal inside the visible area as the mobile
+     browser chrome shows and hides. See /spec/performance/dynamic-viewport-units/. */
+  --pf-modal-max-height: 80dvh;
+  --pf-modal-max-width: min(640px, calc(100vw - 2rem));
+  --pf-modal-top: 6dvh;
 }
-.search-overlay::backdrop {
-  background: rgba(0, 0, 0, 0.55);
-  backdrop-filter: blur(2px);
+
+/* The component's stylesheet resets `color-scheme: initial` on every pagefind
+   custom-element tag (its host reset). That pins our light-dark() tokens to the
+   light branch — dark text on a dark panel. The reset ties our specificity and
+   wins on load order (its <link> follows ours), so !important is the clean way
+   to force the widget to inherit the page scheme and flip with the theme toggle. */
+pagefind-modal,
+pagefind-modal *,
+pagefind-input,
+pagefind-input *,
+pagefind-summary,
+pagefind-summary *,
+pagefind-results,
+pagefind-results * {
+  color-scheme: inherit !important;
 }
-.search-overlay__inner {
-  background: var(--color-ink-50);
-  border: 1px solid var(--color-ink-200);
-  border-radius: 0.75rem;
-  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.45);
+
+/* Make matched terms stand out: the component renders them as bold accent text
+   on a transparent background. Add a soft accent pill behind them too (overriding
+   the component's `background: transparent`, which carries id-level specificity)
+   so hits are scannable in both titles and excerpts. */
+pagefind-results mark,
+pagefind-summary mark {
+  background: color-mix(
+    in srgb,
+    var(--color-accent-600) 18%,
+    transparent
+  ) !important;
+  color: var(--pf-mark) !important;
+  font-weight: 600 !important;
+  border-radius: 0.25rem;
+  padding: 0 0.18rem;
+}
+
+/* The component clamps every excerpt to a single line (white-space: nowrap +
+   text-overflow: ellipsis), which throws away most of our longer excerpt-length.
+   Let excerpts wrap and clamp to a few lines instead so more context shows. */
+pagefind-results .pf-result-excerpt,
+pagefind-results .pf-heading-excerpt,
+pagefind-results .pf-searchbox-result-excerpt {
+  white-space: normal !important;
+  display: -webkit-box !important;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
   overflow: hidden;
 }
-.search-overlay__bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid var(--color-ink-100);
-  background: var(--color-ink-100);
-}
-.search-overlay__foot {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.25rem;
-  padding: 0.6rem 0.9rem;
-  border-top: 1px solid var(--color-ink-100);
-  background: var(--color-ink-100);
-  font-size: 0.75rem;
-  color: var(--color-ink-500);
-}
-.search-overlay__foot kbd {
-  display: inline-block;
-  padding: 0.05rem 0.35rem;
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  border: 1px solid var(--color-ink-200);
-  background: var(--color-ink-50);
-  border-radius: 0.25rem;
-  color: var(--color-ink-600);
-  margin-right: 0.25rem;
-}
-#search-overlay-mount {
-  max-height: 60dvh;
-  overflow-y: auto;
-}
-/* Make Pagefind UI fit the overlay nicely */
-#search-overlay-mount .pagefind-ui {
-  --pagefind-ui-primary: var(--color-accent-700);
-  --pagefind-ui-text: var(--color-ink-800);
-  --pagefind-ui-background: var(--color-ink-50);
-  --pagefind-ui-border: var(--color-ink-200);
-  --pagefind-ui-tag: var(--color-ink-100);
-  --pagefind-ui-border-radius: 0.5rem;
-  --pagefind-ui-font: var(--font-sans);
-  padding: 0.5rem 0.75rem;
-}
-#search-overlay-mount .pagefind-ui__form::before {
-  /* Hide the default search icon since we already have one in the trigger */
-  opacity: 0.5;
+
+/* Hide the modal (and its declared children) until the lazily loaded component
+   bundle upgrades the custom elements, so nothing flashes un-styled first. */
+pagefind-modal:not(:defined) {
+  display: none;
 }
 
 /* Scheme-dependent overrides — single block driven by light-dark(). Both

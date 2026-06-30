@@ -114,11 +114,7 @@ export const GET: APIRoute = async () => {
   function openSearchOverlay() {
     var trigger = document.querySelector('[data-search-trigger]');
     if (trigger) { trigger.click(); return true; }
-    var dialog = document.getElementById('search-overlay');
-    if (dialog && typeof dialog.showModal === 'function') {
-      if (!dialog.open) dialog.showModal();
-      return true;
-    }
+    if (typeof window.__swOpenSearch === 'function') { window.__swOpenSearch(); return true; }
     return false;
   }
 
@@ -245,20 +241,16 @@ export const GET: APIRoute = async () => {
         },
       },
       execute: function (input) {
+        var q = input && input.query;
+        // Prefer the modal driver directly when a query is supplied — it
+        // handles lazy-loading the bundle and prefilling the input itself.
+        if (q && typeof window.__swOpenSearch === 'function') {
+          window.__swOpenSearch(q);
+          return 'Search overlay opened with query "' + q + '".';
+        }
         var ok = openSearchOverlay();
         if (!ok) return 'ERROR: search overlay is not available on this page.';
-        var q = input && input.query;
-        if (q) {
-          setTimeout(function () {
-            var dialog = document.getElementById('search-overlay');
-            var inp = dialog && dialog.querySelector('input');
-            if (inp) {
-              inp.value = q;
-              inp.dispatchEvent(new Event('input', { bubbles: true }));
-            }
-          }, 50);
-        }
-        return q ? 'Search overlay opened with query "' + q + '".' : 'Search overlay opened.';
+        return 'Search overlay opened.';
       },
     },
     {
