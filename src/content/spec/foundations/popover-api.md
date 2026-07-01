@@ -6,7 +6,7 @@ summary: "Replace ARIA-puzzled JavaScript modals, menus, and tooltips with a nat
 status: recommended
 order: 130
 appliesTo: [all]
-relatedSlugs: [semantic-html, aria-usage, keyboard-navigation, focus-indicators, anchor-positioning, invoker-commands]
+relatedSlugs: [semantic-html, aria-usage, keyboard-navigation, focus-indicators, anchor-positioning, invoker-commands, entry-exit-animations]
 updated: "2026-06-08T00:00:00.000Z"
 sources:
   - title: "HTML Standard — Popover"

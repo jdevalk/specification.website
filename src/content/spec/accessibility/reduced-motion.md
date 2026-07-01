@@ -6,7 +6,7 @@ summary: "Respect the user's `prefers-reduced-motion` setting. Decorative animat
 status: required
 order: 125
 appliesTo: [all]
-relatedSlugs: [focus-indicators, semantic-html, color-contrast, forced-colors]
+relatedSlugs: [focus-indicators, semantic-html, color-contrast, forced-colors, entry-exit-animations]
 updated: "2026-05-29T10:57:27.000Z"
 sources:
   - title: "WCAG 2.3.3 — Animation from Interactions (Level AAA)"

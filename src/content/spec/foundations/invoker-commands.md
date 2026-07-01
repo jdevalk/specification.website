@@ -6,7 +6,7 @@ summary: "Wire a button to open a popover, close a dialog, or run a custom actio
 status: recommended
 order: 170
 appliesTo: [all]
-relatedSlugs: [popover-api, native-interactive-elements, semantic-html, inert-attribute, keyboard-navigation]
+relatedSlugs: [popover-api, native-interactive-elements, semantic-html, inert-attribute, keyboard-navigation, entry-exit-animations]
 updated: "2026-06-30T00:00:00.000Z"
 sources:
   - title: "HTML Standard — The button element (command, commandfor)"
