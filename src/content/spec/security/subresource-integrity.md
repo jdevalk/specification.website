@@ -68,7 +68,7 @@ Pair SRI with a strict CSP. CSP says "only load scripts from these hosts"; SRI s
 
 ## Enforce it site-wide with Integrity-Policy
 
-A per-element `integrity` attribute is easy to forget on the next script someone adds. The `Integrity-Policy` response header closes that gap: it tells the browser to block any script (or, behind a flag, stylesheet) that loads without integrity metadata, so a missing hash fails loudly instead of silently.
+A per-element `integrity` attribute is easy to forget on the next script someone adds. The `Integrity-Policy` response header closes that gap: it tells the browser to block any script (or, behind a flag, stylesheet) that loads without integrity metadata, so a missing hash fails loudly instead of silently. It also blocks any script requested in `no-cors` mode, so every `<script>` the policy governs — including same-origin ones — needs a `crossorigin` attribute alongside `integrity`, or it is blocked even when its hash is correct.
 
 ```
 Integrity-Policy: blocked-destinations=(script)

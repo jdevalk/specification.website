@@ -25,11 +25,13 @@
       var script = document.createElement("script");
       script.type = "module";
       script.src = "/pagefind/pagefind-component-ui.js";
-      // SRI so this injected script satisfies Integrity-Policy. Must match
-      // pagefindComponentUiIntegrity in src/lib/integrity.ts; both are verified
-      // against the built file by scripts/check-integrity.mjs on every build.
+      // SRI + CORS mode so this injected script satisfies Integrity-Policy
+      // (which blocks both un-hashed and no-cors script requests). The hash must
+      // match pagefindComponentUiIntegrity in src/lib/integrity.ts; both are
+      // verified against the built file by scripts/check-integrity.mjs.
       script.integrity =
         "sha384-sgK6d6muVu9zgs2S4M4GuLq6M9fV5OMX7x2wloOZiDmbOgYhQa+tf8Ukevo/kjeq";
+      script.crossOrigin = "anonymous";
       script.onload = function () {
         // The custom elements register asynchronously after the module
         // evaluates; wait for the modal to be defined before opening it.

@@ -65,11 +65,13 @@ import { sri, pagefindComponentUiIntegrity } from "~/lib/integrity";
       src="/pagefind/pagefind-component-ui.js"
       type="module"
       is:inline
-      integrity={pagefindComponentUiIntegrity}></script>
+      integrity={pagefindComponentUiIntegrity}
+      crossorigin="anonymous"></script>
     <script
       src="/search-page.js"
       type="text/javascript"
       defer
-      integrity={sri("/search-page.js")}></script>
+      integrity={sri("/search-page.js")}
+      crossorigin="anonymous"></script>
   </div>
 </BaseLayout>

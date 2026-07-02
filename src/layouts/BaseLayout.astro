@@ -94,11 +94,13 @@ const webmcpSri = await webmcpIntegrity();
       is:inline
       src="/vendor/purify.min.js"
       integrity={sri("/vendor/purify.min.js")}
+      crossorigin="anonymous"
     ></script>
     <script
       is:inline
       src="/trusted-types-policy.js"
       integrity={sri("/trusted-types-policy.js")}
+      crossorigin="anonymous"
     ></script>
     <HeadMeta
       title={title}
@@ -119,6 +121,7 @@ const webmcpSri = await webmcpIntegrity();
           data-api={`${site.plausibleHost}/api/event`}
           src="/js/plausible.js"
           integrity={sri("/js/plausible.js")}
+          crossorigin="anonymous"
         />
       )
     }
@@ -194,16 +197,19 @@ const webmcpSri = await webmcpIntegrity();
       src="/search.js"
       type="text/javascript"
       defer
-      integrity={sri("/search.js")}></script>
+      integrity={sri("/search.js")}
+      crossorigin="anonymous"></script>
     <script
       src="/theme-toggle.js"
       type="text/javascript"
       defer
-      integrity={sri("/theme-toggle.js")}></script>
+      integrity={sri("/theme-toggle.js")}
+      crossorigin="anonymous"></script>
     <script
       src="/webmcp.js"
       type="text/javascript"
       defer
-      integrity={webmcpSri}></script>
+      integrity={webmcpSri}
+      crossorigin="anonymous"></script>
   </body>
 </html>
