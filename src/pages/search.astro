@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import Breadcrumbs from "~/components/Breadcrumbs.astro";
+import { sri, pagefindComponentUiIntegrity } from "~/lib/integrity";
 ---
 
 <BaseLayout
@@ -60,8 +61,15 @@ import Breadcrumbs from "~/components/Breadcrumbs.astro";
     </noscript>
 
     <!-- Pagefind: external scripts, no inline JS, no CSP nonces needed. -->
-    <script src="/pagefind/pagefind-component-ui.js" type="module" is:inline
-    ></script>
-    <script src="/search-page.js" type="text/javascript" defer></script>
+    <script
+      src="/pagefind/pagefind-component-ui.js"
+      type="module"
+      is:inline
+      integrity={pagefindComponentUiIntegrity}></script>
+    <script
+      src="/search-page.js"
+      type="text/javascript"
+      defer
+      integrity={sri("/search-page.js")}></script>
   </div>
 </BaseLayout>

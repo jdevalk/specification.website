@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro";
+import { sri } from "~/lib/integrity";
 ---
 
 <BaseLayout
@@ -42,7 +43,12 @@ import BaseLayout from "~/layouts/BaseLayout.astro";
   }
   {
     import.meta.env.PROD && (
-      <script src="/track-404.js" type="text/javascript" defer />
+      <script
+        src="/track-404.js"
+        type="text/javascript"
+        defer
+        integrity={sri("/track-404.js")}
+      />
     )
   }
 </BaseLayout>
