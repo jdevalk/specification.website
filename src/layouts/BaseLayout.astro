@@ -1,6 +1,7 @@
 ---
 import "~/styles/global.css";
 import { site } from "~/lib/site";
+import { plausibleIntegrity, pagefindImportMap } from "~/lib/integrity";
 import HeadMeta from "~/components/HeadMeta.astro";
 import SiteHeader from "~/components/SiteHeader.astro";
 import SiteFooter from "~/components/SiteFooter.astro";
@@ -63,6 +64,14 @@ const finalJsonLd = jsonLd
 <html lang="en-GB" dir="ltr">
   <head>
     {
+      /* Import map giving pagefind.js an SRI hash for its dynamic import (the
+        only way to attach integrity to a dynamically imported module). Declared
+        before any module script so it is in force when the search UI lazy-loads
+        Pagefind. Its sha256 is CSP-allowed in _headers; regenerate both from
+        src/lib/integrity.ts on a Pagefind bump. */
+    }
+    <script type="importmap" is:inline set:html={pagefindImportMap} />
+    {
       /* Restore the stored theme override before paint to avoid FOUC, and set a
         theme-color meta that tracks the resolved theme (not just the OS), so the
         browser chrome matches a manually toggled dark mode. theme-toggle.js keeps
@@ -95,7 +104,9 @@ const finalJsonLd = jsonLd
         <script
           defer
           data-domain={site.plausibleDomain}
-          src={`${site.plausibleHost}/js/script.js`}
+          data-api={`${site.plausibleHost}/api/event`}
+          src="/js/plausible.js"
+          integrity={plausibleIntegrity}
         />
       )
     }

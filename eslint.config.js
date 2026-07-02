@@ -15,6 +15,7 @@ export default [
       "node_modules/",
       "public/pagefind/",
       "public/vendor/",
+      "public/js/",
       "mcp/",
       ".github/skills/",
       ".claude/",

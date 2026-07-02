@@ -4,6 +4,7 @@
   "exclude": [
     "/_astro/*",
     "/fonts/*",
+    "/js/*",
     "/pagefind/*",
     "/og-default.png",
     "/og/*",

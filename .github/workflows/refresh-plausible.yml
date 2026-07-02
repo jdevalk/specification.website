@@ -1,0 +1,80 @@
+name: Refresh Plausible
+
+# Keeps the self-hosted, SRI-pinned Plausible tracker (public/js/plausible.js)
+# in sync with upstream. We serve a frozen copy so it can carry a Subresource
+# Integrity hash (see src/lib/integrity.ts + public/_headers); this job is what
+# stops that copy going stale and missing upstream fixes.
+#
+# On change it opens (or updates) a single PR rather than pushing to main: a
+# third-party script auto-deploying unreviewed is the supply-chain risk the
+# pinning is meant to guard against, and the PR runs through CI. The SRI hash
+# is derived from the bytes at build time, so the PR only touches the .js file
+# — no hash to hand-edit. Enable auto-merge on the PR if you want it hands-off.
+
+on:
+  schedule:
+    - cron: "0 5 * * *" # Daily at 05:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    name: Refresh tracker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Download latest tracker
+        run: |
+          curl -fsSL -A "specification.website refresh-plausible bot" \
+            https://plausible.io/js/script.js -o public/js/plausible.js
+
+      - name: Sanity-check the download
+        # curl -f already rejects HTTP errors; guard against a 200 that isn't the
+        # tracker (a CDN challenge page, an outage placeholder) so we never commit
+        # junk and break analytics. The real script references both of these.
+        run: |
+          grep -q "/api/event" public/js/plausible.js \
+            && grep -q "data-domain" public/js/plausible.js \
+            || { echo "::error::Downloaded file does not look like the Plausible tracker"; exit 1; }
+
+      - name: Detect change
+        id: diff
+        run: |
+          if git diff --quiet -- public/js/plausible.js; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "Tracker unchanged."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Open or update PR
+        if: steps.diff.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          branch="chore/refresh-plausible"
+          hash="sha384-$(openssl dgst -sha384 -binary public/js/plausible.js | openssl base64 -A)"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add public/js/plausible.js
+          git commit -m "chore(plausible): refresh self-hosted tracker
+
+          New SRI hash (derived at build): $hash"
+          git push -f -u origin "$branch"
+          body="Upstream \`plausible.io/js/script.js\` changed. This refreshes the frozen, self-hosted copy at \`public/js/plausible.js\`.
+
+          The SRI \`integrity\` hash is recomputed from these bytes at build time (\`src/lib/integrity.ts\`), so there is nothing else to edit. New hash for reference:
+
+          \`$hash\`
+
+          Merge to deploy. CI verifies the build."
+          gh pr view "$branch" >/dev/null 2>&1 \
+            && gh pr edit "$branch" --body "$body" \
+            || gh pr create --base main --head "$branch" \
+                 --title "chore(plausible): refresh self-hosted tracker" \
+                 --body "$body"

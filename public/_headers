@@ -9,13 +9,22 @@
 #     'inline-speculation-rules' too; the hash is the fallback for
 #     contexts where Chrome ignores that keyword). Recompute the hash
 #     if those rules change.
+#   sha256-8wqC… — the inline <script type="importmap"> in BaseLayout.astro
+#     that pins pagefind.js (src/lib/integrity.ts). Recompute if the import
+#     map serialisation or the pagefind.js hash changes.
+#
+# Plausible is self-hosted at /js/plausible.js (a frozen copy of
+# plausible.io/js/script.js, refreshed daily by
+# .github/workflows/refresh-plausible.yml) and pinned with an SRI hash
+# computed at build time (src/lib/integrity.ts). That is why script-src is
+# 'self' with no plausible.io — only the events endpoint stays in connect-src.
 
 /*
   Strict-Transport-Security: max-age=63072000; includeSubDomains
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' 'sha256-N74AzU+1FxvXAWIxrP2zNCBUxV949ZHOXXqjTvbusx0=' 'sha256-UU9xsfeOKmx3D7Lk33alkWn1rIjk46pD684u4pupy4o=' https://plausible.io; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://plausible.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; report-to csp-endpoint; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' 'sha256-N74AzU+1FxvXAWIxrP2zNCBUxV949ZHOXXqjTvbusx0=' 'sha256-UU9xsfeOKmx3D7Lk33alkWn1rIjk46pD684u4pupy4o=' 'sha256-8wqCJSSabgg10EbyE8Gnnwc8zsNpWH4v1wi4+NcyfRI='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://plausible.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; report-to csp-endpoint; upgrade-insecure-requests
   Content-Security-Policy-Report-Only: require-trusted-types-for 'script'; trusted-types default dompurify; report-to csp-endpoint
   Reporting-Endpoints: csp-endpoint="/reports", default="/reports"
   Cross-Origin-Opener-Policy: same-origin
@@ -23,6 +32,13 @@
   X-Frame-Options: DENY
   No-Vary-Search: params=("utm_source" "utm_medium" "utm_campaign" "utm_content" "utm_term" "gclid" "fbclid" "msclkid" "mc_cid" "mc_eid" "ref"), key-order
   Link: </llms.txt>; rel="describedby"; type="text/markdown"; title="Site index for LLMs", </llms-full.txt>; rel="alternate"; type="text/markdown"; title="Full content as Markdown", </.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json", </.well-known/mcp/server-card.json>; rel="mcp"; type="application/json"; title="MCP server card", <https://mcp.specification.website/mcp>; rel="related"; title="MCP endpoint", </.well-known/agent-card.json>; rel="service-desc"; type="application/json"; title="A2A agent card", <https://mcp.specification.website/a2a/v1>; rel="related"; title="A2A endpoint", </.well-known/agent-skills/index.json>; rel="agent-skills"; type="application/json"; title="Agent Skills discovery index", </.well-known/ai-catalog.json>; rel="ai-catalog"; type="application/ai-catalog+json"; title="Agentic Resource Discovery catalog", </sitemap-index.xml>; rel="sitemap"; type="application/xml", </rss.xml>; rel="alternate"; type="application/rss+xml"; title="Feed of spec changes", </changelog/rss.xml>; rel="alternate"; type="application/rss+xml"; title="Changelog feed", </.well-known/security.txt>; rel="security"; type="text/plain"
+
+# Self-hosted Plausible tracker. Not fingerprinted and refreshed in place by
+# the daily job, so keep the cache short: the HTML's SRI hash updates in the
+# same deploy, and a long-lived stale copy would fail the integrity check.
+/js/plausible.js
+  Content-Type: text/javascript; charset=utf-8
+  Cache-Control: public, max-age=600, must-revalidate
 
 # Long cache for fingerprinted assets
 /_astro/*

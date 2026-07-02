@@ -5,6 +5,11 @@ node_modules/
 public/pagefind/
 public/vendor/
 
+# Frozen upstream Plausible tracker — must stay byte-identical to
+# plausible.io/js/script.js so the daily refresh job's diff is meaningful and
+# the build-time SRI hash matches. Reformatting would break both.
+public/js/
+
 # Generated binary/text assets
 public/og/
 public/icons/
