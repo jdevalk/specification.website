@@ -40,9 +40,11 @@ function built384(rel) {
 
 const integrityTs = readFileSync(join(root, "src/lib/integrity.ts"), "utf8");
 const searchJs = readFileSync(join(root, "public/search.js"), "utf8");
+const statsTs = readFileSync(join(root, "functions/admin/stats.ts"), "utf8");
 const headers = readFileSync(join(root, "public/_headers"), "utf8");
 
-// Each Pagefind file's live hash must appear in every place that pins it.
+// Each file's live hash must appear in every place that pins it as a literal.
+// (Most scripts are hashed at build via src/lib/integrity.ts and need no entry.)
 const pinned = [
   {
     label: "pagefind.js",
@@ -56,6 +58,12 @@ const pinned = [
       ["src/lib/integrity.ts", integrityTs],
       ["public/search.js", searchJs],
     ],
+  },
+  {
+    // Served by an edge Function, which can't hash at build — pinned literally.
+    label: "admin-stats.js",
+    file: "public/admin-stats.js",
+    refs: [["functions/admin/stats.ts", statsTs]],
   },
 ];
 

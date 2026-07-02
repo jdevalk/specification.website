@@ -875,7 +875,10 @@ function renderDashboard(results: QueryResults, errors: QueryErrors): string {
     </div>
   </div>
 
-  <script src="/admin-stats.js" defer></script>
+  <!-- SRI so this satisfies Integrity-Policy. Hardcoded (this is an edge
+       Function, not an Astro render); scripts/check-integrity.mjs verifies it
+       matches public/admin-stats.js on every build. -->
+  <script src="/admin-stats.js" defer integrity="sha384-XUWxtbHAb/brkCdgXgjE9OLsRhBFCUFd5U2oRGnojav+W3oVhEbH80w/ji0pEn44"></script>
 </body>
 </html>`;
 }

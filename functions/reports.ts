@@ -1,9 +1,10 @@
 // Collector for the W3C Reporting API.
 //
-// The `Reporting-Endpoints` header in public/_headers points both the
-// `csp-endpoint` and `default` endpoints at /reports, so visitors' browsers
-// POST batched JSON reports here — CSP and COOP/COEP violations, plus
-// deprecation, intervention, and crash reports that have no header of their
+// The `Reporting-Endpoints` header in public/_headers points the
+// `csp-endpoint`, `integrity-endpoint`, and `default` endpoints at /reports, so
+// visitors' browsers POST batched JSON reports here — CSP and COOP/COEP
+// violations, `integrity-violation` reports from Integrity-Policy-Report-Only,
+// plus deprecation, intervention, and crash reports that have no header of their
 // own. We record one aggregate row per report to the REPORT_LOG Analytics
 // Engine dataset (sw_report_log), which /admin/stats reads. Deprecation and
 // intervention reports triggered by third-party scripts (browser-extension
@@ -117,6 +118,7 @@ function writeReport(
       "effective-directive",
       "id",
       "featureId",
+      "destination", // integrity-violation: the blocked request destination ("script")
     ),
     96,
   );

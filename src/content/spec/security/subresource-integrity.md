@@ -75,7 +75,9 @@ Integrity-Policy: blocked-destinations=(script)
 Integrity-Policy-Report-Only: blocked-destinations=(script), endpoints=(integrity-endpoint)
 ```
 
-Start in report-only mode. `Integrity-Policy-Report-Only` enforces nothing but sends an `IntegrityViolationReport` to a named [Reporting API](/spec/security/reporting-endpoints/) endpoint for every resource that _would_ be blocked, so you can find un-hashed scripts before you turn enforcement on. The header is now interoperable across Chromium, Firefox, and Safari. Note that any third-party script you cannot pin (an analytics loader served from a mutable URL, say) must gain an integrity hash — or be dropped — before you can enforce the policy.
+Start in report-only mode. `Integrity-Policy-Report-Only` enforces nothing but sends an `IntegrityViolationReport` to a named [Reporting API](/spec/security/reporting-endpoints/) endpoint for every resource that _would_ be blocked, so you can find un-hashed scripts before you turn enforcement on. The header is supported across Chromium, Firefox, and Safari, though Firefox currently logs violations to the console rather than delivering them to the endpoint.
+
+This site ships `Integrity-Policy-Report-Only: blocked-destinations=(script)` (see its `_headers`) as a regression tripwire: every first-party script carries integrity — computed at build time — so a clean report stream is the signal that enforcing `Integrity-Policy` is safe. Because a script served from a mutable third-party URL cannot be pinned, the analytics loader here is self-hosted as a frozen, hashed copy (refreshed daily) rather than loaded live; anything you truly cannot pin must be dropped before you enforce.
 
 ## Common mistakes
 
