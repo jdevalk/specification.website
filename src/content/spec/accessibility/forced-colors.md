@@ -6,7 +6,7 @@ summary: "Respect forced colours mode (Windows High Contrast and similar). The `
 status: recommended
 order: 15
 appliesTo: [all]
-relatedSlugs: [color-contrast, color-scheme, reduced-motion]
+relatedSlugs: [color-contrast, color-scheme, reduced-motion, contrast-color]
 updated: "2026-06-22T00:00:00.000Z"
 sources:
   - title: "CSS Media Queries Level 5 — forced-colors"

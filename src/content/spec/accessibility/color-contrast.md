@@ -6,7 +6,7 @@ summary: "Text and meaningful non-text elements must have enough contrast agains
 status: required
 order: 10
 appliesTo: [all]
-relatedSlugs: [focus-indicators, semantic-html, forced-colors]
+relatedSlugs: [focus-indicators, semantic-html, forced-colors, contrast-color]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
   - title: "WCAG 1.4.3 — Contrast (Minimum) (Level AA)"
