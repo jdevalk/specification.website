@@ -6,7 +6,7 @@ summary: "Every script loaded from another domain can read cookies, see the URL,
 status: recommended
 order: 40
 appliesTo: [all]
-relatedSlugs: [cookie-consent, analytics-privacy, security/content-security-policy, security/subresource-integrity]
+relatedSlugs: [cookie-consent, analytics-privacy, storage-access-api, security/content-security-policy, security/subresource-integrity]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
   - title: "MDN — Content Security Policy (CSP)"

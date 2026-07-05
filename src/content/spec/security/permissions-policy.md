@@ -6,7 +6,7 @@ summary: "Permissions-Policy lets you turn off powerful browser features — cam
 status: recommended
 order: 80
 appliesTo: [all]
-relatedSlugs: [content-security-policy, frame-ancestors, referrer-policy, cross-origin-isolation, reporting-endpoints]
+relatedSlugs: [content-security-policy, frame-ancestors, referrer-policy, cross-origin-isolation, reporting-endpoints, privacy/storage-access-api]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
   - title: "Permissions Policy (W3C Working Draft)"
