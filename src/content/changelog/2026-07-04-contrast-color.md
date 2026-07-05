@@ -5,4 +5,4 @@ type: added
 relatedSlugs: [contrast-color]
 ---
 
-Added a page on [automatic contrasting colour](/spec/accessibility/contrast-color/) — the CSS `contrast-color()` function that returns a legible black or white foreground for any background, so a dynamic or user-picked colour keeps readable text without hard-coded colour pairs or luminance maths in JavaScript. Documented as `recommended`: it became newly available across major browsers in April 2026 and degrades safely, but a site works fine computing contrast by hand, so it is not `required`.
+Added a page on [automatic contrasting colour](/spec/accessibility/contrast-color/) — the CSS `contrast-color()` function that returns a legible black or white foreground for any background, so a dynamic or user-picked colour keeps readable text without hard-coded colour pairs or luminance maths in JavaScript. Documented as `optional`: it only helps where a background is dynamic or user-picked — a static site with hand-chosen colours never needs it — though it became newly available across major browsers in April 2026 and degrades safely.

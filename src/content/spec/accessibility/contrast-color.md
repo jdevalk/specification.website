@@ -3,7 +3,7 @@ title: "Automatic contrasting colour"
 slug: contrast-color
 category: accessibility
 summary: "Let the browser pick a legible black or white foreground for a dynamic background with the CSS contrast-color() function, instead of hard-coding colour pairs or computing luminance in JavaScript."
-status: recommended
+status: optional
 order: 12
 appliesTo: [all]
 relatedSlugs: [color-contrast, color-scheme, forced-colors]
