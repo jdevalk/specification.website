@@ -6,7 +6,7 @@ summary: "Style a component by the space it is actually given with container-typ
 status: recommended
 order: 160
 appliesTo: [all]
-relatedSlugs: [css-containment, dynamic-viewport-units, anchor-positioning]
+relatedSlugs: [css-containment, dynamic-viewport-units, anchor-positioning, subgrid]
 updated: "2026-06-27T00:00:00.000Z"
 sources:
   - title: "CSS Containment Module Level 3"
