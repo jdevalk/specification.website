@@ -32,10 +32,10 @@
     "check:ard": "node scripts/sign-ard-catalog.mjs --check"
   },
   "dependencies": {
-    "@astrojs/mdx": "^7.0.0",
-    "@astrojs/rss": "^4.0.18",
+    "@astrojs/mdx": "^7.0.2",
+    "@astrojs/rss": "^4.0.19",
     "@tailwindcss/vite": "^4.3.1",
-    "astro": "^7.0.3",
+    "astro": "^7.0.6",
     "dompurify": "^3.4.11",
     "tailwindcss": "^4.3.0"
   },
