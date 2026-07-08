@@ -4,9 +4,9 @@
     {
       "name": "specification-website",
       "type": "skill-md",
-      "description": "Query and apply The Website Specification \u2014 a platform-agnostic specification of what a good website does. Use when the user asks what their site should have, whether something is required, how to audit a URL, what's missing for agent readiness, or anything else where you'd otherwise be guessing at web best practice. Backs answers with primary sources and ships an MCP server with search, list, fetch, checklist, and audit tools.",
+      "description": "Query and apply The Website Specification — a platform-agnostic specification of what a good website does. Use when the user asks what their site should have, whether something is required, how to audit a URL, what's missing for agent readiness, or anything else where you'd otherwise be guessing at web best practice. Backs answers with primary sources and ships an MCP server with search, list, fetch, checklist, and audit tools.",
       "url": "/.well-known/agent-skills/specification-website/SKILL.md",
-      "digest": "sha256:ee1013cde30d7ec6f058969a1a8d7854377b25054e54cd09188c88dbdc70efd9"
+      "digest": "sha256:17d9594c060aeb8ee300a09956e4893609ec8f14a971c68558bd0d0a1936c3a5"
     }
   ]
 }

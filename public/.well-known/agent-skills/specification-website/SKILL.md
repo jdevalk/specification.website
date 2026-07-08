@@ -40,7 +40,7 @@ Every spec page has a canonical HTML URL and a Markdown variant.
 
 - HTML: `https://specification.website/spec/<category>/<slug>/`
 - Markdown (file extension): `https://specification.website/spec/<category>/<slug>.md`
-- Markdown (content negotiation): set `Accept: text/markdown` on the HTML URL. The Markdown is served in place with `200` and a `Content-Location` pointing at the `.md` variant — there is no redirect to follow.
+- Markdown (content negotiation): set `Accept: text/markdown` on the HTML URL. Middleware serves the Markdown body from that same URL with `200`, `Content-Location` pointing at the `.md` variant, and `Vary: Accept`. There is no redirect to follow.
 
 Every Markdown response carries RFC 9530 integrity fields, so you can verify what you fetched:
 

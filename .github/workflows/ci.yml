@@ -30,6 +30,16 @@ jobs:
       - name: Format check (Prettier)
         run: npm run format:check
 
+      # The hand-maintained discovery files drift silently otherwise: SKILL.md's
+      # page count / category list / MCP revision against the repo, and both
+      # files' pinned integrity (sha256 digest, detached JWS). Neither needs a
+      # private key — they only verify what's committed.
+      - name: Agent Skill drift check
+        run: npm run check:skill
+
+      - name: ARD catalog signature check
+        run: npm run check:ard
+
       - name: Type-check (Astro)
         run: npx astro check
 
