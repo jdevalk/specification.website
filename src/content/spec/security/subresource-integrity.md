@@ -9,7 +9,7 @@ appliesTo: [all]
 relatedSlugs: [content-security-policy, https-tls, x-content-type-options, trusted-types, reporting-endpoints]
 updated: "2026-07-02T00:00:00.000Z"
 sources:
-  - title: "Subresource Integrity (W3C Recommendation)"
+  - title: "Subresource Integrity (W3C Working Draft)"
     url: "https://www.w3.org/TR/SRI/"
     publisher: "W3C"
   - title: "Subresource Integrity — §3.8 Integrity-Policy (W3C Editor's Draft)"
