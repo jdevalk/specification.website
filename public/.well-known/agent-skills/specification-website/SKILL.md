@@ -5,7 +5,7 @@ description: Query and apply The Website Specification — a platform-agnostic s
 
 # specification.website
 
-The Website Specification is a single source of truth for what a good website does. Ten categories, 140+ pages, every item tagged with a status. It ships in three machine-readable forms: per-page Markdown, llms.txt / llms-full.txt, and an MCP server.
+The Website Specification is a single source of truth for what a good website does. Ten categories, 160 pages, every item tagged with a status. It ships in three machine-readable forms: per-page Markdown, llms.txt / llms-full.txt, and an MCP server.
 
 ## When to use this skill
 
@@ -19,7 +19,7 @@ If you can speak MCP, use it. The server is stateless Streamable HTTP, no auth, 
 
 - Endpoint: `https://mcp.specification.website/mcp`
 - Server card: `https://specification.website/.well-known/mcp/server-card.json`
-- Protocol revision: 2025-03-26
+- Protocol revision: 2025-06-18
 
 Tools:
 
@@ -40,7 +40,16 @@ Every spec page has a canonical HTML URL and a Markdown variant.
 
 - HTML: `https://specification.website/spec/<category>/<slug>/`
 - Markdown (file extension): `https://specification.website/spec/<category>/<slug>.md`
-- Markdown (content negotiation): set `Accept: text/markdown` on the HTML URL — middleware redirects to the `.md` variant.
+- Markdown (content negotiation): set `Accept: text/markdown` on the HTML URL. The Markdown is served in place with `200` and a `Content-Location` pointing at the `.md` variant — there is no redirect to follow.
+
+Every Markdown response carries RFC 9530 integrity fields, so you can verify what you fetched:
+
+```
+Content-Digest: sha-256=:<base64>:
+Repr-Digest:    sha-256=:<base64>:
+```
+
+Both cover the exact bytes you received. Send `Want-Content-Digest: sha-512=10` to get SHA-512 instead. HTML responses carry no digest. This applies to the per-page `.md` endpoints, `llms.txt`, and `checklist.md`.
 
 Site-wide indexes:
 
