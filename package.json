@@ -29,7 +29,9 @@
     "format:check": "prettier --check .",
     "assets": "node scripts/generate-assets.mjs",
     "sign:ard": "node scripts/sign-ard-catalog.mjs",
-    "check:ard": "node scripts/sign-ard-catalog.mjs --check"
+    "check:ard": "node scripts/sign-ard-catalog.mjs --check",
+    "sign:skill": "node scripts/check-skill.mjs",
+    "check:skill": "node scripts/check-skill.mjs --check"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.2",

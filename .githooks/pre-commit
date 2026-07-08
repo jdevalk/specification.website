@@ -1,5 +1,6 @@
 #!/bin/sh
-# Pre-commit gate: lint + formatting must pass before a commit lands.
+# Pre-commit gate: lint, formatting, and discovery-file integrity must pass
+# before a commit lands.
 #
 # Tracked in the repo and wired via `core.hooksPath` (see scripts: the
 # `prepare` npm script sets it on install). Dependency-free — no husky.
@@ -14,5 +15,12 @@ npm run --silent lint
 
 echo "pre-commit: prettier…"
 npm run --silent format:check
+
+# After prettier, never before: a reformat between hashing SKILL.md and
+# committing it would invalidate the digest. (public/.well-known/ is in
+# .prettierignore, and check:skill asserts that, so the two can't silently
+# disagree.) Fix with `npm run sign:skill`.
+echo "pre-commit: agent skill drift…"
+npm run --silent check:skill
 
 echo "pre-commit: ok"

@@ -5,7 +5,7 @@ description: Query and apply The Website Specification — a platform-agnostic s
 
 # specification.website
 
-The Website Specification is a single source of truth for what a good website does. Ten categories, 140+ pages, every item tagged with a status. It ships in three machine-readable forms: per-page Markdown, llms.txt / llms-full.txt, and an MCP server.
+The Website Specification is a single source of truth for what a good website does. Ten categories, 159 pages, every item tagged with a status. It ships in three machine-readable forms: per-page Markdown, llms.txt / llms-full.txt, and an MCP server.
 
 ## When to use this skill
 
@@ -19,7 +19,7 @@ If you can speak MCP, use it. The server is stateless Streamable HTTP, no auth, 
 
 - Endpoint: `https://mcp.specification.website/mcp`
 - Server card: `https://specification.website/.well-known/mcp/server-card.json`
-- Protocol revision: 2025-03-26
+- Protocol revision: 2025-06-18
 
 Tools:
 
@@ -40,7 +40,7 @@ Every spec page has a canonical HTML URL and a Markdown variant.
 
 - HTML: `https://specification.website/spec/<category>/<slug>/`
 - Markdown (file extension): `https://specification.website/spec/<category>/<slug>.md`
-- Markdown (content negotiation): set `Accept: text/markdown` on the HTML URL — middleware redirects to the `.md` variant.
+- Markdown (content negotiation): set `Accept: text/markdown` on the HTML URL. Middleware serves the Markdown body from that same URL with `200`, `Content-Location` pointing at the `.md` variant, and `Vary: Accept`. There is no redirect to follow.
 
 Site-wide indexes:
 
