@@ -6,7 +6,7 @@ summary: "A JSON metadata document that tells clients which authorisation server
 status: optional
 order: 32
 appliesTo: [all]
-relatedSlugs: [openid-configuration, well-known-overview, mcp-and-tool-discovery, webauthn]
+relatedSlugs: [openid-configuration, oauth-authorization-server, well-known-overview, mcp-and-tool-discovery, webauthn]
 updated: "2026-07-08T00:00:00.000Z"
 sources:
   - title: "RFC 9728 — OAuth 2.0 Protected Resource Metadata"
