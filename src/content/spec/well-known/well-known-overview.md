@@ -6,7 +6,7 @@ summary: "The /.well-known/ path prefix is a standardised place to publish site-
 status: recommended
 order: 10
 appliesTo: [all]
-relatedSlugs: [change-password, openid-configuration, webfinger, apple-app-site-association, assetlinks-json, nodeinfo, api-catalog, webauthn]
+relatedSlugs: [change-password, openid-configuration, oauth-authorization-server, oauth-protected-resource, webfinger, apple-app-site-association, assetlinks-json, nodeinfo, api-catalog, webauthn]
 updated: "2026-06-08T12:00:00.000Z"
 sources:
   - title: "RFC 8615 — Well-Known Uniform Resource Identifiers (URIs)"
@@ -37,6 +37,8 @@ The names allowed under `/.well-known/` are not arbitrary. IANA maintains a publ
 - **Discoverability.** Clients, browsers, password managers, federated servers, mobile operating systems and crawlers know exactly where to look. They do not need configuration per site.
 - **Interoperability.** Standardised paths are what let Mastodon, Apple, Google, OpenID Connect, ACME (Let's Encrypt) and others work across millions of sites without coordination.
 - **Stability.** The reserved prefix keeps protocol metadata out of the way of your application's routing. You will not accidentally collide with `/security.txt` if it lives under `/.well-known/`.
+
+Some capabilities span **several** well-known URIs that reference each other, so a client can follow the chain with no prior configuration. OAuth 2.0 discovery is the clearest example: a protected resource describes itself at [`/.well-known/oauth-protected-resource`](/spec/well-known/oauth-protected-resource/) and names its authorisation server(s), whose own metadata lives at [`/.well-known/oauth-authorization-server`](/spec/well-known/oauth-authorization-server/) — or [`/.well-known/openid-configuration`](/spec/well-known/openid-configuration/) for OpenID Connect.
 
 ## How to implement
 

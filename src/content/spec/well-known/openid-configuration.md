@@ -6,7 +6,7 @@ summary: "A JSON discovery document that describes an OpenID Connect provider's 
 status: optional
 order: 30
 appliesTo: [all]
-relatedSlugs: [well-known-overview]
+relatedSlugs: [well-known-overview, oauth-authorization-server, oauth-protected-resource]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
   - title: "OpenID Connect Discovery 1.0"
