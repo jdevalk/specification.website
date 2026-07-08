@@ -7,7 +7,7 @@ status: recommended
 order: 155
 appliesTo: [all]
 relatedSlugs: [semantic-html, aria-usage, keyboard-navigation, hidden-until-found, inert-attribute, invoker-commands]
-updated: "2026-05-29T16:40:22.000Z"
+updated: "2026-07-08T00:00:00.000Z"
 sources:
   - title: "WHATWG HTML — The details element"
     url: "https://html.spec.whatwg.org/multipage/interactive-elements.html#the-details-element"
@@ -62,6 +62,21 @@ details::details-content {
 details[open]::details-content { block-size: auto; }
 ```
 
+**Single-open accordion** — give a group of sibling `<details>` the same `name` and the browser enforces that only one is open at a time, closing the others as each opens. No JavaScript, and every panel keeps its native keyboard activation, focus order, and disclosure semantics:
+
+```html
+<details name="faq">
+  <summary>How do refunds work?</summary>
+  <p>Refunds are issued to the original payment method within five days.</p>
+</details>
+<details name="faq">
+  <summary>Can I change my plan later?</summary>
+  <p>Yes — upgrade or downgrade at any time from your account settings.</p>
+</details>
+```
+
+A shared `name` turns a stack of disclosures into an exclusive accordion — the most common accordion pattern — without the `role`, `aria-expanded`, and roving-focus bookkeeping a scripted version has to reimplement and keep correct.
+
 **Modal dialog** — `<dialog>` with `showModal()`:
 
 ```html
@@ -89,6 +104,7 @@ details[open]::details-content { block-size: auto; }
 - **`<div onclick>` as a button.** No keyboard activation, no focus, no accessible name, no role.
 - **`<a href="#" onclick>` as a button.** Pollutes browser history, breaks middle-click and "open in new tab", and announces as a link in screen readers.
 - **Rebuilding `<details>` in JavaScript "to control the animation".** Modern CSS — `interpolate-size`, `transition-behavior: allow-discrete`, `::details-content` — animates the native element.
+- **Scripting a single-open accordion.** Give sibling `<details>` the same `name` and the browser handles mutual exclusion for you, with correct disclosure semantics on every panel.
 - **Using `<dialog>` for transient, non-blocking UI.** Reserve `<dialog>` for modal flows that require a decision. For menus, popovers, and toasts, use the [Popover API](/spec/foundations/popover-api/).
 - **Forgetting `type="button"` inside a `<form>`.** A bare `<button>` defaults to `type="submit"` and submits the form on click.
 
