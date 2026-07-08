@@ -6,7 +6,7 @@ summary: "Custom error pages must return the correct HTTP status code, explain w
 status: required
 order: 10
 appliesTo: [all]
-relatedSlugs: [soft-404, monitoring-uptime, maintenance-pages]
+relatedSlugs: [soft-404, monitoring-uptime, maintenance-pages, deprecation-and-sunset]
 updated: "2026-05-29T18:54:03.000Z"
 sources:
   - title: "RFC 9110 — HTTP Semantics: 404 Not Found"

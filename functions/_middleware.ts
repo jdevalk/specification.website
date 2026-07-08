@@ -30,6 +30,38 @@ type Env = {
 
 const SPEC_PAGE = /^\/spec\/([^/]+)\/([^/]+)\/?$/;
 
+// Retired well-known URI. `/.well-known/ai.txt` was removed on 2026-05-29;
+// the convention proved defunct. Rather than a bare 404 we serve a 410 Gone
+// that records the retirement in machine-readable form: Deprecation (RFC 9745)
+// carries the date it was deprecated, Sunset (RFC 8594) the removal instant,
+// and a rel="deprecation" link points to the human explanation. RFC 8594
+// explicitly covers this post-sunset 410 case. Worked example for
+// /spec/resilience/deprecation-and-sunset/.
+const AI_TXT_PATH = "/.well-known/ai.txt";
+const AI_TXT_DEPRECATION = "@1780012800"; // 2026-05-29T00:00:00Z
+const AI_TXT_SUNSET = "Fri, 29 May 2026 00:00:00 GMT";
+const AI_TXT_DOCS =
+  "https://specification.website/spec/resilience/deprecation-and-sunset/";
+
+function goneAiTxt(): Response {
+  const body =
+    "410 Gone\n\n" +
+    "/.well-known/ai.txt was retired on 2026-05-29. The convention is defunct;\n" +
+    "express AI-crawler preferences via robots.txt and content signals instead.\n" +
+    `See ${AI_TXT_DOCS}\n`;
+  return new Response(body, {
+    status: 410,
+    statusText: "Gone",
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+      Deprecation: AI_TXT_DEPRECATION,
+      Sunset: AI_TXT_SUNSET,
+      Link: `<${AI_TXT_DOCS}>; rel="deprecation"; type="text/html"`,
+      "Cache-Control": "public, max-age=3600",
+    },
+  });
+}
+
 function prefersMarkdown(accept: string): boolean {
   // We treat the request as "wants markdown" only when text/markdown is
   // explicitly named. Browsers default to text/html and don't hit this
@@ -101,8 +133,12 @@ export const onRequest: PagesFunction<Env> = async (context) => {
   let response: Response;
   let repr = "passthrough";
 
-  // Site root: agents asking for Markdown get llms.txt (the site index).
-  if (url.pathname === "/" || url.pathname === "") {
+  // Retired well-known URI: serve a 410 Gone with Deprecation/Sunset headers.
+  if (url.pathname === AI_TXT_PATH) {
+    response = goneAiTxt();
+    repr = "gone";
+    // Site root: agents asking for Markdown get llms.txt (the site index).
+  } else if (url.pathname === "/" || url.pathname === "") {
     if (wantsMarkdown) {
       response = await serveAsMarkdown(env, url, "/llms.txt");
       repr = "markdown";

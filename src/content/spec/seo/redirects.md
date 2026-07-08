@@ -6,7 +6,7 @@ summary: "HTTP redirects send a client from one URL to another. Use 301 or 308 f
 status: required
 order: 60
 appliesTo: [all]
-relatedSlugs: [url-structure, canonical-url, soft-404]
+relatedSlugs: [url-structure, canonical-url, soft-404, deprecation-and-sunset]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
   - title: "RFC 9110 — HTTP Semantics, redirection 3xx"
