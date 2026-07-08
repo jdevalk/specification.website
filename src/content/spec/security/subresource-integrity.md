@@ -6,7 +6,7 @@ summary: "SRI adds a cryptographic hash to every third-party script and styleshe
 status: recommended
 order: 90
 appliesTo: [all]
-relatedSlugs: [content-security-policy, https-tls, x-content-type-options, trusted-types, reporting-endpoints]
+relatedSlugs: [content-security-policy, https-tls, x-content-type-options, trusted-types, reporting-endpoints, digest-fields]
 updated: "2026-07-02T00:00:00.000Z"
 sources:
   - title: "Subresource Integrity (W3C Working Draft)"
