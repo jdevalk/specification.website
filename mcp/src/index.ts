@@ -315,14 +315,17 @@ async function handleMcp(request: Request, env: Env): Promise<Response> {
         return resp;
       })
       .filter((r): r is RpcResponse => r !== null);
+    if (responses.length === 0) {
+      return new Response(null, { status: 202, headers: CORS_HEADERS });
+    }
     return new Response(JSON.stringify(responses), { headers: JSON_HEADERS });
   }
   const req = body as RpcRequest;
   const response = handleRpc(req);
   logMcpCall(env, request, req, response, 'remote');
   if (response === null) {
-    // Pure notification — no response
-    return new Response(null, { status: 204, headers: CORS_HEADERS });
+    // Streamable HTTP requires accepted notifications to return 202 with no body.
+    return new Response(null, { status: 202, headers: CORS_HEADERS });
   }
   return new Response(JSON.stringify(response), { headers: JSON_HEADERS });
 }
