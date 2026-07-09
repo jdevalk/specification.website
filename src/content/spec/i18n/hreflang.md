@@ -7,7 +7,7 @@ status: recommended
 order: 10
 appliesTo: [all]
 relatedSlugs: [lang-attribute, locale-content, rtl-support, international-url-structure, sitemap-hreflang, localised-metadata, language-switcher, avoid-auto-geo-redirects]
-updated: "2026-06-09T00:00:00.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "Google Search Central — Localized versions of your pages"
     url: "https://developers.google.com/search/docs/specialty/international/localized-versions"
@@ -30,6 +30,8 @@ sources:
 <link rel="alternate" hreflang="fr-CA" href="https://example.com/fr-ca/" />
 <link rel="alternate" hreflang="x-default" href="https://example.com/" />
 ```
+
+`hreflang` does not declare what language a page is in. It only asserts that a set of URLs are equivalents of one another. A search engine still reads each page's actual language from its content and its [`lang` attribute](/spec/i18n/lang-attribute/), not from the tag: a self-referential `hreflang="de"` does not make a page German, and if that page in fact serves English the annotation contradicts the content rather than overriding it.
 
 ## Why it matters
 

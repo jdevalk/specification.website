@@ -7,7 +7,7 @@ status: recommended
 order: 30
 appliesTo: [all]
 relatedSlugs: [lang-attribute, hreflang, locale-content, writing-modes]
-updated: "2026-06-22T00:00:00.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "W3C i18n — Structural markup and right-to-left text in HTML"
     url: "https://www.w3.org/International/questions/qa-html-dir"
@@ -25,6 +25,8 @@ sources:
 Right-to-left (RTL) scripts — Arabic, Hebrew, Persian, Urdu, Pashto, Dhivehi, and others — read from right to left. So do their layouts: the logo sits on the right, navigation flows right-to-left, scrollbars are on the left, and progress indicators advance leftwards. Bidirectional ("bidi") text is content that mixes RTL and LTR runs, for example an English brand name embedded inside an Arabic paragraph.
 
 The HTML `dir` attribute declares direction. The Unicode Bidirectional Algorithm handles inline mixing automatically when `dir` is set correctly.
+
+Direction does not follow from language. `lang` and `dir` are independent attributes: a browser handed `lang="ar"` with no `dir` still lays the page out left to right. `lang` names the language so pronunciation, spellcheck, and font selection are right; `dir` sets the direction. An RTL page needs both, which is why every example here carries `lang` and `dir` together.
 
 ```html
 <html lang="ar" dir="rtl">

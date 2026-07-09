@@ -7,7 +7,7 @@ status: recommended
 order: 40
 appliesTo: [all]
 relatedSlugs: [resource-hints, early-hints, core-web-vitals, font-loading]
-updated: "2026-06-18T00:00:00.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "MDN — <link>: The External Resource Link element"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link"
@@ -44,7 +44,7 @@ Four `<link rel>` hints in the head tell the browser to start work earlier than 
 
 The browser only discovers resources as it parses HTML and CSS. By the time it sees a `<link rel="stylesheet">` that references a font, several round-trips have already passed. Hints move that discovery earlier — sometimes saving 200–500ms on the LCP element.
 
-Used badly, the same hints **harm** performance by contending for bandwidth with the actual critical request. Hint sparingly.
+But a hint does not add bandwidth or make the connection faster. `preload` in particular is not an accelerate button. The pipe is fixed, so every byte it pulls forward is a byte something else waits for. It helps only a resource the parser would otherwise discover late, such as a font referenced from CSS or an LCP image injected by script. Preload something already visible early in the HTML and you gain nothing, because the preload scanner found it anyway. Preload a dozen things and they fight for the same bandwidth, starving the one request that sets your LCP. Hint the few late-discovered resources on the critical path, and nothing else.
 
 ## How to implement
 

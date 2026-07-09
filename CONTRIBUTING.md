@@ -44,7 +44,8 @@ Just open a PR. You can use the "Edit this page on GitHub" link on any spec page
    - Copy an existing file in `src/content/spec/<category>/`.
    - Update the front matter (see schema in [`src/content.config.ts`](src/content.config.ts)).
    - Write the body. Sections: `## What it is`, `## Why it matters`, `## How to implement`, `## Common mistakes`, `## Verification`.
-   - 250–500 words. Be useful, not padded.
+   - Up to ~1000 words (up to ~2000 for a genuinely hard topic). No minimum — 400 words is fine if that says it. Length must be earned by explanation, not padding: a real explanation makes some existing sentence redundant.
+   - Name the wrong belief the reader arrives with. Ask what a competent-but-not-expert reader wrongly believes about the topic, then contrast against it (`<title>` is not `<h1>`). Some pages have no such misconception — those get no such paragraph.
 3. Run `npm run dev` locally on port 31337 and verify the page renders.
 4. Open a PR. CI will type-check, build, and verify the schema.
 

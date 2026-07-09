@@ -7,7 +7,7 @@ status: required
 order: 60
 appliesTo: [all]
 relatedSlugs: [cache-control, http3, conditional-requests, compression-dictionary-transport]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "RFC 7932 — Brotli Compressed Data Format"
     url: "https://www.rfc-editor.org/rfc/rfc7932"
@@ -40,7 +40,7 @@ The common algorithms:
 
 - **gzip** — universally supported since the late 1990s. Good ratio, fast.
 - **brotli (br)** — Google, standardised as RFC 7932. 15–25% smaller than gzip for text. Supported by all modern browsers.
-- **zstd** — RFC 8878. Comparable ratio to brotli with faster decompression. Supported by Chrome 123+, Firefox 126+, Safari 17.4+.
+- **zstd** — RFC 8878. Comparable ratio to brotli with faster decompression. Supported by Chrome 123+, Firefox 126+, and Safari 26.3+ (earlier Safari cannot decode Zstandard responses).
 - **deflate** — avoid. Ambiguity between raw deflate and zlib wrapping has bitten implementations for decades.
 
 ## Why it matters

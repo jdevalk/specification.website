@@ -7,7 +7,7 @@ status: recommended
 order: 35
 appliesTo: [all]
 relatedSlugs: [well-known-overview, link-headers, llms-txt, machine-readable-formats, a2a-agent-cards]
-updated: "2026-05-29T11:27:49.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "RFC 9727 — Publishing Organisation API Information"
     url: "https://www.rfc-editor.org/rfc/rfc9727"
@@ -26,6 +26,8 @@ sources:
 ## What it is
 
 `/.well-known/api-catalog` is an IETF-standardised path at which an organisation publishes a machine-readable catalogue of the APIs and structured resources its host exposes. The document is a [Linkset](https://www.rfc-editor.org/rfc/rfc9264) (RFC 9264) — a JSON array of link relations grouped by an anchor URL.
+
+The name undersells it: despite "api", the catalogue is not limited to OpenAPI specs or JSON endpoints. Most of its useful relations, such as `sitemap`, `describedby`, `license` and `alternate`, point at resources that are not APIs at all. Read it as an index of every machine-readable thing on the origin, expressed as a Linkset.
 
 ```http
 GET /.well-known/api-catalog HTTP/1.1

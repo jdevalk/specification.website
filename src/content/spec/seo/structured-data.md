@@ -7,7 +7,7 @@ status: recommended
 order: 100
 appliesTo: [all]
 relatedSlugs: [breadcrumbs, heading-hierarchy, xml-sitemaps, canonical-url, schemamap, server-side-rendering]
-updated: "2026-06-10T00:00:00.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "Schema.org"
     url: "https://schema.org/"
@@ -51,9 +51,11 @@ Microdata and RDFa are also accepted, but JSON-LD is the de facto standard becau
 
 ## Why it matters
 
+Structured data is not a ranking signal. Adding it does not move a page up the results, and Google grants a rich result only to pages already eligible, so valid markup is necessary but never sufficient. What it changes is legibility, not rank: how the result looks, and what a machine can quote without guessing.
+
 Two audiences read it heavily:
 
-- **Search engines** use structured data to power rich results (article cards, breadcrumbs, product carousels, knowledge-panel facts). Without it, you get a plain blue link.
+- **Search engines** use it to power rich results (article cards, breadcrumbs, product carousels, knowledge-panel facts) instead of a plain blue link.
 - **AI agents and answer engines** rely on it as the ground truth for facts they may quote. A `Person` schema with a `sameAs` linking to your verified profiles is the cleanest way to assert identity.
 
 It is also the most stable contract between a publisher and the rest of the web. The HTML can change; the JSON-LD describes meaning.

@@ -7,7 +7,7 @@ status: optional
 order: 20
 appliesTo: [all]
 relatedSlugs: [well-known-overview, webauthn]
-updated: "2026-06-08T12:00:00.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "A Well-Known URL for Changing Passwords"
     url: "https://w3c.github.io/webappsec-change-password-url/"
@@ -15,9 +15,6 @@ sources:
   - title: "IANA — Well-Known URIs Registry"
     url: "https://www.iana.org/assignments/well-known-uris/well-known-uris.xhtml"
     publisher: "IANA"
-  - title: "MDN — Well-known URIs"
-    url: "https://developer.mozilla.org/en-US/docs/Web/Security"
-    publisher: "MDN"
 ---
 
 ## What it is

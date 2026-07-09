@@ -6,8 +6,8 @@ summary: "A plain-text file at the site root that tells crawlers which paths the
 status: recommended
 order: 10
 appliesTo: [all]
-relatedSlugs: [xml-sitemaps, robots-for-ai-crawlers, redirects]
-updated: "2026-05-29T09:13:20.000Z"
+relatedSlugs: [xml-sitemaps, robots-for-ai-crawlers, redirects, meta-robots]
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "RFC 9309 — Robots Exclusion Protocol"
     url: "https://www.rfc-editor.org/rfc/rfc9309.html"
@@ -71,6 +71,7 @@ Rules to follow:
 
 - `Disallow: /` accidentally left over from staging. This blocks the entire site.
 - Disallowing a URL that you also want deindexed. Crawlers cannot read a `noindex` they are not allowed to fetch.
+- Adding a `Noindex:` line to robots.txt to keep a page out of search. It was never part of the standard, Google stopped honouring the unofficial version in September 2019, and unsupported lines are silently ignored. robots.txt governs crawling, not indexing: to deindex a page, let it be crawled and serve `noindex` in a meta robots tag or `X-Robots-Tag`.
 - Blocking CSS and JS. Google needs to render the page to rank it.
 - Serving `robots.txt` from a CDN that returns `5xx` during incidents — crawlers stop fetching the whole site.
 

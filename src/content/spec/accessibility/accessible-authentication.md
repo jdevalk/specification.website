@@ -7,7 +7,7 @@ status: recommended
 order: 115
 appliesTo: [all]
 relatedSlugs: [form-labels, form-errors, mobile-form-inputs, webauthn, redundant-entry]
-updated: "2026-06-17T00:00:00.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "WCAG 3.3.8 — Accessible Authentication (Minimum) (Level AA)"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/accessible-authentication-minimum.html"
@@ -26,6 +26,8 @@ sources:
 ## What it is
 
 WCAG 2.2 added two success criteria, both about logging in: **3.3.8 Accessible Authentication (Minimum)**, Level AA, and **3.3.9 (Enhanced)**, Level AAA. The rule is that no step of an authentication process may rely on a **cognitive function test** — remembering a password, solving a puzzle, transcribing characters, or recognising things — unless an accessible alternative is offered. The Minimum criterion exempts object recognition (e.g. "pick the photos with a bus") and personal-content recognition; the Enhanced criterion removes even those exemptions.
+
+This does not outlaw passwords. A password field is fine as long as something other than the user's memory can supply the value: the criterion is satisfied when a mechanism is available to help, such as a password manager filling the field or simply allowing paste. What fails is a step that forces recall or transcription with no such help. So the fix is rarely to abolish passwords; it is to stop blocking the tools that remove the memory burden.
 
 ## Why it matters
 

@@ -7,7 +7,7 @@ status: recommended
 order: 55
 appliesTo: [all]
 relatedSlugs: [cache-control, canonical-url, speculation-rules, view-transitions, url-structure]
-updated: "2026-05-29T12:14:17.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "No-Vary-Search — WICG editor's draft"
     url: "https://wicg.github.io/nav-speculation/no-vary-search.html"
@@ -39,9 +39,9 @@ The directives are small and precise:
 
 ## Why it matters
 
-- **Prefetch hits land more often.** Pages prefetched via [Speculation Rules](/spec/performance/speculation-rules.md) only count as a hit if the final URL matches. Without `No-Vary-Search`, a click that adds `?utm_source=newsletter` misses the prefetch and re-fetches the page.
+- **Prefetch hits land more often.** Pages prefetched via [Speculation Rules](/spec/performance/speculation-rules/) only count as a hit if the final URL matches. Without `No-Vary-Search`, a click that adds `?utm_source=newsletter` misses the prefetch and re-fetches the page.
 - **CDN cache hit rate improves.** The same logic applies to shared caches: declaring that tracking params do not vary the response lets one cached object serve every campaign.
-- **Less duplicate work for archives and crawlers.** Search engines treat URL variants as distinct pages by default; the [canonical link](/spec/foundations/canonical-url.md) collapses them for indexing, but `No-Vary-Search` collapses them at the HTTP layer too.
+- **Less duplicate work for archives and crawlers.** Search engines treat URL variants as distinct pages by default; the [canonical link](/spec/foundations/canonical-url/) collapses them for indexing, but `No-Vary-Search` collapses them at the HTTP layer too.
 - **Cheap to ship.** It is one response header. No code changes, no URL rewriting, no redirects to debug.
 
 ## How to implement

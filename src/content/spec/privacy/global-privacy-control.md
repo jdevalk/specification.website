@@ -7,7 +7,7 @@ status: recommended
 order: 30
 appliesTo: [all]
 relatedSlugs: [cookie-consent, privacy-policy, analytics-privacy]
-updated: "2026-06-11T00:00:00.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "Global Privacy Control specification"
     url: "https://w3c.github.io/gpc/"
@@ -30,6 +30,8 @@ The signal is sent two ways:
 - A JavaScript property: `navigator.globalPrivacyControl === true`
 
 Both are read-only and trivial to detect server-side or client-side.
+
+GPC is not Do Not Track. The `DNT` header shipped a decade earlier with the same ambition and failed, because nothing obliged a site to honour it: it was a polite request that sites were free to ignore, and almost all did. GPC sends the same kind of signal but carries different legal weight. Where DNT was voluntary everywhere, GPC is a binding opt-out under several US state privacy laws, so ignoring it is not a stylistic choice but a violation. If you dismissed GPC as "another header nobody enforces", that reasoning was true of DNT and is wrong about GPC.
 
 ## Why it matters
 

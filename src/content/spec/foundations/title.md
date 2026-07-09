@@ -2,12 +2,12 @@
 title: "The <title> element"
 slug: title
 category: foundations
-summary: "Every HTML document must have exactly one non-empty <title> element inside <head>. It is used by browsers, search engines, screen readers, social previews, and AI agents."
+summary: "Every HTML document must have exactly one non-empty <title> element inside <head>. It names the page for browsers, search engines, screen readers, social previews, and AI agents. It is not the same thing as the page's <h1>."
 status: required
 order: 50
 appliesTo: [all]
-relatedSlugs: [meta-description, canonical-url, open-graph]
-updated: "2026-05-29T09:13:20.000Z"
+relatedSlugs: [meta-description, canonical-url, open-graph, heading-hierarchy]
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "HTML Living Standard — The title element"
     url: "https://html.spec.whatwg.org/multipage/semantics.html#the-title-element"
@@ -31,6 +31,10 @@ The `<title>` element is a required child of `<head>` that names the document. I
 <title>Setting up CSP · The Website Specification</title>
 ```
 
+The `<title>` is not the `<h1>`. Both name the page, but they are read in different places. The `<h1>` sits at the top of the content, where the reader can already see the logo, the navigation and the URL. It can assume you know where you are. The `<title>` appears where none of that is present: a browser tab, a bookmark, a list of search results drawn from many different sites, the first thing a screen reader announces on load. It can assume nothing.
+
+That is why "Setting up CSP" is a good `<h1>` and a poor `<title>`. As an `<h1>`, the site name is already on the screen. As a `<title>` it is not, so the title has to carry it: `Setting up CSP · The Website Specification`.
+
 ## Why it matters
 
 - **Browsers** show the title in the tab, the window, the bookmark, and the history entry.
@@ -43,10 +47,9 @@ Missing or empty titles are a WCAG 2.4.2 Level A failure — the lowest accessib
 
 ## How to implement
 
-Write the title for the page, not for the site:
+Because the title runs without context, write it for the page, not for the site:
 
-- **Page-specific first, site name second**, separated by a delimiter such as `·`, `—`, or `|`.
-- **Front-load the unique part.** Truncation in search results and tabs hides the end of the string.
+- **Page-specific first, site name second**, separated by a delimiter such as `·`, `—`, or `|`. The unique part is what a reader scanning tabs or search results needs; put it where truncation cannot hide it.
 - **50–60 characters** is a reasonable target. Google typically displays around 600 pixels of width.
 - **One per page, unique per page.** Two pages with the same title is a quality signal that they are duplicates.
 - **No keyword stuffing.** Write what the page is about.

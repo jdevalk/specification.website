@@ -7,7 +7,7 @@ status: recommended
 order: 40
 appliesTo: [all]
 relatedSlugs: [offline-support, favicons]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "W3C — Web Application Manifest"
     url: "https://www.w3.org/TR/appmanifest/"
@@ -22,7 +22,7 @@ sources:
 
 ## What it is
 
-A web app manifest is a JSON document linked from the HTML head that describes how the site should behave when installed to a device's home screen or app launcher. It is the entry point for the Progressive Web App features modern browsers expose — installability, splash screens, themed UI, and maskable icons that look right on every platform.
+A web app manifest is a JSON document linked from the HTML head that describes how the site should behave when installed to a device's home screen or app launcher. It is declarative metadata and nothing more: it never runs, caches nothing, and intercepts no requests. What it unlocks is how the site looks and installs: installability, splash screens, themed UI, and maskable icons that render correctly on every platform. It does not make the site work offline. That is the job of a separate [service worker](/spec/resilience/offline-support/), and the two are independent despite both wearing the "PWA" label. You can ship either without the other.
 
 Serve it at `/site.webmanifest` or `/manifest.webmanifest` and link it from the page:
 
@@ -77,7 +77,7 @@ Required fields for installability in Chromium browsers:
 - `icons` — at least one 192×192 and one 512×512 PNG. Add a separate icon with `"purpose": "maskable"` so Android can apply its adaptive icon mask without cropping content.
 - `theme_color` and `background_color` — the first themes the OS chrome, the second paints the splash screen before the page loads.
 
-Serve the file with `Content-Type: application/manifest+json`.
+The fields alone are not enough: installability also requires the page be served over HTTPS (or `localhost` in development). Serve the manifest file itself with `Content-Type: application/manifest+json`.
 
 ## Common mistakes
 

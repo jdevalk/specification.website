@@ -7,7 +7,7 @@ status: recommended
 order: 30
 appliesTo: [all]
 relatedSlugs: [https-tls, frame-ancestors, subresource-integrity, permissions-policy, mixed-content, cross-origin-isolation, reporting-endpoints, trusted-types]
-updated: "2026-06-08T20:15:00.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "Content Security Policy Level 3"
     url: "https://www.w3.org/TR/CSP3/"
@@ -50,6 +50,8 @@ Content-Security-Policy:
   report-to csp-endpoint
 ```
 
+That `script-src` looks self-contradicting: it lists `'unsafe-inline'` and `https:`, the very things the mistakes below tell you to drop. The contradiction is deliberate and safe. Once `'strict-dynamic'` and a nonce are present, a modern browser ignores both. The CSP Level 3 rule is that `'strict-dynamic'` discards every host allowlist and `'unsafe-inline'`, leaving the nonce as the only thing that decides what runs. The `https:` and `'unsafe-inline'` are there purely as a fallback for older browsers that predate nonces, giving them a weak policy rather than none. The nonce carries the real policy; the leftovers are for readers that cannot understand it. What you must never do is ship `'unsafe-inline'` _without_ a nonce and `'strict-dynamic'`: on its own it is not a fallback, it is the whole policy, and it permits exactly the injected inline script CSP exists to block.
+
 Key directives:
 
 - **`default-src 'self'`** — fallback for all fetch directives. Allow your own origin by default.
@@ -65,7 +67,7 @@ Generate a fresh nonce per response and embed it in every inline `<script>` tag.
 
 ## Common mistakes
 
-- **`unsafe-inline` and `unsafe-eval`.** Either one neutralises most of the protection. Use nonces or hashes instead.
+- **`unsafe-inline` or `unsafe-eval` standing alone.** As above, `'unsafe-inline'` only degrades safely with a nonce and `'strict-dynamic'` beside it; by itself it neutralises the protection, and `'unsafe-eval'` re-enables `eval()`. Use nonces or hashes.
 - **Wildcards like `script-src *` or `https:` alone.** Almost as bad as no policy at all.
 - **No `frame-ancestors`.** Leaves clickjacking open.
 - **Forgetting the nonce on server-rendered inline scripts.** The browser will block them and the page breaks.

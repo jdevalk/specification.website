@@ -7,7 +7,7 @@ status: recommended
 order: 20
 appliesTo: [all]
 relatedSlugs: [sitemap-index, image-sitemaps, robots-txt, canonical-url, schemamap]
-updated: "2026-05-29T19:19:26.585Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "Sitemaps XML format"
     url: "https://www.sitemaps.org/protocol.html"
@@ -44,6 +44,8 @@ An XML sitemap is a structured list of the URLs a site wants search engines to k
 ## Why it matters
 
 Crawlers find URLs by following links. A sitemap is a shortcut: it lists every canonical URL, even those that are only weakly linked, and tells the crawler when they last changed. Without one, new pages can take days or weeks to be discovered.
+
+A sitemap does not make a page rank, and inclusion is not a promise it will be indexed. It is a discovery and scheduling hint, nothing more: a URL can sit in the sitemap for weeks and stay out of the index if the search engine judges it thin or duplicate. Indexing and ranking are decided after the crawl, on the page itself, not on its presence in a list.
 
 A sitemap is also the cleanest way to surface translation pairs, image and video metadata, and large archives. It is the main signal that powers crawl scheduling on Bing and the IndexNow protocol.
 

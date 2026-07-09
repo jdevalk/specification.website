@@ -7,7 +7,7 @@ status: optional
 order: 30
 appliesTo: [all]
 relatedSlugs: [pwa-manifest, error-pages, graceful-degradation]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "MDN — Service Worker API"
     url: "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API"
@@ -26,6 +26,8 @@ sources:
 ## What it is
 
 A service worker is a JavaScript file that the browser runs in the background, separate from any page. It sits between the page and the network and can intercept requests, return cached responses, and respond when the network is unavailable. The minimum useful offline feature is a single cached fallback page that the worker serves when a navigation request fails.
+
+A service worker is not an ordinary script. A normal `<script>` runs when the page loads and is gone on reload; a service worker installs once and keeps controlling later visits to the origin, mediating their requests, until the browser fetches and activates a replacement. That persistence is what makes offline support possible. It is also the catch: a bug in the worker is not fixed by deploying new HTML, because the browser keeps serving through the installed worker until a corrected one takes over. Ship a worker you can roll back.
 
 ## Why it matters
 
@@ -80,7 +82,7 @@ Always include a version string in the cache name and clean up old caches on `ac
 - Forgetting to bump the cache version on deploy, so users never see new content.
 - Registering the service worker before the page is interactive and blocking first paint.
 - Caching responses with `Cache-Control: no-store` or authenticated API calls.
-- No way to unregister — once a buggy worker ships, it can be hard to remove.
+- No way to unregister a shipped worker. Because it outlives the deploy, plan the kill switch before you launch, not after it misbehaves.
 
 ## Verification
 

@@ -7,7 +7,7 @@ status: required
 order: 10
 appliesTo: [all]
 relatedSlugs: [soft-404, monitoring-uptime, maintenance-pages, deprecation-and-sunset]
-updated: "2026-05-29T18:54:03.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "RFC 9110 — HTTP Semantics: 404 Not Found"
     url: "https://www.rfc-editor.org/rfc/rfc9110.html#name-404-not-found"
@@ -25,11 +25,13 @@ sources:
 
 ## What it is
 
-A custom error page is the document a server returns when it cannot fulfil a request. The two pages every site needs are the **404 Not Found** for missing resources and the **500 Internal Server Error** for unexpected failures. The page must be styled to match the rest of the site and must return the matching HTTP status code in the response headers.
+A custom error page is the document a server returns when it cannot fulfil a request. The two pages every site needs are the **404 Not Found** for missing resources and the **500 Internal Server Error** for unexpected failures.
+
+A custom error page has two parts that are easy to conflate. One is the document the human reads: a styled page, matching the rest of the site, that explains what went wrong. The other is the HTTP status code in the response headers, which the human never sees but every crawler, link checker, and monitoring tool reads. Only the status code is the contract. A well-designed "page not found" that returns `200 OK` has reassured the visitor and misinformed every machine.
 
 ## Why it matters
 
-The status code is what crawlers, link checkers, and monitoring tools read. A "page not found" message that returns `200 OK` is a **soft 404**: search engines index the error page, link checkers see no broken links, and analytics tools count failures as normal traffic. Google explicitly treats soft 404s as a quality problem.
+That mismatch has a name. A "page not found" message that returns `200 OK` is a **soft 404**: search engines index the error page, link checkers see no broken links, and analytics tools count failures as normal traffic. Google explicitly treats soft 404s as a quality problem.
 
 For humans, a generic server error page or a stack trace damages trust and may leak file paths, framework versions, or database details that help an attacker. A custom page keeps users in the site and gives them an obvious next step.
 

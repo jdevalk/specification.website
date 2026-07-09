@@ -7,7 +7,7 @@ status: recommended
 order: 70
 appliesTo: [all]
 relatedSlugs: [title, meta-description, open-graph, no-vary-search]
-updated: "2026-06-18T00:00:00.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "RFC 6596 — The Canonical Link Relation"
     url: "https://www.rfc-editor.org/rfc/rfc6596"
@@ -33,6 +33,8 @@ The canonical link tells crawlers which URL is the authoritative version of a pa
 
 It belongs in `<head>` and was standardised in [RFC 6596](https://www.rfc-editor.org/rfc/rfc6596). All major search engines honour it.
 
+A canonical is not a redirect, and it is not `noindex`. The other URLs stay live, keep returning `200`, and stay crawlable; nothing changes for a visitor who lands on one. The tag only asks search engines to _attribute_ the content to the URL you name, so ranking signals, backlinks, and the indexed address consolidate there instead of splitting across the duplicates. It changes where credit lands, not what is reachable.
+
 ## Why it matters
 
 The same content often lives at multiple URLs without anyone meaning it to:
@@ -44,7 +46,7 @@ The same content often lives at multiple URLs without anyone meaning it to:
 - `/page?sort=date` and `/page?sort=name` (filter and sort variants)
 - Paginated archives, printer-friendly views, AMP versions
 
-Without a canonical, crawlers may index every variant separately, splitting ranking signals and backlinks across duplicates. With a canonical, those signals consolidate on one URL. The result is a stronger ranking for the page you actually want to rank, and a cleaner index.
+Without a canonical, crawlers may index every variant separately, splitting ranking signals and backlinks across duplicates. Consolidating them gives a stronger ranking for the page you actually want to rank, and a cleaner index.
 
 A canonical is a **strong hint**, not an absolute directive. Search engines can override it if other signals (sitemaps, redirects, internal links) point elsewhere. Make all your signals agree.
 

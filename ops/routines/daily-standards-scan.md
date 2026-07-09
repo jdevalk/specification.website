@@ -101,7 +101,11 @@ nothing stale, say so in Slack and open no PRs.
   - **New page:** full frontmatter (`title`, `slug`, `category`, `summary`, `status`,
     `order`, `appliesTo`, `relatedSlugs`, `sources` [2–4], `updated`) + the canonical
     sections (`## What it is` / `## Why it matters` / `## How to implement` /
-    `## Common mistakes` / `## Verification`), British English, 250–500 words.
+    `## Common mistakes` / `## Verification`), British English, up to ~1000 words
+    (up to ~2000 only for a genuinely hard topic) with no minimum — do not pad to a
+    target; length must be earned by explanation. Name the wrong belief the reader
+    arrives with and contrast against it where the topic has one (`<title>` is not
+    `<h1>`); skip that paragraph on pages that have no such misconception.
   - Wire `relatedSlugs` on adjacent pages; if it adds a discoverable resource, update the
     api-catalog Linkset and the `Link` header per CLAUDE.md.
   - If page count or categories change, update

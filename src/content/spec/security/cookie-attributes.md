@@ -7,7 +7,7 @@ status: required
 order: 100
 appliesTo: [all]
 relatedSlugs: [https-tls, hsts, frame-ancestors, referrer-policy, clear-site-data, privacy/storage-access-api]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "draft-ietf-httpbis-rfc6265bis — Cookies: HTTP State Management Mechanism"
     url: "https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-rfc6265bis"
@@ -70,6 +70,7 @@ Always set an explicit `Path`, `Max-Age` or `Expires`, and a sensible value leng
 - **`SameSite=None` without `Secure`.** Modern browsers reject the cookie outright.
 - **Putting `__Host-` on a cookie with `Domain` set.** Browser ignores it.
 - **Sharing one cookie across many subdomains by default.** Set `Domain` only when you actually need it.
+- **Treating `SameSite` as a complete CSRF defence.** It is defence in depth, not a replacement for anti-CSRF tokens. `SameSite=Lax` still sends the cookie on top-level GET navigations, so a state-changing request reachable by `GET` and triggered from another site keeps the session attached; and `SameSite` keys on the registered domain, not the origin, so it trusts every subdomain. Pair it with per-request CSRF tokens or a `Sec-Fetch-Site` check for state-changing endpoints.
 
 ## Verification
 

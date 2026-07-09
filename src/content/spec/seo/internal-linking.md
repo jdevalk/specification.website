@@ -6,14 +6,17 @@ summary: "Links from one page on a site to another. The strongest signal you con
 status: recommended
 order: 90
 appliesTo: [all]
-relatedSlugs: [url-structure, breadcrumbs, heading-hierarchy, xml-sitemaps]
-updated: "2026-05-29T09:13:20.000Z"
+relatedSlugs: [url-structure, breadcrumbs, heading-hierarchy, xml-sitemaps, robots-txt]
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "Yoast — Internal linking for SEO"
     url: "https://yoast.com/internal-linking-for-seo-why-and-how/"
     publisher: "Yoast"
   - title: "Google — Links and link building"
     url: "https://developers.google.com/search/docs/crawling-indexing/links-crawlable"
+    publisher: "Google Search Central"
+  - title: "Google — Qualify your outbound links"
+    url: "https://developers.google.com/search/docs/crawling-indexing/qualify-outbound-links"
     publisher: "Google Search Central"
   - title: "MDN — Creating hyperlinks"
     url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Structuring_content/Creating_links"
@@ -63,6 +66,7 @@ Avoid linking inside long lists of navigation that repeat on every page. Those c
 - Linking to staging or preview URLs by accident.
 - Building the entire navigation in JavaScript with no `<a href>` fallback. Crawlers and screen readers cannot follow it.
 - Pointing internal links at redirect chains created by an old migration.
+- Using `rel="nofollow"` on internal links to "sculpt" ranking signals or save crawl budget. Google treats nofollow as a hint, not an instruction, so nofollowed pages can still be crawled and indexed through your sitemap or other links. It is not a crawl-control lever: to keep your own pages out of the crawl, Google's guidance is a robots.txt `disallow`, not `nofollow`.
 
 ## Verification
 

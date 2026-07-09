@@ -7,7 +7,7 @@ status: recommended
 order: 50
 appliesTo: [all]
 relatedSlugs: [cookie-consent, third-party-scripts, data-minimization, privacy-policy]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "EDPB — 101 complaints concerning EU-U.S. data transfers (Google Analytics)"
     url: "https://edpb.europa.eu/news/news/2022/austrian-dpa-decision-101-complaints-issued_en"
@@ -31,6 +31,8 @@ Most product questions — what pages people read, where they came from, where t
 Between 2022 and 2023, the Austrian, French, Italian, and Danish data protection authorities ruled that the standard configuration of Google Analytics violated the GDPR because of transfers to the US. The EU–US Data Privacy Framework has changed the legal picture, but regulators still treat ad-tech-grade analytics with scrutiny, and the underlying design problem — every visit shared with a third party that combines it with data from millions of other sites — has not gone away.
 
 There is a more practical reason: a cookieless analytics tool does not require a consent banner under EU rules, because nothing is stored on the user's device. The data you get is also more representative, because nobody opts out.
+
+Cookieless is not the same as GDPR-exempt, and the two are easily confused. Two separate laws apply. The ePrivacy Directive governs storing or reading anything on the device, and going cookieless clears that hurdle, which is why the banner disappears. The GDPR governs the processing of personal data, and it does not disappear: an IP address or a device-derived identifier is still personal data, so you still need a lawful basis, and the minimisation and retention duties below still bind you. Removing the cookie removes the consent prompt, not the obligation to handle the data lawfully.
 
 ## How to implement
 

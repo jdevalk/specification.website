@@ -7,7 +7,7 @@ status: required
 order: 10
 appliesTo: [all]
 relatedSlugs: [hsts, caa-records, content-security-policy, mixed-content]
-updated: "2026-06-08T20:15:00.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "RFC 8446 — The Transport Layer Security (TLS) Protocol Version 1.3"
     url: "https://www.rfc-editor.org/rfc/rfc8446"
@@ -26,6 +26,8 @@ sources:
 ## What it is
 
 HTTPS is HTTP carried over TLS, a protocol that encrypts and authenticates the connection between the browser and the server. TLS 1.3 (RFC 8446) is the current version; TLS 1.2 remains acceptable. Everything earlier — TLS 1.0, TLS 1.1, and all versions of SSL — is broken and must be disabled.
+
+What HTTPS does not do is vouch for the site. The certificate proves you are talking to the genuine holder of the name in the address bar, and that nobody on the path can read or alter the bytes. It says nothing about whether that party is honest: a phishing page served over flawless HTTPS shows the same padlock a bank does. HTTPS secures the channel, not the character of whatever is at the far end of it.
 
 ## Why it matters
 

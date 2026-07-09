@@ -7,7 +7,7 @@ status: required
 order: 10
 appliesTo: [all]
 relatedSlugs: [html-lang, meta-charset, meta-viewport]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "HTML Living Standard — The DOCTYPE"
     url: "https://html.spec.whatwg.org/multipage/syntax.html#the-doctype"
@@ -29,6 +29,8 @@ The doctype is a short declaration at the very top of an HTML document that tell
 ```
 
 It is case-insensitive, so `<!DOCTYPE html>` is equally valid. It must be the first thing in the document, before `<html>`, with no whitespace, comments, or byte-order mark trickery in front of it.
+
+Despite how it looks, the doctype does not declare a version of HTML. The old `HTML 4.01 Transitional` and `XHTML 1.0 Strict` doctypes pointed at a DTD, so reading them as "this document is written in that version" was fair. `<!doctype html>` carries no version and switches on no "HTML5 mode". The modern elements and features you may use do not depend on it: `<section>`, `<video>`, and the rest parse with or without a doctype. Its only job is to choose the rendering mode: present and well-formed gives standards mode, absent or malformed gives quirks mode.
 
 ## Why it matters
 
@@ -58,7 +60,7 @@ Put the doctype on line one of every HTML response. No XML prolog, no comment, n
 </html>
 ```
 
-The old HTML 4 and XHTML doctypes (`HTML 4.01 Transitional`, `XHTML 1.0 Strict`, etc.) are obsolete. Replace them with `<!doctype html>`. The short form is part of the HTML Living Standard and works in every browser back to IE6.
+Replace any legacy HTML 4 or XHTML doctype with `<!doctype html>`. The short form is part of the HTML Living Standard and works in every browser back to IE6.
 
 For XML-serialised HTML (XHTML served as `application/xhtml+xml`), the doctype is optional, but the document must still parse as XML. Almost no public sites need this — serve HTML.
 

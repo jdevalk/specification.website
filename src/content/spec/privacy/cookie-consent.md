@@ -7,7 +7,7 @@ status: required
 order: 20
 appliesTo: [all]
 relatedSlugs: [privacy-policy, third-party-scripts, analytics-privacy, global-privacy-control]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "EDPB Guidelines 03/2022 on deceptive design patterns in social media"
     url: "https://edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-032022-deceptive-design-patterns-social-media_en"
@@ -28,6 +28,8 @@ sources:
 In the EU and UK, the ePrivacy Directive — implemented through national laws such as PECR in the UK — requires consent before storing or reading information on a user's device. The GDPR then defines what valid consent looks like: a freely given, specific, informed, and unambiguous indication of the user's wishes, given by a clear affirmative action.
 
 This applies to cookies, but also to localStorage, sessionStorage, IndexedDB, fingerprinting, and pixel trackers. The technology does not matter; the storage and access do.
+
+A banner is not what the law requires. The obligation is narrow: do not store or read non-essential information on the device without prior consent. A banner is one way to collect that consent, not the requirement itself. A site that sets no non-essential storage needs no banner at all, and a banner that drops analytics cookies before the user has chosen is non-compliant however polished it looks. The compliant state is defined by what your site does before the click, not by the presence of the dialog.
 
 ## Why it matters
 

@@ -7,7 +7,7 @@ status: optional
 order: 120
 appliesTo: [all]
 relatedSlugs: [caa-records, https-tls, hsts]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "RFC 4033 — DNS Security Introduction and Requirements"
     url: "https://www.rfc-editor.org/rfc/rfc4033"
@@ -28,6 +28,8 @@ sources:
 DNS Security Extensions add cryptographic signatures to DNS records. A signed zone publishes a public key (`DNSKEY`); each record set is signed (`RRSIG`); the parent zone publishes a hash of your key (`DS`) so a resolver can build a chain of trust from the DNS root down to your domain. Defined originally in RFC 4033 and 4035, with operational guidance in RFC 9364.
 
 A validating resolver that asks for `www.example.com` checks every signature on the way and refuses to return a forged answer.
+
+DNSSEC signs; it does not encrypt. The signatures let a resolver detect a tampered or forged answer, but the query and the answer still travel in clear text, so anyone on the path can still see which names you look up. Confidentiality for DNS is a separate job, done by encrypted transports such as DNS over HTTPS or DNS over TLS. The two solve different problems, authenticity versus privacy, and are often deployed together.
 
 ## Why it matters
 

@@ -6,8 +6,8 @@ summary: "A proposed markdown file at the site root that gives LLMs a curated in
 status: recommended
 order: 20
 appliesTo: [all]
-relatedSlugs: [llms-full-txt, markdown-source-endpoints, agent-readiness-overview, robots-for-ai-crawlers, agent-skills-discovery, schemamap]
-updated: "2026-05-29T14:13:42.000Z"
+relatedSlugs: [llms-full-txt, markdown-source-endpoints, agent-readiness-overview, robots-for-ai-crawlers, content-signals, agent-skills-discovery, schemamap]
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "The /llms.txt proposal"
     url: "https://llmstxt.org/"
@@ -20,6 +20,8 @@ sources:
 ## What it is
 
 `/llms.txt` is a proposed convention for a markdown file served at the root of a site. It gives large language models a short, curated map of the content you most want them to see. The proposal lives at [llmstxt.org](https://llmstxt.org/) and was put forward by Jeremy Howard in 2024.
+
+The name invites a comparison with `robots.txt`, and it is the wrong one. `robots.txt` is a control file: it grants and withholds access, crawler by crawler. `llms.txt` controls nothing. Listing a page in it does not open that page, and leaving one out does not protect it; the file is an index and an invitation, not a permission. Access and usage policy live elsewhere, in [robots.txt for AI crawlers](/spec/agent-readiness/robots-for-ai-crawlers/) and [Content Signals](/spec/agent-readiness/content-signals/), which actually allow, disallow, and set training preferences.
 
 It is not a ratified standard. No major model vendor has committed to consuming it. Treat it as a low-cost bet that may pay off as agents look for cheap, authoritative summaries of a site.
 

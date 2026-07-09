@@ -7,7 +7,7 @@ status: required
 order: 10
 appliesTo: [all]
 relatedSlugs: [focus-indicators, semantic-html, forced-colors, contrast-color]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "WCAG 1.4.3 — Contrast (Minimum) (Level AA)"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html"
@@ -25,7 +25,7 @@ sources:
 
 ## What it is
 
-Contrast is the difference in luminance between the foreground (text, icons, control borders) and the background behind them. WCAG defines minimum ratios that pages must meet so that text remains legible for users with low vision, age-related sight loss, or colour vision deficiencies, and for everyone reading on a glare-filled screen.
+Contrast is the difference in luminance between the foreground (text, icons, control borders) and the background behind them. Luminance is not the same as how different two colours look. A vivid pairing chosen by hue, such as saturated red on green, can sit at almost the same lightness and fail, while an unremarkable dark grey on white passes comfortably. What the ratio measures is lightness against lightness, so picking colours because they clash or feel bold is no guarantee they contrast. WCAG defines minimum ratios that pages must meet so that text remains legible for users with low vision, age-related sight loss, or colour vision deficiencies, and for everyone reading on a glare-filled screen.
 
 ## Why it matters
 

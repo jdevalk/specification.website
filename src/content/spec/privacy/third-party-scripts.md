@@ -7,7 +7,7 @@ status: recommended
 order: 40
 appliesTo: [all]
 relatedSlugs: [cookie-consent, analytics-privacy, storage-access-api, security/content-security-policy, security/subresource-integrity]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "MDN — Content Security Policy (CSP)"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP"
@@ -42,7 +42,7 @@ Treat every third party as a liability you are choosing to take on.
 - **Defer or gate the rest.** Anything that is not essential to first render should load after user interaction, or only after consent for non-essential storage.
 - **Use a Content Security Policy.** A `script-src` allowlist prevents a compromised page from loading scripts you did not approve. See `security/content-security-policy`.
 - **Use Subresource Integrity** for any script you must load from a third party where the URL is stable. An SRI hash ensures the file has not changed since you audited it. See `security/subresource-integrity`.
-- **Set a Referrer-Policy** of `strict-origin-when-cross-origin` or stricter so third parties do not see full URLs.
+- **Set a Referrer-Policy** of `strict-origin-when-cross-origin` or stricter. It trims the URL carried in the `Referer` header the browser sends when it fetches a third-party resource, so a pixel or image endpoint sees your origin rather than the full path and query string.
 
 ## Common mistakes
 
@@ -50,4 +50,5 @@ Treat every third party as a liability you are choosing to take on.
 - Hot-linking fonts or libraries from a public CDN to "save bandwidth" while leaking visitor IPs to that CDN.
 - Adding session-replay tools without checking what they record. Many capture passwords and credit cards by default.
 - Setting a permissive CSP (`script-src *`) that defeats the protection.
+- Expecting `Referrer-Policy` to hide the URL from a third-party script. It controls the `Referer` header only. A script loaded with `<script src>` runs inside your document and reads `location.href` directly, whatever the policy says. The policy limits what a fetched resource is told, not what an executing script can see, so the two protections are not interchangeable.
 - Auditing once at launch and never again.
