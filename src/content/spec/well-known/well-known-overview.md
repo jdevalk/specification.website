@@ -7,7 +7,7 @@ status: recommended
 order: 10
 appliesTo: [all]
 relatedSlugs: [change-password, openid-configuration, oauth-authorization-server, oauth-protected-resource, webfinger, apple-app-site-association, assetlinks-json, nodeinfo, api-catalog, webauthn]
-updated: "2026-06-08T12:00:00.000Z"
+updated: "2026-07-09T12:00:00.000Z"
 sources:
   - title: "RFC 8615 — Well-Known Uniform Resource Identifiers (URIs)"
     url: "https://www.rfc-editor.org/rfc/rfc8615"
@@ -15,9 +15,6 @@ sources:
   - title: "IANA — Well-Known URIs Registry"
     url: "https://www.iana.org/assignments/well-known-uris/well-known-uris.xhtml"
     publisher: "IANA"
-  - title: "MDN — Well-known URIs"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers"
-    publisher: "MDN"
 ---
 
 ## What it is
