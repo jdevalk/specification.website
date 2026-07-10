@@ -6,7 +6,8 @@ summary: "Interactive controls must be large enough to tap or click reliably. WC
 status: required
 order: 145
 appliesTo: [all]
-relatedSlugs: [keyboard-navigation, focus-indicators, empty-links-buttons, mobile-form-inputs]
+relatedSlugs:
+  [keyboard-navigation, focus-indicators, empty-links-buttons, mobile-form-inputs, dragging-movements]
 updated: "2026-06-08T00:00:00.000Z"
 sources:
   - title: "WCAG 2.5.8 — Target Size (Minimum) Level AA"

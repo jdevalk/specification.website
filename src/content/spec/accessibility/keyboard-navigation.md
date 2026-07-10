@@ -6,7 +6,7 @@ summary: "Every interactive element on the page must be reachable and operable w
 status: required
 order: 40
 appliesTo: [all]
-relatedSlugs: [focus-indicators, skip-links, semantic-html, inert-attribute]
+relatedSlugs: [focus-indicators, skip-links, semantic-html, inert-attribute, dragging-movements]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
   - title: "WCAG 2.1.1 — Keyboard (Level A)"

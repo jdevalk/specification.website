@@ -6,7 +6,16 @@ summary: "Prefer native HTML interactive elements — <button>, <a>, <details>/<
 status: recommended
 order: 155
 appliesTo: [all]
-relatedSlugs: [semantic-html, aria-usage, keyboard-navigation, hidden-until-found, inert-attribute, invoker-commands]
+relatedSlugs:
+  [
+    semantic-html,
+    aria-usage,
+    keyboard-navigation,
+    hidden-until-found,
+    inert-attribute,
+    invoker-commands,
+    dragging-movements,
+  ]
 updated: "2026-07-08T00:00:00.000Z"
 sources:
   - title: "WHATWG HTML — The details element"
