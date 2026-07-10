@@ -13,13 +13,13 @@ sources:
     url: "https://html.spec.whatwg.org/multipage/scripting.html#the-noscript-element"
     publisher: "WHATWG"
   - title: "MDN — Progressive enhancement"
-    url: "https://developer.mozilla.org/en-US/docs/Glossary/Progressive_enhancement"
+    url: "https://developer.mozilla.org/en-US/docs/Glossary/Progressive_Enhancement"
     publisher: "MDN"
   - title: "MDN — Graceful degradation"
     url: "https://developer.mozilla.org/en-US/docs/Glossary/Graceful_degradation"
     publisher: "MDN"
   - title: "MDN — <noscript>"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/noscript"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/noscript"
     publisher: "MDN"
 ---
 

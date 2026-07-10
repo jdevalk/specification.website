@@ -10,13 +10,13 @@ relatedSlugs: [cookie-consent, analytics-privacy, storage-access-api, security/c
 updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "MDN — Content Security Policy (CSP)"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP"
     publisher: "MDN"
   - title: "EDPB Guidelines 2/2023 on Technical Scope of Art. 5(3) ePrivacy Directive"
     url: "https://edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-22023-technical-scope-art-53-eprivacy-directive_en"
     publisher: "EDPB"
   - title: "MDN — Subresource Integrity"
-    url: "https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity"
+    url: "https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity"
     publisher: "MDN"
 ---
 

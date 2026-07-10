@@ -19,7 +19,7 @@ sources:
     url: "https://developers.google.com/search/docs/crawling-indexing/http-network-errors#soft-404-errors"
     publisher: "Google Search Central"
   - title: "MDN — HTTP response status codes"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status"
     publisher: "MDN"
 ---
 

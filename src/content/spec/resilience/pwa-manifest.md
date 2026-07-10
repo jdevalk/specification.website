@@ -13,7 +13,7 @@ sources:
     url: "https://www.w3.org/TR/appmanifest/"
     publisher: "W3C"
   - title: "MDN — Web app manifest"
-    url: "https://developer.mozilla.org/en-US/docs/Web/Manifest"
+    url: "https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Manifest"
     publisher: "MDN"
   - title: "web.dev — Add a web app manifest"
     url: "https://web.dev/articles/add-manifest"
