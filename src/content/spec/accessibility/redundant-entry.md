@@ -6,7 +6,7 @@ summary: "Don't make people re-type information they already gave you in the sam
 status: recommended
 order: 116
 appliesTo: [all]
-relatedSlugs: [form-labels, form-errors, mobile-form-inputs, accessible-authentication]
+relatedSlugs: [form-labels, form-errors, mobile-form-inputs, accessible-authentication, consistent-help]
 updated: "2026-06-18T00:00:00.000Z"
 sources:
   - title: "WCAG 3.3.7 — Redundant Entry (Level A)"
