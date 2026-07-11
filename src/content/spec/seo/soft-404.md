@@ -16,7 +16,7 @@ sources:
     url: "https://www.rfc-editor.org/rfc/rfc9110.html#name-404-not-found"
     publisher: "IETF"
   - title: "MDN — HTTP response status codes"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Status"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status"
     publisher: "MDN"
 ---
 

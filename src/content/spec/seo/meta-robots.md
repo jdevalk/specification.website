@@ -19,7 +19,7 @@ sources:
     url: "https://www.bing.com/webmasters/help/which-robots-metatags-does-bing-support-5198d240"
     publisher: "Bing"
   - title: "MDN — <meta name=\"robots\">"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/name"
     publisher: "MDN"
 ---
 

@@ -16,7 +16,7 @@ sources:
     url: "https://developers.google.com/search/docs/crawling-indexing/301-redirects"
     publisher: "Google Search Central"
   - title: "MDN — Redirections in HTTP"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Redirections"
     publisher: "MDN"
 ---
 

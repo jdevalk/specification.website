@@ -19,7 +19,7 @@ sources:
     url: "https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/"
     publisher: "W3C WAI"
   - title: "MDN — aria-current"
-    url: "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Attributes/aria-current"
+    url: "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Reference/Attributes/aria-current"
     publisher: "MDN"
 ---
 

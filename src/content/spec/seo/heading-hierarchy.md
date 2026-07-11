@@ -19,7 +19,7 @@ sources:
     url: "https://www.w3.org/WAI/tutorials/page-structure/headings/"
     publisher: "W3C WAI"
   - title: "MDN — Heading elements"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/Heading_Elements"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/Heading_Elements"
     publisher: "MDN"
 ---
 
