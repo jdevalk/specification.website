@@ -16,7 +16,7 @@ sources:
     url: "https://html.spec.whatwg.org/multipage/tables.html"
     publisher: "WHATWG"
   - title: "MDN — <table>: The Table element"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/table"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/table"
     publisher: "MDN"
   - title: "Web Accessibility Tutorials — Tables"
     url: "https://www.w3.org/WAI/tutorials/tables/"

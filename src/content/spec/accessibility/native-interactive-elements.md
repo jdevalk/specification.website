@@ -25,7 +25,7 @@ sources:
     url: "https://html.spec.whatwg.org/multipage/interactive-elements.html#the-dialog-element"
     publisher: "WHATWG"
   - title: "MDN — <dialog>"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dialog"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/dialog"
     publisher: "MDN"
   - title: "WAI-ARIA Authoring Practices"
     url: "https://www.w3.org/WAI/ARIA/apg/"

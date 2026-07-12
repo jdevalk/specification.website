@@ -10,7 +10,7 @@ relatedSlugs: [title, open-graph, canonical-url]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
   - title: "MDN — <meta>: the metadata element"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta"
     publisher: "MDN"
   - title: "Google — Create good meta descriptions"
     url: "https://developers.google.com/search/docs/appearance/snippet"

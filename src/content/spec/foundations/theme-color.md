@@ -10,7 +10,7 @@ relatedSlugs: [color-scheme, favicons, meta-viewport, open-graph]
 updated: "2026-06-08T00:00:00.000Z"
 sources:
   - title: "MDN — <meta name=\"theme-color\">"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta/name/theme-color"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/name/theme-color"
     publisher: "MDN"
   - title: "HTML Living Standard — Other metadata names: theme-color"
     url: "https://html.spec.whatwg.org/multipage/semantics.html#meta-theme-color"

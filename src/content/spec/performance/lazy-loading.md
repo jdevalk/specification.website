@@ -10,13 +10,13 @@ relatedSlugs: [image-optimization, core-web-vitals, preload-prefetch-preconnect]
 updated: "2026-05-29T09:51:43.000Z"
 sources:
   - title: "MDN — <img> loading attribute"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#loading"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img#loading"
     publisher: "MDN"
   - title: "MDN — <iframe> loading attribute"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/iframe#loading"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/iframe#loading"
     publisher: "MDN"
   - title: "MDN — <video> loading attribute"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/video#loading"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/video#loading"
     publisher: "MDN"
   - title: "HTML Living Standard — The video element"
     url: "https://html.spec.whatwg.org/multipage/media.html#the-video-element"
@@ -25,7 +25,7 @@ sources:
     url: "https://web.dev/articles/browser-level-image-lazy-loading"
     publisher: "web.dev"
   - title: "MDN — decoding attribute"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#decoding"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img#decoding"
     publisher: "MDN"
 ---
 

@@ -13,7 +13,7 @@ sources:
     url: "https://html.spec.whatwg.org/multipage/scripting.html#the-script-element"
     publisher: "WHATWG"
   - title: "MDN — <script>"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script"
     publisher: "MDN"
   - title: "Chrome for Developers — Eliminate render-blocking resources"
     url: "https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources"

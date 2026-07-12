@@ -13,7 +13,7 @@ sources:
     url: "https://html.spec.whatwg.org/multipage/semantics.html#the-title-element"
     publisher: "WHATWG"
   - title: "MDN — <title>: The Document Title element"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/title"
     publisher: "MDN"
   - title: "WCAG 2.4.2 — Page Titled (Level A)"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/page-titled.html"

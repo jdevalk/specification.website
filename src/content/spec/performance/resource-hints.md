@@ -13,7 +13,7 @@ sources:
     url: "https://www.w3.org/TR/resource-hints/"
     publisher: "W3C"
   - title: "MDN — <link>: The External Resource Link element"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/link"
     publisher: "MDN"
   - title: "web.dev — Preload critical assets"
     url: "https://web.dev/articles/preload-critical-assets"

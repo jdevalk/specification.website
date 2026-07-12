@@ -13,7 +13,7 @@ sources:
     url: "https://html.spec.whatwg.org/multipage/semantics.html#charset"
     publisher: "WHATWG"
   - title: "MDN — <meta>: charset"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/meta#charset"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta#charset"
     publisher: "MDN"
   - title: "WHATWG Encoding Standard"
     url: "https://encoding.spec.whatwg.org/"

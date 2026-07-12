@@ -19,7 +19,7 @@ sources:
     url: "https://www.w3.org/WAI/WCAG22/Understanding/audio-only-and-video-only-prerecorded.html"
     publisher: "W3C"
   - title: "MDN — <track>: The Embed Text Track element"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/track"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/track"
     publisher: "MDN"
   - title: "WP Accessibility — Accessible media"
     url: "https://wpaccessibility.org/"

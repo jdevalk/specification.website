@@ -10,7 +10,7 @@ relatedSlugs: [resource-hints, early-hints, core-web-vitals, font-loading]
 updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "MDN — <link>: The External Resource Link element"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/link"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/link"
     publisher: "MDN"
   - title: "web.dev — Preload critical assets to improve loading speed"
     url: "https://web.dev/articles/preload-critical-assets"

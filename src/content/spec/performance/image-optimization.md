@@ -10,7 +10,7 @@ relatedSlugs: [lazy-loading, core-web-vitals, preload-prefetch-preconnect]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
   - title: "MDN — <img>: The Image Embed element"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img"
     publisher: "MDN"
   - title: "web.dev — Use modern image formats"
     url: "https://web.dev/articles/serve-images-webp"
