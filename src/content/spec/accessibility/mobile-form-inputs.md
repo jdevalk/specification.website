@@ -19,7 +19,7 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#input_types"
     publisher: "MDN"
   - title: "MDN — text-size-adjust"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/text-size-adjust"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/text-size-adjust"
     publisher: "MDN"
 ---
 

@@ -16,7 +16,7 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll-driven_animations"
     publisher: "MDN"
   - title: "MDN — animation-timeline"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timeline"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation-timeline"
     publisher: "MDN"
   - title: "Chrome for Developers — Scroll-driven animations"
     url: "https://developer.chrome.com/articles/scroll-driven-animations"

@@ -13,7 +13,7 @@ sources:
     url: "https://drafts.csswg.org/css-contain-2/"
     publisher: "W3C"
   - title: "MDN — contain"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/contain"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/contain"
     publisher: "MDN"
   - title: "web.dev — content-visibility: boost rendering performance"
     url: "https://web.dev/articles/content-visibility"

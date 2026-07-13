@@ -13,7 +13,7 @@ sources:
     url: "https://drafts.csswg.org/css-contain-2/"
     publisher: "W3C CSSWG"
   - title: "MDN — content-visibility"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/content-visibility"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/content-visibility"
     publisher: "MDN"
   - title: "Intersection Observer"
     url: "https://www.w3.org/TR/intersection-observer/"

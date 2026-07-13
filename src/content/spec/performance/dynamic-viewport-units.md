@@ -13,7 +13,7 @@ sources:
     url: "https://drafts.csswg.org/css-values-4/#viewport-relative-lengths"
     publisher: "W3C CSSWG"
   - title: "MDN — Viewport-percentage lengths"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/length#viewport-percentage_lengths"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length#viewport-percentage_lengths"
     publisher: "MDN"
   - title: "web.dev — The large, small, and dynamic viewport units"
     url: "https://web.dev/blog/viewport-units"

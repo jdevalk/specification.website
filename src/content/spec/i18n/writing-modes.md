@@ -19,7 +19,7 @@ sources:
     url: "https://www.w3.org/International/articles/typography/linebreak.en"
     publisher: "W3C"
   - title: "MDN — writing-mode"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/writing-mode"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/writing-mode"
     publisher: "MDN"
 ---
 

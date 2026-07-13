@@ -16,7 +16,7 @@ sources:
     url: "https://drafts.csswg.org/css-device-adapt/#viewport-meta"
     publisher: "W3C"
   - title: "MDN — env() and the safe-area-inset-* variables"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/env"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/env"
     publisher: "MDN"
   - title: "WCAG 1.4.4 — Resize Text (Level AA)"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/resize-text.html"
