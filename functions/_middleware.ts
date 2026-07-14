@@ -12,8 +12,8 @@
  * representations.
  *
  * A handful of short-URL aliases (e.g. `/security.txt`, `/sitemap.xml`) are
- * redirected here rather than in `public/_redirects`, so each 301 carries an
- * `X-Redirect-By` header naming what performed the redirect — a worked example
+ * redirected here rather than in `public/_redirects`, so each 301 carries a
+ * `Redirect-By` header naming what performed the redirect — a worked example
  * of /spec/resilience/redirect-by/. Cloudflare Pages' `_redirects` file cannot
  * attach custom response headers; middleware can.
  *
@@ -38,8 +38,9 @@ const SPEC_PAGE = /^\/spec\/([^/]+)\/([^/]+)\/?$/;
 
 // Short-URL aliases people guess at. Served here as 301s rather than from
 // public/_redirects so each response can name what redirected it via the
-// X-Redirect-By header — a non-standard but widely deployed convention
-// (WordPress core, Yoast SEO, TYPO3) for making redirect chains debuggable.
+// Redirect-By header — a non-standard but widely deployed convention (deployed
+// today as X-Redirect-By by WordPress core, Yoast SEO, TYPO3) for making
+// redirect chains debuggable. We emit the RFC-6648-clean, unprefixed name.
 // Worked example for /spec/resilience/redirect-by/.
 const REDIRECT_BY = "specification.website";
 const ALIAS_REDIRECTS: Record<string, string> = {
@@ -50,14 +51,14 @@ const ALIAS_REDIRECTS: Record<string, string> = {
   "/spec/index": "/spec/",
 };
 
-// A 301 that identifies its own source. X-Redirect-By is emitted immediately
+// A 301 that identifies its own source. Redirect-By is emitted immediately
 // before Location, per the convention. No body — this is a bare redirect.
 function aliasRedirect(url: URL, target: string): Response {
   return new Response(null, {
     status: 301,
     statusText: "Moved Permanently",
     headers: {
-      "X-Redirect-By": REDIRECT_BY,
+      "Redirect-By": REDIRECT_BY,
       Location: new URL(target, url).toString(),
       "Cache-Control": "public, max-age=3600",
     },

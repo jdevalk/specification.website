@@ -2,7 +2,7 @@
 #
 # The short-URL aliases (/security.txt, /change-password, /sitemap.xml,
 # /sitemap-0.xml, /spec/index) that used to live here are now served from
-# functions/_middleware.ts instead, so each 301 can carry an X-Redirect-By
+# functions/_middleware.ts instead, so each 301 can carry a Redirect-By
 # header naming what performed the redirect. Pages' _redirects file cannot set
 # custom response headers; the middleware can. See
 # /spec/resilience/redirect-by/. Keep this file for any future header-less
