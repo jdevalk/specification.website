@@ -40,6 +40,11 @@ cases and **(b)** send one Slack summary of everything found.
 - Adjacent (watch, don't blindly trust): `web.dev` — especially <https://web.dev/blog> —
   `developer.chrome.com`, Google Search Central — for emerging conventions worth
   promoting LATER
+- <https://mnot.net/blog/> (Mark Nottingham: HTTP WG co-chair and a designated expert for
+  the IANA HTTP Field Name registry): high-signal early commentary on HTTP headers,
+  Structured Fields, caching, and registry/protocol movement, often ahead of the RFC.
+  Treat what he flags as a lead to investigate; a page still cites the primary standard,
+  not the blog.
 
 ## Tools — use the MDN MCP server
 
