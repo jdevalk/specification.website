@@ -11,6 +11,12 @@
  * spec-page HTML responses so caches don't conflate the two
  * representations.
  *
+ * A handful of short-URL aliases (e.g. `/security.txt`, `/sitemap.xml`) are
+ * redirected here rather than in `public/_redirects`, so each 301 carries an
+ * `X-Redirect-By` header naming what performed the redirect — a worked example
+ * of /spec/resilience/redirect-by/. Cloudflare Pages' `_redirects` file cannot
+ * attach custom response headers; middleware can.
+ *
  * Also calls `logBot()` first thing, so every page and well-known request
  * that looks like a crawler / agent gets recorded in the AGENT_LOG
  * Analytics Engine dataset (read by /admin/stats).
@@ -29,6 +35,34 @@ type Env = {
 };
 
 const SPEC_PAGE = /^\/spec\/([^/]+)\/([^/]+)\/?$/;
+
+// Short-URL aliases people guess at. Served here as 301s rather than from
+// public/_redirects so each response can name what redirected it via the
+// X-Redirect-By header — a non-standard but widely deployed convention
+// (WordPress core, Yoast SEO, TYPO3) for making redirect chains debuggable.
+// Worked example for /spec/resilience/redirect-by/.
+const REDIRECT_BY = "specification.website";
+const ALIAS_REDIRECTS: Record<string, string> = {
+  "/security.txt": "/.well-known/security.txt",
+  "/change-password": "/.well-known/change-password",
+  "/sitemap.xml": "/sitemap-index.xml",
+  "/sitemap-0.xml": "/sitemap-foundations.xml",
+  "/spec/index": "/spec/",
+};
+
+// A 301 that identifies its own source. X-Redirect-By is emitted immediately
+// before Location, per the convention. No body — this is a bare redirect.
+function aliasRedirect(url: URL, target: string): Response {
+  return new Response(null, {
+    status: 301,
+    statusText: "Moved Permanently",
+    headers: {
+      "X-Redirect-By": REDIRECT_BY,
+      Location: new URL(target, url).toString(),
+      "Cache-Control": "public, max-age=3600",
+    },
+  });
+}
 
 // Retired well-known URI. `/.well-known/ai.txt` was removed on 2026-05-29;
 // the convention proved defunct. Rather than a bare 404 we serve a 410 Gone
@@ -254,8 +288,13 @@ export const onRequest: PagesFunction<Env> = async (context) => {
   let response: Response;
   let repr = "passthrough";
 
-  // Retired well-known URI: serve a 410 Gone with Deprecation/Sunset headers.
-  if (url.pathname === AI_TXT_PATH) {
+  // Short-URL aliases: 301 with X-Redirect-By naming the redirector.
+  const aliasTarget = ALIAS_REDIRECTS[url.pathname];
+  if (aliasTarget) {
+    response = aliasRedirect(url, aliasTarget);
+    repr = "redirect";
+    // Retired well-known URI: serve a 410 Gone with Deprecation/Sunset headers.
+  } else if (url.pathname === AI_TXT_PATH) {
     response = goneAiTxt();
     repr = "gone";
     // Site root: agents asking for Markdown get llms.txt (the site index).
