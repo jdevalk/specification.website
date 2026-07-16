@@ -7,7 +7,7 @@ status: optional
 order: 80
 appliesTo: [all]
 relatedSlugs: [agent-readiness-overview, machine-readable-formats, llms-txt, link-headers, api-catalog, agent-skills-discovery, a2a-agent-cards, webmcp, nlweb, agentic-resource-discovery, oauth-protected-resource]
-updated: "2026-06-17T00:00:00.000Z"
+updated: "2026-07-16T00:00:00.000Z"
 sources:
   - title: "Model Context Protocol"
     url: "https://modelcontextprotocol.io/"
@@ -16,7 +16,7 @@ sources:
     url: "https://modelcontextprotocol.io/specification"
     publisher: "MCP project"
   - title: "MCP server tools: annotations & structured content"
-    url: "https://modelcontextprotocol.io/specification/2025-06-18/server/tools"
+    url: "https://modelcontextprotocol.io/specification/2025-11-25/server/tools"
     publisher: "MCP project"
   - title: "Is It Agent Ready?"
     url: "https://isitagentready.com/"
@@ -27,7 +27,7 @@ sources:
 
 The Model Context Protocol (MCP) is an open protocol, originally proposed by Anthropic in late 2024, that defines how language-model clients talk to external tools and data sources. Instead of an agent scraping your UI, you expose an MCP server that declares a set of tools, resources, and prompts; the agent calls them directly.
 
-MCP is built on JSON-RPC over a few transports — stdio for local servers, HTTP plus Server-Sent Events for remote ones. A tool definition includes a name, a description, and a JSON Schema for inputs.
+MCP is built on JSON-RPC over two transports — stdio for local servers, Streamable HTTP for remote ones (the older HTTP-plus-Server-Sent-Events transport is deprecated). A tool definition includes a name, a description, and a JSON Schema for inputs.
 
 This is relevant when your site exposes actions a user might want an agent to take: search a catalogue, create a ticket, book an appointment, query an account. For static content sites and blogs, MCP often adds little — well-cached HTML and a feed are enough. The exception is structured content sites where the data is filterable: a documentation set, a spec, a knowledge base. There an MCP server lets an agent ask "list all required SEO topics" or "give me the canonical CSP page" in a single typed call, instead of crawling and parsing.
 

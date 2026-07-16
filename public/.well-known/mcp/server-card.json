@@ -1,8 +1,8 @@
 {
   "name": "specification-website",
   "title": "The Website Specification",
-  "version": "0.1.0",
-  "description": "Read-only MCP server exposing the 96 spec pages of specification.website as queryable tools — search, list_topics, get_topic, get_checklist, get_categories — plus an `audit_url` prompt for URL audits.",
+  "version": "0.2.0",
+  "description": "Read-only MCP server exposing every spec page of specification.website as queryable tools — search, list_topics, get_topic, get_checklist, get_categories, get_changes — plus an `audit_url` prompt for URL audits.",
   "vendor": {
     "name": "Joost de Valk",
     "url": "https://joost.blog"
@@ -14,7 +14,7 @@
   },
   "endpoint": "https://mcp.specification.website/mcp",
   "transport": "http",
-  "protocolVersion": "2025-06-18",
+  "protocolVersion": "2025-11-25",
   "authentication": "none",
   "capabilities": {
     "tools": true,
@@ -27,7 +27,8 @@
     { "name": "list_topics", "description": "List spec topics, optionally filtered by category and/or status." },
     { "name": "get_topic", "description": "Fetch full canonical Markdown for a single spec page by slug." },
     { "name": "get_checklist", "description": "Return a Markdown checklist of spec items, grouped by category." },
-    { "name": "get_categories", "description": "List the ten top-level categories with summaries and topic counts." }
+    { "name": "get_categories", "description": "List the ten top-level categories with summaries and topic counts." },
+    { "name": "get_changes", "description": "List spec changes since a date — new pages, status changes, rewrites, removals — resolved to current topics." }
   ],
   "prompts": [
     { "name": "audit_url", "description": "Generate an audit plan for a target URL against this spec." }

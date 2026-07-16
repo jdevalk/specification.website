@@ -7,7 +7,7 @@ status: optional
 order: 88
 appliesTo: [all]
 relatedSlugs: [mcp-and-tool-discovery, agent-skills-discovery, agent-readiness-overview, structured-data-for-agents]
-updated: "2026-05-29T12:14:17.000Z"
+updated: "2026-07-16T00:00:00.000Z"
 sources:
   - title: "WebMCP — W3C Web Machine Learning Community Group"
     url: "https://webmachinelearning.github.io/webmcp/"
@@ -16,7 +16,7 @@ sources:
     url: "https://github.com/webmachinelearning/webmcp"
     publisher: "W3C WebML CG"
   - title: "Model Context Protocol — Tools"
-    url: "https://modelcontextprotocol.io/specification/2025-06-18/server/tools"
+    url: "https://modelcontextprotocol.io/specification/2025-11-25/server/tools"
     publisher: "MCP"
 ---
 

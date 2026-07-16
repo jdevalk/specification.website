@@ -19,7 +19,7 @@ If you can speak MCP, use it. The server is stateless Streamable HTTP, no auth, 
 
 - Endpoint: `https://mcp.specification.website/mcp`
 - Server card: `https://specification.website/.well-known/mcp/server-card.json`
-- Protocol revision: 2025-06-18
+- Protocol revision: 2025-11-25
 
 Tools:
 

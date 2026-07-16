@@ -3,8 +3,10 @@
 // Streamable HTTP transport (the modern MCP transport): the client POSTs
 // JSON-RPC 2.0 messages to /mcp and gets back JSON-RPC responses. No
 // sessions, no server-initiated messages, no SSE — this server is stateless
-// and read-only. Advertises the 2025-06-18 protocol revision (tool
-// annotations + structured output / outputSchema).
+// and read-only. Advertises the 2025-11-25 protocol revision and negotiates
+// down to 2025-06-18 / 2025-03-26 when a client requests one of those —
+// the feature surface (tool annotations, structured output / outputSchema)
+// is identical across them for this server.
 //
 // All spec content is bundled at build time via scripts/build-data.mjs.
 // The Worker holds the manifest in module scope, so it is parsed once per
@@ -31,11 +33,25 @@ interface Env {
 
 const manifest = data as unknown as Manifest;
 
-const PROTOCOL_VERSION = '2025-06-18';
+const PROTOCOL_VERSION = '2025-11-25';
+// Older revisions this server is also fully compatible with. Version
+// negotiation (spec: basic/lifecycle) echoes the client's requested version
+// when it is in this set, and answers with PROTOCOL_VERSION otherwise.
+const SUPPORTED_PROTOCOL_VERSIONS = [PROTOCOL_VERSION, '2025-06-18', '2025-03-26'];
 const SERVER_INFO = {
   name: 'specification-website',
-  version: '0.1.0',
+  version: '0.2.0',
   title: 'The Website Specification',
+  description:
+    'Read-only MCP server exposing The Website Specification — search, list, fetch, and checklist tools over every spec page, plus an audit_url prompt.',
+  websiteUrl: 'https://specification.website',
+  icons: [
+    {
+      src: 'https://specification.website/icon-512.png',
+      mimeType: 'image/png',
+      sizes: ['512x512'],
+    },
+  ],
 };
 
 const CORS_HEADERS = {
@@ -77,9 +93,12 @@ function handleRpc(req: RpcRequest): RpcResponse | null {
   const { id, method, params = {} } = req;
 
   switch (method) {
-    case 'initialize':
+    case 'initialize': {
+      const requested = String((params as Record<string, unknown>).protocolVersion || '');
       return ok(id, {
-        protocolVersion: PROTOCOL_VERSION,
+        protocolVersion: SUPPORTED_PROTOCOL_VERSIONS.includes(requested)
+          ? requested
+          : PROTOCOL_VERSION,
         serverInfo: SERVER_INFO,
         capabilities: {
           tools: { listChanged: false },
@@ -95,6 +114,7 @@ function handleRpc(req: RpcRequest): RpcResponse | null {
           'The `list_topics` and `get_checklist` tools return ALL statuses by default — pass `status` to filter. ' +
           'The `audit_url` prompt is the exception: with no `focus`, it defaults to `required`-only.',
       });
+    }
 
     case 'notifications/initialized':
     case 'notifications/cancelled':
@@ -127,7 +147,13 @@ function handleRpc(req: RpcRequest): RpcResponse | null {
             return err(id, -32602, `Unknown tool: ${name}`);
         }
       } catch (e) {
-        return err(id, -32603, `Tool error: ${(e as Error).message}`);
+        // Per SEP-1303 (2025-11-25): execution/validation failures inside a
+        // known tool are tool results with isError, not protocol errors, so
+        // the calling model can read the message and self-correct.
+        return ok(id, {
+          content: [{ type: 'text', text: `Tool error: ${(e as Error).message}` }],
+          isError: true,
+        });
       }
     }
 
@@ -192,6 +218,7 @@ function htmlLanding(): Response {
   <li><code>get_topic({ slug })</code> — full Markdown for one page</li>
   <li><code>get_checklist({ category?, status? })</code> — flat checklist</li>
   <li><code>get_categories()</code> — taxonomy with counts</li>
+  <li><code>get_changes({ since?, type?, limit? })</code> — spec changelog, resolved to current topics</li>
 </ul>
 
 <h2>Prompts</h2>
