@@ -7,10 +7,13 @@ status: required
 order: 10
 appliesTo: [all]
 relatedSlugs: [hsts, caa-records, content-security-policy, mixed-content]
-updated: "2026-07-09T00:00:00.000Z"
+updated: "2026-07-17T00:00:00.000Z"
 sources:
-  - title: "RFC 8446 — The Transport Layer Security (TLS) Protocol Version 1.3"
-    url: "https://www.rfc-editor.org/rfc/rfc8446"
+  - title: "RFC 9846 — The Transport Layer Security (TLS) Protocol Version 1.3"
+    url: "https://www.rfc-editor.org/rfc/rfc9846"
+    publisher: "IETF"
+  - title: "RFC 9851 — TLS 1.2 is in Feature Freeze"
+    url: "https://www.rfc-editor.org/rfc/rfc9851"
     publisher: "IETF"
   - title: "Mozilla SSL Configuration Generator"
     url: "https://ssl-config.mozilla.org/"
@@ -25,7 +28,9 @@ sources:
 
 ## What it is
 
-HTTPS is HTTP carried over TLS, a protocol that encrypts and authenticates the connection between the browser and the server. TLS 1.3 (RFC 8446) is the current version; TLS 1.2 remains acceptable. Everything earlier — TLS 1.0, TLS 1.1, and all versions of SSL — is broken and must be disabled.
+HTTPS is HTTP carried over TLS, a protocol that encrypts and authenticates the connection between the browser and the server. TLS 1.3 is the current version, specified by RFC 9846 — a July 2026 revision that obsoleted RFC 8446 without changing the version number or breaking compatibility. TLS 1.2 remains acceptable. Everything earlier — TLS 1.0, TLS 1.1, and all versions of SSL — is broken and must be disabled.
+
+"Acceptable" is not the same as "equal", though, and the gap is widening rather than holding steady. TLS 1.2 is in feature freeze (RFC 9851): it receives urgent security fixes and nothing else, and post-quantum key exchange is being specified for TLS 1.3 and later only. Keeping TLS 1.2 enabled for the clients that still need it is sound; treating it as a version you can sit on indefinitely is not.
 
 What HTTPS does not do is vouch for the site. The certificate proves you are talking to the genuine holder of the name in the address bar, and that nobody on the path can read or alter the bytes. It says nothing about whether that party is honest: a phishing page served over flawless HTTPS shows the same padlock a bank does. HTTPS secures the channel, not the character of whatever is at the far end of it.
 
