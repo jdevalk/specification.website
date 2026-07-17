@@ -32,11 +32,29 @@ cases and **(b)** send one Slack summary of everything found.
   movement): `https://api.webstatus.dev/v1/features?q=baseline_status:newly` (public, no
   auth, JSON) lists features that have _newly_ reached Baseline; add
   `baseline_date:<START>..<END>` to scope to this run's window — use a trailing ~8-day
-  window so a skipped run never drops a feature. `baseline_status:widely` catches the
-  newly-Baseline → Widely transition (a feature now safe to rely on everywhere). This is
-  the discovery step for section #2's Baseline check; the MDN MCP then corroborates each
-  hit and supplies the canonical primary-source URL. It is derived data, not editorial —
-  trustworthy as a signal, but a page still cites the primary standard, not webstatus.dev.
+  window so a skipped run never drops a feature. This is the discovery step for section
+  #2's Baseline check; the MDN MCP then corroborates each hit and supplies the canonical
+  primary-source URL. It is derived data, not editorial — trustworthy as a signal, but a
+  page still cites the primary standard, not webstatus.dev.
+
+  **`baseline_date` always matches a feature's _low_ date** (the day it went _newly_), even
+  when you filter on `baseline_status:widely`. Widely is reached ~30 months after newly, so
+  a feature that goes Widely today has a low date ~30 months in the past. This means the
+  intuitive query — `baseline_status:widely AND baseline_date:<this run's window>` — is
+  **always empty** and silently reports "no transitions" forever. To catch the newly →
+  Widely transition, offset the window back ~30 months:
+
+  ```
+  # Newly Baseline this run (trailing ~8-day window on the low date):
+  baseline_status:newly AND baseline_date:<TODAY-8>..<TODAY>
+
+  # Went WIDELY this run — same window shifted back 30 months:
+  baseline_status:widely AND baseline_date:<TODAY-30mo-8d>..<TODAY-30mo>
+  ```
+
+  Sanity-check the offset against the returned `baseline.high_date` rather than trusting
+  the 30-month rule of thumb; the API returns both `low_date` and `high_date` per feature.
+
 - Adjacent (watch, don't blindly trust): `web.dev` — especially <https://web.dev/blog> —
   `developer.chrome.com`, Google Search Central — for emerging conventions worth
   promoting LATER
