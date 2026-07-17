@@ -15,7 +15,7 @@ sources:
   - title: "W3C i18n — When should I use language negotiation?"
     url: "https://www.w3.org/International/questions/qa-when-lang-neg"
     publisher: "W3C"
-  - title: "W3C i18n — Using language selectors"
+  - title: "W3C i18n — Using select to link to localized content"
     url: "https://www.w3.org/International/questions/qa-navigation-select"
     publisher: "W3C"
 ---

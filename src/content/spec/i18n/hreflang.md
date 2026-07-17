@@ -9,7 +9,7 @@ appliesTo: [all]
 relatedSlugs: [lang-attribute, locale-content, rtl-support, international-url-structure, sitemap-hreflang, localised-metadata, language-switcher, avoid-auto-geo-redirects]
 updated: "2026-07-09T00:00:00.000Z"
 sources:
-  - title: "Google Search Central — Localized versions of your pages"
+  - title: "Google Search Central — Tell Google about localized versions of your page"
     url: "https://developers.google.com/search/docs/specialty/international/localized-versions"
     publisher: "Google Search Central"
   - title: "BCP 47 — Tags for Identifying Languages"

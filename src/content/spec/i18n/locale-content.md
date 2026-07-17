@@ -13,7 +13,7 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl"
     publisher: "MDN"
   - title: "W3C i18n — Working with language and locale"
-    url: "https://www.w3.org/International/articlelist#locales"
+    url: "https://www.w3.org/International/articlelist"
     publisher: "W3C"
   - title: "MDN — Accept-Language header"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Accept-Language"

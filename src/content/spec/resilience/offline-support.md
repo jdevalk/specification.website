@@ -15,7 +15,7 @@ sources:
   - title: "MDN — Using Service Workers"
     url: "https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers"
     publisher: "MDN"
-  - title: "web.dev — Offline cookbook"
+  - title: "web.dev — Common techniques to build offline applications"
     url: "https://web.dev/articles/offline-cookbook"
     publisher: "web.dev"
   - title: "W3C — Service Workers"
