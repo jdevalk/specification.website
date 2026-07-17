@@ -5,7 +5,7 @@ description: Query and apply The Website Specification — a platform-agnostic s
 
 # specification.website
 
-The Website Specification is a single source of truth for what a good website does. Ten categories, 163 pages, every item tagged with a status. It ships in three machine-readable forms: per-page Markdown, llms.txt / llms-full.txt, and an MCP server.
+The Website Specification is a single source of truth for what a good website does. Ten categories, 164 pages, every item tagged with a status. It ships in three machine-readable forms: per-page Markdown, llms.txt / llms-full.txt, and an MCP server.
 
 ## When to use this skill
 

@@ -6,7 +6,14 @@ summary: "In the EU and UK, non-essential cookies and similar storage require fr
 status: required
 order: 20
 appliesTo: [all]
-relatedSlugs: [privacy-policy, third-party-scripts, analytics-privacy, global-privacy-control]
+relatedSlugs:
+  [
+    privacy-policy,
+    third-party-scripts,
+    analytics-privacy,
+    global-privacy-control,
+    focus-not-obscured,
+  ]
 updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "EDPB Guidelines 03/2022 on deceptive design patterns in social media"

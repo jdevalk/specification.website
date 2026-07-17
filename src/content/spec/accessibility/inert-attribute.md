@@ -6,7 +6,14 @@ summary: "When an overlay is open, the content behind it should be unreachable â
 status: recommended
 order: 65
 appliesTo: [all]
-relatedSlugs: [keyboard-navigation, focus-indicators, skip-links, native-interactive-elements]
+relatedSlugs:
+  [
+    keyboard-navigation,
+    focus-indicators,
+    focus-not-obscured,
+    skip-links,
+    native-interactive-elements,
+  ]
 updated: "2026-06-26T09:00:00.000Z"
 sources:
   - title: "HTML Standard â€” The inert attribute"
