@@ -15,9 +15,9 @@ sources:
   - title: "MDN — Evolution of HTTP"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Evolution_of_HTTP"
     publisher: "MDN"
-  - title: "web.dev — HTTP/2 and you"
-    url: "https://web.dev/articles/performance-http2"
-    publisher: "web.dev"
+  - title: "MDN — Connection management in HTTP/1.x"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Connection_management_in_HTTP_1.x"
+    publisher: "MDN"
 ---
 
 ## What it is
