@@ -73,6 +73,7 @@ These mirror `CONTRIBUTING.md`. Enforce them in your own writing and when review
 | ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `src/content/spec/<cat>/<slug>.md`                                            | Spec content. Edit here.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | `src/content.config.ts`                                                       | Content collection schema. Edit if adding a field.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `src/content/considered/<slug>.md`                                            | Hand-curated register of standards deliberately **not** specced, with the reason and what would reverse it. Rendered at `/considered/`. Not derived.                                                                                                                                                                                                                                                                                                                                                                                                |
 | `src/lib/site.ts`                                                             | Site metadata + the canonical category list.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
 | `src/layouts/BaseLayout.astro`                                                | HTML shell, head, dialog for ⌘K search, Plausible (PROD only).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | `src/layouts/SpecLayout.astro`                                                | Spec page wrapper; emits TechArticle + BreadcrumbList JSON-LD; advertises Markdown alt via `markdownUrl`.                                                                                                                                                                                                                                                                                                                                                                                                                                           |
@@ -153,7 +154,32 @@ The same PR must do **one** of:
 
 Also update the [api-catalog Linkset](public/.well-known/api-catalog) if the capability adds a discoverable resource, and the global `Link` header in [`public/_headers`](public/_headers) if it has a registered IANA `rel`. Both should match what the new spec page describes.
 
-The reverse holds too: **do not promote a convention to spec status without us shipping a working implementation first.** The site is the proof-of-feasibility. If the underlying convention turns out non-existent or defunct (see the `/.well-known/ai.txt` deletion history), remove the asset _and_ the spec page in the same PR — don't leave the page documenting something we no longer ship.
+If the underlying convention turns out non-existent or defunct (see the `/.well-known/ai.txt` deletion history), remove the asset _and_ the spec page in the same PR — don't leave the page documenting something we no longer ship.
+
+### Speccing and shipping are separate decisions
+
+**We do not have to ship something to spec it.** The site is a worked example wherever that is useful, not a gate. Plenty of good advice does not apply to a static, cookieless, six-page-of-plumbing site: a page can be right for the sites reading it and irrelevant here. When that is the case, write the page and skip the implementation — but **say so on the page**, in one line, with the reason. "This site does not ship it: we are static, so no response ever means _this changed_" is useful content. Silence is not.
+
+So there are three honest shapes for a page, and all three are fine:
+
+1. **Specced and shipped** — the common case. Carry the "this site ships it; see [X]" callout.
+2. **Specced, deliberately not shipped** — the topic does not apply to us. Carry a one-line note saying that, and why.
+3. **Not specced** — see below.
+
+### What we don't spec, and where that gets recorded
+
+**Do not add a page for a convention nothing is using yet.** A standard being final is not sufficient; something has to implement it, or the page recommends a header no cache reads and an element no browser honours. Being final also is not necessary — a widely-deployed convention can earn a page before its RFC lands.
+
+**This particular call belongs to the maintainer, not to an agent.** If a topic is real and well-sourced but adoption looks thin, do not add the page and do not silently drop it either — surface it (Slack, for the daily scan; the PR description otherwise) and let Joost decide.
+
+When a topic is turned down, record it in **`src/content/considered/`** — the hand-curated collection rendered at [`/considered/`](src/pages/considered.astro). One file per topic:
+
+- `title`, `date` (the decision), `reason` (`too-early` | `out-of-scope` | `too-narrow`), `sources`, and `revisit` — the last being _what would change our mind_, which is what keeps the register from becoming a graveyard.
+- A two-or-three-paragraph body: what the thing is, why it did not land, and — where the reasoning generalises — what it is the reference case for.
+
+Being in `/considered/` is not a rejection forever. When the reason expires (something ships it; adoption broadens), delete the entry in the same PR that adds the spec page.
+
+Like the changelog, this collection is **not derived** — nothing generates it. It is also **not** a to-do list: entries are decisions already taken, not a queue.
 
 ## When changing a status
 
