@@ -26,6 +26,13 @@
 # /reports means a script shipped without integrity. Flip to enforcing
 # `Integrity-Policy` once the /reports stream confirms a clean run. Worked
 # example for /spec/security/subresource-integrity/.
+#
+# tdm-reservation: 0 is the W3C TDMRep declaration that we do NOT reserve the
+# right to object to text and data mining — the machine-readable counterpart to
+# the CC BY 4.0 content licence, and the inverse of the Article 4 CDSM opt-out.
+# Keep it at 0: a site whose whole point is being read by machines has no
+# business reserving against them. Worked example for
+# /spec/agent-readiness/tdmrep/.
 
 /*
   Strict-Transport-Security: max-age=63072000; includeSubDomains
@@ -40,6 +47,7 @@
   Cross-Origin-Resource-Policy: same-site
   X-Frame-Options: DENY
   No-Vary-Search: params=("utm_source" "utm_medium" "utm_campaign" "utm_content" "utm_term" "gclid" "fbclid" "msclkid" "mc_cid" "mc_eid" "ref"), key-order
+  tdm-reservation: 0
   Link: </llms.txt>; rel="describedby"; type="text/markdown"; title="Site index for LLMs", </llms-full.txt>; rel="alternate"; type="text/markdown"; title="Full content as Markdown", </.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json", </.well-known/mcp/server-card.json>; rel="mcp"; type="application/json"; title="MCP server card", <https://mcp.specification.website/mcp>; rel="related"; title="MCP endpoint", </.well-known/agent-card.json>; rel="service-desc"; type="application/json"; title="A2A agent card", <https://mcp.specification.website/a2a/v1>; rel="related"; title="A2A endpoint", </.well-known/agent-skills/index.json>; rel="agent-skills"; type="application/json"; title="Agent Skills discovery index", </.well-known/ai-catalog.json>; rel="ai-catalog"; type="application/ai-catalog+json"; title="Agentic Resource Discovery catalog", </sitemap-index.xml>; rel="sitemap"; type="application/xml", </rss.xml>; rel="alternate"; type="application/rss+xml"; title="Feed of spec changes", </changelog/rss.xml>; rel="alternate"; type="application/rss+xml"; title="Changelog feed", </.well-known/security.txt>; rel="security"; type="text/plain"
 
 # Self-hosted Plausible tracker. Not fingerprinted and refreshed in place by
