@@ -61,6 +61,27 @@ const LEGACY_DEFAULT_VERSION = LEGACY_PROTOCOL_VERSIONS[0];
 
 const SUPPORTED_PROTOCOL_VERSIONS = [...MODERN_PROTOCOL_VERSIONS, ...LEGACY_PROTOCOL_VERSIONS];
 
+// Our own support window for the handshake, announced on the wire.
+//
+// Note what this is NOT: MCP does not deprecate the `initialize` handshake.
+// 2025-11-25 is a Final revision, and the deprecated-features registry
+// (specification/2026-07-28/deprecated) does not list it. Revisions do not
+// sunset — how long a given server keeps honouring one is that server's
+// policy. So these dates are ours, not the specification's, and Deprecation
+// (RFC 9745) + Sunset (RFC 8594) are the right shape for exactly that: a
+// commitment this endpoint is making about its own future behaviour.
+//
+// Worked example for /spec/resilience/deprecation-and-sunset/.
+const HANDSHAKE_DEPRECATION = '@1785196800'; // 2026-07-28T00:00:00Z
+const HANDSHAKE_SUNSET = 'Wed, 28 Jul 2027 00:00:00 GMT';
+const HANDSHAKE_DOCS =
+  'https://specification.website/spec/agent-readiness/mcp-and-tool-discovery/';
+const HANDSHAKE_HEADERS = {
+  Deprecation: HANDSHAKE_DEPRECATION,
+  Sunset: HANDSHAKE_SUNSET,
+  Link: `<${HANDSHAKE_DOCS}>; rel="deprecation"; type="text/html"`,
+};
+
 // Reserved `_meta` keys from the 2026-07-28 revision (basic/index#meta).
 const META_PROTOCOL_VERSION = 'io.modelcontextprotocol/protocolVersion';
 const META_SERVER_INFO = 'io.modelcontextprotocol/serverInfo';
@@ -100,7 +121,9 @@ const CORS_HEADERS = {
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers':
     'Content-Type, Mcp-Session-Id, Mcp-Protocol-Version, Mcp-Method, Mcp-Name',
-  'Access-Control-Expose-Headers': 'Mcp-Session-Id',
+  // Deprecation/Sunset/Link are exposed so a browser-based client can
+  // actually read them — without this they are invisible to fetch().
+  'Access-Control-Expose-Headers': 'Mcp-Session-Id, Deprecation, Sunset, Link',
   'Access-Control-Max-Age': '86400',
 };
 
@@ -161,10 +184,15 @@ function handleRpc(req: RpcRequest): RpcResponse | null {
       return ok(id, {
         resultType: 'complete',
         supportedVersions: MODERN_PROTOCOL_VERSIONS,
+        // No `logging` here. Logging is Deprecated as of 2026-07-28
+        // (specification/2026-07-28/deprecated, SEP-2577), and new
+        // implementations SHOULD NOT adopt it — advertising it in a discovery
+        // call written after that date would be adopting it. The legacy
+        // `initialize` response below still declares it, because clients
+        // written against those revisions may already expect it there.
         capabilities: {
           tools: {},
           prompts: {},
-          logging: {},
         },
         _meta: {
           [META_SERVER_INFO]: SERVER_INFO,
@@ -545,7 +573,13 @@ async function handleMcp(request: Request, env: Env): Promise<Response> {
   // HTTP 404 with a JSON-RPC -32601 body.
   const status =
     bodyVersion !== null && 'error' in response && response.error.code === -32601 ? 404 : 200;
-  return new Response(JSON.stringify(response), { status, headers: JSON_HEADERS });
+
+  // A legacy handshake gets our support window on the wire. Scoped to the
+  // `initialize` response rather than every response from /mcp: the endpoint
+  // is not going away, only our willingness to answer the handshake on it.
+  const headers =
+    req.method === 'initialize' ? { ...JSON_HEADERS, ...HANDSHAKE_HEADERS } : JSON_HEADERS;
+  return new Response(JSON.stringify(response), { status, headers });
 }
 
 // --- Usage logging --------------------------------------------------------

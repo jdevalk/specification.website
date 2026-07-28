@@ -6,7 +6,7 @@ summary: "The Model Context Protocol is an emerging way for sites to expose quer
 status: optional
 order: 80
 appliesTo: [all]
-relatedSlugs: [agent-readiness-overview, machine-readable-formats, llms-txt, link-headers, api-catalog, agent-skills-discovery, a2a-agent-cards, webmcp, nlweb, agentic-resource-discovery, oauth-protected-resource]
+relatedSlugs: [agent-readiness-overview, machine-readable-formats, llms-txt, link-headers, api-catalog, agent-skills-discovery, a2a-agent-cards, webmcp, nlweb, agentic-resource-discovery, oauth-protected-resource, deprecation-and-sunset]
 updated: "2026-07-28T00:00:00.000Z"
 sources:
   - title: "Model Context Protocol"
@@ -72,6 +72,10 @@ A dual-era server decides which semantics to apply from how the client opens, no
 Two details are easy to get wrong. First, an `initialize` handshake must never be answered with `2026-07-28` — that revision has no handshake, so echoing it back promises something the server cannot then honour; answer with the newest revision that does have one. Second, apply the new header validation only to requests that declare the new version. Imposing `Mcp-Method` and `Mcp-Name` on a legacy request rejects a client that is behaving correctly for the revision it speaks.
 
 Validation matters because the transport now mirrors body fields into headers so intermediaries can route without parsing JSON. If a header and the body disagree, a load balancer and your server are acting on different instructions — so the specification requires you to reject the request with a `HeaderMismatch` error rather than pick a winner.
+
+Decide how long you will answer the handshake, and publish it. The protocol will not decide for you: earlier revisions are Final rather than withdrawn, and nothing in MCP says when a server should stop honouring one. This site's server answers `initialize` until 28 July 2027 and says so on the wire — those responses carry `Deprecation`, `Sunset` and a `rel="deprecation"` link, so a client learns its remaining runway without reading a blog post. The endpoint itself carries no such headers; `/mcp` is not being retired. See [deprecation and sunset](/spec/resilience/deprecation-and-sunset/) for the mechanics, and note the dates there are a server's policy, not the specification's.
+
+Watch the [deprecated features registry](https://modelcontextprotocol.io/specification/2026-07-28/deprecated) for the things the protocol *has* scheduled for removal — Roots, Sampling, Logging and Dynamic Client Registration are all Deprecated as of 2026-07-28. Do not advertise a deprecated capability in a server you are writing now; new implementations are told not to adopt them.
 
 ## Common mistakes
 
