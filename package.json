@@ -30,6 +30,7 @@
     "assets": "node scripts/generate-assets.mjs",
     "sign:ard": "node scripts/sign-ard-catalog.mjs",
     "check:ard": "node scripts/sign-ard-catalog.mjs --check",
+    "test:websub": "node --experimental-strip-types scripts/test-websub.mjs",
     "sign:skill": "node scripts/check-skill.mjs",
     "check:skill": "node scripts/check-skill.mjs --check"
   },

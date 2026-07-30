@@ -1,0 +1,81 @@
+name: WebSub ping
+
+# Notify our own WebSub hub that a feed changed, so subscribers are pushed the
+# update instead of waiting for their next poll.
+#
+# WebSub §4 leaves publisher→hub notification out of scope, so this uses the
+# de-facto PubSubHubbub 0.4 convention (hub.mode=publish) against
+# functions/websub.ts, authenticated with a bearer token.
+#
+# Trigger mirrors deploy-mcp.yml: content commits are what change the feeds.
+#   - src/content/spec/**      → /rss.xml
+#   - src/content/changelog/** → /changelog/rss.xml
+# Both topics are pinged on either path. Distinguishing them would save one
+# no-op request and cost a conditional; the hub short-circuits with 202 "no
+# active subscribers" anyway.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/content/spec/**"
+      - "src/content/changelog/**"
+      - ".github/workflows/websub-ping.yml"
+  # Manual trigger for testing the hub without a content commit.
+  workflow_dispatch:
+
+# The ping must land *after* Cloudflare Pages has published the new feed,
+# otherwise the hub reads and distributes the previous build. Pages deploys on
+# its own schedule, so wait before pinging (see the sleep below) and never run
+# two pings concurrently.
+concurrency:
+  group: websub-ping
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    # Skip entirely on forks, where the secret is absent.
+    if: github.repository == 'jdevalk/specification.website'
+    steps:
+      # Pages typically finishes a build in 1-3 minutes. Distributing a stale
+      # feed is worse than distributing late — subscribers would get the old
+      # body and, having been notified, would not re-poll.
+      - name: Wait for the Pages deploy to go live
+        run: sleep 300
+
+      - name: Ping the hub for each topic
+        env:
+          SECRET: ${{ secrets.WEBSUB_PUBLISH_SECRET }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SECRET:-}" ]; then
+            echo "WEBSUB_PUBLISH_SECRET is not set — skipping."
+            exit 0
+          fi
+          for topic in \
+            "https://specification.website/rss.xml" \
+            "https://specification.website/changelog/rss.xml"
+          do
+            echo "::group::$topic"
+            code=$(curl -sS -o /tmp/body.txt -w '%{http_code}' \
+              -X POST "https://specification.website/websub" \
+              -H "Authorization: Bearer $SECRET" \
+              -H "Content-Type: application/x-www-form-urlencoded" \
+              --data-urlencode "hub.mode=publish" \
+              --data-urlencode "hub.topic=$topic" \
+              --retry 3 --retry-delay 10 --retry-connrefused \
+              --max-time 30)
+            cat /tmp/body.txt
+            echo "HTTP $code"
+            echo "::endgroup::"
+            # 202 is the only success. Anything else fails the job loudly: a
+            # silently broken hub is exactly the failure mode the spec page
+            # warns about.
+            if [ "$code" != "202" ]; then
+              echo "::error::Hub returned $code for $topic"
+              exit 1
+            fi
+          done

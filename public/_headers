@@ -49,6 +49,24 @@
   Content-Type: text/javascript; charset=utf-8
   Cache-Control: public, max-age=600, must-revalidate
 
+# Feeds — WebSub discovery. HELD BACK UNTIL THE HUB IS LIVE: advertising
+# rel="hub" while /websub cannot accept subscriptions is the exact failure
+# /spec/foundations/websub/ warns about (an advertisement is not a delivery
+# mechanism), so these blocks are uncommented in the same commit that
+# provisions the D1 database — see the checklist in wrangler.toml.
+#
+# rel="hub" names the hub that pushes updates for this topic; rel="self" is the
+# topic's canonical URL, which is the identity subscribers key on. Subscribers
+# must check Link headers before embedded elements (WebSub §4), so this is the
+# authoritative copy and the atom:link elements inside each feed are the
+# fallback. Keep all three in sync with ALLOWED_TOPICS in functions/websub.ts.
+#
+# /rss.xml
+#   Link: </websub>; rel="hub", <https://specification.website/rss.xml>; rel="self"
+#
+# /changelog/rss.xml
+#   Link: </websub>; rel="hub", <https://specification.website/changelog/rss.xml>; rel="self"
+
 # Long cache for fingerprinted assets
 /_astro/*
   Cache-Control: public, max-age=31536000, immutable
