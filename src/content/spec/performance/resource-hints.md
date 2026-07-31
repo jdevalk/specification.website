@@ -7,11 +7,11 @@ status: recommended
 order: 100
 appliesTo: [all]
 relatedSlugs: [preload-prefetch-preconnect, early-hints, font-loading, critical-css]
-updated: "2026-06-18T00:00:00.000Z"
+updated: "2026-07-23T00:00:00.000Z"
 sources:
-  - title: "W3C — Resource Hints"
-    url: "https://www.w3.org/TR/resource-hints/"
-    publisher: "W3C"
+  - title: "WHATWG HTML — Link types"
+    url: "https://html.spec.whatwg.org/multipage/links.html#linkTypes"
+    publisher: "WHATWG"
   - title: "MDN — <link>: The External Resource Link element"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/link"
     publisher: "MDN"
@@ -25,7 +25,7 @@ sources:
 
 ## What it is
 
-Resource hints are `<link rel>` declarations that tell the browser to do work earlier than the HTML parser would otherwise discover it. The W3C Resource Hints specification defines four; HTML adds two more (`preload`, `modulepreload`).
+Resource hints are `<link rel>` declarations that tell the browser to do work earlier than the HTML parser would otherwise discover it. All five live in one place: the WHATWG HTML Standard's link types. There is no separate "Resource Hints" specification any more — the W3C document of that name was discontinued and its URL now redirects into HTML.
 
 | Hint | What it does | Use when |
 |---|---|---|

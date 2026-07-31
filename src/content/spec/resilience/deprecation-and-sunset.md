@@ -6,8 +6,8 @@ summary: "When you retire an endpoint, announce it in machine-readable form: the
 status: optional
 order: 55
 appliesTo: [all]
-relatedSlugs: [error-pages, redirects, maintenance-pages, stable-urls]
-updated: "2026-07-08T00:00:00.000Z"
+relatedSlugs: [error-pages, redirects, maintenance-pages, stable-urls, mcp-and-tool-discovery]
+updated: "2026-07-28T00:00:00.000Z"
 sources:
   - title: "RFC 9745 — The Deprecation HTTP Response Header Field"
     url: "https://www.rfc-editor.org/rfc/rfc9745"
@@ -51,12 +51,21 @@ Announce as early as you can — the point is lead time. Do not start failing be
 
 This site ships a worked example. `/.well-known/ai.txt` was retired, and rather than a bare 404 it returns `410 Gone` carrying `Deprecation`, `Sunset`, and a `rel="deprecation"` link back to this page (see `functions/_middleware.ts`). The `ai.txt` convention itself proved defunct — express AI-crawler preferences via [robots.txt](/spec/seo/robots-txt/) and content signals instead.
 
+### Announcing your own support window
+
+The headers are usually read as "this URL is being retired", but they answer a broader question: *how long will this keep working?* That question also arises when nothing is being retired at all — when a still-valid way of talking to your endpoint is one you intend to stop accepting.
+
+Our MCP server is the case in point. The 2026-07-28 revision of the protocol replaced the `initialize` handshake with per-request negotiation, but it did not deprecate the handshake: the older revisions are Final, not withdrawn, and the protocol says nothing about when a server should stop honouring them. That makes the support window a decision by the server, not by the specification — and a decision nobody can discover by reading the standard. So responses to a legacy `initialize` carry `Deprecation`, a `Sunset` of 28 July 2027, and a `rel="deprecation"` link, while the endpoint itself carries nothing: `/mcp` is not going anywhere, only our willingness to answer the handshake on it. See [MCP and tool discovery](/spec/agent-readiness/mcp-and-tool-discovery/).
+
+Two things make that legitimate rather than a misuse of the headers. The scope is a real one — the response to a particular request, not the URL in general — and the commitment is one we are actually making and can be held to. If you borrow this pattern, be clear in your own documentation that the dates are yours. Attributing them to an upstream standard that never set them is a claim someone will check.
+
 ## Common mistakes
 
 - A `Sunset` earlier than `Deprecation`. Invalid per RFC 9745.
 - Emitting `Deprecation` but never a `Sunset` or a successor link — consumers learn it is deprecated but not when it dies or what to use instead.
 - Failing the resource _before_ the announced Sunset. Deprecation is a promise to keep working until then.
 - Using a bare `Deprecation: true`. The value is a structured-field date, not a boolean.
+- Announcing a sunset you have no intention of honouring, because a standard "moved on" from a feature. Check whether the thing is actually scheduled for removal; if the date is your policy rather than the standard's, say so.
 
 ## Verification
 

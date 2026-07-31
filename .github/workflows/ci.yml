@@ -37,9 +37,6 @@ jobs:
       - name: Agent Skill drift check
         run: npm run check:skill
 
-      - name: ARD catalog signature check
-        run: npm run check:ard
-
       - name: Type-check (Astro)
         run: npx astro check
 

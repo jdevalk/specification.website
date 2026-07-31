@@ -90,10 +90,29 @@ if (!headers.includes(`'${csp256}'`)) {
   fail(`public/_headers CSP is missing the import map hash '${csp256}'.`);
 }
 
+// The inline WebMCP guard is hashed by CSP over its exact emitted bytes, so
+// check the built HTML rather than the source constant. Its text is meant to be
+// invariant across builds (the per-build SRI travels in a data- attribute, which
+// CSP does not hash) — if this fires, the guard itself was edited.
+const homepage = readFileSync(join(root, "dist/index.html"), "utf8");
+const guard = (homepage.match(
+  /<script data-webmcp-src=[^>]*>([\s\S]*?)<\/script>/,
+) || [])[1];
+if (!guard) {
+  fail("dist/index.html has no inline WebMCP guard — BaseLayout changed?");
+} else {
+  const guardHash = sri(Buffer.from(guard), "sha256");
+  if (!headers.includes(`'${guardHash}'`)) {
+    fail(
+      `public/_headers CSP is missing the WebMCP guard hash.\n     Set it to: ${guardHash}`,
+    );
+  }
+}
+
 if (failed) {
   console.error("\ncheck-integrity: FAILED");
   process.exit(1);
 }
 console.log(
-  "✓ check-integrity: pagefind.js + component-ui pinned and CSP-allowed.",
+  "✓ check-integrity: pagefind.js + component-ui + WebMCP guard pinned and CSP-allowed.",
 );
