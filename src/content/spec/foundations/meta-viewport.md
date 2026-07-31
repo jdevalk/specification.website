@@ -7,10 +7,10 @@ status: required
 order: 40
 appliesTo: [all]
 relatedSlugs: [doctype, meta-charset, theme-color, dynamic-viewport-units, mobile-form-inputs]
-updated: "2026-06-08T00:00:00.000Z"
+updated: "2026-07-27T00:00:00.000Z"
 sources:
   - title: "MDN — Viewport meta tag"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Viewport_meta_tag"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/name/viewport"
     publisher: "MDN"
   - title: "CSS Device Adaptation Module — viewport meta"
     url: "https://drafts.csswg.org/css-device-adapt/#viewport-meta"
