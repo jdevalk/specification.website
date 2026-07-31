@@ -41,20 +41,20 @@
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.9",
-    "@cloudflare/workers-types": "^5.20260714.1",
+    "@astrojs/check": "^0.9.10",
+    "@cloudflare/workers-types": "^5.20260728.1",
     "@eslint/js": "^10.0.1",
-    "@types/node": "^26.1.1",
-    "eslint": "^10.7.0",
+    "@types/node": "^26.1.2",
+    "eslint": "^10.8.0",
     "eslint-plugin-astro": "^2.1.1",
-    "globals": "^17.7.0",
+    "globals": "^17.8.0",
     "linkinator": "7.6.1",
     "pagefind": "^1.5.2",
-    "prettier": "^3.9.5",
+    "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
     "sharp": "^0.35.3",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.64.0"
+    "typescript-eslint": "^8.65.0"
   },
   "overrides": {
     "esbuild": "^0.28.1"
