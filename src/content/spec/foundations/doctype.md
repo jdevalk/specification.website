@@ -7,7 +7,7 @@ status: required
 order: 10
 appliesTo: [all]
 relatedSlugs: [html-lang, meta-charset, meta-viewport]
-updated: "2026-07-09T00:00:00.000Z"
+updated: "2026-07-27T00:00:00.000Z"
 sources:
   - title: "HTML Living Standard — The DOCTYPE"
     url: "https://html.spec.whatwg.org/multipage/syntax.html#the-doctype"
@@ -16,7 +16,7 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Glossary/Doctype"
     publisher: "MDN"
   - title: "MDN — Quirks Mode and Standards Mode"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Quirks_Mode_and_Standards_Mode"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Guides/Quirks_mode_and_standards_mode"
     publisher: "MDN"
 ---
 

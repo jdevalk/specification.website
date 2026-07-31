@@ -7,16 +7,16 @@ status: recommended
 order: 160
 appliesTo: [all]
 relatedSlugs: [form-errors, form-labels, focus-indicators, semantic-html]
-updated: "2026-05-29T16:40:22.000Z"
+updated: "2026-07-28T00:00:00.000Z"
 sources:
   - title: "W3C Selectors Level 4 — Relational selector `:has()`"
     url: "https://www.w3.org/TR/selectors-4/#relational"
     publisher: "W3C"
   - title: "MDN — `:has()`"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/:has"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:has"
     publisher: "MDN"
   - title: "MDN — `:user-invalid`"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/:user-invalid"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:user-invalid"
     publisher: "MDN"
   - title: "HTML Living Standard — Constraint validation"
     url: "https://html.spec.whatwg.org/multipage/form-control-infrastructure.html#constraint-validation"
