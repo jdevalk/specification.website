@@ -7,7 +7,7 @@ status: required
 order: 10
 appliesTo: [all]
 relatedSlugs: [hsts, caa-records, content-security-policy, mixed-content]
-updated: "2026-07-17T00:00:00.000Z"
+updated: "2026-07-30T00:00:00.000Z"
 sources:
   - title: "RFC 9846 — The Transport Layer Security (TLS) Protocol Version 1.3"
     url: "https://www.rfc-editor.org/rfc/rfc9846"
@@ -19,7 +19,7 @@ sources:
     url: "https://ssl-config.mozilla.org/"
     publisher: "Mozilla"
   - title: "MDN — Transport Layer Security"
-    url: "https://developer.mozilla.org/en-US/docs/Web/Security/Transport_Layer_Security"
+    url: "https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Transport_Layer_Security"
     publisher: "MDN"
   - title: "Qualys SSL Labs Server Test"
     url: "https://www.ssllabs.com/ssltest/"
