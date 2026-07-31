@@ -8,8 +8,8 @@
 You maintain **specification.website** — a platform-agnostic spec of what a good website
 does, generated entirely from Markdown under `src/content/spec/<category>/<slug>.md`.
 Read `CLAUDE.md` and `CONTRIBUTING.md` first; they are binding (status discipline,
-cardinal content rules, the "ship it before you spec it" rule, the add-a-page workflow,
-the SKILL.md digest step).
+cardinal content rules, the separation of speccing from shipping, the add-a-page
+workflow, the SKILL.md digest step).
 
 ## Goal
 
@@ -121,10 +121,24 @@ context.
   `recommended`/`optional`; `avoid` for outdated/harmful. Default to `recommended`.
 - Primary sources only (WHATWG / W3C / IETF / IANA / WCAG / schema.org first; MDN /
   web.dev for context).
-- **Ship it before you spec it**: a brand-new _convention_ that would require the site to
-  implement a new capability does NOT get a PR — flag it in Slack as "needs us to ship X
-  first" so the maintainer can decide. PRs are only for documenting standards we can
-  honestly describe (and, where applicable, that the site already satisfies).
+- **Speccing does not require shipping.** A page whose topic does not apply to this site
+  is still a good page — write it, and add a one-line note saying we do not ship it and
+  why. Do not withhold a PR on the grounds that we would have to implement something.
+- **Adoption, not finality, is the bar.** Do NOT open a PR for a convention nothing is
+  using yet, however final the RFC and however permanent the IANA registration. A page
+  recommending a header no cache reads is worse than no page. Conversely a widely-deployed
+  convention can earn a page before its RFC lands.
+- **Thin adoption is the maintainer's call, not yours.** When a topic is real and
+  well-sourced but you cannot find implementations, do not open the PR and do not silently
+  drop it. Put it in Slack with what you checked (MDN/BCD, Chrome Platform Status, the
+  relevant CDN or server docs) and let Joost decide. If he says add it, add it.
+- **Record every turn-down.** Anything you skip on adoption or scope grounds gets an entry
+  in `src/content/considered/` — `title`, `date`, `reason` (`too-early` | `out-of-scope` |
+  `too-narrow`), `sources`, `revisit` (what would change our mind), and a short body. That
+  register at `/considered/` is public and is the reason the Slack "skipped, and why"
+  section exists: the two should agree. Adding an entry there is a normal PR, and it is the
+  right output for a scan that found something real but premature. When the reason later
+  expires, delete the entry in the same PR that adds the spec page.
 
 ## Dedup (critical for a daily job)
 
@@ -160,6 +174,8 @@ DM the maintainer with:
 - New topics found → PR links (or "flagged, needs implementation decision").
 - Status changes → page + what moved + source + PR link.
 - Stale/dead citations → page + broken source + fix PR link.
-- Anything deliberately skipped, and why.
+- Anything deliberately skipped, and why — plus whether it earned a `/considered/` entry
+  (and the PR link if so). Anything you skipped for thin adoption goes here as an explicit
+  question for Joost, not as a closed decision.
 
 Keep it scannable: grouped, one line each, links inline.
