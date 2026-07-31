@@ -7,7 +7,7 @@ status: optional
 order: 130
 appliesTo: [all]
 relatedSlugs: [feed-discovery, feed-hygiene, canonical-url, link-headers]
-updated: "2026-07-30T00:00:00.000Z"
+updated: "2026-07-31T00:00:00.000Z"
 sources:
   - title: "WebSub — W3C Recommendation, 2 June 2026"
     url: "https://www.w3.org/TR/websub/"
@@ -61,6 +61,8 @@ Or, inside an Atom feed:
 **3. Run or choose a hub.** You can operate one, or point at a hosted hub. Either way the hub is a real service with obligations: it verifies every subscription with a `hub.challenge` handshake, enforces lease expiry via `hub.lease_seconds`, and must not issue perpetual leases. If a subscriber supplied a `hub.secret`, the hub signs each delivery with `X-Hub-Signature`, in the form `method=signature` — `sha256`, `sha384`, and `sha512` are the algorithms to use; `sha1` is still recognised but has no business in new deployments.
 
 **4. Keep the feed correct anyway.** WebSub is additive. Subscribers that do not implement it keep polling, so [feed hygiene](/spec/foundations/feed-hygiene/) — stable GUIDs, valid markup, correct `Last-Modified` and `ETag` — still governs how well those clients behave. The push path carries the same feed body, so a malformed feed is malformed for everyone.
+
+**This site ships it.** Both [`/rss.xml`](/rss.xml) and [`/changelog/rss.xml`](/changelog/rss.xml) advertise `rel="hub"` and `rel="self"` on the response and inside the feed, pointing at a hub we run ourselves at `/websub`. It is deliberately a *self-hub*: `hub.topic` is allowlisted to those two feeds, so the endpoint cannot be pointed at arbitrary URLs or made to relay anyone else's content. An open hub is a public service with a different risk profile, and running one is not a prerequisite for the advice above — pointing at a hosted hub is the ordinary choice.
 
 ## Common mistakes
 

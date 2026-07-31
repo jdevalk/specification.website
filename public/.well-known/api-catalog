@@ -26,6 +26,12 @@
           "title": "Changelog feed"
         }
       ],
+      "hub": [
+        {
+          "href": "https://specification.website/websub",
+          "title": "WebSub hub for this site's feeds"
+        }
+      ],
       "sitemap": [
         {
           "href": "https://specification.website/sitemap-index.xml",
