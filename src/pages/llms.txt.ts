@@ -100,6 +100,9 @@ export const GET: APIRoute = async () => {
     `- [Checklist](${site.url}/checklist/): The whole spec as a flat checklist. Also as a copy-and-paste [Markdown task list](${site.url}/checklist.md).`,
   );
   lines.push(
+    `- [Considered, not adopted](${site.url}/considered/): Standards deliberately left out of the spec, with the reason for each and what would change it.`,
+  );
+  lines.push(
     `- [MCP server](${site.url}/mcp/): How to connect an MCP client to the spec.`,
   );
   lines.push(

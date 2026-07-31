@@ -120,3 +120,31 @@ export const changeTypeColor: Record<string, string> = {
   status: "bg-amber-50 text-amber-800 border-amber-200",
   removed: "bg-red-50 text-red-800 border-red-200",
 };
+
+export const consideredReasonLabel: Record<string, string> = {
+  "too-early": "Too early",
+  "out-of-scope": "Out of scope",
+  "too-narrow": "Too narrow",
+};
+
+export const consideredReasonColor: Record<string, string> = {
+  "too-early": "bg-blue-50 text-blue-800 border-blue-200",
+  "out-of-scope": "bg-ink-100 text-ink-700 border-ink-200",
+  "too-narrow": "bg-amber-50 text-amber-800 border-amber-200",
+};
+
+// Shown as the intro under each group heading on /considered/.
+export const consideredReasonBlurb: Record<string, string> = {
+  "too-early":
+    "The standard is real and final, but nothing implements it yet. Speccing it would mean recommending something no visitor, crawler, or cache would notice.",
+  "out-of-scope":
+    "Real and widely used, but not a property of a website you could check from the outside. These are ways of building a site, not things a good site does.",
+  "too-narrow":
+    "Real, implemented, and auditable — but it applies to too few sites to belong in a general specification.",
+};
+
+export const consideredReasonOrder = [
+  "too-early",
+  "out-of-scope",
+  "too-narrow",
+] as const;

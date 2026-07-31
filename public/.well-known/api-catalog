@@ -60,11 +60,6 @@
           "href": "https://specification.website/.well-known/ai-catalog.json",
           "type": "application/ai-catalog+json",
           "title": "Agentic Resource Discovery (ARD) catalog"
-        },
-        {
-          "href": "https://specification.website/.well-known/jwks.json",
-          "type": "application/jwk-set+json",
-          "title": "JWK Set — verifies the ARD catalog signature"
         }
       ],
       "license": [
