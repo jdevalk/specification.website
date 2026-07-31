@@ -48,4 +48,22 @@ const changelog = defineCollection({
   }),
 });
 
-export const collections = { spec, changelog };
+// Standards we have evaluated and deliberately left out of the spec, with the
+// reason. Hand-curated like `changelog` — nothing derives it.
+const considered = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/considered" }),
+  schema: z.object({
+    title: z.string(),
+    date: z.string(),
+    reason: z
+      .enum(["too-early", "out-of-scope", "too-narrow"])
+      .default("too-early"),
+    // What would flip this decision. Keeps the register actionable rather than
+    // a graveyard — omit only when nothing plausibly would.
+    revisit: z.string().optional(),
+    sources: z.array(sourceSchema).default([]),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { spec, changelog, considered };

@@ -7,7 +7,7 @@ status: required
 order: 125
 appliesTo: [all]
 relatedSlugs: [focus-indicators, semantic-html, color-contrast, forced-colors]
-updated: "2026-05-29T10:57:27.000Z"
+updated: "2026-07-28T00:00:00.000Z"
 sources:
   - title: "WCAG 2.3.3 — Animation from Interactions (Level AAA)"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions.html"
@@ -16,7 +16,7 @@ sources:
     url: "https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html"
     publisher: "W3C"
   - title: "MDN — prefers-reduced-motion"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion"
     publisher: "MDN"
   - title: "WP Accessibility"
     url: "https://wpaccessibility.org/"
