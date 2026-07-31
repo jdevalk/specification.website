@@ -2,7 +2,7 @@
 import BaseLayout from "~/layouts/BaseLayout.astro";
 import Breadcrumbs from "~/components/Breadcrumbs.astro";
 
-const updated = "2026-06-29";
+const updated = "2026-07-30";
 ---
 
 <BaseLayout
@@ -179,6 +179,43 @@ const updated = "2026-06-29";
         catch security-policy and deprecation regressions. The data lives in
         Cloudflare's Analytics Engine under our account; retention follows
         Cloudflare's defaults.
+      </p>
+
+      <h2 id="websub">WebSub subscriptions</h2>
+      <p>
+        The site has a <a href="/spec/foundations/websub/">WebSub</a> hub at
+        <code>/websub</code>, which pushes updates to our <a href="/rss.xml"
+          >two</a
+        >
+        <a href="/changelog/rss.xml">feeds</a> to subscribers instead of making them
+        poll. Subscribing is the one thing on this site that stores data you give
+        us, so to be explicit about it:
+      </p>
+      <ul>
+        <li>
+          <strong>What is stored:</strong> if you subscribe, we keep the callback
+          URL you supplied, the topic you subscribed to, the optional
+          <code>hub.secret</code> you chose (used only to sign deliveries to you,
+          never logged and never disclosed), and your lease expiry time. Nothing else
+          — no IP address, no User-Agent.
+        </li>
+        <li>
+          <strong>How long:</strong> until the lease expires, at which point the row
+          is deleted. Leases last at most 30 days, so an abandoned subscription removes
+          itself. You can unsubscribe at any time by POSTing
+          <code>hub.mode=unsubscribe</code>, which deletes the row immediately
+          once your callback confirms.
+        </li>
+        <li>
+          <strong>Who sees it:</strong> nobody outside the hub. Subscriber lists are
+          not published, not shared, and not fed into the
+          <code>/admin/stats</code> dashboard.
+        </li>
+      </ul>
+      <p>
+        A callback URL can be personally identifying if you host it yourself, so
+        treat subscribing as sharing that URL with us. If you would rather not,
+        poll the feed — it works exactly as well, just less promptly.
       </p>
 
       <h2 id="content-hosting">GitHub</h2>
