@@ -49,6 +49,12 @@ Just open a PR. You can use the "Edit this page on GitHub" link on any spec page
 3. Run `npm run dev` locally on port 31337 and verify the page renders.
 4. Open a PR. CI will type-check, build, and verify the schema.
 
+A topic has to be **used**, not merely standardised. A final RFC with a permanent IANA registration still does not earn a page if nothing implements it — the page would recommend a header no cache reads. The reverse also holds: a widely-deployed convention can earn a page before its RFC lands. If adoption looks thin, say so in the issue and let the maintainer weigh it.
+
+Topics that get turned down are recorded publicly at [`/considered/`](https://specification.website/considered/), with the reason and with what would reverse the decision. That page is worth reading before you open an issue — your topic may already be there, in which case the useful contribution is evidence that its `revisit` condition has now been met.
+
+Note that we do **not** require the site to implement something before specifying it. Plenty of good advice does not apply to a small static site; such a page simply says so in one line, and explains why.
+
 ### New category
 
 These are rare. Open an issue first — categories are slow-changing.

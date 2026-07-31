@@ -7,13 +7,13 @@ status: required
 order: 70
 appliesTo: [all]
 relatedSlugs: [aria-usage, skip-links, keyboard-navigation]
-updated: "2026-05-29T10:57:27.000Z"
+updated: "2026-07-28T00:00:00.000Z"
 sources:
   - title: "WCAG 1.3.1 — Info and Relationships (Level A)"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/info-and-relationships.html"
     publisher: "W3C"
   - title: "MDN — HTML elements reference"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Element"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements"
     publisher: "MDN"
   - title: "W3C WAI — ARIA Landmarks"
     url: "https://www.w3.org/WAI/ARIA/apg/practices/landmark-regions/"

@@ -589,6 +589,13 @@ const marketingPages = [
       "New topics, status changes, and honest removals. Newest first, with sources.",
   },
   {
+    slug: "considered",
+    eyebrow: "CONSIDERED",
+    title: "What we left out.",
+    subtitle:
+      "Standards we read, weighed, and did not adopt — with the reason, and what would change it.",
+  },
+  {
     slug: "privacy",
     eyebrow: "PRIVACY",
     title: "Almost nothing collected.",
