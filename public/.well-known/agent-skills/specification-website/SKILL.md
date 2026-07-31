@@ -139,6 +139,18 @@ status promotion (e.g. a topic moving to `required`) can change a previously
 passing site into a failing one, so a delta check is worth doing even when no new
 pages were added.
 
+## When a topic is absent
+
+Absence is not always an oversight. `https://specification.website/considered/`
+lists standards that were evaluated and deliberately left out, each with a reason
+— `too-early` (final, but nothing implements it), `out-of-scope` (a way of
+building a site, not something a site does), `too-narrow` (real, but applies to
+too few sites) — and with what would reverse the decision.
+
+Check it before concluding the spec has a gap, and before recommending that a
+topic be added. If the topic is listed, the useful contribution is evidence that
+its stated revisit condition has now been met, not a fresh proposal.
+
 ## Sources and licence
 
 Code MIT. Content CC BY 4.0. Site source: <https://github.com/jdevalk/specification.website>.

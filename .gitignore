@@ -31,6 +31,8 @@ pnpm-debug.log*
 .wrangler/
 
 # ARD AI Catalog offline signing key — NEVER commit. Back up to secure storage.
+# Retired with the ARD trust-manifest signature. Kept ignored so a leftover key
+# from before the removal can never be committed by accident.
 .ard-signing-key.json
 
 # Claude

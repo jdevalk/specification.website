@@ -4,13 +4,7 @@
     "displayName": "The Website Specification",
     "identifier": "specification.website",
     "documentationUrl": "https://specification.website/spec/agent-readiness/agentic-resource-discovery/",
-    "logoUrl": "https://specification.website/icon-512.png",
-    "trustManifest": {
-      "identity": "https://specification.website/.well-known/jwks.json",
-      "identityType": "https",
-      "privacyPolicyUrl": "https://specification.website/privacy/",
-      "signature": "eyJhbGciOiJFUzI1NiIsImtpZCI6Im5mYy14WnJwWVJEam9PalM2UVVaT2E3QVk5cTh1angyU2VaVk43MVBmNkkifQ..H5L3qJ-zcov8WtTxR_tc__y5a0VLkA7y4Agr0Auln5A5JxiqrcHXLEfByFOPR4zqFfWkMLLX19O3TFe6jJLDEA"
-    }
+    "logoUrl": "https://specification.website/icon-512.png"
   },
   "entries": [
     {

@@ -10,7 +10,7 @@ relatedSlugs: [core-web-vitals, cache-control, conditional-requests]
 updated: "2026-06-18T00:00:00.000Z"
 sources:
   - title: "Server Timing — the Server-Timing header field"
-    url: "https://w3c.github.io/server-timing/#the-server-timing-header-field"
+    url: "https://www.w3.org/TR/server-timing/#the-server-timing-header-field"
     publisher: "W3C"
   - title: "MDN — Server-Timing"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Server-Timing"
@@ -58,5 +58,5 @@ for (const { name, duration, description } of nav.serverTiming) {
 ## Common mistakes
 
 - **Expecting cross-origin metrics to appear in JavaScript.** `PerformanceServerTiming` is same-origin only. For a CDN or third-party host, the response must send [`Timing-Allow-Origin`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Timing-Allow-Origin) naming your origin, or `nav.serverTiming` is empty — the DevTools display still works, but automated collection silently does not.
-- **Leaking infrastructure detail.** The header is visible to anyone. Internal service names, query counts, and host identifiers are an information-disclosure surface; the [spec warns about this](https://w3c.github.io/server-timing/#privacy-and-security). Send coarse labels publicly, or gate richer metrics behind authentication.
+- **Leaking infrastructure detail.** The header is visible to anyone. Internal service names, query counts, and host identifiers are an information-disclosure surface; the [spec warns about this](https://www.w3.org/TR/server-timing/#privacy-and-security). Send coarse labels publicly, or gate richer metrics behind authentication.
 - **Sending it as a trailer expecting the Fetch API to read it.** `Server-Timing` as an HTTP trailer is consumed only by DevTools, not by `fetch()` or the Performance API.

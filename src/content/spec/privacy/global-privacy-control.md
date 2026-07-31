@@ -7,11 +7,11 @@ status: recommended
 order: 30
 appliesTo: [all]
 relatedSlugs: [cookie-consent, privacy-policy, analytics-privacy]
-updated: "2026-07-09T00:00:00.000Z"
+updated: "2026-07-29T00:00:00.000Z"
 sources:
-  - title: "Global Privacy Control specification"
-    url: "https://w3c.github.io/gpc/"
-    publisher: "W3C Community Group"
+  - title: "Global Privacy Control (GPC) — W3C Working Draft"
+    url: "https://www.w3.org/TR/gpc/"
+    publisher: "W3C Privacy Working Group"
   - title: "California Attorney General — Frequently Asked Questions: CCPA"
     url: "https://oag.ca.gov/privacy/ccpa"
     publisher: "California Office of the Attorney General"

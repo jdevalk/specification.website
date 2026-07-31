@@ -9,9 +9,9 @@ appliesTo: [all]
 relatedSlugs: [cache-control, canonical-url, speculation-rules, view-transitions, url-structure]
 updated: "2026-07-09T00:00:00.000Z"
 sources:
-  - title: "No-Vary-Search — WICG editor's draft"
-    url: "https://wicg.github.io/nav-speculation/no-vary-search.html"
-    publisher: "WICG"
+  - title: "draft-ietf-httpbis-no-vary-search — The No-Vary-Search HTTP Caching Extension"
+    url: "https://datatracker.ietf.org/doc/html/draft-ietf-httpbis-no-vary-search"
+    publisher: "IETF"
   - title: "MDN — No-Vary-Search"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/No-Vary-Search"
     publisher: "MDN"
