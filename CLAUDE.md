@@ -50,7 +50,9 @@ When in doubt, default to `recommended`, not `required`. The bar for `required` 
 
 **Always link to the page(s) inline.** An "added a page on X" entry must link X to its `/spec/<category>/<slug>/` URL _in the sentence_ — never trail off with a link to the `/spec/` index. List every page added, each linked.
 
-Do **not** log: typo fixes, refactors, CI/tooling, dependency bumps, OG tweaks, new analytics events, header changes, or any site behaviour invisible on a spec page. Use real dates (British English in the body) and keep each entry to one-to-three sentences.
+Do **not** log: typo fixes, refactors, CI/tooling, dependency bumps, OG tweaks, new analytics events, header changes, or any site behaviour invisible on a spec page. British English in the body, and keep each entry to one-to-three sentences.
+
+**`date` is the day the entry lands on `main`, not the day it was written or the day the underlying standard moved.** This is _our site's_ changelog: it records when this spec changed, not when the world did. A PR authored on the 23rd and merged on the 31st is dated the 31st — so if a PR sits for a few days, re-date the entry (and rename the file to match) before merging. Mention the standard's own date in the body if it matters. The filename is `<date>-<slug>.md` and its stem becomes `entry.id`, which is both the `<li>` anchor on `/changelog/` and the `#`-link in the RSS feed — so renaming an entry that is already live re-delivers it to subscribers as a new item. Re-date before merging, not after.
 
 **When you are unsure whether a change warrants an entry, ask the user — do not silently skip it.** The clear-cut cases decide themselves (a new page always gets one; a typo fix never does). For anything in between — a partial rewrite, a citation overhaul, a reworded summary, a status nuance that isn't a full promotion/downgrade — surface it: _"This change to X is borderline for the changelog — log it as a `changed` entry, or leave it out?"_ and let them call it.
 

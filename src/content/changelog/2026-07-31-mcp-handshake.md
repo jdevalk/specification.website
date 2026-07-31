@@ -1,6 +1,6 @@
 ---
 title: MCP dropped the handshake, so the page describing it had to change
-date: "2026-07-28"
+date: "2026-07-31"
 type: changed
 relatedSlugs: [mcp-and-tool-discovery, deprecation-and-sunset, agent-readiness-overview]
 ---
