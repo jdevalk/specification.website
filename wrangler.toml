@@ -24,3 +24,47 @@ dataset = "sw_agent_log"
 [[analytics_engine_datasets]]
 binding = "REPORT_LOG"
 dataset = "sw_report_log"
+
+# D1 — WebSub subscription store, read/written by functions/websub.ts.
+#
+# COMMENTED OUT UNTIL THE DATABASE EXISTS. The hub returns 503 without this
+# binding, so the site deploys and behaves normally in the meantime.
+#
+# ---------------------------------------------------------------------------
+# GO-LIVE CHECKLIST for the WebSub hub. Do all of it in one commit, so the site
+# never advertises a hub it cannot serve — a rel="hub" link with nothing behind
+# it is the exact failure /spec/foundations/websub/ warns about.
+#
+#   1. Create the database and note the id it prints:
+#        npx wrangler d1 create specification-website-websub
+#
+#   2. Paste that id below and uncomment the [[d1_databases]] block.
+#
+#   3. Apply the schema:
+#        npx wrangler d1 migrations apply specification-website-websub --remote
+#
+#   4. Add the WEBSUB_PUBLISH_SECRET Pages secret (Settings → Variables and
+#      Secrets, Production + Preview) — the bearer token that authorises
+#      hub.mode=publish. Add the same value as a GitHub Actions repo secret of
+#      the same name, which .github/workflows/websub-ping.yml reads.
+#
+#   5. Advertise the hub — this is the step that makes it discoverable:
+#        - uncomment the two feed blocks in public/_headers;
+#        - uncomment the `atom:link rel="hub"` line in src/pages/rss.xml.ts and
+#          in src/pages/changelog/rss.xml.ts;
+#        - add a "hub" entry to public/.well-known/api-catalog pointing at
+#          https://specification.website/websub.
+#
+#   6. Add the worked-example callout to
+#      src/content/spec/foundations/websub.md — the site is now an example of
+#      the page, and CLAUDE.md requires the page to say so.
+#
+#   7. Verify against production: `curl -sI https://specification.website/rss.xml
+#      | grep -i '^link'` shows rel="hub", and the manual `workflow_dispatch` run
+#      of websub-ping returns 202.
+# ---------------------------------------------------------------------------
+#
+# [[d1_databases]]
+# binding = "WEBSUB_DB"
+# database_name = "specification-website-websub"
+# database_id = "PASTE_ID_FROM_STEP_1"

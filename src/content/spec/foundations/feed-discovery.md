@@ -6,7 +6,7 @@ summary: "If your site publishes a feed — RSS, Atom, or JSON Feed — announce
 status: recommended
 order: 110
 appliesTo: [all]
-relatedSlugs: [feed-hygiene, open-graph, canonical-url, machine-readable-formats, llms-txt, markdown-source-endpoints]
+relatedSlugs: [feed-hygiene, websub, open-graph, canonical-url, machine-readable-formats, llms-txt, markdown-source-endpoints]
 updated: "2026-06-18T00:00:00.000Z"
 sources:
   - title: "HTML Living Standard — Link types: alternate"

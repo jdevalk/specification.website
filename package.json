@@ -28,8 +28,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "assets": "node scripts/generate-assets.mjs",
-    "sign:ard": "node scripts/sign-ard-catalog.mjs",
-    "check:ard": "node scripts/sign-ard-catalog.mjs --check",
+    "test:websub": "node --experimental-strip-types scripts/test-websub.mjs",
     "sign:skill": "node scripts/check-skill.mjs",
     "check:skill": "node scripts/check-skill.mjs --check"
   },
@@ -37,7 +36,7 @@
     "@astrojs/mdx": "^7.0.3",
     "@astrojs/rss": "^4.0.19",
     "@tailwindcss/vite": "^4.3.2",
-    "astro": "^7.1.1",
+    "astro": "^7.1.3",
     "dompurify": "^3.4.12",
     "tailwindcss": "^4.3.0"
   },

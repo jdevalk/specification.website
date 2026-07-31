@@ -7,16 +7,16 @@ status: optional
 order: 45
 appliesTo: [all]
 relatedSlugs: [robots-for-ai-crawlers, content-signals, agent-readiness-overview, link-headers]
-updated: "2026-05-29T12:14:17.000Z"
+updated: "2026-07-19T00:00:00.000Z"
 sources:
   - title: "RFC 9421 — HTTP Message Signatures"
     url: "https://www.rfc-editor.org/rfc/rfc9421"
     publisher: "IETF"
-  - title: "draft-meunier-web-bot-auth-architecture"
-    url: "https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture"
+  - title: "draft-meunier-webbotauth-httpsig-protocol — HTTP Message Signatures for automated traffic"
+    url: "https://datatracker.ietf.org/doc/draft-meunier-webbotauth-httpsig-protocol/"
     publisher: "IETF"
-  - title: "draft-meunier-http-message-signatures-directory"
-    url: "https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory"
+  - title: "draft-meunier-webbotauth-httpsig-directory — HTTP Message Signatures Directory"
+    url: "https://datatracker.ietf.org/doc/draft-meunier-webbotauth-httpsig-directory/"
     publisher: "IETF"
   - title: "Cloudflare — Forget IPs: using cryptography to verify bot and agent traffic"
     url: "https://blog.cloudflare.com/web-bot-auth/"
@@ -27,7 +27,7 @@ sources:
 
 Web Bot Auth is an emerging convention that lets a bot prove its identity cryptographically on every request, using the standard [HTTP Message Signatures](https://www.rfc-editor.org/rfc/rfc9421) mechanism from RFC 9421. Instead of guessing whether a request really comes from OpenAI's crawler by inspecting the user-agent string and looking up reverse DNS, the server reads a `Signature` header, fetches the bot's public key from a published key directory, and verifies the signature.
 
-The proposal lives in two IETF drafts: [draft-meunier-web-bot-auth-architecture](https://datatracker.ietf.org/doc/html/draft-meunier-web-bot-auth-architecture) describes the trust model and discovery; [draft-meunier-http-message-signatures-directory](https://datatracker.ietf.org/doc/html/draft-meunier-http-message-signatures-directory) profiles RFC 9421 for bot use and defines the published key directory. Cloudflare ships verification at the network edge, and a growing list of major crawlers sign their traffic.
+The proposal lives in two IETF drafts: [draft-meunier-webbotauth-httpsig-protocol](https://datatracker.ietf.org/doc/draft-meunier-webbotauth-httpsig-protocol/) describes the trust model and how a bot signs its requests; [draft-meunier-webbotauth-httpsig-directory](https://datatracker.ietf.org/doc/draft-meunier-webbotauth-httpsig-directory/) profiles RFC 9421 for bot use and defines the published key directory — a JWKS at a well-known URI, discoverable in-band via a signature header. Cloudflare ships verification at the network edge, and a growing list of major crawlers sign their traffic.
 
 ## Why it matters
 

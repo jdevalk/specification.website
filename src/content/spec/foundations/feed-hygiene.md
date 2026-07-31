@@ -6,7 +6,7 @@ summary: "If you publish a feed, ship it well-formed. Identify the feed inside i
 status: recommended
 order: 120
 appliesTo: [all]
-relatedSlugs: [feed-discovery, canonical-url, machine-readable-formats, llms-txt]
+relatedSlugs: [feed-discovery, websub, canonical-url, machine-readable-formats, llms-txt]
 updated: "2026-05-29T15:19:28.000Z"
 sources:
   - title: "RSS 2.0 Specification"

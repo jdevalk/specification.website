@@ -34,6 +34,9 @@ export async function GET(context: APIContext) {
     customData: [
       "<language>en-GB</language>",
       `<atom:link href="${feedUrl}" rel="self" type="application/rss+xml" />`,
+      // WebSub hub for this topic — held back until the hub is live, along with
+      // the Link header in public/_headers. See the checklist in wrangler.toml.
+      // `<atom:link href="${new URL("/websub", siteUrl).toString()}" rel="hub" />`,
       `<lastBuildDate>${lastBuild.toUTCString()}</lastBuildDate>`,
       "<sy:updatePeriod>weekly</sy:updatePeriod>",
       "<sy:updateFrequency>1</sy:updateFrequency>",

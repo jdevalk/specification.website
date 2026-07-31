@@ -2,7 +2,7 @@
 import "~/styles/global.css";
 import { site } from "~/lib/site";
 import { sri, pagefindImportMap } from "~/lib/integrity";
-import { webmcpIntegrity } from "~/lib/webmcp";
+import { WEBMCP_GUARD, webmcpIntegrity } from "~/lib/webmcp";
 import HeadMeta from "~/components/HeadMeta.astro";
 import SiteHeader from "~/components/SiteHeader.astro";
 import SiteFooter from "~/components/SiteFooter.astro";
@@ -205,11 +205,17 @@ const webmcpSri = await webmcpIntegrity();
       defer
       integrity={sri("/theme-toggle.js")}
       crossorigin="anonymous"></script>
+    {
+      /* WebMCP: feature-detect before fetching. The payload is only useful to a
+        browser that exposes modelContext, so the guard injects it rather than
+        every visitor downloading it to run the same check and bail. Guard text
+        is constant (one stable CSP hash); the per-build SRI rides in data-. */
+    }
     <script
-      src="/webmcp.js"
-      type="text/javascript"
-      defer
-      integrity={webmcpSri}
-      crossorigin="anonymous"></script>
+      is:inline
+      data-webmcp-src="/webmcp.js"
+      data-webmcp-sri={webmcpSri}
+      set:html={WEBMCP_GUARD}
+    />
   </body>
 </html>

@@ -8,7 +8,7 @@ order: 145
 appliesTo: [all]
 relatedSlugs:
   [keyboard-navigation, focus-indicators, empty-links-buttons, mobile-form-inputs, dragging-movements]
-updated: "2026-06-08T00:00:00.000Z"
+updated: "2026-07-28T00:00:00.000Z"
 sources:
   - title: "WCAG 2.5.8 — Target Size (Minimum) Level AA"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html"
@@ -17,7 +17,7 @@ sources:
     url: "https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html"
     publisher: "W3C"
   - title: "MDN — pointer (media feature)"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@media/pointer"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/pointer"
     publisher: "MDN"
   - title: "Human Interface Guidelines — Layout"
     url: "https://developer.apple.com/design/human-interface-guidelines/layout"
