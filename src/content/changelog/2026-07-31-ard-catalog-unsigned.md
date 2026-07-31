@@ -1,6 +1,6 @@
 ---
 title: "ARD catalogues: sign only when the key is anchored elsewhere"
-date: "2026-07-23"
+date: "2026-07-31"
 type: changed
 relatedSlugs: [agentic-resource-discovery]
 ---

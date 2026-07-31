@@ -7,7 +7,7 @@ status: optional
 order: 86
 appliesTo: [all]
 relatedSlugs: [dns-aid, mcp-and-tool-discovery, a2a-agent-cards, agent-skills-discovery, okf-bundle, link-headers, well-known-overview]
-updated: "2026-07-23T00:00:00.000Z"
+updated: "2026-07-31T00:00:00.000Z"
 sources:
   - title: "Agentic Resource Discovery (ARD) specification"
     url: "https://agenticresourcediscovery.org/"

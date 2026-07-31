@@ -5,7 +5,7 @@ reference implementation of [Agentic Resource Discovery](https://agenticresource
 (ARD) — the Linux Foundation / Google draft announced June 2026. Not part of the
 deployed site; this file is scratch for the write-up.
 
-> **Superseded in part, 23 July 2026.** The signing described in §9 was removed.
+> **Superseded in part, 31 July 2026.** The signing described in §9 was removed.
 > The verifying JWK Set lived at `/.well-known/jwks.json`, on the same origin as
 > the catalogue it vouched for — so anyone able to rewrite the catalogue could
 > swap the key too, and the signature could not detect the compromise it existed
