@@ -7,7 +7,7 @@ status: required
 order: 50
 appliesTo: [all]
 relatedSlugs: [keyboard-navigation, color-contrast, inert-attribute, focus-not-obscured]
-updated: "2026-07-17T00:00:00.000Z"
+updated: "2026-07-28T00:00:00.000Z"
 sources:
   - title: "WCAG 2.4.7 — Focus Visible (Level AA)"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/focus-visible.html"
@@ -19,7 +19,7 @@ sources:
     url: "https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance.html"
     publisher: "W3C"
   - title: "MDN — :focus-visible"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Selectors/:focus-visible"
     publisher: "MDN"
 ---
 

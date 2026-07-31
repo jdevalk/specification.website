@@ -7,13 +7,13 @@ status: optional
 order: 70
 appliesTo: [all]
 relatedSlugs: [well-known-overview, webfinger]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-07-29T00:00:00.000Z"
 sources:
   - title: "NodeInfo — Protocol overview"
-    url: "http://nodeinfo.diaspora.software/"
+    url: "https://nodeinfo.diaspora.software/"
     publisher: "NodeInfo project"
   - title: "NodeInfo Protocol specification"
-    url: "http://nodeinfo.diaspora.software/protocol.html"
+    url: "https://nodeinfo.diaspora.software/protocol.html"
     publisher: "NodeInfo project"
   - title: "IANA — Well-Known URIs Registry"
     url: "https://www.iana.org/assignments/well-known-uris/well-known-uris.xhtml"

@@ -3,10 +3,20 @@
 // Streamable HTTP transport (the modern MCP transport): the client POSTs
 // JSON-RPC 2.0 messages to /mcp and gets back JSON-RPC responses. No
 // sessions, no server-initiated messages, no SSE — this server is stateless
-// and read-only. Advertises the 2025-11-25 protocol revision and negotiates
-// down to 2025-06-18 / 2025-03-26 when a client requests one of those —
-// the feature surface (tool annotations, structured output / outputSchema)
-// is identical across them for this server.
+// and read-only.
+//
+// DUAL-ERA (spec: 2026-07-28 basic/versioning#backward-compatibility).
+// Revision 2026-07-28 removed the `initialize` handshake: every request now
+// declares its own protocol version in `params._meta`, mirrored into the
+// MCP-Protocol-Version header. Earlier revisions ("legacy") negotiate once
+// via `initialize`. This server answers both on the same endpoint, and picks
+// which by how the client opens:
+//
+//   * a request carrying the modern _meta version key  → modern, stateless
+//   * an `initialize` request                          → legacy semantics
+//
+// Being stateless already, the modern shape costs us nothing structurally —
+// the work is per-request validation and the mandatory server/discover RPC.
 //
 // All spec content is bundled at build time via scripts/build-data.mjs.
 // The Worker holds the manifest in module scope, so it is parsed once per
@@ -33,11 +43,52 @@ interface Env {
 
 const manifest = data as unknown as Manifest;
 
-const PROTOCOL_VERSION = '2025-11-25';
-// Older revisions this server is also fully compatible with. Version
-// negotiation (spec: basic/lifecycle) echoes the client's requested version
-// when it is in this set, and answers with PROTOCOL_VERSION otherwise.
-const SUPPORTED_PROTOCOL_VERSIONS = [PROTOCOL_VERSION, '2025-06-18', '2025-03-26'];
+const PROTOCOL_VERSION = '2026-07-28';
+
+// Versions valid for the MODERN per-request mechanism. Only 2026-07-28 goes
+// here, and deliberately so: the `_meta` protocol-version key does not exist
+// in earlier revisions, so a request carrying it can only mean 2026-07-28.
+// Advertising a legacy version through server/discover would invite a client
+// to send it as per-request metadata, which is not a thing that revision
+// defines. Legacy versions stay reachable through `initialize` below.
+const MODERN_PROTOCOL_VERSIONS = [PROTOCOL_VERSION];
+
+// Handshake-based revisions this server still answers via `initialize`. The
+// feature surface (tool annotations, structured output / outputSchema) is
+// identical across them for this server.
+const LEGACY_PROTOCOL_VERSIONS = ['2025-11-25', '2025-06-18', '2025-03-26'];
+const LEGACY_DEFAULT_VERSION = LEGACY_PROTOCOL_VERSIONS[0];
+
+const SUPPORTED_PROTOCOL_VERSIONS = [...MODERN_PROTOCOL_VERSIONS, ...LEGACY_PROTOCOL_VERSIONS];
+
+// Our own support window for the handshake, announced on the wire.
+//
+// Note what this is NOT: MCP does not deprecate the `initialize` handshake.
+// 2025-11-25 is a Final revision, and the deprecated-features registry
+// (specification/2026-07-28/deprecated) does not list it. Revisions do not
+// sunset — how long a given server keeps honouring one is that server's
+// policy. So these dates are ours, not the specification's, and Deprecation
+// (RFC 9745) + Sunset (RFC 8594) are the right shape for exactly that: a
+// commitment this endpoint is making about its own future behaviour.
+//
+// Worked example for /spec/resilience/deprecation-and-sunset/.
+const HANDSHAKE_DEPRECATION = '@1785196800'; // 2026-07-28T00:00:00Z
+const HANDSHAKE_SUNSET = 'Wed, 28 Jul 2027 00:00:00 GMT';
+const HANDSHAKE_DOCS =
+  'https://specification.website/spec/agent-readiness/mcp-and-tool-discovery/';
+const HANDSHAKE_HEADERS = {
+  Deprecation: HANDSHAKE_DEPRECATION,
+  Sunset: HANDSHAKE_SUNSET,
+  Link: `<${HANDSHAKE_DOCS}>; rel="deprecation"; type="text/html"`,
+};
+
+// Reserved `_meta` keys from the 2026-07-28 revision (basic/index#meta).
+const META_PROTOCOL_VERSION = 'io.modelcontextprotocol/protocolVersion';
+const META_SERVER_INFO = 'io.modelcontextprotocol/serverInfo';
+
+// Protocol-defined JSON-RPC error codes (basic/index#error-codes).
+const ERR_HEADER_MISMATCH = -32020;
+const ERR_UNSUPPORTED_PROTOCOL_VERSION = -32022;
 const SERVER_INFO = {
   name: 'specification-website',
   version: '0.2.0',
@@ -54,11 +105,25 @@ const SERVER_INFO = {
   ],
 };
 
+// Natural-language guidance for the calling model. Returned by both eras —
+// `initialize` (legacy) and `server/discover` (modern) — so keep it one string.
+const SERVER_INSTRUCTIONS =
+  'Read-only MCP server for The Website Specification at https://specification.website. ' +
+  'Use `search` for free-text queries, `list_topics` for filtered lists, `get_topic` to fetch ' +
+  'a single page as Markdown, and `get_checklist` for audit-style output. ' +
+  'Spec items have one of four statuses: `required` (platform contract breaks without it), ' +
+  '`recommended` (modern site should do it), `optional` (context-dependent), `avoid` (outdated or harmful). ' +
+  'The `list_topics` and `get_checklist` tools return ALL statuses by default — pass `status` to filter. ' +
+  'The `audit_url` prompt is the exception: with no `focus`, it defaults to `required`-only.';
+
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Mcp-Session-Id, Mcp-Protocol-Version',
-  'Access-Control-Expose-Headers': 'Mcp-Session-Id',
+  'Access-Control-Allow-Headers':
+    'Content-Type, Mcp-Session-Id, Mcp-Protocol-Version, Mcp-Method, Mcp-Name',
+  // Deprecation/Sunset/Link are exposed so a browser-based client can
+  // actually read them — without this they are invisible to fetch().
+  'Access-Control-Expose-Headers': 'Mcp-Session-Id, Deprecation, Sunset, Link',
   'Access-Control-Max-Age': '86400',
 };
 
@@ -93,28 +158,52 @@ function handleRpc(req: RpcRequest): RpcResponse | null {
   const { id, method, params = {} } = req;
 
   switch (method) {
+    // Legacy era only. An `initialize` request selects handshake semantics
+    // (spec: 2026-07-28 basic/versioning), so it can never yield the modern
+    // revision — echo the requested legacy version, else the newest legacy one.
     case 'initialize': {
       const requested = String((params as Record<string, unknown>).protocolVersion || '');
       return ok(id, {
-        protocolVersion: SUPPORTED_PROTOCOL_VERSIONS.includes(requested)
+        protocolVersion: LEGACY_PROTOCOL_VERSIONS.includes(requested)
           ? requested
-          : PROTOCOL_VERSION,
+          : LEGACY_DEFAULT_VERSION,
         serverInfo: SERVER_INFO,
         capabilities: {
           tools: { listChanged: false },
           prompts: { listChanged: false },
           logging: {},
         },
-        instructions:
-          'Read-only MCP server for The Website Specification at https://specification.website. ' +
-          'Use `search` for free-text queries, `list_topics` for filtered lists, `get_topic` to fetch ' +
-          'a single page as Markdown, and `get_checklist` for audit-style output. ' +
-          'Spec items have one of four statuses: `required` (platform contract breaks without it), ' +
-          '`recommended` (modern site should do it), `optional` (context-dependent), `avoid` (outdated or harmful). ' +
-          'The `list_topics` and `get_checklist` tools return ALL statuses by default — pass `status` to filter. ' +
-          'The `audit_url` prompt is the exception: with no `focus`, it defaults to `required`-only.',
+        instructions: SERVER_INSTRUCTIONS,
       });
     }
+
+    // Modern era. Servers MUST implement server/discover: it returns the
+    // supported versions, capabilities and identity in one request, so a
+    // client can skip probing tools/list + prompts/list separately.
+    case 'server/discover':
+      return ok(id, {
+        resultType: 'complete',
+        supportedVersions: MODERN_PROTOCOL_VERSIONS,
+        // No `logging` here. Logging is Deprecated as of 2026-07-28
+        // (specification/2026-07-28/deprecated, SEP-2577), and new
+        // implementations SHOULD NOT adopt it — advertising it in a discovery
+        // call written after that date would be adopting it. The legacy
+        // `initialize` response below still declares it, because clients
+        // written against those revisions may already expect it there.
+        capabilities: {
+          tools: {},
+          prompts: {},
+        },
+        _meta: {
+          [META_SERVER_INFO]: SERVER_INFO,
+        },
+        instructions: SERVER_INSTRUCTIONS,
+        // The manifest is baked in at build time and only changes on deploy,
+        // so a discovery result stays valid for as long as a client cares to
+        // hold it. Public: there is nothing per-client in this response.
+        ttlMs: 3_600_000,
+        cacheScope: 'public',
+      });
 
     case 'notifications/initialized':
     case 'notifications/cancelled':
@@ -315,8 +404,120 @@ async function handleA2a(request: Request, env: Env): Promise<Response> {
   return new Response(JSON.stringify(response), { headers: JSON_HEADERS });
 }
 
+// --- Modern-era transport validation (2026-07-28) -------------------------
+
+// Header values that cannot be represented in plain ASCII arrive wrapped in a
+// sentinel: `=?base64?<base64 of the UTF-8 bytes>?=`. Servers MUST decode
+// before comparing to the body value (transports/streamable-http#value-encoding).
+function decodeHeaderValue(raw: string): string {
+  if (!raw.startsWith('=?base64?') || !raw.endsWith('?=')) return raw;
+  const encoded = raw.slice('=?base64?'.length, -'?='.length);
+  try {
+    const bytes = Uint8Array.from(atob(encoded), (c) => c.charCodeAt(0));
+    return new TextDecoder().decode(bytes);
+  } catch {
+    return raw; // undecodable → will fail the comparison, which is correct
+  }
+}
+
+// The `Mcp-Name` header mirrors params.name (tools/call, prompts/get) or
+// params.uri (resources/read). Returns null when the method does not require it.
+function expectedMcpName(method: string, params: Record<string, unknown>): string | null {
+  switch (method) {
+    case 'tools/call':
+    case 'prompts/get':
+      return typeof params.name === 'string' ? params.name : '';
+    case 'resources/read':
+      return typeof params.uri === 'string' ? params.uri : '';
+    default:
+      return null;
+  }
+}
+
+// A request is "modern" iff it carries the per-request protocol-version key.
+// That key does not exist before 2026-07-28, so its presence is unambiguous.
+function modernVersionOf(req: RpcRequest): string | null {
+  const params = (req.params ?? {}) as Record<string, unknown>;
+  const meta = params._meta as Record<string, unknown> | undefined;
+  if (!meta || typeof meta !== 'object') return null;
+  const version = meta[META_PROTOCOL_VERSION];
+  return typeof version === 'string' ? version : null;
+}
+
+// Returns a JSON-RPC error response when the request must be rejected, or
+// null when it may proceed. Every rejection here is a MUST in
+// transports/streamable-http; all of them are HTTP 400.
+function validateModernRequest(
+  httpReq: Request,
+  req: RpcRequest,
+  bodyVersion: string,
+): RpcResponse | null {
+  const { id, method } = req;
+  const params = (req.params ?? {}) as Record<string, unknown>;
+
+  // The revision explicitly leaves header requirements for notification POSTs
+  // undefined, so validating them would invent a rule and reject conforming
+  // clients. A JSON-RPC notification is a message with no `id`.
+  if (id === undefined || id === null) return null;
+
+  const reject = (code: number, message: string, data?: unknown) =>
+    err(id, code, message, data);
+
+  // The header mirrors the body value; a mismatch means two components in the
+  // path disagree about what is being asked, which is a security problem.
+  const headerVersion = httpReq.headers.get('mcp-protocol-version');
+  if (!headerVersion) {
+    return reject(ERR_HEADER_MISMATCH, 'Missing required header: MCP-Protocol-Version');
+  }
+  if (headerVersion !== bodyVersion) {
+    return reject(
+      ERR_HEADER_MISMATCH,
+      `Header mismatch: MCP-Protocol-Version header value '${headerVersion}' does not match body value '${bodyVersion}'`,
+    );
+  }
+
+  if (!MODERN_PROTOCOL_VERSIONS.includes(bodyVersion)) {
+    return reject(
+      ERR_UNSUPPORTED_PROTOCOL_VERSION,
+      'Unsupported protocol version',
+      { supported: MODERN_PROTOCOL_VERSIONS, requested: bodyVersion },
+    );
+  }
+
+  const headerMethod = httpReq.headers.get('mcp-method');
+  if (!headerMethod) {
+    return reject(ERR_HEADER_MISMATCH, 'Missing required header: Mcp-Method');
+  }
+  if (headerMethod !== method) {
+    return reject(
+      ERR_HEADER_MISMATCH,
+      `Header mismatch: Mcp-Method header value '${headerMethod}' does not match body value '${method}'`,
+    );
+  }
+
+  const wantName = expectedMcpName(method, params);
+  if (wantName !== null) {
+    const rawName = httpReq.headers.get('mcp-name');
+    if (rawName === null) {
+      return reject(ERR_HEADER_MISMATCH, 'Missing required header: Mcp-Name');
+    }
+    const gotName = decodeHeaderValue(rawName);
+    if (gotName !== wantName) {
+      return reject(
+        ERR_HEADER_MISMATCH,
+        `Header mismatch: Mcp-Name header value '${gotName}' does not match body value '${wantName}'`,
+      );
+    }
+  }
+
+  return null;
+}
+
 async function handleMcp(request: Request, env: Env): Promise<Response> {
   if (request.method !== 'POST') {
+    // 2026-07-28 removed the GET stream and the DELETE session teardown; both
+    // are 405 now. Mcp-Session-Id and Last-Event-ID are ignored wherever they
+    // appear — this server never had sessions to resume.
     return new Response(
       JSON.stringify(err(null, -32600, 'MCP endpoint requires POST with a JSON-RPC body.')),
       { status: 405, headers: JSON_HEADERS },
@@ -348,13 +549,37 @@ async function handleMcp(request: Request, env: Env): Promise<Response> {
     return new Response(JSON.stringify(responses), { headers: JSON_HEADERS });
   }
   const req = body as RpcRequest;
+
+  // Era selection (spec: basic/versioning). A request carrying the modern
+  // per-request version key is served under 2026-07-28 and validated
+  // accordingly; anything else falls through to the legacy path untouched,
+  // so existing `initialize`-based clients keep working exactly as before.
+  const bodyVersion = modernVersionOf(req);
+  if (bodyVersion !== null) {
+    const rejection = validateModernRequest(request, req, bodyVersion);
+    if (rejection) {
+      logMcpCall(env, request, req, rejection, 'remote');
+      return new Response(JSON.stringify(rejection), { status: 400, headers: JSON_HEADERS });
+    }
+  }
+
   const response = handleRpc(req);
   logMcpCall(env, request, req, response, 'remote');
   if (response === null) {
     // Streamable HTTP requires accepted notifications to return 202 with no body.
     return new Response(null, { status: 202, headers: CORS_HEADERS });
   }
-  return new Response(JSON.stringify(response), { headers: JSON_HEADERS });
+  // Modern era distinguishes "no such method" from a legacy 404 by pairing
+  // HTTP 404 with a JSON-RPC -32601 body.
+  const status =
+    bodyVersion !== null && 'error' in response && response.error.code === -32601 ? 404 : 200;
+
+  // A legacy handshake gets our support window on the wire. Scoped to the
+  // `initialize` response rather than every response from /mcp: the endpoint
+  // is not going away, only our willingness to answer the handshake on it.
+  const headers =
+    req.method === 'initialize' ? { ...JSON_HEADERS, ...HANDSHAKE_HEADERS } : JSON_HEADERS;
+  return new Response(JSON.stringify(response), { status, headers });
 }
 
 // --- Usage logging --------------------------------------------------------
@@ -396,6 +621,20 @@ function logMcpCall(
     let clientName = '';
     let clientVersion = '';
     let isError = '';
+
+    // Modern era (2026-07-28) carries clientInfo in `_meta` on EVERY request,
+    // not once at `initialize`. Read it first so the client-mix column keeps
+    // filling as clients migrate; the `initialize` branch below still covers
+    // legacy clients, for which this key is absent.
+    const meta = (params as Record<string, unknown>)._meta as Record<string, unknown> | undefined;
+    if (meta && typeof meta === 'object') {
+      const modernClient = (meta['io.modelcontextprotocol/clientInfo'] || {}) as {
+        name?: unknown;
+        version?: unknown;
+      };
+      clientName = String(modernClient.name || '');
+      clientVersion = String(modernClient.version || '');
+    }
 
     if (method === 'tools/call') {
       toolName = String((params as Record<string, unknown>).name || '');

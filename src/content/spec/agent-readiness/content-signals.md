@@ -6,8 +6,8 @@ summary: "Add Content-Signal directives to robots.txt to declare whether AI craw
 status: optional
 order: 42
 appliesTo: [all]
-relatedSlugs: [robots-for-ai-crawlers, robots-txt, agent-readiness-overview, web-bot-auth]
-updated: "2026-05-29T12:14:17.000Z"
+relatedSlugs: [robots-for-ai-crawlers, robots-txt, tdmrep, agent-readiness-overview, web-bot-auth]
+updated: "2026-07-28T00:00:00.000Z"
 sources:
   - title: "IETF AI Preferences WG (aipref) — drafts"
     url: "https://datatracker.ietf.org/wg/aipref/documents/"
@@ -43,12 +43,14 @@ Each takes `yes` or `no`. Multiple values are comma-separated on a single `Conte
 
 ## Status of the proposal
 
-This is **not yet a settled standard**. The work is split across two ongoing efforts:
+This is **not yet a settled standard**, and the two halves of it are in very different health. The work is split across two efforts:
 
 - The **IETF AI Preferences working group ([aipref](https://datatracker.ietf.org/wg/aipref/documents/))** is working on a vocabulary and protocol-level definition.
 - The **IAB Tech Lab Content Signals project** has published a parallel specification aimed at industry adoption.
 
-Drafts have been circulating since 2024 and the vocabulary is converging. Treat Content Signals as recommended-to-experiment-with, not as a finalised standard. The directive will be ignored by every crawler that does not yet parse it — which today is most of them.
+Inside the IETF work, separate the *vocabulary* from the *attachment mechanism*. The vocabulary — what `search`, `ai-input` and `ai-train` mean — is alive and was being edited for publication as recently as April 2026 ([draft-ietf-aipref-vocab](https://datatracker.ietf.org/doc/draft-ietf-aipref-vocab/)). The document that would define how you actually bind those preferences to content over HTTP, [draft-ietf-aipref-attach](https://datatracker.ietf.org/doc/draft-ietf-aipref-attach/), **expired on 1 May 2026** and has not been reposted; its text has seen no edits in the working group's repository since September 2025. So the part of Content Signals a site can act on today — a line in `robots.txt` — currently rests on the IAB Tech Lab specification and on validator convention, not on a live IETF draft.
+
+That is not a reason to avoid it, but it is a reason to expect the syntax to move. Treat Content Signals as recommended-to-experiment-with, not as a finalised standard. The directive will be ignored by every crawler that does not yet parse it — which today is most of them.
 
 ## Why it matters
 
