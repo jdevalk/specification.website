@@ -5,7 +5,7 @@ description: Query and apply The Website Specification — a platform-agnostic s
 
 # specification.website
 
-The Website Specification is a single source of truth for what a good website does. Ten categories, 165 pages, every item tagged with a status. It ships in three machine-readable forms: per-page Markdown, llms.txt / llms-full.txt, and an MCP server.
+The Website Specification is a single source of truth for what a good website does. Ten categories, 166 pages, every item tagged with a status. It ships in three machine-readable forms: per-page Markdown, llms.txt / llms-full.txt, and an MCP server.
 
 ## When to use this skill
 
@@ -19,7 +19,8 @@ If you can speak MCP, use it. The server is stateless Streamable HTTP, no auth, 
 
 - Endpoint: `https://mcp.specification.website/mcp`
 - Server card: `https://specification.website/.well-known/mcp/server-card.json`
-- Protocol revision: 2025-11-25
+- Protocol revision: 2026-07-28
+- Also answers the handshake-based revisions 2025-11-25, 2025-06-18 and 2025-03-26 via `initialize`, so older clients keep working unchanged
 
 Tools:
 
@@ -137,6 +138,18 @@ A sensible default cadence is **monthly**, or at the start of any fresh audit. A
 status promotion (e.g. a topic moving to `required`) can change a previously
 passing site into a failing one, so a delta check is worth doing even when no new
 pages were added.
+
+## When a topic is absent
+
+Absence is not always an oversight. `https://specification.website/considered/`
+lists standards that were evaluated and deliberately left out, each with a reason
+— `too-early` (final, but nothing implements it), `out-of-scope` (a way of
+building a site, not something a site does), `too-narrow` (real, but applies to
+too few sites) — and with what would reverse the decision.
+
+Check it before concluding the spec has a gap, and before recommending that a
+topic be added. If the topic is listed, the useful contribution is evidence that
+its stated revisit condition has now been met, not a fresh proposal.
 
 ## Sources and licence
 

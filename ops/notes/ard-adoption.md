@@ -5,6 +5,16 @@ reference implementation of [Agentic Resource Discovery](https://agenticresource
 (ARD) — the Linux Foundation / Google draft announced June 2026. Not part of the
 deployed site; this file is scratch for the write-up.
 
+> **Superseded in part, 31 July 2026.** The signing described in §9 was removed.
+> The verifying JWK Set lived at `/.well-known/jwks.json`, on the same origin as
+> the catalogue it vouched for — so anyone able to rewrite the catalogue could
+> swap the key too, and the signature could not detect the compromise it existed
+> for. It also covered `host.trustManifest` only, leaving every `entries` URL
+> (the fields an attacker would actually target) unsigned. The catalogue is now
+> served as plain JSON. The reasoning is on the
+> [spec page](../../src/content/spec/agent-readiness/agentic-resource-discovery.md);
+> it makes a better post than the signing walkthrough did.
+
 ## The one-sentence pitch
 
 ARD is a discovery layer (not a runtime): a domain publishes an **AI Catalog** at

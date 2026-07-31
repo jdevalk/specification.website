@@ -7,7 +7,7 @@ status: recommended
 order: 25
 appliesTo: [all]
 relatedSlugs: [https-tls, content-security-policy, hsts, subresource-integrity]
-updated: "2026-06-08T20:15:00.000Z"
+updated: "2026-07-30T00:00:00.000Z"
 sources:
   - title: "W3C — Mixed Content"
     url: "https://www.w3.org/TR/mixed-content/"
@@ -16,7 +16,7 @@ sources:
     url: "https://www.w3.org/TR/upgrade-insecure-requests/"
     publisher: "W3C"
   - title: "MDN — Mixed content"
-    url: "https://developer.mozilla.org/en-US/docs/Web/Security/Mixed_content"
+    url: "https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Mixed_content"
     publisher: "MDN"
   - title: "MDN — CSP: upgrade-insecure-requests"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Content-Security-Policy/upgrade-insecure-requests"

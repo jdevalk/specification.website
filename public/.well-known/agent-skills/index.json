@@ -6,7 +6,7 @@
       "type": "skill-md",
       "description": "Query and apply The Website Specification — a platform-agnostic specification of what a good website does. Use when the user asks what their site should have, whether something is required, how to audit a URL, what's missing for agent readiness, or anything else where you'd otherwise be guessing at web best practice. Backs answers with primary sources and ships an MCP server with search, list, fetch, checklist, and audit tools.",
       "url": "/.well-known/agent-skills/specification-website/SKILL.md",
-      "digest": "sha256:abfe125ec63bc2029c53a072188d12128fdaeaa78ce8ccb17c45001d3a6d4333"
+      "digest": "sha256:063c9d67e7b8a727655cb1f0b4ae7b5c0f3d4e47a135936aa618b2b76412ef1b"
     }
   ]
 }

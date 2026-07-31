@@ -12,6 +12,13 @@
 #   sha256-8wqC… — the inline <script type="importmap"> in BaseLayout.astro
 #     that pins pagefind.js (src/lib/integrity.ts). Recompute if the import
 #     map serialisation or the pagefind.js hash changes.
+#   sha256-QJ6d… — the inline WebMCP guard (WEBMCP_GUARD in src/lib/webmcp.ts).
+#     It feature-detects modelContext and only then injects /webmcp.js, so a
+#     browser with no WebMCP implementation fetches none of it. The guard text
+#     is invariant — /webmcp.js's per-build SRI travels in a data- attribute,
+#     which CSP does not hash — so this hash should never need recomputing.
+#     check-integrity.mjs verifies it against the built HTML and fails the
+#     build with the correct value if the guard is ever edited.
 #
 # Plausible is self-hosted at /js/plausible.js (a frozen copy of
 # plausible.io/js/script.js, refreshed daily by
@@ -26,13 +33,20 @@
 # /reports means a script shipped without integrity. Flip to enforcing
 # `Integrity-Policy` once the /reports stream confirms a clean run. Worked
 # example for /spec/security/subresource-integrity/.
+#
+# tdm-reservation: 0 is the W3C TDMRep declaration that we do NOT reserve the
+# right to object to text and data mining — the machine-readable counterpart to
+# the CC BY 4.0 content licence, and the inverse of the Article 4 CDSM opt-out.
+# Keep it at 0: a site whose whole point is being read by machines has no
+# business reserving against them. Worked example for
+# /spec/agent-readiness/tdmrep/.
 
 /*
   Strict-Transport-Security: max-age=63072000; includeSubDomains
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=(), interest-cohort=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' 'sha256-N74AzU+1FxvXAWIxrP2zNCBUxV949ZHOXXqjTvbusx0=' 'sha256-UU9xsfeOKmx3D7Lk33alkWn1rIjk46pD684u4pupy4o=' 'sha256-8wqCJSSabgg10EbyE8Gnnwc8zsNpWH4v1wi4+NcyfRI='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://plausible.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; report-to csp-endpoint; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' 'sha256-N74AzU+1FxvXAWIxrP2zNCBUxV949ZHOXXqjTvbusx0=' 'sha256-UU9xsfeOKmx3D7Lk33alkWn1rIjk46pD684u4pupy4o=' 'sha256-8wqCJSSabgg10EbyE8Gnnwc8zsNpWH4v1wi4+NcyfRI=' 'sha256-QJ6dY3o48Nii8P8MjvF7lHKOwTps0NWPrEzA2RCm83s='; worker-src 'self' blob:; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:; connect-src 'self' https://plausible.io; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'; report-to csp-endpoint; upgrade-insecure-requests
   Content-Security-Policy-Report-Only: require-trusted-types-for 'script'; trusted-types default dompurify; report-to csp-endpoint
   Integrity-Policy-Report-Only: blocked-destinations=(script), endpoints=(integrity-endpoint)
   Reporting-Endpoints: csp-endpoint="/reports", default="/reports", integrity-endpoint="/reports"
@@ -40,6 +54,7 @@
   Cross-Origin-Resource-Policy: same-site
   X-Frame-Options: DENY
   No-Vary-Search: params=("utm_source" "utm_medium" "utm_campaign" "utm_content" "utm_term" "gclid" "fbclid" "msclkid" "mc_cid" "mc_eid" "ref"), key-order
+  tdm-reservation: 0
   Link: </llms.txt>; rel="describedby"; type="text/markdown"; title="Site index for LLMs", </llms-full.txt>; rel="alternate"; type="text/markdown"; title="Full content as Markdown", </.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json", </.well-known/mcp/server-card.json>; rel="mcp"; type="application/json"; title="MCP server card", <https://mcp.specification.website/mcp>; rel="related"; title="MCP endpoint", </.well-known/agent-card.json>; rel="service-desc"; type="application/json"; title="A2A agent card", <https://mcp.specification.website/a2a/v1>; rel="related"; title="A2A endpoint", </.well-known/agent-skills/index.json>; rel="agent-skills"; type="application/json"; title="Agent Skills discovery index", </.well-known/ai-catalog.json>; rel="ai-catalog"; type="application/ai-catalog+json"; title="Agentic Resource Discovery catalog", </sitemap-index.xml>; rel="sitemap"; type="application/xml", </rss.xml>; rel="alternate"; type="application/rss+xml"; title="Feed of spec changes", </changelog/rss.xml>; rel="alternate"; type="application/rss+xml"; title="Changelog feed", </.well-known/security.txt>; rel="security"; type="text/plain"
 
 # Self-hosted Plausible tracker. Not fingerprinted and refreshed in place by
@@ -113,6 +128,14 @@
   Cache-Control: public, max-age=3600, stale-if-error=86400
   Access-Control-Allow-Origin: *
 
+# WebMCP spec manifest — fetched lazily by /webmcp.js on the first tool call
+# that needs it. Deliberately left in the Functions route (not _routes.json's
+# exclude list): a request for it is the clearest signal that an in-browser
+# agent actually used the tools, so it lands in the agent log.
+/webmcp-manifest.json
+  Content-Type: application/json; charset=utf-8
+  Cache-Control: public, max-age=3600, stale-if-error=86400
+
 # Per-page JSON-LD graph served from /spec/<category>/<slug>.jsonld
 /spec/*.jsonld
   Content-Type: application/ld+json; charset=utf-8
@@ -167,12 +190,6 @@
 # Agentic Resource Discovery (ARD) — AI Catalog manifest
 /.well-known/ai-catalog.json
   Content-Type: application/ai-catalog+json; charset=utf-8
-  Cache-Control: public, max-age=3600
-  Access-Control-Allow-Origin: *
-
-# JWK Set — public key for verifying the AI Catalog trustManifest signature
-/.well-known/jwks.json
-  Content-Type: application/jwk-set+json; charset=utf-8
   Cache-Control: public, max-age=3600
   Access-Control-Allow-Origin: *
 
