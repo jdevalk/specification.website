@@ -167,12 +167,6 @@
   Cache-Control: public, max-age=3600
   Access-Control-Allow-Origin: *
 
-# JWK Set — public key for verifying the AI Catalog trustManifest signature
-/.well-known/jwks.json
-  Content-Type: application/jwk-set+json; charset=utf-8
-  Cache-Control: public, max-age=3600
-  Access-Control-Allow-Origin: *
-
 /.well-known/agent-skills/*/SKILL.md
   Content-Type: text/markdown; charset=utf-8
   Cache-Control: public, max-age=3600

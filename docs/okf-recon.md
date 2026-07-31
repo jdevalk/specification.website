@@ -3,6 +3,11 @@
 Recon for the "publish the spec as an OKF bundle, fix discovery via ARD" plan.
 No source files were changed to produce this. Read this before Phase 1.
 
+> **Point-in-time document.** Its ARD signing observations no longer describe the
+> site: the `trustManifest` signature, `scripts/sign-ard-catalog.mjs`, and
+> `jwks.json` were removed on 23 July 2026 because the verifying key shared an
+> origin with the catalogue it signed. See `ops/notes/ard-adoption.md`.
+
 ## State reconciliation (what the plan assumed vs. what is already shipped)
 
 | Plan phase                                   | Status today                 | Notes                                                                                                                                                                                                                                                                                                                                                                                      |
