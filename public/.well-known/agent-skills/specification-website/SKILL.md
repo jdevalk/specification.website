@@ -19,7 +19,8 @@ If you can speak MCP, use it. The server is stateless Streamable HTTP, no auth, 
 
 - Endpoint: `https://mcp.specification.website/mcp`
 - Server card: `https://specification.website/.well-known/mcp/server-card.json`
-- Protocol revision: 2025-11-25
+- Protocol revision: 2026-07-28
+- Also answers the handshake-based revisions 2025-11-25, 2025-06-18 and 2025-03-26 via `initialize`, so older clients keep working unchanged
 
 Tools:
 
