@@ -7,7 +7,7 @@ status: required
 order: 110
 appliesTo: [all]
 relatedSlugs: [form-labels, aria-usage, color-contrast, mobile-form-inputs, accessible-authentication, redundant-entry]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-07-28T00:00:00.000Z"
 sources:
   - title: "WCAG 3.3.1 — Error Identification (Level A)"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html"
@@ -19,7 +19,7 @@ sources:
     url: "https://www.w3.org/WAI/WCAG22/Understanding/use-of-color.html"
     publisher: "W3C"
   - title: "MDN — ARIA live regions"
-    url: "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Live_Regions"
+    url: "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Guides/Live_regions"
     publisher: "MDN"
 ---
 

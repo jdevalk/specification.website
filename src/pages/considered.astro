@@ -1,0 +1,128 @@
+---
+import BaseLayout from "~/layouts/BaseLayout.astro";
+import Breadcrumbs from "~/components/Breadcrumbs.astro";
+import {
+  consideredReasonBlurb,
+  consideredReasonColor,
+  consideredReasonLabel,
+  consideredReasonOrder,
+} from "~/lib/site";
+import { getCollection, render } from "astro:content";
+
+const entries = await getCollection("considered", ({ data }) => !data.draft);
+entries.sort((a, b) => b.data.date.localeCompare(a.data.date));
+
+const rendered = await Promise.all(
+  entries.map(async (entry) => ({
+    entry,
+    Content: (await render(entry)).Content,
+  })),
+);
+
+const dayFmt = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+
+// Group by reason, in the fixed order from site.ts rather than by date, so the
+// page reads as a register of decisions rather than a timeline.
+const groups = consideredReasonOrder
+  .map((reason) => ({
+    reason,
+    items: rendered.filter(({ entry }) => entry.data.reason === reason),
+  }))
+  .filter((g) => g.items.length > 0);
+---
+
+<BaseLayout
+  title="Considered, not adopted"
+  description="Standards this specification has looked at and deliberately left out — what they are, why they are not here yet, and what would change that."
+  ogImage="/og/considered.png"
+>
+  <div class="mx-auto max-w-3xl px-4 py-10">
+    <Breadcrumbs
+      crumbs={[{ label: "Home", href: "/" }, { label: "Considered" }]}
+    />
+    <header class="mt-5 border-b border-ink-200 pb-5">
+      <h1 class="text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl">
+        Considered, not adopted
+      </h1>
+      <p class="mt-2 text-ink-600">
+        A specification is defined as much by what it leaves out as by what it
+        contains. These are standards we have read, weighed, and decided not to
+        cover — each with the reason, and with what would change our mind. The
+        <a class="underline hover:text-accent-700" href="/changelog/"
+          >changelog</a
+        > records what went in; this records what did not.
+      </p>
+    </header>
+
+    <div class="mt-10 space-y-14">
+      {
+        groups.map((group) => (
+          <section>
+            <h2 class="flex flex-wrap items-center gap-3 text-lg font-semibold text-ink-900">
+              <span
+                class:list={[
+                  "inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium",
+                  consideredReasonColor[group.reason],
+                ]}
+              >
+                {consideredReasonLabel[group.reason]}
+              </span>
+            </h2>
+            <p class="mt-2 text-sm text-ink-600">
+              {consideredReasonBlurb[group.reason]}
+            </p>
+
+            <ol class="mt-6 space-y-8 border-l border-ink-200 pl-6">
+              {group.items.map(({ entry, Content }) => (
+                <li id={entry.id} class="relative scroll-mt-24">
+                  <span
+                    class="absolute top-2 -left-[1.6875rem] h-2.5 w-2.5 rounded-full border-2 border-ink-50 bg-ink-300"
+                    aria-hidden="true"
+                  />
+                  <h3 class="text-lg font-semibold text-ink-900">
+                    {entry.data.title}
+                  </h3>
+                  <time class="text-xs text-ink-500" datetime={entry.data.date}>
+                    Decided {dayFmt.format(new Date(entry.data.date))}
+                  </time>
+                  <div class="prose-spec mt-2 text-ink-600">
+                    <Content />
+                  </div>
+
+                  {entry.data.revisit && (
+                    <p class="mt-3 rounded-md border border-ink-200 bg-ink-50 px-3 py-2 text-sm text-ink-700">
+                      <strong class="font-semibold text-ink-900">
+                        What would change this:
+                      </strong>{" "}
+                      {entry.data.revisit}
+                    </p>
+                  )}
+
+                  {entry.data.sources.length > 0 && (
+                    <ul class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-ink-500">
+                      {entry.data.sources.map((s) => (
+                        <li>
+                          <a
+                            class="underline hover:text-accent-700"
+                            href={s.url}
+                            rel="noopener"
+                          >
+                            {s.title}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</BaseLayout>

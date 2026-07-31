@@ -7,7 +7,7 @@ status: optional
 order: 88
 appliesTo: [all]
 relatedSlugs: [mcp-and-tool-discovery, agent-skills-discovery, agent-readiness-overview, structured-data-for-agents]
-updated: "2026-07-16T00:00:00.000Z"
+updated: "2026-07-23T00:00:00.000Z"
 sources:
   - title: "WebMCP — W3C Web Machine Learning Community Group"
     url: "https://webmachinelearning.github.io/webmcp/"
@@ -47,7 +47,7 @@ mc?.registerTool({
 });
 ```
 
-**This site ships it.** Every page on `specification.website` loads [`/webmcp.js`](/webmcp.js), which registers `search_spec`, `list_topics`, `get_topic`, `open_search`, and `open_checklist` tools — generated at build time from the same content collection that powers the rest of the site. An in-browser agent can search and read the spec without going through the remote [MCP server](/spec/agent-readiness/mcp-and-tool-discovery/).
+**This site ships it.** [`/webmcp.js`](/webmcp.js) registers `search_spec`, `list_topics`, `get_topic`, `open_search`, and `open_checklist` — generated at build time from the same content collection that powers the rest of the site. An in-browser agent can search and read the spec without going through the remote [MCP server](/spec/agent-readiness/mcp-and-tool-discovery/). A visitor whose browser has no WebMCP implementation downloads none of it: a small inline guard checks for `modelContext` and only then injects the script.
 
 ## Why it matters
 
@@ -60,7 +60,8 @@ The API is early — implementations are shipping behind flags and via polyfill.
 
 ## How to implement
 
-- **Register tools at page load**, after `navigator.modelContext` is feature-detected. If the API is absent, do nothing — never throw.
+- **Feature-detect before you download, not just before you register.** The obvious shape — ship the tool bundle on every page, check `modelContext` at the top, return early when it is missing — puts the check inside the thing it is meant to guard. Every visitor pays for a script that today almost none of them can use. Put the detection in a few inline bytes and inject the bundle only when the API is present. If it is absent, do nothing — never throw.
+- **Keep the payload small; fetch the corpus on demand.** Tool definitions are tiny, the data they search usually is not. Register the tools with complete input schemas up front — an agent needs those to decide what to call — then fetch the data on the first call that actually needs it. The agent is already awaiting a tool result, so the extra round trip costs nothing anyone perceives.
 - **Mirror your server-side MCP tools.** If you already publish `search_docs` on an HTTP MCP server, register a tool with the same name, description, and input schema in the browser. An agent that knows the server-side tool will recognise the browser one immediately.
 - **Use the `annotations` field** to declare safety properties: `readOnlyHint: true` for tools that do not mutate state, `destructiveHint: true` for ones that do. The agent uses these to decide whether to confirm with the user.
 - **Pick `mode: 'summarize'`** when the tool returns a single result rather than streaming. Streaming is supported but adds complexity that most page tools do not need.
@@ -70,13 +71,14 @@ The API is early — implementations are shipping behind flags and via polyfill.
 ## Common mistakes
 
 - Registering tools that bypass the site's own access controls. A WebMCP tool runs as the logged-in user; treat it like any other JavaScript-callable action and apply the same authorisation checks server-side.
-- Forgetting feature detection. `navigator.modelContext` does not exist in most browsers yet. Guard every call.
+- Feature-detecting inside the bundle rather than before it. The early return is correct but it runs too late — the bytes are already on the wire and parsed. Guard the load, then guard the call.
 - Designing tools that only make sense in the browser. If a server-side MCP server can do the same job, ship both — agents should be able to use whichever transport they have.
 - Treating annotations as cosmetic. `readOnlyHint` and `destructiveHint` change agent behaviour; declare them honestly.
 
 ## Verification
 
 - `typeof navigator.modelContext?.registerTool === 'function'` in a console on a supporting browser.
+- On a browser *without* the API, the network panel shows no request for the tool bundle at all — not a request whose script returns early.
 - The browser's agent UI lists your registered tools by name and description.
 - Calling a registered tool from a test agent returns a well-formed MCP-shaped result (`{ content: [...] }`).
 - If you ship a parallel HTTP MCP server, the tool names match across both surfaces.
