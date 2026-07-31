@@ -7,14 +7,14 @@ status: recommended
 order: 80
 appliesTo: [all]
 relatedSlugs: [semantic-html, form-labels, keyboard-navigation]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-07-31T00:00:00.000Z"
 sources:
+  - title: "ARIA in HTML (W3C Recommendation, 15 April 2026)"
+    url: "https://www.w3.org/TR/html-aria/"
+    publisher: "W3C"
   - title: "ARIA Authoring Practices Guide — Read Me First"
     url: "https://www.w3.org/WAI/ARIA/apg/practices/read-me-first/"
     publisher: "W3C WAI"
-  - title: "Using ARIA"
-    url: "https://www.w3.org/TR/using-aria/"
-    publisher: "W3C"
   - title: "MDN — ARIA"
     url: "https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA"
     publisher: "MDN"
@@ -29,17 +29,20 @@ ARIA — Accessible Rich Internet Applications — is a set of HTML attributes (
 
 ## Why it matters
 
-ARIA is a sharp tool. Used well, it lets you describe widgets the HTML spec does not cover. Used badly, it overrides the real semantics of an element and makes the page *less* accessible than the unstyled HTML would have been. The W3C's own guide leads with five rules — and the first is the most important.
+ARIA is a sharp tool. Used well, it lets you describe widgets the HTML spec does not cover. Used badly, it overrides the real semantics of an element and makes the page *less* accessible than the unstyled HTML would have been. The W3C's four rules of ARIA lead with the most important one: reach for native HTML first.
+
+Which roles and attributes are actually *allowed* on a given element is not a matter of taste either. [ARIA in HTML](https://www.w3.org/TR/html-aria/) became a W3C Recommendation in April 2026 and specifies it element by element. The answers are not always the intuitive ones: `role="button"` on an `<a href>` is permitted, while `<textarea>` accepts no role other than the `textbox` it already has, and `<input type="hidden">` accepts no `role` or `aria-*` attribute at all.
 
 ## How to implement
 
-The five rules of ARIA, in plain English:
+The four rules of ARIA, in plain English:
 
 1. **Don't use ARIA if a native HTML element will do.** `<button>`, `<a href>`, `<input type="checkbox">`, `<details>` — these come with role, focus, and keyboard support for free.
 2. **Don't change native semantics.** Never write `<h1 role="button">`. If you need a button, use a `<button>`.
 3. **All interactive ARIA controls must be keyboard-operable.** A `role="button"` div without Space/Enter handlers is broken.
 4. **Don't set `role="presentation"` or `aria-hidden="true"` on focusable elements.** You will hide controls from the very users who need them.
-5. **Every interactive element needs an accessible name.** Use a visible label, `aria-label`, or `aria-labelledby`.
+
+One more requirement sits outside that list but is enforced by WCAG all the same: every interactive element needs an accessible name — a visible label, `aria-label`, or `aria-labelledby`.
 
 Common, useful ARIA attributes:
 
