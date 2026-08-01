@@ -7,7 +7,7 @@ status: required
 order: 50
 appliesTo: [all]
 relatedSlugs: [compression, core-web-vitals, no-vary-search, conditional-requests, compression-dictionary-transport]
-updated: "2026-06-08T20:15:00.000Z"
+updated: "2026-08-01T00:00:00.000Z"
 sources:
   - title: "RFC 9111 — HTTP Caching"
     url: "https://www.rfc-editor.org/rfc/rfc9111"
@@ -19,7 +19,7 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Cache-Control"
     publisher: "MDN"
   - title: "MDN — HTTP caching"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching"
+    url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Caching"
     publisher: "MDN"
   - title: "MDN — Vary"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Vary"
