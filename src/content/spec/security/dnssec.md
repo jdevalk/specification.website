@@ -7,7 +7,7 @@ status: optional
 order: 120
 appliesTo: [all]
 relatedSlugs: [caa-records, https-tls, hsts]
-updated: "2026-07-09T00:00:00.000Z"
+updated: "2026-08-02T00:00:00.000Z"
 sources:
   - title: "RFC 4033 — DNS Security Introduction and Requirements"
     url: "https://www.rfc-editor.org/rfc/rfc4033"
@@ -15,12 +15,12 @@ sources:
   - title: "RFC 4035 — Protocol Modifications for the DNS Security Extensions"
     url: "https://www.rfc-editor.org/rfc/rfc4035"
     publisher: "IETF"
+  - title: "RFC 10026 (BCP 246) — Operational Recommendations for DNSSEC Delegation Signer (DS) Automation"
+    url: "https://www.rfc-editor.org/rfc/rfc10026.html"
+    publisher: "IETF"
   - title: "ICANN — DNSSEC"
     url: "https://www.icann.org/resources/pages/dnssec-what-is-it-why-important-2019-03-05-en"
     publisher: "ICANN"
-  - title: "Internet Society — Deploying DNSSEC"
-    url: "https://www.internetsociety.org/deploy360/dnssec/"
-    publisher: "Internet Society"
 ---
 
 ## What it is
@@ -43,7 +43,7 @@ The honest caveat: DNSSEC is operationally tricky. A misconfiguration — a miss
 
 1. **Check support.** Your DNS provider must sign your zone, and your registrar must publish a `DS` record at the parent registry. Most managed DNS providers (Cloudflare, Route 53, Google Cloud DNS, DNSimple) can do both, often with a single toggle. Some legacy registrars cannot.
 2. **Enable signing at the DNS provider.** This generates a Key Signing Key (KSK) and a Zone Signing Key (ZSK), publishes `DNSKEY` records, and signs every record set.
-3. **Publish the `DS` record at the registrar.** Some providers automate this via CDS/CDNSKEY; otherwise you copy the `DS` from the provider's UI to the registrar's UI.
+3. **Publish the `DS` record at the registrar.** Prefer the automated path: you publish `CDS` and `CDNSKEY` records in your zone, and the registrar or registry polls them and maintains the `DS` for you. RFC 10026 (BCP 246, July 2026) is the operational guidance for the parties running that machinery — check the `CDS`/`CDNSKEY` records agree across every authoritative nameserver, confirm the resulting `DS` still validates before publishing it, and drop the `DS` TTL to a few minutes around a change so a bad one can be rolled back quickly. Where automation is not offered, you copy the `DS` from the provider's UI to the registrar's UI by hand.
 4. **Verify the chain.** Use `dig +dnssec` or [Verisign DNSSEC Debugger](https://dnssec-analyzer.verisignlabs.com/) to confirm every signature validates and the `DS` at the parent matches.
 
 Example records (truncated):
@@ -60,7 +60,8 @@ Operational hygiene:
 
 - Automate key rollovers (KSK and ZSK). Manual rollovers fail.
 - Monitor signature expiry. An expired `RRSIG` is an outage.
-- Re-publish `DS` whenever the KSK rotates.
+- Re-publish `DS` whenever the KSK rotates — via `CDS`/`CDNSKEY` if your registrar honours them.
+- Keep a manual route to the `DS` open even when automation works. BCP 246 is explicit that the non-automated channel has to survive, because a provider that stops cooperating mid-migration is exactly when you need to change the `DS` and cannot ask it to.
 - Pair with [CAA records](/spec/security/caa-records/) for defence in depth around certificate issuance.
 
 ## Common mistakes
