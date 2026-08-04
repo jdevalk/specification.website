@@ -7,7 +7,7 @@ status: recommended
 order: 20
 appliesTo: [all]
 relatedSlugs: [error-pages, monitoring-uptime, graceful-degradation, robots-for-ai-crawlers]
-updated: "2026-06-08T20:15:00.000Z"
+updated: "2026-08-04T00:00:00.000Z"
 sources:
   - title: "RFC 9110 — HTTP Semantics: 503 Service Unavailable"
     url: "https://www.rfc-editor.org/rfc/rfc9110.html#name-503-service-unavailable"
@@ -18,8 +18,8 @@ sources:
   - title: "RFC 6585 — Additional HTTP Status Codes: 429 Too Many Requests"
     url: "https://www.rfc-editor.org/rfc/rfc6585#section-4"
     publisher: "IETF"
-  - title: "Google Search Central — How to deal with planned site downtime"
-    url: "https://developers.google.com/search/blog/2011/01/how-to-deal-with-planned-site-downtime"
+  - title: "Google Search Central — Temporarily pause or disable a website"
+    url: "https://developers.google.com/search/docs/crawling-indexing/pause-online-business"
     publisher: "Google Search Central"
 ---
 
