@@ -2,19 +2,19 @@
 title: "Image optimisation"
 slug: image-optimization
 category: performance
-summary: "Serve images in modern formats (WebP, AVIF), at the right size for the viewport, with explicit dimensions. Images are the largest payload on most pages."
+summary: "Serve images in modern formats (AVIF, WebP), at the right size for the viewport, with explicit dimensions. Images are the largest payload on most pages."
 status: required
 order: 20
 appliesTo: [all]
 relatedSlugs: [lazy-loading, core-web-vitals, preload-prefetch-preconnect]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-08-04T00:00:00.000Z"
 sources:
-  - title: "MDN — <img>: The Image Embed element"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/img"
+  - title: "HTML Standard — 4.8.4 Images"
+    url: "https://html.spec.whatwg.org/multipage/images.html"
+    publisher: "WHATWG"
+  - title: "MDN — Image file type and format guide"
+    url: "https://developer.mozilla.org/en-US/docs/Web/Media/Guides/Formats/Image_types"
     publisher: "MDN"
-  - title: "web.dev — Use modern image formats"
-    url: "https://web.dev/articles/serve-images-webp"
-    publisher: "web.dev"
   - title: "web.dev — Serve responsive images"
     url: "https://web.dev/articles/serve-responsive-images"
     publisher: "web.dev"
@@ -44,7 +44,9 @@ Images are the single largest contributor to page weight on the web — typicall
 
 ## How to implement
 
-**Use a modern format.** AVIF gives the smallest files but encodes slowly; WebP is well-supported and faster to produce. Both beat JPEG and PNG by 25–50% at equivalent quality. Use `<picture>` to offer fallbacks:
+**Use a modern format.** Both AVIF and WebP beat JPEG and PNG by 25–50% at equivalent quality, and AVIF is the smaller of the two. Encode AVIF first: it reached Baseline widely available on 25 July 2026, so it is no longer the risky new format you bolt on behind WebP. The remaining trade-off is time, not support — AVIF encodes far more slowly, which matters for user uploads and large batch jobs, but not for a build step that runs once.
+
+Keep the `<picture>` chain anyway. "Widely available" describes browser versions released over the past two and a half years, not the ones actually installed, and a fallback costs one line:
 
 ```html
 <picture>
