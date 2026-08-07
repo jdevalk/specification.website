@@ -6,7 +6,7 @@ summary: "The nosniff header stops browsers from guessing a response's content t
 status: required
 order: 50
 appliesTo: [all]
-relatedSlugs: [content-security-policy, frame-ancestors, referrer-policy]
+relatedSlugs: [content-security-policy, frame-ancestors, referrer-policy, x-xss-protection]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
   - title: "MDN — X-Content-Type-Options"
