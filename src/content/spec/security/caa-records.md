@@ -6,7 +6,7 @@ summary: "A CAA record tells certificate authorities which of them are allowed t
 status: recommended
 order: 110
 appliesTo: [all]
-relatedSlugs: [https-tls, hsts, dnssec]
+relatedSlugs: [https-tls, hsts, dnssec, for-sale-dns]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
   - title: "RFC 8659 — DNS Certification Authority Authorization (CAA) Resource Record"

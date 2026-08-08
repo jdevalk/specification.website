@@ -6,7 +6,7 @@ summary: "Publish SVCB/HTTPS records under _agents.example.com so agents can dis
 status: optional
 order: 85
 appliesTo: [all]
-relatedSlugs: [link-headers, mcp-and-tool-discovery, dnssec, well-known-overview, a2a-agent-cards, agentic-resource-discovery]
+relatedSlugs: [link-headers, mcp-and-tool-discovery, dnssec, well-known-overview, a2a-agent-cards, agentic-resource-discovery, for-sale-dns]
 updated: "2026-05-29T11:27:49.000Z"
 sources:
   - title: "draft-mozleywilliams-dnsop-dnsaid — DNS for AI Discovery"

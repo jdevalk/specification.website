@@ -6,7 +6,7 @@ summary: "DNSSEC cryptographically signs DNS records so resolvers can verify the
 status: optional
 order: 120
 appliesTo: [all]
-relatedSlugs: [caa-records, https-tls, hsts]
+relatedSlugs: [caa-records, https-tls, hsts, for-sale-dns]
 updated: "2026-08-08T00:00:00.000Z"
 sources:
   - title: "RFC 4033 — DNS Security Introduction and Requirements"
