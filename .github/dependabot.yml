@@ -35,9 +35,16 @@ updates:
       day: monday
     open-pull-requests-limit: 5
     ignore:
-      # wrangler's peer range only accepts workers-types v4; a v5 bump
-      # breaks `npm ci` in the Deploy MCP workflow. Re-allow once
-      # wrangler's peerDependencies accept v5.
+      # Standing rule, not a temporary hold: wrangler peers
+      # @cloudflare/workers-types to one specific major, so a workers-types
+      # major that lands before wrangler catches up fails `npm ci` with
+      # ERESOLVE and takes the Deploy MCP workflow with it. Minor and patch
+      # bumps within the current major are unaffected and still flow.
+      # Wrangler moves this range itself; when it does, bump the major here
+      # by hand in the same PR as the wrangler bump. Check with:
+      #   npm view wrangler peerDependencies
+      # (2026-08-08: wrangler 4.118.0 peers ^5.x and /mcp is on 5.x — the
+      # v4 constraint this rule was originally written for is long gone.)
       - dependency-name: "@cloudflare/workers-types"
         update-types: ["version-update:semver-major"]
 
