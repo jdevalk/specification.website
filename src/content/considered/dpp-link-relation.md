@@ -1,7 +1,7 @@
 ---
 title: 'The "dpp" link relation (Digital Product Passport)'
 date: "2026-08-01"
-reason: too-early
+reason: out-of-scope
 revisit: "A product page on the open web advertising its passport directly — an HTTP `Link` header or a `<link rel=\"dpp\">` in the document — rather than only a resolver behind a QR code. ESPR delegated acts for textiles, footwear or batteries requiring a web-discoverable passport would produce that quickly."
 sources:
   - title: "IANA Link Relation Types registry — dpp"
