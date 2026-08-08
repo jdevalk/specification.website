@@ -16,8 +16,8 @@ sources:
     url: "https://developers.google.com/search/docs/crawling-indexing/robots/intro"
     publisher: "Google Search Central"
   - title: "How Google interprets the robots.txt specification"
-    url: "https://developers.google.com/search/docs/crawling-indexing/robots/robots_txt"
-    publisher: "Google Search Central"
+    url: "https://developers.google.com/crawling/docs/robots-txt/robots-txt-spec"
+    publisher: "Google Crawling Infrastructure"
 ---
 
 ## What it is
