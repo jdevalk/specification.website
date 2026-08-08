@@ -1,6 +1,6 @@
 ---
 title: DS automation has a best current practice now
-date: "2026-08-02"
+date: "2026-08-08"
 type: changed
 relatedSlugs: [dnssec]
 ---
