@@ -1,6 +1,6 @@
 ---
 title: TLS 1.2 lost most of its key exchange methods
-date: "2026-08-02"
+date: "2026-08-08"
 type: changed
 relatedSlugs: [https-tls]
 ---

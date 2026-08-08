@@ -7,7 +7,7 @@ status: required
 order: 10
 appliesTo: [all]
 relatedSlugs: [hsts, caa-records, content-security-policy, mixed-content]
-updated: "2026-08-02T00:00:00.000Z"
+updated: "2026-08-08T00:00:00.000Z"
 sources:
   - title: "RFC 9846 — The Transport Layer Security (TLS) Protocol Version 1.3"
     url: "https://www.rfc-editor.org/rfc/rfc9846"
