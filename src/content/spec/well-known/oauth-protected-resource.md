@@ -7,7 +7,7 @@ status: optional
 order: 32
 appliesTo: [all]
 relatedSlugs: [openid-configuration, oauth-authorization-server, well-known-overview, mcp-and-tool-discovery, webauthn]
-updated: "2026-07-08T00:00:00.000Z"
+updated: "2026-08-08T00:00:00.000Z"
 sources:
   - title: "RFC 9728 — OAuth 2.0 Protected Resource Metadata"
     url: "https://www.rfc-editor.org/rfc/rfc9728"
@@ -18,8 +18,8 @@ sources:
   - title: "IANA — Well-Known URIs Registry"
     url: "https://www.iana.org/assignments/well-known-uris/well-known-uris.xhtml"
     publisher: "IANA"
-  - title: "Model Context Protocol — Authorization"
-    url: "https://modelcontextprotocol.io/specification/draft/basic/authorization"
+  - title: "Model Context Protocol 2026-07-28 — Authorization"
+    url: "https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization"
     publisher: "Anthropic / MCP"
 ---
 

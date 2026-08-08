@@ -16,8 +16,8 @@ sources:
     url: "https://llmstxt.org/"
     publisher: "llmstxt.org"
   - title: "Overview of Google crawlers and fetchers"
-    url: "https://developers.google.com/search/docs/crawling-indexing/overview-google-crawlers"
-    publisher: "Google Search Central"
+    url: "https://developers.google.com/crawling/docs/crawlers-fetchers/overview-google-crawlers"
+    publisher: "Google Crawling Infrastructure"
 ---
 
 ## What it is

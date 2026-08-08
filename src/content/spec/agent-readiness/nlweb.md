@@ -9,12 +9,12 @@ appliesTo: [all]
 relatedSlugs: [mcp-and-tool-discovery, agent-readiness-overview, structured-data-for-agents, link-headers]
 updated: "2026-05-29T12:14:17.000Z"
 sources:
-  - title: "microsoft/NLWeb on GitHub"
-    url: "https://github.com/microsoft/NLWeb"
-    publisher: "Microsoft"
+  - title: "nlweb-ai/NLWeb on GitHub"
+    url: "https://github.com/nlweb-ai/NLWeb"
+    publisher: "NLWeb project"
   - title: "NLWeb — REST API"
-    url: "https://github.com/microsoft/NLWeb/blob/main/docs/nlweb-rest-api.md"
-    publisher: "Microsoft"
+    url: "https://github.com/nlweb-ai/NLWeb/blob/main/docs/nlweb-rest-api.md"
+    publisher: "NLWeb project"
   - title: "schema.org"
     url: "https://schema.org/"
     publisher: "schema.org"
@@ -22,7 +22,7 @@ sources:
 
 ## What it is
 
-NLWeb is an open project, originally from Microsoft, that lets any website expose a conversational query interface in a standard way. A site implements a small HTTP endpoint — by convention `/ask` — that accepts a natural-language query and returns a structured answer grounded in the site's own content, typically built from its [schema.org](https://schema.org/) data and embeddings of its pages.
+NLWeb is an open project, originally from Microsoft and now developed in its own `nlweb-ai` organisation, that lets any website expose a conversational query interface in a standard way. A site implements a small HTTP endpoint — by convention `/ask` — that accepts a natural-language query and returns a structured answer grounded in the site's own content, typically built from its [schema.org](https://schema.org/) data and embeddings of its pages.
 
 Discovery is one HTML link tag:
 
@@ -39,7 +39,7 @@ An agent that recognises the relation knows the site speaks NLWeb without furthe
 - **Composes with [MCP](/spec/agent-readiness/mcp-and-tool-discovery/).** The NLWeb endpoint can also be exposed as an `ask_site` MCP tool. Same logic, two transports.
 - **Cheap to ship.** A static site with [structured data](/spec/agent-readiness/structured-data-for-agents/) and a small vector index can answer most factual questions about its own content without a chatbot UI.
 
-The convention is early and mostly Microsoft-driven so far, but the discovery link is a single line in `<head>` and the endpoint shape is documented. Treat NLWeb as `optional` — recommended where the site already has the corpus to ground answers, skippable for small static sites.
+The convention is still early and driven by a single project, but the discovery link is a single line in `<head>` and the endpoint shape is documented. Treat NLWeb as `optional` — recommended where the site already has the corpus to ground answers, skippable for small static sites.
 
 ## How to implement
 

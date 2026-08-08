@@ -7,10 +7,10 @@ status: optional
 order: 60
 appliesTo: [all]
 relatedSlugs: [well-known-overview, apple-app-site-association]
-updated: "2026-06-09T11:30:00.000Z"
+updated: "2026-08-08T00:00:00.000Z"
 sources:
-  - title: "Digital Asset Links — Verify Android App Links"
-    url: "https://developer.android.com/training/app-links/verify-android-applinks"
+  - title: "Verify Android App Links"
+    url: "https://developer.android.com/training/app-links/verify-applinks"
     publisher: "Google Developers"
   - title: "Digital Asset Links protocol"
     url: "https://developers.google.com/digital-asset-links/v1/getting-started"
