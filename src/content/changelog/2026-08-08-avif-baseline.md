@@ -1,6 +1,6 @@
 ---
 title: AVIF is now the format to encode first, not the one behind the fallback
-date: "2026-08-04"
+date: "2026-08-08"
 type: changed
 relatedSlugs: [image-optimization, core-web-vitals]
 ---

@@ -7,7 +7,7 @@ status: required
 order: 20
 appliesTo: [all]
 relatedSlugs: [lazy-loading, core-web-vitals, preload-prefetch-preconnect]
-updated: "2026-08-04T00:00:00.000Z"
+updated: "2026-08-08T00:00:00.000Z"
 sources:
   - title: "HTML Standard — 4.8.4 Images"
     url: "https://html.spec.whatwg.org/multipage/images.html"
