@@ -7,6 +7,15 @@ updates:
       interval: weekly
       day: monday
     open-pull-requests-limit: 5
+    ignore:
+      # @astrojs/check 0.9.10 peers typescript "^5.0.0 || ^6.0.0", so a v7
+      # bump makes `npm ci` fail with ERESOLVE and every job in every
+      # workflow dies at install (#155, #164 — both regenerated weekly and
+      # neither could ever go green). The bump also drags the rest of the
+      # dev-deps group down with it. Re-allow once @astrojs/check widens
+      # its peer range to accept v7.
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
     groups:
       astro:
         patterns:
