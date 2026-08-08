@@ -7,19 +7,19 @@ status: optional
 order: 125
 appliesTo: [all]
 relatedSlugs: [view-transitions, core-web-vitals, visibility-aware-rendering, reduced-motion]
-updated: "2026-05-29T16:40:22.000Z"
+updated: "2026-08-01T00:00:00.000Z"
 sources:
   - title: "CSS Scroll-driven Animations Module Level 1"
     url: "https://drafts.csswg.org/scroll-animations-1/"
     publisher: "W3C"
   - title: "MDN — CSS scroll-driven animations"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_scroll-driven_animations"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scroll-driven_animations"
     publisher: "MDN"
   - title: "MDN — animation-timeline"
     url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/animation-timeline"
     publisher: "MDN"
   - title: "Chrome for Developers — Scroll-driven animations"
-    url: "https://developer.chrome.com/articles/scroll-driven-animations"
+    url: "https://developer.chrome.com/docs/css-ui/scroll-driven-animations"
     publisher: "Google"
 ---
 

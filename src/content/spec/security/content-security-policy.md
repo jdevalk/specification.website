@@ -6,7 +6,7 @@ summary: "A CSP tells browsers which sources of script, style, image, and frame 
 status: recommended
 order: 30
 appliesTo: [all]
-relatedSlugs: [https-tls, frame-ancestors, subresource-integrity, permissions-policy, mixed-content, cross-origin-isolation, reporting-endpoints, trusted-types]
+relatedSlugs: [https-tls, frame-ancestors, subresource-integrity, permissions-policy, mixed-content, cross-origin-isolation, reporting-endpoints, trusted-types, x-xss-protection]
 updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "Content Security Policy Level 3"
