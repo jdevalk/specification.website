@@ -9,9 +9,9 @@ appliesTo: [all]
 relatedSlugs: [redirects, url-structure, server-side-rendering]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
-  - title: "Google Search Central — How HTTP status codes affect Google's crawlers"
-    url: "https://developers.google.com/search/docs/crawling-indexing/http-network-errors"
-    publisher: "Google Search Central"
+  - title: "How HTTP status codes affect Google's crawlers"
+    url: "https://developers.google.com/crawling/docs/troubleshooting/http-status-codes"
+    publisher: "Google Crawling Infrastructure"
   - title: "RFC 9110 — 404 Not Found"
     url: "https://www.rfc-editor.org/rfc/rfc9110.html#name-404-not-found"
     publisher: "IETF"

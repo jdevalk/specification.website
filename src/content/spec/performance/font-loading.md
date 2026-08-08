@@ -7,16 +7,16 @@ status: recommended
 order: 70
 appliesTo: [all]
 relatedSlugs: [preload-prefetch-preconnect, critical-css, core-web-vitals, text-wrap]
-updated: "2026-05-29T20:27:54.000Z"
+updated: "2026-08-01T00:00:00.000Z"
 sources:
   - title: "MDN — @font-face"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face"
     publisher: "MDN"
   - title: "web.dev — Best practices for fonts"
     url: "https://web.dev/articles/font-best-practices"
     publisher: "web.dev"
   - title: "MDN — font-display"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-display"
     publisher: "MDN"
   - title: "web.dev — Avoid invisible text during font loading"
     url: "https://web.dev/articles/avoid-invisible-text"
