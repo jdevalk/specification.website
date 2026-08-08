@@ -1,6 +1,6 @@
 ---
 title: The security header a third of the web still sends to nobody
-date: "2026-08-07"
+date: "2026-08-08"
 type: added
 relatedSlugs: [x-xss-protection, content-security-policy, trusted-types]
 ---

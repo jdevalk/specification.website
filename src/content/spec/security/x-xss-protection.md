@@ -8,7 +8,7 @@ order: 96
 appliesTo: [all]
 relatedSlugs:
   [content-security-policy, trusted-types, x-content-type-options, frame-ancestors]
-updated: "2026-08-07T00:00:00.000Z"
+updated: "2026-08-08T00:00:00.000Z"
 sources:
   - title: "MDN — X-XSS-Protection"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/X-XSS-Protection"
@@ -43,7 +43,7 @@ Today the argument is moot, because nothing implements it. Firefox never shipped
 
 A filter that rewrites your response based on a URL an attacker controls is a mechanism the attacker can aim. Because the filter decided what to suppress by matching the request against the body, an attacker could put a *legitimate* fragment of your own page into the query string and have the browser remove it — turning a safe page unsafe. MDN's worked example is the classic shape: a page sets `productionMode = true` in one inline script and guards debug code on it in another. Feed the first script back through the query string, the filter removes it as a suspected injection, `productionMode` evaluates to `undefined`, and the debug branch runs. Nothing on the server changed. The same selective-suppression trick was extended into cross-origin side channels, using the filter's block behaviour as an oracle for whether a given string appeared in a page the attacker could not otherwise read. That is what got the auditors removed: they cost more than they caught.
 
-Now that no browser reads the header, the harm has changed shape rather than disappeared. Mark Nottingham's [survey of 120 million HTTP responses](https://mnot.net/blog/2026/linting_the_web) found `X-XSS-Protection` on 29% of the Tranco top 100,000 — sent by more sites than have a Content-Security-Policy at all. Its persistence is the point: it is the header nobody has to think about, so it stays in the config forever, and it keeps scoring points on security-header scanners that grade on presence rather than effect. A team can read a green report, believe reflected XSS is handled, and have shipped nothing that stops it.
+Now that no browser reads the header, the harm has changed shape rather than disappeared. Mark Nottingham's [survey of 120 million HTTP responses](https://mnot.net/blog/2026/linting_the_web) found `X-XSS-Protection` on 29% of the Tranco top 100,000 — within a few points of the 32% that send a Content-Security-Policy, which is the defence that actually replaces it. Its persistence is the point: it is the header nobody has to think about, so it stays in the config forever, and it keeps scoring points on security-header scanners that grade on presence rather than effect. A team can read a green report, believe reflected XSS is handled, and have shipped nothing that stops it.
 
 ## How to implement
 
