@@ -15,8 +15,8 @@ sources:
   - title: "webmachinelearning/webmcp on GitHub"
     url: "https://github.com/webmachinelearning/webmcp"
     publisher: "W3C WebML CG"
-  - title: "Model Context Protocol — Tools"
-    url: "https://modelcontextprotocol.io/specification/2025-11-25/server/tools"
+  - title: "Model Context Protocol 2026-07-28 — Tools"
+    url: "https://modelcontextprotocol.io/specification/2026-07-28/server/tools"
     publisher: "MCP"
 ---
 
