@@ -7,9 +7,9 @@ status: recommended
 order: 80
 appliesTo: [all]
 relatedSlugs: [semantic-html, form-labels, keyboard-navigation]
-updated: "2026-07-31T00:00:00.000Z"
+updated: "2026-08-12T00:00:00.000Z"
 sources:
-  - title: "ARIA in HTML (W3C Recommendation, 15 April 2026)"
+  - title: "ARIA in HTML (W3C Recommendation)"
     url: "https://www.w3.org/TR/html-aria/"
     publisher: "W3C"
   - title: "ARIA Authoring Practices Guide — Read Me First"
@@ -31,7 +31,9 @@ ARIA — Accessible Rich Internet Applications — is a set of HTML attributes (
 
 ARIA is a sharp tool. Used well, it lets you describe widgets the HTML spec does not cover. Used badly, it overrides the real semantics of an element and makes the page *less* accessible than the unstyled HTML would have been. The W3C's four rules of ARIA lead with the most important one: reach for native HTML first.
 
-Which roles and attributes are actually *allowed* on a given element is not a matter of taste either. [ARIA in HTML](https://www.w3.org/TR/html-aria/) became a W3C Recommendation in April 2026 and specifies it element by element. The answers are not always the intuitive ones: `role="button"` on an `<a href>` is permitted, while `<textarea>` accepts no role other than the `textbox` it already has, and `<input type="hidden">` accepts no `role` or `aria-*` attribute at all.
+Which roles and attributes are actually *allowed* on a given element is not a matter of taste either. [ARIA in HTML](https://www.w3.org/TR/html-aria/) specifies it element by element. The answers are not always the intuitive ones: `role="button"` on an `<a href>` is permitted, while `<textarea>` accepts no role other than the `textbox` it already has, and `<input type="hidden">` accepts no `role` or `aria-*` attribute at all.
+
+It has been a W3C Recommendation since December 2021, but "Recommendation" here does not mean finished. W3C republishes it as an amended Recommendation whenever the element table changes — several times a year, most recently on 11 August 2026 — so a rule you looked up two years ago may since have been added, narrowed, or dropped. Read the undated `/TR/html-aria/` URL, which always resolves to the current edition, and check the specification's own change log rather than a copy of the table in a blog post or a linter's rule set.
 
 ## How to implement
 
