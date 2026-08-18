@@ -39,8 +39,10 @@ const claudeJson = JSON.stringify(desktopConfig, null, 2);
     <article class="prose-spec mt-8">
       <h2 id="endpoint">Endpoint</h2>
       <p>
-        Streamable HTTP MCP, 2025-03-26 protocol revision. Stateless. Wide-open
-        CORS. No authentication.
+        Streamable HTTP MCP, 2026-07-28 protocol revision. Stateless. Wide-open
+        CORS. No authentication. The handshake-based revisions 2025-11-25,
+        2025-06-18 and 2025-03-26 are still answered via <code>initialize</code
+        >, under a published <code>Deprecation</code> and <code>Sunset</code>.
       </p>
       <pre><code>{site.mcp.endpoint}</code></pre>
       <p>
@@ -118,9 +120,9 @@ const claudeJson = JSON.stringify(desktopConfig, null, 2);
 
       <h2 id="connect-other">Other MCP clients</h2>
       <p>
-        Any client that speaks Streamable HTTP MCP (2025-03-26 revision)
-        connects with one URL. There is no client SDK to install and no token to
-        manage. <a
+        Any client that speaks Streamable HTTP MCP (2026-07-28 revision, or one
+        of the older handshake-based revisions above) connects with one URL.
+        There is no client SDK to install and no token to manage. <a
           href="https://github.com/modelcontextprotocol/inspector"
           rel="external">MCP Inspector</a
         > is the fastest way to poke at the schema.
