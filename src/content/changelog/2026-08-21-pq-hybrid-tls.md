@@ -1,6 +1,6 @@
 ---
 title: Hybrid post-quantum key agreement is now a TLS 1.3 recommendation
-date: "2026-08-12"
+date: "2026-08-21"
 type: changed
 relatedSlugs: [https-tls]
 ---
