@@ -1,6 +1,6 @@
 ---
 title: "The Cache-Status header (RFC 9211)"
-date: "2026-08-09"
+date: "2026-08-21"
 reason: too-early
 revisit: "A default-on implementation at a CDN with real market share — Cloudflare emitting `Cache-Status` alongside or instead of `CF-Cache-Status`, or Fastly turning it on without a VCL recipe. Nginx shipping it would count too."
 sources:
