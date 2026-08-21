@@ -1,6 +1,6 @@
 ---
 title: "/.well-known/cyclic-trigger"
-date: "2026-08-19"
+date: "2026-08-21"
 reason: out-of-scope
 revisit: "Evidence that this is something public sites publish for callers they do not already control, rather than a private hook between an orchestrator and its own services — and an error model that uses HTTP status codes. Both would have to change; adoption alone would not move it."
 sources:
