@@ -1,6 +1,6 @@
 ---
 title: "The /.well-known/scitt-keys URI"
-date: "2026-08-14"
+date: "2026-08-21"
 reason: too-narrow
 revisit: "If serving a transparency-service endpoint ever becomes a normal part of publishing a website rather than of running supply-chain infrastructure. The likelier neighbour is content provenance — a C2PA-style manifest attached to the images and text a site actually publishes — and that would be its own page, not this one."
 sources:
@@ -19,4 +19,4 @@ SCITT — Supply Chain Integrity, Transparency and Trust — gives software supp
 
 The registration is what brought it into view here, because new well-known URIs are exactly what this spec watches for. But the registry is not a scope boundary — it holds well-known URIs for smart inverters and for job-posting feeds too. The question is who serves the file, and the answer is a transparency service: a piece of supply-chain infrastructure, operated by whoever runs the ledger. It is not something a website serves alongside its `security.txt`. A site that publishes to a transparency service is a *client* of one of these endpoints, never the host of one.
 
-That distinction is the useful part, and it generalises past SCITT. `/.well-known/` is a shared namespace, not a list of things every origin should have, and a suffix landing in the registry says only that somebody needed a stable path — not that the somebody was a website. The test that matters is whether serving the file makes *this* origin better for its visitors, crawlers, or agents. For [`security.txt`](/spec/well-known/security-txt/) or [`change-password`](/spec/well-known/change-password/) it plainly does. For `scitt-keys` it plainly does not, and no amount of adoption among ledger operators would change that — which is why the reason here is scope, not timing.
+That distinction is the useful part, and it generalises past SCITT. `/.well-known/` is a shared namespace, not a list of things every origin should have, and a suffix landing in the registry says only that somebody needed a stable path — not that the somebody was a website. The test that matters is whether serving the file makes *this* origin better for its visitors, crawlers, or agents. For [`security.txt`](/spec/security/security-txt/) or [`change-password`](/spec/well-known/change-password/) it plainly does. For `scitt-keys` it plainly does not, and no amount of adoption among ledger operators would change that — which is why the reason here is scope, not timing.
