@@ -1,6 +1,6 @@
 ---
 title: "Cross-device flow security (RFC 10027 / BCP 247)"
-date: "2026-08-16"
+date: "2026-08-21"
 reason: out-of-scope
 revisit: "If a site-published artefact grows around it — a well-known document, a header, or metadata declaring which cross-device flows an origin will accept — that artefact is the topic, and it would earn a page in `well-known` or `security`."
 sources:
