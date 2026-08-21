@@ -9,7 +9,7 @@ appliesTo: [all]
 relatedSlugs: [semantic-html, form-labels, keyboard-navigation]
 updated: "2026-07-31T00:00:00.000Z"
 sources:
-  - title: "ARIA in HTML (W3C Recommendation, 11 August 2026)"
+  - title: "ARIA in HTML (W3C Recommendation, 15 April 2026)"
     url: "https://www.w3.org/TR/html-aria/"
     publisher: "W3C"
   - title: "ARIA Authoring Practices Guide — Read Me First"
