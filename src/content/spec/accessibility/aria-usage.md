@@ -7,7 +7,7 @@ status: recommended
 order: 80
 appliesTo: [all]
 relatedSlugs: [semantic-html, form-labels, keyboard-navigation]
-updated: "2026-08-12T00:00:00.000Z"
+updated: "2026-08-21T00:00:00.000Z"
 sources:
   - title: "ARIA in HTML (W3C Recommendation)"
     url: "https://www.w3.org/TR/html-aria/"
