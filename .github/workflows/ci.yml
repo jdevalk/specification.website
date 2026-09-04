@@ -51,3 +51,44 @@ jobs:
           name: dist
           path: dist
           retention-days: 7
+
+  # The MCP Worker in mcp/ is a separate package with its own lockfile, so the
+  # job above never touches it: the root `npm ci` doesn't install it, and both
+  # eslint.config.js and .prettierignore exclude mcp/ deliberately. Its
+  # type-check had never run in CI either. A separate job so a Worker failure
+  # reads distinctly from a site-build failure.
+  mcp:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          # ts-resolve-hook.mjs needs registerHooks, added in 22.15. The `22`
+          # the job above uses would satisfy that today, but pinning the floor
+          # here keeps a runner rolling back from failing at link time with
+          # nothing to point at.
+          node-version: 22.15
+          cache: npm
+          cache-dependency-path: mcp/package-lock.json
+
+      - name: Install MCP dependencies
+        run: npm ci
+        working-directory: mcp
+
+      # src/data.json is generated rather than committed, and src/index.ts
+      # imports it — so tsc cannot resolve the module until the manifest
+      # exists. `npm test` regenerates it as well (pretest), but the
+      # type-check has no such hook and runs first.
+      - name: Build data manifest
+        run: npm run build:data
+        working-directory: mcp
+
+      - name: Type-check (tsc)
+        run: npm run typecheck
+        working-directory: mcp
+
+      - name: Test (node:assert)
+        run: npm test
+        working-directory: mcp
