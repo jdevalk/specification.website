@@ -6,7 +6,7 @@ summary: "Every cookie should be Secure, HttpOnly where possible, and have an ex
 status: required
 order: 100
 appliesTo: [all]
-relatedSlugs: [https-tls, hsts, frame-ancestors, referrer-policy, clear-site-data, privacy/storage-access-api]
+relatedSlugs: [https-tls, hsts, frame-ancestors, referrer-policy, clear-site-data, fetch-metadata, privacy/storage-access-api]
 updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "draft-ietf-httpbis-rfc6265bis — Cookies: HTTP State Management Mechanism"
