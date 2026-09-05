@@ -7,7 +7,7 @@ status: recommended
 order: 20
 appliesTo: [all]
 relatedSlugs: [sitemap-index, image-sitemaps, robots-txt, canonical-url, schemamap]
-updated: "2026-07-09T00:00:00.000Z"
+updated: "2026-09-05T00:00:00.000Z"
 sources:
   - title: "Sitemaps XML format"
     url: "https://www.sitemaps.org/protocol.html"
@@ -15,12 +15,12 @@ sources:
   - title: "Build and submit a sitemap"
     url: "https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap"
     publisher: "Google Search Central"
-  - title: "XSL Transformations (XSLT) Version 1.0"
-    url: "https://www.w3.org/TR/xslt-10/"
-    publisher: "W3C"
-  - title: "XML sitemaps: the most important SEO tool"
-    url: "https://yoast.com/what-is-an-xml-sitemap-and-why-should-you-have-one/"
-    publisher: "Yoast"
+  - title: "HTML Standard — Interactions with XPath and XSLT"
+    url: "https://html.spec.whatwg.org/multipage/infrastructure.html#interactions-with-xpath-and-xslt"
+    publisher: "WHATWG"
+  - title: "Removing XSLT for a more secure browser"
+    url: "https://developer.chrome.com/docs/web-platform/deprecating-xslt"
+    publisher: "Chrome for Developers"
 ---
 
 ## What it is
@@ -65,23 +65,17 @@ Generate sitemaps dynamically from your content source, not by crawling your own
 
 **This site ships it.** `specification.website` generates [`/sitemap-index.xml`](/sitemap-index.xml) at build time from the content collection, and sets each `<lastmod>` from the entry's `updated` front matter — the same field the [RSS feed](/rss.xml) uses — rather than the build timestamp, so the date only moves when the content actually changes.
 
-## A stylesheet for human readers
+## Do not attach an XSL stylesheet
 
-Browsers parse XML, but the raw view is hostile to anyone who is not a crawler. An [XSL stylesheet](https://www.w3.org/TR/xslt-10/) referenced from the sitemap transforms it into HTML in the browser, so a person who opens the URL sees a readable page with clickable links. Crawlers ignore the stylesheet and parse the underlying XML directly.
+A sitemap opened in a browser shows raw XML, which is hostile to anyone who is not a crawler. The long-standing fix was an `<?xml-stylesheet?>` processing instruction pointing at an XSLT stylesheet, which the browser applied to render the sitemap as a readable HTML table. That advice has expired.
 
-Reference the stylesheet with an `<?xml-stylesheet?>` processing instruction immediately after the XML declaration, before the `<urlset>` (or `<sitemapindex>`) root element:
+Since August 2026 the [HTML Standard](https://html.spec.whatwg.org/multipage/infrastructure.html#interactions-with-xpath-and-xslt) tells authors to avoid client-side XSLT outright: browser XSLT implementations are, in its words, highly susceptible to memory-safety vulnerabilities, and the feature is being removed from the web platform. Chrome stops running it in version 158, due 17 November 2026; Firefox and WebKit have signalled the same intent. This is a removal, not a deprecation warning — the stylesheet simply stops being applied.
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  ...
-</urlset>
-```
+The failure is worth understanding precisely, because it is milder than it sounds and that is exactly why it gets left in place too long. Crawlers never read the stylesheet; they parse the XML underneath it, and an `<?xml-stylesheet?>` instruction a parser cannot process is ignored rather than fatal. So nothing about discovery or indexing breaks. What breaks is the human view: a URL that rendered a tidy table starts rendering the browser's raw-XML fallback, and nobody notices until someone opens the sitemap and reports it as a bug.
 
-The same stylesheet can render both `<urlset>` and `<sitemapindex>` documents by matching on the root element. Serve the `.xsl` file as `application/xslt+xml` from the same origin as the sitemap; cross-origin XSL is blocked by browsers. XSLT 1.0 is supported by current Chrome, Firefox, and Safari with no client-side dependencies.
+If you want a page a person can read, write one in HTML and link it. It costs no more than the stylesheet did, it is crawlable and linkable in its own right, and it does not depend on a feature three engines are deleting.
 
-**This site ships it.** Open [`/sitemap-index.xml`](/sitemap-index.xml) or any per-category sitemap in a browser to see the transformed view. The stylesheet lives at [`/sitemap.xsl`](/sitemap.xsl).
+**This site no longer does it.** `specification.website` pointed its sitemaps at a `/sitemap.xsl` until this page changed; the processing instruction has been dropped rather than left to break.
 
 ## Common mistakes
 
