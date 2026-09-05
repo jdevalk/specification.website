@@ -37,10 +37,9 @@ export function clampLastmod(d: string | undefined): string | undefined {
 }
 
 const XML_DECL = '<?xml version="1.0" encoding="UTF-8"?>';
-const STYLESHEET_PI = '<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>';
 
 export function renderUrlset(entries: SitemapEntry[]): string {
-  const lines: string[] = [XML_DECL, STYLESHEET_PI];
+  const lines: string[] = [XML_DECL];
   lines.push('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">');
   for (const e of entries) {
     lines.push("  <url>");
@@ -54,7 +53,7 @@ export function renderUrlset(entries: SitemapEntry[]): string {
 }
 
 export function renderSitemapIndex(entries: SitemapEntry[]): string {
-  const lines: string[] = [XML_DECL, STYLESHEET_PI];
+  const lines: string[] = [XML_DECL];
   lines.push(
     '<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
   );
