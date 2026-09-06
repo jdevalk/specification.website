@@ -6,17 +6,17 @@ summary: "Web Bot Auth lets a bot prove who it is by signing each HTTP request w
 status: optional
 order: 45
 appliesTo: [all]
-relatedSlugs: [robots-for-ai-crawlers, content-signals, agent-readiness-overview, link-headers]
-updated: "2026-07-19T00:00:00.000Z"
+relatedSlugs: [robots-for-ai-crawlers, content-signals, agent-readiness-overview, link-headers, well-known-overview]
+updated: "2026-09-06T00:00:00.000Z"
 sources:
   - title: "RFC 9421 — HTTP Message Signatures"
     url: "https://www.rfc-editor.org/rfc/rfc9421"
     publisher: "IETF"
-  - title: "draft-meunier-webbotauth-httpsig-protocol — HTTP Message Signatures for automated traffic"
-    url: "https://datatracker.ietf.org/doc/draft-meunier-webbotauth-httpsig-protocol/"
-    publisher: "IETF"
-  - title: "draft-meunier-webbotauth-httpsig-directory — HTTP Message Signatures Directory"
-    url: "https://datatracker.ietf.org/doc/draft-meunier-webbotauth-httpsig-directory/"
+  - title: "draft-ietf-webbotauth-httpsig-protocol — HTTP Message Signatures for automated traffic"
+    url: "https://datatracker.ietf.org/doc/draft-ietf-webbotauth-httpsig-protocol/"
+    publisher: "IETF Web Bot Auth Working Group"
+  - title: "IETF Web Bot Auth (webbotauth) Working Group"
+    url: "https://datatracker.ietf.org/wg/webbotauth/about/"
     publisher: "IETF"
   - title: "Cloudflare — Forget IPs: using cryptography to verify bot and agent traffic"
     url: "https://blog.cloudflare.com/web-bot-auth/"
@@ -27,7 +27,9 @@ sources:
 
 Web Bot Auth is an emerging convention that lets a bot prove its identity cryptographically on every request, using the standard [HTTP Message Signatures](https://www.rfc-editor.org/rfc/rfc9421) mechanism from RFC 9421. Instead of guessing whether a request really comes from OpenAI's crawler by inspecting the user-agent string and looking up reverse DNS, the server reads a `Signature` header, fetches the bot's public key from a published key directory, and verifies the signature.
 
-The proposal lives in two IETF drafts: [draft-meunier-webbotauth-httpsig-protocol](https://datatracker.ietf.org/doc/draft-meunier-webbotauth-httpsig-protocol/) describes the trust model and how a bot signs its requests; [draft-meunier-webbotauth-httpsig-directory](https://datatracker.ietf.org/doc/draft-meunier-webbotauth-httpsig-directory/) profiles RFC 9421 for bot use and defines the published key directory — a JWKS at a well-known URI, discoverable in-band via a signature header. Cloudflare ships verification at the network edge, and a growing list of major crawlers sign their traffic.
+The work now has an IETF home. In September 2026 the [Web Bot Auth working group](https://datatracker.ietf.org/wg/webbotauth/about/) adopted [draft-ietf-webbotauth-httpsig-protocol](https://datatracker.ietf.org/doc/draft-ietf-webbotauth-httpsig-protocol/) as its first working-group document, folding in the separate key-directory draft that used to sit alongside it. One document now covers the trust model, the signing rules, the `Signature-Agent` header used to discover a bot's keys, and the JWK Set that header points at — served, the draft asks IANA to register, from `/.well-known/http-message-signatures-directory`. Cloudflare ships verification at the network edge, and a growing list of major crawlers sign their traffic.
+
+Working-group adoption is not publication. The draft is still a draft, its details can and will change before it becomes an RFC, and the well-known URI it names is requested rather than registered. What adoption does tell you is that the mechanism is no longer one vendor's proposal: it has a chartered group, chairs, and a deliverable date, so building against it is a bet on a process rather than on a company.
 
 ## Why it matters
 
@@ -36,7 +38,7 @@ The proposal lives in two IETF drafts: [draft-meunier-webbotauth-httpsig-protoco
 - **Granular policy.** Once you can verify the caller, you can apply different rules — paywall bypass for partner agents, slower rate limits for low-trust crawlers — without bespoke detection.
 - **Composable with [Content Signals](/spec/agent-readiness/content-signals/) and [robots.txt for AI crawlers](/spec/agent-readiness/robots-for-ai-crawlers/).** robots.txt declares the policy; Web Bot Auth proves the identity the policy is about to be applied to.
 
-Treat it as `optional` for now. The drafts are pre-RFC, the verifier ecosystem is small, and most sites will get the benefit transparently via their CDN before they touch any code. But the direction is clear: bot identity is moving from "trust the header" to "verify the signature".
+Treat it as `optional` for now. The draft is pre-RFC, the verifier ecosystem is small, and most sites will get the benefit transparently via their CDN before they touch any code. But the direction is clear: bot identity is moving from "trust the header" to "verify the signature".
 
 ## How to implement
 
@@ -48,15 +50,15 @@ Treat it as `optional` for now. The drafts are pre-RFC, the verifier ecosystem i
 
 **If you operate a bot:**
 
-- **Generate a signing keypair** (Ed25519 is the recommended algorithm in the draft).
-- **Publish the public key** in a JWK Set at a stable URL declared in your bot's documentation. Per the draft, sites discover the key set from the `Signature-Agent` header or the bot's IANA-registered identity.
-- **Sign every request** with the `signature-input` and `signature` headers per RFC 9421, covering at minimum `@method`, `@authority`, `@target-uri`, and a `created` timestamp.
+- **Generate an asymmetric signing keypair.** The draft restricts you to algorithms in the RFC 9421 registry and rules out shared-secret HMAC outright — a symmetric key would have to be handed to every site that wants to verify, which defeats the point.
+- **Publish the public key** as a JWK Set at `/.well-known/http-message-signatures-directory`, served as `application/http-message-signatures-directory+json`, and point at it from the `Signature-Agent` header on every signed request. That header is itself covered by the signature, so it cannot be swapped for an attacker's directory in transit.
+- **Sign every request** with `Signature` and `Signature-Input` per RFC 9421, covering `@authority` or `@target-uri` and carrying the `created`, `expires`, `keyid`, and `tag` parameters. `tag` must be `web-bot-auth`, which is what lets a verifier tell this profile apart from other uses of message signatures on the same connection.
 - **Rotate keys** without breaking verifiers: keep the previous key in the published key set for at least a few weeks after rotation.
 
 ## Common mistakes
 
 - Blocking unsigned traffic as a default. The standard is opt-in for bots; legitimate non-signing clients (including most browsers) will be locked out.
-- Skipping the `created` field or accepting old timestamps. Without a freshness window, captured signatures replay forever.
+- Skipping `created` and `expires`, or accepting stale timestamps. Both are mandatory signature parameters in the draft; without a freshness window a captured signature replays forever.
 - Verifying only the homepage. Bots fetch internal pages too; the policy has to apply site-wide.
 - Treating the user-agent string as redundant. It still carries the human-readable bot name and version; signatures verify it, they do not replace it.
 
