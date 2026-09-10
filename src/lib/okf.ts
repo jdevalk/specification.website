@@ -16,7 +16,7 @@
 // to the 0.1 fields when they are absent, not to expect both.
 //
 // Concept files carry the blessed fields (type, title, description, resource,
-// tags, generated, sources) plus producer-defined keys (category, status,
+// tags, sources) plus producer-defined keys (category, requirement, source_updated_at,
 // conformance, standard, and a per-source `mirror` pointing at this bundle's
 // own copy of the standard). Index and log files are reserved filenames and
 // carry no frontmatter, except the bundle-root index.md which may carry
@@ -27,12 +27,9 @@ import { categories, site } from "~/lib/site";
 
 export const OKF_VERSION = "0.2";
 
-// §7 actor for `generated.by`. Every page in this spec is hand-authored and
-// merged by the maintainer; the bundle is a rendering of that prose, not
-// machine-generated content. The `human:` prefix is the signal consumers key
-// off when classifying trust (§5.3), so claiming a `process:` actor here would
-// understate what the content actually is.
-export const OKF_GENERATED_BY = "human:jdevalk";
+// The collection has no per-page authorship or verification records. Omit
+// optional generated/verified provenance rather than attribute the corpus to
+// its maintainer. Preserve the source edit date separately from provenance.
 
 type Source = { title: string; url: string; publisher?: string };
 
@@ -51,8 +48,8 @@ export type OkfConcept = {
   status: string;
   conformance: string;
   resource: string;
-  /** §5.2 `generated.at` — the content's last meaningful change. */
-  generatedAt?: string;
+  /** Source edit date; does not attest authorship or verification. */
+  updatedAt?: string;
   tags: string[];
   sources: Source[];
   body: string;
@@ -132,7 +129,7 @@ export async function getOkfData(): Promise<OkfData> {
       status: e.data.status,
       conformance: CONFORMANCE[e.data.status] ?? "SHOULD",
       resource: `${site.url}/spec/${e.data.category}/${slug}/`,
-      generatedAt: e.data.updated,
+      updatedAt: e.data.updated,
       tags,
       sources,
       body: (e.body ?? "").trim(),
@@ -178,13 +175,7 @@ export function renderConcept(c: OkfConcept): string {
   fm.push(`resource: ${c.resource}`);
   fm.push("tags:");
   for (const t of c.tags) fm.push(`  - ${t}`);
-  if (c.generatedAt) {
-    // §5.2. `by` is required within `generated`; `at` is the last meaningful
-    // change to the prose, which is the spec entry's own `updated` date.
-    fm.push("generated:");
-    fm.push(`  by: ${yamlString(OKF_GENERATED_BY)}`);
-    fm.push(`  at: ${yamlString(c.generatedAt)}`);
-  }
+  if (c.updatedAt) fm.push(`source_updated_at: ${yamlString(c.updatedAt)}`);
   // §5.1. Frontmatter provenance, replacing the 0.1 body-level `# Citations`
   // list. `mirror` is producer-defined and points at this bundle's own copy of
   // the standard, so the in-bundle graph survives the move out of the body.
@@ -199,7 +190,8 @@ export function renderConcept(c: OkfConcept): string {
     });
   }
   fm.push(`category: ${c.category}`);
-  fm.push(`status: ${c.status}`);
+  // OKF reserves status for draft/stable/deprecated, not requirement strength.
+  fm.push(`requirement: ${c.status}`);
   fm.push(`conformance: ${yamlString(c.conformance)}`);
   if (c.refSlugs.length) fm.push(`standard: ../references/${c.refSlugs[0]}.md`);
   fm.push("---");
