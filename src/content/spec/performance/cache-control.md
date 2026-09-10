@@ -6,7 +6,7 @@ summary: "Cache-Control tells browsers and CDNs how long to keep a response. Use
 status: required
 order: 50
 appliesTo: [all]
-relatedSlugs: [compression, core-web-vitals, no-vary-search, conditional-requests, compression-dictionary-transport]
+relatedSlugs: [compression, core-web-vitals, vary, no-vary-search, conditional-requests, compression-dictionary-transport]
 updated: "2026-08-01T00:00:00.000Z"
 sources:
   - title: "RFC 9111 — HTTP Caching"
@@ -78,7 +78,7 @@ Pair with a validator so revalidation is cheap — see [conditional requests](/s
 
 **Per-user content — private.** Anything personalised needs `private` to prevent shared caches from leaking one user's data to another.
 
-**Set `Vary` correctly.** If the response varies by `Accept-Encoding` or `Accept-Language`, set `Vary` accordingly. Missing `Vary` causes a CDN to serve gzip to a client that asked for brotli.
+**Set [`Vary`](/spec/performance/vary/) correctly.** If the response varies by `Accept-Encoding` or `Accept-Language`, set `Vary` accordingly. Missing `Vary` causes a CDN to serve gzip to a client that asked for brotli.
 
 **Survive origin failures — `stale-if-error`.** Defined in RFC 5861, this directive tells shared caches and browsers to keep serving the last good copy when a revalidation request fails — a 5xx from the origin, a timeout, or a connection error. It turns a backend outage into stale-but-working pages instead of error pages:
 

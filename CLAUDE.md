@@ -116,7 +116,7 @@ npm run assets   # regenerate icons + OG image
 
 `predev` and `prebuild` run `scripts/generate-assets.mjs` automatically.
 
-The Worker in `mcp/` has its own scripts, run from there: `npm test`, `npm run typecheck`, `npm run dev` (wrangler on 31338). On a fresh clone run `npm run build:data` first — `src/data.json` is generated, so `typecheck` fails with `TS2307` without it; `pretest` covers `npm test`. CI's `mcp` job runs the three in that order.
+The Worker in `mcp/` has its own scripts, run from there: `npm test`, `npm run typecheck`, `npm run dev` (wrangler on 31338). On a fresh clone run `npm run build:data` first — `src/data.json` is generated, so `typecheck` fails with `TS2307` without it; `pretest` covers `npm test`. CI's `mcp` job audits dependencies, builds the manifest, type-checks, and runs the protocol assertions.
 
 **Pre-commit gate.** A tracked git hook at `.githooks/pre-commit` runs `npm run lint` and `npm run format:check` on every `git commit`; `core.hooksPath` is pointed at `.githooks/` by the `prepare` script on `npm install` (no husky). The same two checks run in CI (`ci.yml`). Run them before committing so the hook passes; `prettier --write .` fixes formatting. Bypass only in a genuine emergency with `git commit --no-verify`. The Worker's assertions are deliberately **not** in the hook: `mcp/` has its own dependency tree that most contributors never install, and running them would rewrite the generated `mcp/src/data.json` on every unrelated commit. CI is the gate for that.
 
@@ -225,6 +225,10 @@ The dashboard reads all three datasets via the [Analytics Engine SQL API](https:
 - `CF_ANALYTICS_TOKEN` — an API token with **Account → Account Analytics → Read** scoped to that account. Create at [dash.cloudflare.com/profile/api-tokens](https://dash.cloudflare.com/profile/api-tokens) and add both as Pages → Settings → Variables and Secrets (Production + Preview).
 
 A "table not found" error from a query is expected until the matching dataset has received its first write. Datasets are account-scoped, so the same SQL token reads from both the Pages-written `sw_agent_log` and the Worker-written `sw_mcp_log`.
+
+The Crawlers tab supports `?format=markdown` (Accept-header flags, including legacy rows, or direct `.md` paths) across all crawler queries. Its daily graph defaults to 30 UTC calendar days, with `?days=7`, `30`, or `90`; today is partial. These GET controls retain both selections in the URL.
+
+The MCP / A2A tab has the same daily history periods alongside its 24-hour graph. `?section=mcp` opens that tab and keeps it selected when applying a graph period; the crawler Markdown filter does not affect MCP / A2A counts.
 
 Conventions when extending it:
 
