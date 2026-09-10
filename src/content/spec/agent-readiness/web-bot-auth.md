@@ -7,7 +7,7 @@ status: optional
 order: 45
 appliesTo: [all]
 relatedSlugs: [robots-for-ai-crawlers, content-signals, agent-readiness-overview, link-headers, well-known-overview]
-updated: "2026-09-06T00:00:00.000Z"
+updated: "2026-09-10T00:00:00.000Z"
 sources:
   - title: "RFC 9421 — HTTP Message Signatures"
     url: "https://www.rfc-editor.org/rfc/rfc9421"
@@ -44,26 +44,27 @@ Treat it as `optional` for now. The draft is pre-RFC, the verifier ecosystem is 
 
 **If you are running a site:**
 
-- **Let the edge do it.** Cloudflare, Fastly, and other CDNs are adding signature verification as a configurable feature. Turn it on, expose the result to your origin as a request header (e.g. `Cf-Verified-Bot-Category`), and branch on it.
+- **Use a verifier that supports your signing profile.** Follow its documented identity result. If verification happens at a proxy, accept that result only over a trusted proxy-to-origin path; strip client-supplied copies of identity headers.
 - **Combine, do not replace.** Web Bot Auth tells you who is calling. [robots.txt](/spec/seo/robots-txt/) and [Content Signals](/spec/agent-readiness/content-signals/) tell you what they may do with the response. Both layers are needed.
-- **Do not punish unsigned traffic.** Treat unsigned requests with the same defaults you use today. Signed requests earn trust; unsigned ones do not lose it.
+- **Keep authorisation separate.** A valid signature establishes a key/identifier association, not permission or good behaviour. Apply your own policy to verified identifiers and retain your existing defaults for unsigned traffic.
 
 **If you operate a bot:**
 
 - **Generate an asymmetric signing keypair.** The draft restricts you to algorithms in the RFC 9421 registry and rules out shared-secret HMAC outright — a symmetric key would have to be handed to every site that wants to verify, which defeats the point.
-- **Publish the public key** as a JWK Set at `/.well-known/http-message-signatures-directory`, served as `application/http-message-signatures-directory+json`, and point at it from the `Signature-Agent` header on every signed request. That header is itself covered by the signature, so it cannot be swapped for an attacker's directory in transit.
+- **Publish the public key** as a JWK Set. For default directory discovery, serve it at `https://bot.example/.well-known/http-message-signatures-directory` with media type `application/http-message-signatures-directory+json`. Send `Signature-Agent: sig1="https://bot.example"`: the value is an HTTPS **origin**, not the well-known file's URL. For a direct JWK Set URL instead, send `Signature-Agent: sig1="https://bot.example/keys.json";type=jwks_uri`.
+- **Use the same label** (`sig1` here) in `Signature`, `Signature-Input` and `Signature-Agent`. Cover the matching dictionary member with `"signature-agent";key="sig1"` in `Signature-Input`, alongside the required target component. See [draft sections 5.2.1 and 5.5](https://datatracker.ietf.org/doc/html/draft-ietf-webbotauth-httpsig-protocol-00#section-5.2.1).
 - **Sign every request** with `Signature` and `Signature-Input` per RFC 9421, covering `@authority` or `@target-uri` and carrying the `created`, `expires`, `keyid`, and `tag` parameters. `tag` must be `web-bot-auth`, which is what lets a verifier tell this profile apart from other uses of message signatures on the same connection.
-- **Rotate keys** without breaking verifiers: keep the previous key in the published key set for at least a few weeks after rotation.
+- **Rotate keys** without breaking verifiers: allow for cached directories and outstanding signatures when overlapping keys; remove compromised keys promptly.
 
 ## Common mistakes
 
 - Blocking unsigned traffic as a default. The standard is opt-in for bots; legitimate non-signing clients (including most browsers) will be locked out.
 - Skipping `created` and `expires`, or accepting stale timestamps. Both are mandatory signature parameters in the draft; without a freshness window a captured signature replays forever.
 - Verifying only the homepage. Bots fetch internal pages too; the policy has to apply site-wide.
-- Treating the user-agent string as redundant. It still carries the human-readable bot name and version; signatures verify it, they do not replace it.
+- Assuming a signature authenticates `User-Agent`. It protects only the components it covers; the profile does not require that header to be signed.
 
 ## Verification
 
-- `curl -sI -H 'Signature: …' -H 'Signature-Input: …' https://example.com/` — a properly configured edge logs verification success and exposes a derived header to origin.
+- Send an actually signed request using your signing client. Confirm the verifier reports the expected identifier, then change a covered component and confirm verification fails. Placeholder signature values cannot test success.
 - For bot operators: feed your signed request into an RFC 9421 verifier and confirm the canonicalised signature base matches what your client constructed.
 - Check your access logs for a verified-bot tag on traffic from signing crawlers (OpenAI, Anthropic, Perplexity, and others publish their key sets).
