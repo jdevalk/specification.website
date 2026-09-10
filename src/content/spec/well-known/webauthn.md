@@ -7,9 +7,9 @@ status: optional
 appliesTo: [all]
 relatedSlugs: [well-known-overview, change-password, https-tls, accessible-authentication]
 order: 25
-updated: "2026-06-08T12:00:00.000Z"
+updated: "2026-09-08T00:00:00.000Z"
 sources:
-  - title: "Web Authentication: An API for accessing Public Key Credentials — Level 3"
+  - title: "Web Authentication: An API for accessing Public Key Credentials — Level 3 (W3C Recommendation)"
     url: "https://www.w3.org/TR/webauthn-3/"
     publisher: "W3C Web Authentication Working Group"
   - title: "IANA — Well-Known URIs Registry"
@@ -22,7 +22,7 @@ sources:
 
 ## What it is
 
-`/.well-known/webauthn` is a JSON document that lists the origins permitted to create and use [passkeys](https://www.w3.org/TR/webauthn-3/) scoped to a single Relying Party ID (RP ID). It is the discovery file behind **Related Origin Requests (ROR)**, a feature added in WebAuthn Level 3.
+`/.well-known/webauthn` is a JSON document that lists the origins permitted to create and use [passkeys](https://www.w3.org/TR/webauthn-3/) scoped to a single Relying Party ID (RP ID). It is the discovery file behind **Related Origin Requests (ROR)**, a feature added in WebAuthn Level 3, which reached W3C Recommendation in August 2026.
 
 A passkey is normally bound to one RP ID, which must match the registrable domain of the site using it. That breaks down when one organisation operates several domains — `example.com`, `example.co.uk`, `example.de` — and wants a single passkey to work across all of them. ROR lets a browser treat a request from a listed origin as valid for the RP ID, after fetching and checking this file.
 
@@ -40,7 +40,7 @@ A passkey is normally bound to one RP ID, which must match the registrable domai
 
 - **One credential, many domains.** Users register a passkey once and sign in across every related property, instead of one passkey per ccTLD or brand domain.
 - **No shared secret or redirect dance.** The allowlist is a static, publicly fetchable file. The browser, not your servers, enforces it.
-- **It is a platform feature, not a vendor one.** ROR is in the W3C standard and ships in Chrome, Safari, and Firefox (152+), so the behaviour is consistent across browsers.
+- **It is a platform feature, not a vendor one.** ROR is in the W3C Recommendation and ships in Chrome, Safari, and Firefox (152+), so the behaviour is consistent across browsers.
 
 ## How to implement
 
