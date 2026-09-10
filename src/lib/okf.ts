@@ -7,18 +7,32 @@
 // in astro-okf-tarball.mjs. Do not hand-author any of it.
 //
 // OKF spec: https://github.com/GoogleCloudPlatform/knowledge-catalog (okf/SPEC.md).
-//   §4 frontmatter · §6 index files · §7 log · §8 citations/references · §9 conformance.
+//   §5.1 sources · §5.2 provenance · §5.3 trust · §7 actors · §13 breaking changes.
+//
+// Targets OKF 0.2. That revision makes two breaking changes to 0.1, both of
+// which land here (§13): the `timestamp` field is superseded by `generated.at`,
+// and the body-level `# Citations` list is superseded by a frontmatter
+// `sources` list. We emit the 0.2 shape only — consumers are told to fall back
+// to the 0.1 fields when they are absent, not to expect both.
 //
 // Concept files carry the blessed fields (type, title, description, resource,
-// tags, timestamp) plus producer-defined keys (category, status, conformance,
-// standard, last_verified). Index and log files are reserved filenames and
+// tags, generated, sources) plus producer-defined keys (category, status,
+// conformance, standard, and a per-source `mirror` pointing at this bundle's
+// own copy of the standard). Index and log files are reserved filenames and
 // carry no frontmatter, except the bundle-root index.md which may carry
-// okf_version (§11).
+// okf_version.
 
 import { getCollection } from "astro:content";
 import { categories, site } from "~/lib/site";
 
-export const OKF_VERSION = "0.1";
+export const OKF_VERSION = "0.2";
+
+// §7 actor for `generated.by`. Every page in this spec is hand-authored and
+// merged by the maintainer; the bundle is a rendering of that prose, not
+// machine-generated content. The `human:` prefix is the signal consumers key
+// off when classifying trust (§5.3), so claiming a `process:` actor here would
+// understate what the content actually is.
+export const OKF_GENERATED_BY = "human:jdevalk";
 
 type Source = { title: string; url: string; publisher?: string };
 
@@ -37,7 +51,8 @@ export type OkfConcept = {
   status: string;
   conformance: string;
   resource: string;
-  timestamp?: string;
+  /** §5.2 `generated.at` — the content's last meaningful change. */
+  generatedAt?: string;
   tags: string[];
   sources: Source[];
   body: string;
@@ -117,7 +132,7 @@ export async function getOkfData(): Promise<OkfData> {
       status: e.data.status,
       conformance: CONFORMANCE[e.data.status] ?? "SHOULD",
       resource: `${site.url}/spec/${e.data.category}/${slug}/`,
-      timestamp: e.data.updated,
+      generatedAt: e.data.updated,
       tags,
       sources,
       body: (e.body ?? "").trim(),
@@ -163,12 +178,30 @@ export function renderConcept(c: OkfConcept): string {
   fm.push(`resource: ${c.resource}`);
   fm.push("tags:");
   for (const t of c.tags) fm.push(`  - ${t}`);
-  if (c.timestamp) fm.push(`timestamp: ${yamlString(c.timestamp)}`);
+  if (c.generatedAt) {
+    // §5.2. `by` is required within `generated`; `at` is the last meaningful
+    // change to the prose, which is the spec entry's own `updated` date.
+    fm.push("generated:");
+    fm.push(`  by: ${yamlString(OKF_GENERATED_BY)}`);
+    fm.push(`  at: ${yamlString(c.generatedAt)}`);
+  }
+  // §5.1. Frontmatter provenance, replacing the 0.1 body-level `# Citations`
+  // list. `mirror` is producer-defined and points at this bundle's own copy of
+  // the standard, so the in-bundle graph survives the move out of the body.
+  if (c.sources.length) {
+    fm.push("sources:");
+    c.sources.forEach((s, i) => {
+      fm.push(`  - id: ${c.refSlugs[i]}`);
+      fm.push(`    title: ${yamlString(s.title)}`);
+      fm.push(`    resource: ${s.url}`);
+      if (s.publisher) fm.push(`    author: ${yamlString(s.publisher)}`);
+      fm.push(`    mirror: ../references/${c.refSlugs[i]}.md`);
+    });
+  }
   fm.push(`category: ${c.category}`);
   fm.push(`status: ${c.status}`);
   fm.push(`conformance: ${yamlString(c.conformance)}`);
   if (c.refSlugs.length) fm.push(`standard: ../references/${c.refSlugs[0]}.md`);
-  if (c.timestamp) fm.push(`last_verified: ${yamlString(c.timestamp)}`);
   fm.push("---");
 
   const parts: string[] = [
@@ -188,14 +221,6 @@ export function renderConcept(c: OkfConcept): string {
       `Primary standard: [${c.sources[0].title}](../references/${c.refSlugs[0]}.md).`,
       "",
     );
-  }
-
-  if (c.sources.length) {
-    parts.push("# Citations", "");
-    c.sources.forEach((s, i) => {
-      parts.push(`[${i + 1}] [${s.title}](../references/${c.refSlugs[i]}.md)`);
-    });
-    parts.push("");
   }
 
   return parts.join("\n");
