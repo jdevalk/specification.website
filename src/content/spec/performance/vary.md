@@ -14,7 +14,7 @@ relatedSlugs:
     no-vary-search,
     markdown-source-endpoints,
   ]
-updated: "2026-09-07T00:00:00.000Z"
+updated: "2026-09-10T00:00:00.000Z"
 sources:
   - title: "RFC 9110 §12.5.5 — Vary"
     url: "https://www.rfc-editor.org/rfc/rfc9110#name-vary"
@@ -25,9 +25,6 @@ sources:
   - title: "MDN — Vary"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Vary"
     publisher: "MDN"
-  - title: "Informing HTTP Extension Design with Data"
-    url: "https://mnot.net/blog/2026/linting_the_web"
-    publisher: "Mark Nottingham"
 ---
 
 ## What it is
@@ -39,7 +36,7 @@ Content-Type: text/markdown; charset=utf-8
 Vary: Accept, Accept-Encoding
 ```
 
-That response says: the body you are holding is the right answer for a request whose `Accept` and `Accept-Encoding` looked like this one's. For any other combination, ask the origin again.
+That response can be reused only for requests whose `Accept` and `Accept-Encoding` match the original request, allowing semantics-preserving normalisation. If no stored variant matches, the cache must forward the request.
 
 **`Vary` is not a sibling of `Cache-Control`, and it does not mean "this changes often".** That is the belief most people arrive with, and it is the source of nearly every mistake below. `Cache-Control` decides *whether and for how long* a response may be stored. `Vary` decides *which stored response may be handed back*. Adding `Vary` does not make a response fresher, shorter-lived, or less cacheable — it files it under a longer key. Which is why getting `Vary` wrong does not show up as stale content. It shows up as a cache serving one visitor the response that was built for a different one.
 
@@ -51,9 +48,7 @@ Content negotiation without `Vary` is broken by construction. Suppose the same U
 
 The same failure with `Accept-Encoding` is uglier: a client that cannot decode Brotli is handed a Brotli body and renders nothing.
 
-The opposite failure is quieter and far more common. Every field you add to `Vary` multiplies the number of stored entries for that URL, and a cache entry that is never matched twice is worse than no cache at all — you paid the storage and still went to origin. `Vary: User-Agent` is the canonical example: user-agent strings are close to unique, so a shared cache ends up storing a copy per browser build and reusing almost none of them. RFC 9110 §12.5.5 is explicit that a `Vary` value "SHOULD NOT include an excessive number of fields", precisely because of this.
-
-It is not a theoretical concern. Mark Nottingham's 2026 analysis of Common Crawl responses across the Tranco top 100,000 sites found around 26% of responses varying on more than one axis, roughly 3,000 sites listing four or more, and outliers reaching 47. At that width the cache is an expensive pass-through with a storage bill.
+The opposite failure is cache fragmentation. Each additional field can increase the number of variants stored for a URL. Fields with many distinct values, such as `User-Agent`, can divide requests among many entries and reduce reuse. Keep the list limited to fields that affect the response, and measure the cache hit rate. RFC 9110 §12.5.5 discusses the performance cost of expanding the cache key; it does not set a maximum number of fields.
 
 ## How to implement
 
@@ -61,7 +56,7 @@ It is not a theoretical concern. Mark Nottingham's 2026 analysis of Common Crawl
 
 **Set it on every representation, including the default.** A cache that stored the HTML response *without* `Vary: Accept` will happily reuse it for a request that asked for Markdown. Both branches of a negotiation need the header, not just the interesting one.
 
-**Normalise before you branch.** The comparison in RFC 9111 §4.1 permits only whitespace changes, combining repeated field lines, and normalisation the field's own specification defines as semantics-preserving. It does not reorder lists for you, so `Accept-Encoding: gzip, br` and `Accept-Encoding: br, gzip` are two keys for one answer. Where your CDN can collapse a header to a small set of buckets before the cache lookup, do that.
+**Verify how your cache normalises values.** RFC 9111 §4.1 permits normalisation that preserves a field's semantics, including reordering values where order is insignificant. `Accept-Encoding: gzip, br` and `Accept-Encoding: br, gzip` therefore need not create different cache entries. Whether your cache merges them depends on its implementation. If you configure a smaller set of cache-key values, make sure that requests mapped to the same key can safely receive the same response.
 
 **Prefer distinct URLs when the representations differ substantially.** `Vary` earns its place for encodings and for format mirrors of the same document. It is a poor way to serve different languages — give each locale its own URL and wire them together with [hreflang](/spec/i18n/hreflang/), so the content is linkable, shareable, and indexable. See [international URL structure](/spec/i18n/international-url-structure/).
 
@@ -83,5 +78,5 @@ This site ships `Vary: Accept` on every spec page, because each canonical URL re
 ## Verification
 
 - `curl -sI -H 'Accept: text/markdown' https://example.com/page/` and the same request without the header: the `Content-Type` should differ and *both* responses should carry `Vary: Accept`.
-- Request the same URL twice through your CDN with `Accept-Encoding: gzip` and `Accept-Encoding: br`. Each response's `Content-Encoding` must match what was asked for, and the cache-status header should show two separate entries rather than one.
+- Request the same URL through your CDN with `Accept-Encoding: gzip` and `Accept-Encoding: br`, in both orders. Each response must use an encoding the client accepts; an unencoded response can also be valid. Confirm that cache reuse or edge recompression never serves an incompatible encoding, rather than assuming the CDN stores two separate bodies.
 - Scan your responses for `Vary` values listing more than two fields. Each one should trace to a branch that genuinely exists in the server code.

@@ -1,6 +1,6 @@
 ---
 title: "Added a page on the Vary header"
-date: "2026-09-07"
+date: "2026-09-10"
 type: added
 relatedSlugs: [vary, cache-control, compression, markdown-source-endpoints]
 ---
