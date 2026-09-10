@@ -10,6 +10,30 @@ permissions:
   contents: read
 
 jobs:
+  mcp:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mcp
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: mcp/package-lock.json
+
+      - name: Install MCP dependencies
+        run: npm ci
+
+      - name: Audit MCP dependencies
+        run: npm audit
+
+      - name: Generate MCP data and type-check
+        run: npm run build:data && npm run typecheck
+
   build:
     runs-on: ubuntu-latest
     steps:
