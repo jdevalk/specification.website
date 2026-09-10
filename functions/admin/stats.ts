@@ -22,9 +22,10 @@ const AGENT_MARKDOWN = "(blob10 IN ('markdown', '1') OR blob4 LIKE '%.md')";
 const AGENT_MIME = `if(${AGENT_MARKDOWN}, 'markdown', 'html')`;
 const HISTORY_DAYS = [7, 30, 90] as const;
 
-interface CrawlerFilters {
+interface DashboardFilters {
   markdownOnly: boolean;
   days: number;
+  section: "crawlers" | "mcp";
 }
 
 // Deprecation/intervention reports fire for any in-page script, including
@@ -67,9 +68,10 @@ export const onRequest: PagesFunction<Env> = async (context) => {
 
   const params = new URL(context.request.url).searchParams;
   const requestedDays = Number(params.get("days"));
-  const filters: CrawlerFilters = {
+  const filters: DashboardFilters = {
     markdownOnly: params.get("format") === "markdown",
     days: HISTORY_DAYS.find((days) => days === requestedDays) ?? 30,
+    section: params.get("section") === "mcp" ? "mcp" : "crawlers",
   };
   const agentFilter = filters.markdownOnly ? `AND ${AGENT_MARKDOWN}` : "";
 
@@ -124,6 +126,12 @@ export const onRequest: PagesFunction<Env> = async (context) => {
       FROM ${MCP}
       WHERE timestamp > NOW() - INTERVAL '1' DAY
       GROUP BY hour ORDER BY hour ASC
+    `,
+    mcp_daily: `
+      SELECT toStartOfDay(timestamp) AS day, SUM(_sample_interval) AS count
+      FROM ${MCP}
+      WHERE timestamp >= toStartOfDay(NOW()) - INTERVAL '${filters.days - 1}' DAY
+      GROUP BY day ORDER BY day ASC
     `,
     mcp_tools24h: `
       SELECT blob2 AS tool, SUM(_sample_interval) AS count
@@ -579,7 +587,7 @@ function statCard(label: string, value: number): string {
 function renderDashboard(
   results: QueryResults,
   errors: QueryErrors,
-  filters: CrawlerFilters,
+  filters: DashboardFilters,
 ): string {
   const errorBlock =
     Object.keys(errors).length === 0
@@ -670,12 +678,12 @@ function renderDashboard(
   ${errorBlock}
 
   <div class="section-nav tabs" data-tabs="sections">
-    <button type="button" class="tab active" data-tab="section-crawlers">Crawlers</button>
-    <button type="button" class="tab" data-tab="section-mcp">MCP / A2A usage</button>
+    <button type="button" class="tab${filters.section === "crawlers" ? " active" : ""}" data-tab="section-crawlers">Crawlers</button>
+    <button type="button" class="tab${filters.section === "mcp" ? " active" : ""}" data-tab="section-mcp">MCP / A2A usage</button>
     <button type="button" class="tab" data-tab="section-reports">Browser reports</button>
   </div>
 
-  <div id="section-crawlers" class="tab-pane">
+  <div id="section-crawlers" class="tab-pane"${filters.section === "crawlers" ? "" : " hidden"}>
     <form class="filter-row" method="get" action="/admin/stats">
       <label for="crawler-format">Requests</label>
       <select id="crawler-format" name="format">
@@ -753,12 +761,25 @@ function renderDashboard(
     </div>
   </div>
 
-  <div id="section-mcp" class="tab-pane" hidden>
+  <div id="section-mcp" class="tab-pane"${filters.section === "mcp" ? "" : " hidden"}>
+    <form class="filter-row" method="get" action="/admin/stats">
+      <input type="hidden" name="section" value="mcp">
+      <input type="hidden" name="format" value="${filters.markdownOnly ? "markdown" : "all"}">
+      <label for="mcp-days">Graph period</label>
+      <select id="mcp-days" name="days">
+        ${HISTORY_DAYS.map((days) => `<option value="${days}"${filters.days === days ? " selected" : ""}>Last ${days} days</option>`).join("")}
+      </select>
+      <button type="submit" class="tab">Apply</button>
+    </form>
     <div class="stats-row">
       ${statCard("Calls 24h", sumCounts(results.mcp_hourly))}
       ${statCard("Tool calls 7d", sumCounts(results.mcp_tools7d))}
       ${statCard("Errors 7d", firstCount(results.mcp_errors))}
     </div>
+
+    <h2>Calls per day — last ${filters.days} days</h2>
+    ${errors.mcp_daily ? '<p class="empty">Call history could not be loaded.</p>' : renderDayLineChart(rowsOrEmpty(results.mcp_daily), filters.days, "#10b981", `MCP/A2A calls per day, last ${filters.days} days`)}
+    <p class="sub">Daily totals in UTC; today is incomplete. Days without recorded calls show zero.</p>
 
     <div class="cols">
       <div>
