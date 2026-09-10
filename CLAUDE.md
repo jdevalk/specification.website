@@ -224,6 +224,10 @@ The dashboard reads all three datasets via the [Analytics Engine SQL API](https:
 
 A "table not found" error from a query is expected until the matching dataset has received its first write. Datasets are account-scoped, so the same SQL token reads from both the Pages-written `sw_agent_log` and the Worker-written `sw_mcp_log`.
 
+The Crawlers tab supports `?format=markdown` (Accept-header flags, including legacy rows, or direct `.md` paths) across all crawler queries. Its daily graph defaults to 30 UTC calendar days, with `?days=7`, `30`, or `90`; today is partial. These GET controls retain both selections in the URL.
+
+The MCP / A2A tab has the same daily history periods alongside its 24-hour graph. `?section=mcp` opens that tab and keeps it selected when applying a graph period; the crawler Markdown filter does not affect MCP / A2A counts.
+
 Conventions when extending it:
 
 - Keep the dashboard CSP-safe — interaction JS lives in `public/admin-stats.js`, not inline.
