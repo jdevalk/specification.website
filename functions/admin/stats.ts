@@ -17,6 +17,16 @@ const AGENT = "sw_agent_log";
 const MCP = "sw_mcp_log";
 const REPORT = "sw_report_log";
 
+// Include direct .md URLs and the legacy Accept-header flag in historical data.
+const AGENT_MARKDOWN = "(blob10 IN ('markdown', '1') OR blob4 LIKE '%.md')";
+const AGENT_MIME = `if(${AGENT_MARKDOWN}, 'markdown', 'html')`;
+const HISTORY_DAYS = [7, 30, 90] as const;
+
+interface CrawlerFilters {
+  markdownOnly: boolean;
+  days: number;
+}
+
 // Deprecation/intervention reports fire for any in-page script, including
 // browser-extension content scripts. functions/reports.ts now drops those at
 // write time, but Analytics Engine is append-only — historical extension noise
@@ -55,49 +65,57 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     return text("Missing CF_ACCOUNT_ID or CF_ANALYTICS_TOKEN env vars.", 500);
   }
 
+  const params = new URL(context.request.url).searchParams;
+  const requestedDays = Number(params.get("days"));
+  const filters: CrawlerFilters = {
+    markdownOnly: params.get("format") === "markdown",
+    days: HISTORY_DAYS.find((days) => days === requestedDays) ?? 30,
+  };
+  const agentFilter = filters.markdownOnly ? `AND ${AGENT_MARKDOWN}` : "";
+
   const queries: Record<string, string> = {
     // --- Crawlers ---------------------------------------------------------
     agent_hourly: `
       SELECT toStartOfHour(timestamp) AS hour, index1 AS bot, SUM(_sample_interval) AS count
       FROM ${AGENT}
-      WHERE timestamp > NOW() - INTERVAL '1' DAY
+      WHERE timestamp > NOW() - INTERVAL '1' DAY ${agentFilter}
       GROUP BY hour, bot
       ORDER BY hour ASC
     `,
     agent_daily: `
       SELECT toStartOfDay(timestamp) AS day, SUM(_sample_interval) AS count
       FROM ${AGENT}
-      WHERE timestamp > NOW() - INTERVAL '14' DAY
+      WHERE timestamp >= toStartOfDay(NOW()) - INTERVAL '${filters.days - 1}' DAY ${agentFilter}
       GROUP BY day ORDER BY day ASC
     `,
     agent_top24h: `
-      SELECT index1 AS bot, blob10 AS mime, SUM(_sample_interval) AS count
+      SELECT index1 AS bot, ${AGENT_MIME} AS mime, SUM(_sample_interval) AS count
       FROM ${AGENT}
-      WHERE timestamp > NOW() - INTERVAL '1' DAY
+      WHERE timestamp > NOW() - INTERVAL '1' DAY ${agentFilter}
       GROUP BY bot, mime ORDER BY count DESC LIMIT 50
     `,
     agent_top7d: `
-      SELECT index1 AS bot, blob10 AS mime, SUM(_sample_interval) AS count
+      SELECT index1 AS bot, ${AGENT_MIME} AS mime, SUM(_sample_interval) AS count
       FROM ${AGENT}
-      WHERE timestamp > NOW() - INTERVAL '7' DAY
+      WHERE timestamp > NOW() - INTERVAL '7' DAY ${agentFilter}
       GROUP BY bot, mime ORDER BY count DESC LIMIT 50
     `,
     agent_top30d: `
-      SELECT index1 AS bot, blob10 AS mime, SUM(_sample_interval) AS count
+      SELECT index1 AS bot, ${AGENT_MIME} AS mime, SUM(_sample_interval) AS count
       FROM ${AGENT}
-      WHERE timestamp > NOW() - INTERVAL '30' DAY
+      WHERE timestamp > NOW() - INTERVAL '30' DAY ${agentFilter}
       GROUP BY bot, mime ORDER BY count DESC LIMIT 50
     `,
     agent_sources: `
       SELECT blob9 AS source, SUM(_sample_interval) AS count
       FROM ${AGENT}
-      WHERE timestamp > NOW() - INTERVAL '7' DAY
+      WHERE timestamp > NOW() - INTERVAL '7' DAY ${agentFilter}
       GROUP BY source ORDER BY count DESC
     `,
     agent_topPaths: `
-      SELECT index1 AS bot, blob4 AS path, blob10 AS mime, SUM(_sample_interval) AS count
+      SELECT index1 AS bot, blob4 AS path, ${AGENT_MIME} AS mime, SUM(_sample_interval) AS count
       FROM ${AGENT}
-      WHERE timestamp > NOW() - INTERVAL '7' DAY
+      WHERE timestamp > NOW() - INTERVAL '7' DAY ${agentFilter}
       GROUP BY bot, path, mime ORDER BY count DESC LIMIT 200
     `,
     // --- MCP / A2A --------------------------------------------------------
@@ -200,7 +218,7 @@ export const onRequest: PagesFunction<Env> = async (context) => {
     }),
   );
 
-  return new Response(renderDashboard(results, errors), {
+  return new Response(renderDashboard(results, errors, filters), {
     headers: { "Content-Type": "text/html;charset=utf-8" },
   });
 };
@@ -478,10 +496,11 @@ function renderHourLineChart(
   return `<svg class="line-chart" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img" aria-label="${esc(ariaLabel)}">${gridLines}<polyline points="${linePts}" fill="none" stroke="${colour}" stroke-width="1.5" stroke-linejoin="round" />${dots}${xLabels}</svg>`;
 }
 
-// Daily counterpart of renderHourLineChart: a 14-day line, one point per UTC
+// Daily counterpart of renderHourLineChart: one point per UTC
 // day. Rows are { day, count } from a toStartOfDay() query.
 function renderDayLineChart(
   rows: AeRow[],
+  days: number,
   colour: string,
   ariaLabel: string,
 ): string {
@@ -496,7 +515,7 @@ function renderDayLineChart(
   const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
   const grid: Array<{ time: Date; value: number }> = [];
-  for (let i = 13; i >= 0; i--) {
+  for (let i = days - 1; i >= 0; i--) {
     const t = new Date(today);
     t.setUTCDate(t.getUTCDate() - i);
     const key = t.toISOString().slice(0, 19).replace("T", " ");
@@ -530,7 +549,11 @@ function renderDayLineChart(
 
   const xLabels = grid
     .map((p, i) => ({ i, t: p.time }))
-    .filter(({ i }) => i % 2 === 0 || i === grid.length - 1)
+    .filter(
+      ({ i }) =>
+        (i % Math.ceil((days - 1) / 6) === 0 && i < days - 3) ||
+        i === grid.length - 1,
+    )
     .map(
       ({ i, t }) =>
         `<text x="${xFor(i).toFixed(1)}" y="${H - 8}" text-anchor="middle" fill="#9bb" font-size="10" font-family="ui-monospace,monospace">${t.toISOString().slice(5, 10)}</text>`,
@@ -553,7 +576,11 @@ function statCard(label: string, value: number): string {
 
 // --- Page render ----------------------------------------------------------
 
-function renderDashboard(results: QueryResults, errors: QueryErrors): string {
+function renderDashboard(
+  results: QueryResults,
+  errors: QueryErrors,
+  filters: CrawlerFilters,
+): string {
   const errorBlock =
     Object.keys(errors).length === 0
       ? ""
@@ -649,18 +676,33 @@ function renderDashboard(results: QueryResults, errors: QueryErrors): string {
   </div>
 
   <div id="section-crawlers" class="tab-pane">
+    <form class="filter-row" method="get" action="/admin/stats">
+      <label for="crawler-format">Requests</label>
+      <select id="crawler-format" name="format">
+        <option value="all"${filters.markdownOnly ? "" : " selected"}>All requests</option>
+        <option value="markdown"${filters.markdownOnly ? " selected" : ""}>Markdown only</option>
+      </select>
+      <label for="crawler-days">Graph period</label>
+      <select id="crawler-days" name="days">
+        ${HISTORY_DAYS.map((days) => `<option value="${days}"${filters.days === days ? " selected" : ""}>Last ${days} days</option>`).join("")}
+      </select>
+      <button type="submit" class="tab">Apply</button>
+    </form>
+    <p class="sub">${filters.markdownOnly ? "Showing Markdown requests across all crawler charts and tables: .md URLs or requests accepting text/markdown." : "Showing all logged crawler requests."}</p>
     <div class="stats-row">
       ${statCard("Crawls 24h", sumCounts(results.agent_top24h))}
       ${statCard("Crawls 7d", sumCounts(results.agent_top7d))}
-      ${statCard("Distinct bots 7d", rowsOrEmpty(results.agent_top7d).length)}
+      ${statCard("Distinct bots 7d", new Set(rowsOrEmpty(results.agent_top7d).map((r) => r.bot)).size)}
     </div>
+
+    <h2>Requests per day — last ${filters.days} days${filters.markdownOnly ? " · Markdown only" : ""}</h2>
+    ${errors.agent_daily ? '<p class="empty">Request history could not be loaded.</p>' : renderDayLineChart(rowsOrEmpty(results.agent_daily), filters.days, "#3b82f6", `Crawler requests per day, last ${filters.days} days${filters.markdownOnly ? ", Markdown only" : ""}`)}
+    <p class="sub">Daily totals in UTC; today is incomplete. Days without recorded requests show zero.</p>
 
     <div class="cols">
       <div>
         <h2>Crawls per hour — last 24h</h2>
         ${renderHourLineChart(rowsOrEmpty(results.agent_hourly), "#3b82f6", "Crawls per hour, last 24h")}
-        <h2>Crawls per day — last 14d</h2>
-        ${renderDayLineChart(rowsOrEmpty(results.agent_daily), "#3b82f6", "Crawls per day, last 14d")}
       </div>
       <div>
         <div class="panel-head">
