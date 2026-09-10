@@ -1,22 +1,25 @@
 ---
 title: "Unencoded-Digest and Want-Unencoded-Digest"
-date: "2026-09-04"
+date: "2026-09-10"
 reason: too-early
-revisit: "A server, CDN or client that emits or checks `Unencoded-Digest` without a hand-written recipe. Cloudflare or Fastly adding it alongside their existing `Content-Digest` support would be the clearest signal; so would a package manager or software-distribution endpoint adopting it for the integrity case the draft was written for."
+revisit: "Reassess a general recommendation when browser support extends beyond Chromium, or a documented server/client deployment provides a practical use case to cover alongside the existing Digest Fields page."
 sources:
   - title: "draft-ietf-httpbis-unencoded-digest — HTTP Unencoded Digest"
     url: "https://datatracker.ietf.org/doc/draft-ietf-httpbis-unencoded-digest/"
     publisher: "IETF HTTP Working Group"
-  - title: "RFC 9530 — Digest Fields"
-    url: "https://www.rfc-editor.org/rfc/rfc9530.html"
-    publisher: "IETF"
   - title: "IANA — HTTP Field Name Registry"
     url: "https://www.iana.org/assignments/http-fields/http-fields.xhtml"
     publisher: "IANA"
+  - title: "MDN browser compatibility data — Unencoded-Digest"
+    url: "https://github.com/mdn/browser-compat-data/blob/main/http/headers/Unencoded-Digest.json"
+    publisher: "MDN"
+  - title: "Signature-based Integrity — Unencoded-Digest validation"
+    url: "https://wicg.github.io/signature-based-sri/#unencoded-digest-validation-for-sri"
+    publisher: "W3C Web Incubator Community Group"
 ---
 
-[RFC 9530](/spec/security/digest-fields/) gives HTTP two integrity fields: `Content-Digest`, which hashes the bytes actually on the wire, and `Repr-Digest`, which hashes the selected representation. Neither hashes the resource as it exists before any content coding is applied — so a client that receives a gzipped response cannot compare its digest against the one the origin's build pipeline computed over the raw file, and a proxy that recompresses the body invalidates `Content-Digest` on the way through. `Unencoded-Digest` (and its request-side companion `Want-Unencoded-Digest`) closes exactly that gap: one digest that survives being compressed, decompressed and recompressed by anything on the path.
+`Unencoded-Digest` hashes representation data before content coding, so the same digest can describe a resource served with different compression encodings. `Want-Unencoded-Digest` lets a client express its digest preferences. They complement the [Digest Fields](/spec/security/digest-fields/) page: `Content-Digest` covers message content, while `Repr-Digest` covers the selected representation, including any content coding.
 
-It is real work and it is nearly done. The draft is an HTTP Working Group document, both fields carry provisional entries in the IANA HTTP Field Name registry, SECDIR and GENART reviews came back clean, and as of this scan it sits in the RFC Editor queue awaiting an editor. What it does not have is a single implementation we could point a reader at. No CDN emits it, no server produces it, no client checks it — the field exists in a registry and a draft and nowhere else. Our own [Digest Fields](/spec/security/digest-fields/) page is already `optional` on the grounds that `Content-Digest` is thinly deployed; a sibling field with strictly less deployment than that does not clear a bar the parent barely clears.
+Both names are **permanently registered** in IANA's HTTP Field Name Registry. Implementations also exist: MDN's compatibility data, checked on 10 September 2026, records `Unencoded-Digest` support in Chrome and Edge from version 141, with Firefox and Safari unsupported. The signature-based integrity specification defines browser validation of the field. This evidence concerns `Unencoded-Digest`; it does not establish support for its request-side companion or adoption by servers and CDNs.
 
-This is the reference case for **registration is not adoption**, which is the mistake the IANA registries most invite. A provisional entry in an IANA table looks like a fact about the web — the name is taken, the semantics are fixed, the reference is stable — and it is none of those things about what any server actually sends. Reading a registry top to bottom is a good way to find candidates and a bad way to decide between them; every entry there had someone who wanted it, and that is all the entry proves. Wait for the second implementation, not the registration.
+The deferral is about recommending the pair generally while support remains uneven, not an absence of working code. Registration, client support and deployment answer different questions: a registry establishes the field's name and reference, compatibility data identifies supporting clients, and an operational deployment shows what a site can use today. The current evidence supports a narrower Chromium use case; revisit the scope as interoperability or documented deployment broadens.
