@@ -7,7 +7,7 @@ status: recommended
 order: 20
 appliesTo: [all]
 relatedSlugs: [sitemap-index, image-sitemaps, robots-txt, canonical-url, schemamap]
-updated: "2026-09-05T00:00:00.000Z"
+updated: "2026-09-10T00:00:00.000Z"
 sources:
   - title: "Sitemaps XML format"
     url: "https://www.sitemaps.org/protocol.html"
@@ -69,11 +69,11 @@ Generate sitemaps dynamically from your content source, not by crawling your own
 
 A sitemap opened in a browser shows raw XML, which is hostile to anyone who is not a crawler. The long-standing fix was an `<?xml-stylesheet?>` processing instruction pointing at an XSLT stylesheet, which the browser applied to render the sitemap as a readable HTML table. That advice has expired.
 
-Since August 2026 the [HTML Standard](https://html.spec.whatwg.org/multipage/infrastructure.html#interactions-with-xpath-and-xslt) tells authors to avoid client-side XSLT outright: browser XSLT implementations are, in its words, highly susceptible to memory-safety vulnerabilities, and the feature is being removed from the web platform. Chrome stops running it in version 158, due 17 November 2026; Firefox and WebKit have signalled the same intent. This is a removal, not a deprecation warning — the stylesheet simply stops being applied.
+Since August 2026 the [HTML Standard](https://html.spec.whatwg.org/multipage/infrastructure.html#interactions-with-xpath-and-xslt) tells authors to avoid client-side XSLT outright: browser XSLT implementations are, in its words, highly susceptible to memory-safety vulnerabilities, and the feature is being removed from the web platform. Chrome plans to disable native XSLT in version 158, scheduled for 17 November 2026, with temporary exceptions for origin-trial and enterprise-policy participants until Chrome 176, scheduled for 17 August 2027. Firefox and WebKit have also signalled removal intent; they do not share Chrome's published timetable.
 
 The failure is worth understanding precisely, because it is milder than it sounds and that is exactly why it gets left in place too long. Crawlers never read the stylesheet; they parse the XML underneath it, and an `<?xml-stylesheet?>` instruction a parser cannot process is ignored rather than fatal. So nothing about discovery or indexing breaks. What breaks is the human view: a URL that rendered a tidy table starts rendering the browser's raw-XML fallback, and nobody notices until someone opens the sitemap and reports it as a bug.
 
-If you want a page a person can read, write one in HTML and link it. It costs no more than the stylesheet did, it is crawlable and linkable in its own right, and it does not depend on a feature three engines are deleting.
+XML itself and XML styled with CSS remain supported; this removal concerns native XSLT transformations. If you want a page a person can read, write one in HTML and link it. It costs no more than the stylesheet did, it is crawlable and linkable in its own right, and it does not depend on a feature three engines are deleting.
 
 **This site no longer does it.** `specification.website` pointed its sitemaps at a `/sitemap.xsl` until this page changed; the processing instruction has been dropped rather than left to break.
 

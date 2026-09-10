@@ -6,7 +6,7 @@ summary: "The `No-Vary-Search` response header tells browsers and caches that so
 status: recommended
 order: 55
 appliesTo: [all]
-relatedSlugs: [cache-control, canonical-url, speculation-rules, view-transitions, url-structure]
+relatedSlugs: [cache-control, vary, canonical-url, speculation-rules, view-transitions, url-structure]
 updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "draft-ietf-httpbis-no-vary-search — The No-Vary-Search HTTP Caching Extension"

@@ -6,7 +6,7 @@ summary: "Compress text responses with brotli where supported, gzip everywhere e
 status: required
 order: 60
 appliesTo: [all]
-relatedSlugs: [cache-control, http3, conditional-requests, compression-dictionary-transport]
+relatedSlugs: [cache-control, vary, http3, conditional-requests, compression-dictionary-transport]
 updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "RFC 7932 — Brotli Compressed Data Format"
@@ -59,7 +59,7 @@ Text resources — HTML, CSS, JavaScript, JSON, SVG, XML — compress to 20–30
 
 **Pre-compress static assets.** For files that don't change (your bundled JS), compress at build time to maximum level (brotli quality 11, gzip level 9) and let the server serve the `.br` or `.gz` file directly. Runtime compression usually runs at level 5–6 for CPU reasons.
 
-**Set `Vary: Accept-Encoding`.** Tells CDNs to keep a separate cache entry per encoding. Without it, gzip clients may receive a brotli body they can't decode.
+**Set [`Vary: Accept-Encoding`](/spec/performance/vary/).** Tells CDNs to keep a separate cache entry per encoding. Without it, gzip clients may receive a brotli body they can't decode.
 
 **Don't double-compress.** Images (JPEG, PNG, WebP, AVIF), video, fonts (WOFF2), and zip files are already compressed. Re-encoding wastes CPU and often grows the file.
 
