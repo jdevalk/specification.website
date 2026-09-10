@@ -7,18 +7,29 @@
 // in astro-okf-tarball.mjs. Do not hand-author any of it.
 //
 // OKF spec: https://github.com/GoogleCloudPlatform/knowledge-catalog (okf/SPEC.md).
-//   §4 frontmatter · §6 index files · §7 log · §8 citations/references · §9 conformance.
+//   §5.1 sources · §5.2 provenance · §5.3 trust · §7 actors · §13 breaking changes.
+//
+// Targets OKF 0.2. That revision makes two breaking changes to 0.1, both of
+// which land here (§13): the `timestamp` field is superseded by `generated.at`,
+// and the body-level `# Citations` list is superseded by a frontmatter
+// `sources` list. We emit the 0.2 shape only — consumers are told to fall back
+// to the 0.1 fields when they are absent, not to expect both.
 //
 // Concept files carry the blessed fields (type, title, description, resource,
-// tags, timestamp) plus producer-defined keys (category, status, conformance,
-// standard, last_verified). Index and log files are reserved filenames and
+// tags, sources) plus producer-defined keys (category, requirement, source_updated_at,
+// conformance, standard, and a per-source `mirror` pointing at this bundle's
+// own copy of the standard). Index and log files are reserved filenames and
 // carry no frontmatter, except the bundle-root index.md which may carry
-// okf_version (§11).
+// okf_version.
 
 import { getCollection } from "astro:content";
 import { categories, site } from "~/lib/site";
 
-export const OKF_VERSION = "0.1";
+export const OKF_VERSION = "0.2";
+
+// The collection has no per-page authorship or verification records. Omit
+// optional generated/verified provenance rather than attribute the corpus to
+// its maintainer. Preserve the source edit date separately from provenance.
 
 type Source = { title: string; url: string; publisher?: string };
 
@@ -37,7 +48,8 @@ export type OkfConcept = {
   status: string;
   conformance: string;
   resource: string;
-  timestamp?: string;
+  /** Source edit date; does not attest authorship or verification. */
+  updatedAt?: string;
   tags: string[];
   sources: Source[];
   body: string;
@@ -117,7 +129,7 @@ export async function getOkfData(): Promise<OkfData> {
       status: e.data.status,
       conformance: CONFORMANCE[e.data.status] ?? "SHOULD",
       resource: `${site.url}/spec/${e.data.category}/${slug}/`,
-      timestamp: e.data.updated,
+      updatedAt: e.data.updated,
       tags,
       sources,
       body: (e.body ?? "").trim(),
@@ -163,12 +175,25 @@ export function renderConcept(c: OkfConcept): string {
   fm.push(`resource: ${c.resource}`);
   fm.push("tags:");
   for (const t of c.tags) fm.push(`  - ${t}`);
-  if (c.timestamp) fm.push(`timestamp: ${yamlString(c.timestamp)}`);
+  if (c.updatedAt) fm.push(`source_updated_at: ${yamlString(c.updatedAt)}`);
+  // §5.1. Frontmatter provenance, replacing the 0.1 body-level `# Citations`
+  // list. `mirror` is producer-defined and points at this bundle's own copy of
+  // the standard, so the in-bundle graph survives the move out of the body.
+  if (c.sources.length) {
+    fm.push("sources:");
+    c.sources.forEach((s, i) => {
+      fm.push(`  - id: ${c.refSlugs[i]}`);
+      fm.push(`    title: ${yamlString(s.title)}`);
+      fm.push(`    resource: ${s.url}`);
+      if (s.publisher) fm.push(`    author: ${yamlString(s.publisher)}`);
+      fm.push(`    mirror: ../references/${c.refSlugs[i]}.md`);
+    });
+  }
   fm.push(`category: ${c.category}`);
-  fm.push(`status: ${c.status}`);
+  // OKF reserves status for draft/stable/deprecated, not requirement strength.
+  fm.push(`requirement: ${c.status}`);
   fm.push(`conformance: ${yamlString(c.conformance)}`);
   if (c.refSlugs.length) fm.push(`standard: ../references/${c.refSlugs[0]}.md`);
-  if (c.timestamp) fm.push(`last_verified: ${yamlString(c.timestamp)}`);
   fm.push("---");
 
   const parts: string[] = [
@@ -188,14 +213,6 @@ export function renderConcept(c: OkfConcept): string {
       `Primary standard: [${c.sources[0].title}](../references/${c.refSlugs[0]}.md).`,
       "",
     );
-  }
-
-  if (c.sources.length) {
-    parts.push("# Citations", "");
-    c.sources.forEach((s, i) => {
-      parts.push(`[${i + 1}] [${s.title}](../references/${c.refSlugs[i]}.md)`);
-    });
-    parts.push("");
   }
 
   return parts.join("\n");

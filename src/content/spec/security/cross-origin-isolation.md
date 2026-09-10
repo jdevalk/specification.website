@@ -6,7 +6,7 @@ summary: "Three response headers — Cross-Origin-Opener-Policy, Cross-Origin-Em
 status: recommended
 order: 65
 appliesTo: [all]
-relatedSlugs: [frame-ancestors, content-security-policy, permissions-policy, referrer-policy, reporting-endpoints]
+relatedSlugs: [frame-ancestors, content-security-policy, permissions-policy, referrer-policy, reporting-endpoints, fetch-metadata]
 updated: "2026-06-11T00:00:00.000Z"
 sources:
   - title: "HTML Standard — Cross-Origin-Opener-Policy"
