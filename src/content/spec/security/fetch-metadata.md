@@ -2,7 +2,7 @@
 title: "Fetch Metadata request headers"
 slug: fetch-metadata
 category: security
-summary: "Browsers attach Sec-Fetch-Site, Sec-Fetch-Mode and Sec-Fetch-Dest to every request, describing where it came from and what it is for. A server that reads them can reject cross-site requests it never intended to serve, before any handler runs."
+summary: "Read Sec-Fetch-Site, Sec-Fetch-Mode and Sec-Fetch-Dest to reject unwanted cross-site browser requests before a handler runs. Keep ordinary inbound links working and retain other CSRF defences."
 status: recommended
 order: 63
 appliesTo: [all]
@@ -14,7 +14,7 @@ relatedSlugs:
     x-content-type-options,
     content-security-policy,
   ]
-updated: "2026-09-04T00:00:00.000Z"
+updated: "2026-09-10T00:00:00.000Z"
 sources:
   - title: "Fetch Metadata Request Headers"
     url: "https://www.w3.org/TR/fetch-metadata/"
@@ -25,11 +25,14 @@ sources:
   - title: "MDN — Fetch metadata"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Fetch_metadata"
     publisher: "MDN"
+  - title: "Protect your resources from web attacks with Fetch Metadata"
+    url: "https://web.dev/articles/fetch-metadata"
+    publisher: "Google"
 ---
 
 ## What it is
 
-Fetch Metadata is a set of request headers the browser attaches to every outgoing request, describing the context the request was made in. The server never has to ask for them and a page cannot forge them — the `Sec-` prefix makes them [forbidden request headers](https://fetch.spec.whatwg.org/#forbidden-request-header), so script cannot set or change them.
+Fetch Metadata is a set of headers browsers attach to requests to potentially trustworthy URLs, such as HTTPS endpoints, describing the request's context. The server does not need to opt in. Page JavaScript cannot set or change them because the `Sec-` prefix makes them [forbidden request headers](https://fetch.spec.whatwg.org/#forbidden-request-header). Non-browser clients can supply arbitrary values, so these headers do not authenticate a caller.
 
 Three of them carry the useful signal:
 
@@ -46,7 +49,7 @@ Sec-Fetch-Mode: no-cors
 Sec-Fetch-Dest: image
 ```
 
-That request came from someone else's page, as an `<img>` tag, pointed at a state-changing endpoint. No legitimate use of your site produces it.
+In a browser, that request came from someone else's page as an `<img>` tag. A deletion endpoint should reject it. It must also reject state changes through `GET`, independently of Fetch Metadata.
 
 **These are request headers you read, not response headers you set.** That is the point most people get backwards on first contact. Every other entry in this category — [CSP](/spec/security/content-security-policy/), [`frame-ancestors`](/spec/security/frame-ancestors/), [`X-Content-Type-Options`](/spec/security/x-content-type-options/) — is something you send and the browser enforces. Fetch Metadata inverts that: the browser sends, and **nothing happens unless your server acts on it**. Adding it to a headers config file does nothing at all.
 
@@ -56,32 +59,33 @@ Cross-site attacks work by getting the visitor's own browser to make a request t
 
 Fetch Metadata makes them distinguishable. A password change submitted by your own form arrives as `Sec-Fetch-Site: same-origin`; the same request smuggled in from `evil.example` arrives as `cross-site`. One line of server-side logic separates them, and it separates them for every endpoint at once — including the endpoint someone adds next month and forgets to protect.
 
-That "every endpoint at once" property is what makes it worth the effort. Per-endpoint defences fail by omission: a [CSRF token](/spec/security/cookie-attributes/) protects the forms that have one. A resource isolation policy applied in middleware protects everything behind it by default, so a new route is safe before anyone reviews it.
+Applying a resource isolation policy in middleware gives new routes a common baseline. It does not establish that a route is safe: authentication, authorisation, safe HTTP methods and [CSRF protection](/spec/security/cookie-attributes/) still need review.
 
 Support is effectively universal for the three headers that matter — Chrome and Edge since 2020, Firefox since 90, Safari since 16.4 — which is why OWASP now names Fetch Metadata as a primary CSRF defence rather than an experimental extra.
 
-**This site does not ship a resource isolation policy.** It is static and cookieless: there is no session to ride, no state-changing endpoint, and the one endpoint that does accept `POST` — `/reports`, for [browser policy reports](/spec/security/reporting-endpoints/) — is *supposed* to receive requests the user never initiated. There is nothing here for the policy to protect.
+**This site does not apply a resource isolation policy to its public spec pages.** They serve public, cookieless content; the [browser policy report collector](/spec/security/reporting-endpoints/) deliberately accepts reports sent by browsers. Other endpoints still need their own access controls.
 
 ## How to implement
 
 Apply the check in one place — middleware, a reverse proxy, an edge function — so it covers every route rather than the routes someone remembered.
 
-Reject the request when **all** of the following hold:
+Use an ordered policy, following the [resource isolation example](https://web.dev/articles/fetch-metadata):
 
-1. `Sec-Fetch-Site` is present (absent means an older client or a non-browser agent — fail open, or you break `curl`, monitoring, and server-to-server calls).
-2. `Sec-Fetch-Site` is `cross-site`.
-3. `Sec-Fetch-Mode` is not `navigate`, **or** the method is not `GET` — a plain cross-site link to one of your pages is normal traffic and must keep working.
-4. `Sec-Fetch-Dest` is not `object` or `embed` — those two are how a cross-site navigation gets weaponised, so block them even when the mode is `navigate`.
+1. Identify endpoints that deliberately accept cross-site requests, such as CORS APIs, public embeds, OAuth callbacks and report collectors. Give each exemption its own appropriate validation.
+2. If `Sec-Fetch-Site` is absent, fall back to your existing protections, such as CSRF tokens and Origin checks. Absence must not bypass those checks or authentication.
+3. Allow `same-origin` and `none` through this policy. Allow `same-site` only if you trust every relevant subdomain; otherwise treat it like `cross-site`.
+4. For cross-site requests, allow a navigation only when **all three** conditions hold: the method is `GET`, `Sec-Fetch-Mode` is `navigate`, and `Sec-Fetch-Dest` is neither `object` nor `embed`.
+5. Reject the remaining non-exempt cross-site requests, normally with `403`.
 
-Everything else — `same-origin`, `same-site`, and `none` — is allowed.
+This permits an ordinary inbound document link while rejecting a cross-site `GET` navigation into an `object` or `embed`. Keep [`frame-ancestors`](/spec/security/frame-ancestors/) for controlling iframe embedding; this policy does not replace it.
 
-Then carve out the endpoints that are *meant* to be reached cross-site, and only those: CORS APIs, public embeds, OAuth callbacks, webhook receivers, report collectors, and anything you serve to other people's pages on purpose. These exemptions are the part worth reviewing, because each one is a hole you have deliberately left.
+When the policy changes a cacheable response, include the request fields it uses in `Vary`, as the [W3C deployment guidance](https://www.w3.org/TR/fetch-metadata/#vary) explains. For the policy above, append `Sec-Fetch-Site, Sec-Fetch-Mode, Sec-Fetch-Dest` to any existing `Vary` fields on allowed and denied responses. Otherwise a cache can reuse an allowed response for a request the policy would reject, or serve a cached denial to a legitimate visitor.
 
 Roll it out in report-only first. Log what the policy *would* have blocked for a week and read the list before enforcing; a legitimate integration you had forgotten about is far more likely to show up than an attack.
 
 ## Common mistakes
 
-- **Rejecting requests that have no `Sec-Fetch-Site` header.** Non-browser clients send none. Fail open on absence and let your other defences handle those.
+- **Treating missing headers as proof of safety.** Use the endpoint's existing CSRF and authentication checks when metadata is absent; many non-browser clients omit it.
 - **Blocking `cross-site` navigations outright.** Every inbound link from another site is `Sec-Fetch-Site: cross-site` with `Sec-Fetch-Mode: navigate`. Block those and your site becomes unreachable from search results.
 - **Treating `same-site` as safe when it is not.** `same-site` includes every subdomain of your registrable domain. If you host untrusted content on one — user pages, a legacy app, a sandbox — it clears the check. Compare against `same-origin` for anything that matters.
 - **Requiring `Sec-Fetch-User`.** Safari does not send it. A rule that demands it locks out Safari users entirely.
@@ -92,13 +96,15 @@ Roll it out in report-only first. Log what the policy *would* have blocked for a
 
 Send a request that mimics the attack and confirm it is refused:
 
-```
-curl -sI https://example.com/account/settings \
+```sh
+curl -s -o /dev/null -w '%{http_code}\n' https://example.com/account/settings \
   -H 'Sec-Fetch-Site: cross-site' \
   -H 'Sec-Fetch-Mode: no-cors' \
   -H 'Sec-Fetch-Dest: image'
 ```
 
-Expect a `4xx`. Repeat with `Sec-Fetch-Site: same-origin` and expect the normal response. Then check the two cases that must keep working: a plain cross-site navigation (`Sec-Fetch-Site: cross-site`, `Sec-Fetch-Mode: navigate`, `GET`) and a request with no `Sec-Fetch-*` headers at all — both should be served.
+Expect a `403` from this policy. Repeat with `Sec-Fetch-Site: same-origin` and expect the endpoint's normal response. Test a cross-site `GET` with mode `navigate` and destination `document`: the policy should allow it. Repeat with destination `object`, then `embed`: both should be rejected. With metadata omitted, confirm that the endpoint's existing protections still run.
+
+Repeat allowed and denied requests through the cache in both orders. Verify the `Vary` fields and confirm that one request does not prime the cache with a response reused for the other.
 
 In DevTools, the request headers panel shows the values the browser actually sent, which is the ground truth when a rule misfires.
