@@ -1,8 +1,8 @@
 ---
 title: "Sanitizer API (setHTML)"
-date: "2026-09-10"
-reason: too-early
-revisit: "Safari ships `setHTML()`, taking the Sanitizer API to Baseline newly available. At that point the question stops being support and becomes the harder one: whether a sanitiser choice is auditable from outside the site at all, or whether `require-trusted-types-for` is the only externally visible half of this story."
+date: "2026-09-11"
+reason: too-narrow
+revisit: "A broader spec page on preventing HTML injection, with verification based on safe handling of untrusted content rather than use of a particular sanitiser. The Sanitizer API could be an implementation example there. Safari support alone would not change the scope decision."
 sources:
   - title: "HTML Standard — Element.setHTML() and the Sanitizer API"
     url: "https://html.spec.whatwg.org/multipage/dynamic-markup-insertion.html#dom-element-sethtml"
@@ -12,8 +12,8 @@ sources:
     publisher: "MDN"
 ---
 
-The Sanitizer API gives the platform a built-in HTML sanitiser. `element.setHTML(string)` parses untrusted markup and strips anything that could execute — the job sites have handed to DOMPurify for a decade — with `SanitizerConfig` for sites that need to widen or narrow the default allowlist. It landed in the HTML Standard rather than a separate specification, and is still being refined there: a change in August 2026 added a `javascriptURLs` option, and Chrome only removed `<base>` from configuration allowlists in version 153.
+The Sanitizer API gives browsers a built-in way to handle untrusted HTML. `element.setHTML(string)` parses and sanitises markup before inserting it into the DOM, removing script elements, event-handler attributes and other unsafe HTML even when a custom configuration allows them. It is part of the HTML Standard and already ships in Chrome 146 and Firefox 148. Safari has not shipped it, so sites using it need feature detection and a suitable fallback for unsupported browsers. That compatibility limit does not make the API too early to discuss.
 
-It is not Baseline. Chrome shipped it in 146 (March 2026) and Firefox in 148 (February 2026), but Safari has not shipped it at all, on desktop or on iOS. A page recommending `setHTML()` today would be recommending a method that silently does not exist for a large share of visitors, and the fallback is the library the API is meant to replace — so the practical advice would be "keep DOMPurify", which is what sites already do. This site is its own example: it still vendors DOMPurify.
+Preventing untrusted content from executing as script is a website outcome worth specifying. A standalone checklist item requiring `setHTML()` would prescribe one way to achieve it. Sites can handle untrusted HTML safely through other sanitisation implementations, or avoid parsing untrusted content as HTML when only text is needed. The relevant assessment is whether the site's handling of that content prevents injection; finding or failing to find a particular API call does not answer that question.
 
-The reason this is filed as `too-early` rather than `out-of-scope` is worth stating, because the [CSS subgrid](/considered/#css-subgrid) entry looks superficially similar and is not. Subgrid is a way of building a site that no visitor can perceive. XSS is different: whether untrusted markup gets sanitised is a user-facing outcome, not a developer convenience. What is genuinely unclear is whether it is an *auditable* one — you cannot tell from outside a site which sanitiser it used, which is why [Trusted Types](/spec/security/trusted-types/) earns a page and this may not. That question is worth answering when support makes it live, not now.
+The API is therefore recorded as `too-narrow` for its own spec page. A broader page on preventing HTML injection could explain when sanitisation is needed, how to verify the outcome, and where this API helps. It should also distinguish sanitisation from [Trusted Types](/spec/security/trusted-types/), which enforces typed values at DOM injection sinks but depends on the policies that produce those values. Neither a policy header nor use of one safe method proves that every injection path is protected. Wider browser support would simplify implementation choices without resolving that scope question.
