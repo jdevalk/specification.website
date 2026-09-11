@@ -51,7 +51,7 @@ const PROTOCOL_VERSION = '2026-07-28';
 // Advertising a legacy version through server/discover would invite a client
 // to send it as per-request metadata, which is not a thing that revision
 // defines. Legacy versions stay reachable through `initialize` below.
-const MODERN_PROTOCOL_VERSIONS = [PROTOCOL_VERSION];
+export const MODERN_PROTOCOL_VERSIONS = [PROTOCOL_VERSION];
 
 // Handshake-based revisions this server still answers via `initialize`. The
 // feature surface (tool annotations, structured output / outputSchema) is
@@ -188,6 +188,20 @@ function err(
 ): RpcResponse {
   return { jsonrpc: '2.0', id: id ?? null, error: { code, message, data } };
 }
+
+// Methods handleRpc answers that 2026-07-28 removed. Neither appears in that
+// revision's `ClientRequest` union, and its schema.json defines no
+// `PingRequest` or `SetLevelRequest` at all; `logging/setLevel` gave way to the
+// io.modelcontextprotocol/logLevel `_meta` key (SEP-2577). Both reply with a
+// bare `{}`, which the modern era cannot serve either way: `Result.required` is
+// `["resultType"]` there and `EmptyResult` is a `$ref` to `Result`, so an
+// unstamped `{}` is schema-invalid and a stamped one reports success for a
+// method the revision does not define. The modern era answers -32601; the
+// legacy era answers both exactly as before.
+//
+// `initialize` is not here — it selects the handshake era for its own message
+// (basic/versioning), and is answered in that shape.
+export const LEGACY_ONLY_METHODS = ['ping', 'logging/setLevel'];
 
 function handleRpc(req: RpcRequest): RpcResponse | null {
   const { id, method, params = {} } = req;
@@ -587,7 +601,11 @@ async function handleMcp(request: Request, env: Env): Promise<Response> {
   // per-request version key is served under 2026-07-28 and validated
   // accordingly; anything else falls through to the legacy path untouched,
   // so existing `initialize`-based clients keep working exactly as before.
+  // The gate below is a SUPPORTED version, not the mere presence of the key:
+  // validateModernRequest() returns early for a message with no usable `id`, so
+  // an id-less request is never validated at all — only its version is checked.
   const bodyVersion = modernVersionOf(req);
+  const isModern = bodyVersion !== null && MODERN_PROTOCOL_VERSIONS.includes(bodyVersion);
   if (bodyVersion !== null) {
     const rejection = validateModernRequest(request, req, bodyVersion);
     if (rejection) {
@@ -596,7 +614,10 @@ async function handleMcp(request: Request, env: Env): Promise<Response> {
     }
   }
 
-  const response = handleRpc(req);
+  const response =
+    isModern && LEGACY_ONLY_METHODS.includes(req.method)
+      ? err(req.id, -32601, `Method not found: ${req.method}`)
+      : handleRpc(req);
   logMcpCall(env, request, req, response, 'remote');
   if (response === null) {
     // Streamable HTTP requires accepted notifications to return 202 with no body.
@@ -604,8 +625,7 @@ async function handleMcp(request: Request, env: Env): Promise<Response> {
   }
   // Modern era distinguishes "no such method" from a legacy 404 by pairing
   // HTTP 404 with a JSON-RPC -32601 body.
-  const status =
-    bodyVersion !== null && 'error' in response && response.error.code === -32601 ? 404 : 200;
+  const status = isModern && 'error' in response && response.error.code === -32601 ? 404 : 200;
 
   // A legacy handshake gets our support window on the wire. Scoped to the
   // `initialize` response rather than every response from /mcp: the endpoint

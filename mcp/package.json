@@ -7,6 +7,8 @@
   "license": "MIT",
   "scripts": {
     "build:data": "node scripts/build-data.mjs",
+    "pretest": "npm run build:data",
+    "test": "node --experimental-strip-types --import ./ts-resolve-hook.mjs scripts/test-protocol.mjs",
     "predev": "npm run build:data",
     "dev": "wrangler dev --port 31338",
     "predeploy": "npm run build:data",

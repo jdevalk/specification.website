@@ -48,6 +48,29 @@ curl -sX POST http://localhost:31338/mcp \
   | jq
 ```
 
+## Tests
+
+```bash
+cd mcp
+npm test          # scripts/test-protocol.mjs
+npm run typecheck
+```
+
+`scripts/test-protocol.mjs` drives the Worker's real fetch handler in-process
+and asserts the two-era wire contract: the members revision 2026-07-28 requires
+on every result, the cache hints only where that revision defines them, the
+methods it removed, the transport rules, and that the handshake era keeps
+answering. Same idiom as `scripts/test-websub.mjs` at the repo root — plain
+node + `node:assert`, no framework, no dependency, no network.
+
+Needs **Node >= 22.15**, above the root's declared `>= 22.12`: the sources are
+TypeScript and `ts-resolve-hook.mjs` uses `node:module`'s `registerHooks`, added
+in 22.15. Below that the run fails at link time naming the missing export.
+
+`pretest` runs `build:data`, so a fresh clone needs nothing else. `typecheck`
+has no such hook — run `npm run build:data` first, or `tsc` cannot resolve the
+generated `src/data.json`.
+
 ## Deploy
 
 First time:

@@ -34,6 +34,9 @@ jobs:
       - name: Generate MCP data and type-check
         run: npm run build:data && npm run typecheck
 
+      - name: Test MCP protocol
+        run: npm test
+
   build:
     runs-on: ubuntu-latest
     steps:
