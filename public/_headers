@@ -149,11 +149,6 @@
   Content-Type: application/xml; charset=utf-8
   Cache-Control: public, max-age=3600, stale-if-error=86400
 
-# Sitemap XSL stylesheet — styles the XML when viewed in a browser
-/sitemap.xsl
-  Content-Type: application/xslt+xml; charset=utf-8
-  Cache-Control: public, max-age=3600
-
 # RFC 9727 — Publishing Organisation API Information
 /.well-known/api-catalog
   Content-Type: application/linkset+json; charset=utf-8

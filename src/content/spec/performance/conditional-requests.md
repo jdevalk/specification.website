@@ -6,7 +6,7 @@ summary: "Send a validator — ETag or Last-Modified — on every cacheable resp
 status: recommended
 order: 52
 appliesTo: [all]
-relatedSlugs: [cache-control, compression, markdown-source-endpoints, stable-urls]
+relatedSlugs: [cache-control, vary, compression, markdown-source-endpoints, stable-urls]
 updated: "2026-06-09T11:00:00.000Z"
 sources:
   - title: "RFC 9110 §13 — Conditional Requests"
