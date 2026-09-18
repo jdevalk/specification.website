@@ -11,11 +11,10 @@ import { site, categories } from "~/lib/site";
         <p class="text-sm font-semibold text-ink-900">{site.name}</p>
         <p class="mt-2 max-w-xs text-sm text-ink-600">{site.description}</p>
         <p class="mt-4 text-xs text-ink-500">
-          Built in the open. <a
-            class="underline"
-            href={site.repo}
-            rel="external">Contribute on GitHub →</a
-          >
+          Built in the open.{" "}
+          <a class="underline" href={site.repo} rel="external">
+            Contribute on GitHub →
+          </a>
         </p>
       </div>
       <div>
@@ -23,18 +22,16 @@ import { site, categories } from "~/lib/site";
           Topics
         </p>
         <ul class="mt-3 space-y-1.5 text-sm">
-          {
-            categories.slice(0, 5).map((c) => (
-              <li>
-                <a
-                  class="text-ink-700 hover:text-accent-700"
-                  href={`/spec/${c.slug}/`}
-                >
-                  {c.title}
-                </a>
-              </li>
-            ))
-          }
+          {categories.slice(0, 5).map((c) => (
+            <li>
+              <a
+                class="text-ink-700 hover:text-accent-700"
+                href={`/spec/${c.slug}/`}
+              >
+                {c.title}
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
       <div>
@@ -42,18 +39,16 @@ import { site, categories } from "~/lib/site";
           More
         </p>
         <ul class="mt-3 space-y-1.5 text-sm">
-          {
-            categories.slice(5).map((c) => (
-              <li>
-                <a
-                  class="text-ink-700 hover:text-accent-700"
-                  href={`/spec/${c.slug}/`}
-                >
-                  {c.title}
-                </a>
-              </li>
-            ))
-          }
+          {categories.slice(5).map((c) => (
+            <li>
+              <a
+                class="text-ink-700 hover:text-accent-700"
+                href={`/spec/${c.slug}/`}
+              >
+                {c.title}
+              </a>
+            </li>
+          ))}
         </ul>
       </div>
       <div>
@@ -62,85 +57,90 @@ import { site, categories } from "~/lib/site";
         </p>
         <ul class="mt-3 space-y-1.5 text-sm">
           <li>
-            <a class="text-ink-700 hover:text-accent-700" href="/about/"
-              >About</a
-            >
+            <a class="text-ink-700 hover:text-accent-700" href="/about/">
+              About
+            </a>
           </li>
           <li>
-            <a class="text-ink-700 hover:text-accent-700" href="/contribute/"
-              >Contribute</a
-            >
+            <a class="text-ink-700 hover:text-accent-700" href="/contribute/">
+              Contribute
+            </a>
           </li>
           <li>
-            <a class="text-ink-700 hover:text-accent-700" href="/checklist/"
-              >Checklist</a
-            >
+            <a class="text-ink-700 hover:text-accent-700" href="/checklist/">
+              Checklist
+            </a>
           </li>
           <li>
-            <a class="text-ink-700 hover:text-accent-700" href="/changelog/"
-              >Changelog</a
-            >
+            <a class="text-ink-700 hover:text-accent-700" href="/changelog/">
+              Changelog
+            </a>
           </li>
           <li>
-            <a class="text-ink-700 hover:text-accent-700" href="/considered/"
-              >Considered</a
-            >
+            <a class="text-ink-700 hover:text-accent-700" href="/considered/">
+              Considered
+            </a>
           </li>
           <li>
-            <a class="text-ink-700 hover:text-accent-700" href="/privacy/"
-              >Privacy</a
-            >
+            <a class="text-ink-700 hover:text-accent-700" href="/privacy/">
+              Privacy
+            </a>
           </li>
           <li>
-            <a class="text-ink-700 hover:text-accent-700" href="/llms.txt"
-              >llms.txt</a
-            >
+            <a class="text-ink-700 hover:text-accent-700" href="/llms.txt">
+              llms.txt
+            </a>
           </li>
           <li>
-            <a class="text-ink-700 hover:text-accent-700" href="/mcp/"
-              >MCP server</a
-            >
+            <a class="text-ink-700 hover:text-accent-700" href="/mcp/">
+              MCP server
+            </a>
           </li>
           <li>
             <a
               class="text-ink-700 hover:text-accent-700"
-              href="/.well-known/security.txt">security.txt</a
+              href="/.well-known/security.txt"
             >
+              security.txt
+            </a>
           </li>
           <li>
-            <a class="text-ink-700 hover:text-accent-700" href="/rss.xml">RSS</a
-            >
+            <a class="text-ink-700 hover:text-accent-700" href="/rss.xml">
+              RSS
+            </a>
           </li>
         </ul>
       </div>
     </div>
-    <div
-      class="mt-10 flex flex-col gap-3 border-t border-ink-200 pt-6 text-xs text-ink-500 md:flex-row md:items-center md:justify-between"
-    >
+    <div class="mt-10 flex flex-col gap-3 border-t border-ink-200 pt-6 text-xs text-ink-500 md:flex-row md:items-center md:justify-between">
       <p>
         © {new Date().getFullYear()}
-        <a class="underline" href={site.author.url}>{site.author.name}</a> and contributors.
-        Content licensed under
+        <a class="underline" href={site.author.url}>
+          {site.author.name}
+        </a>{" "}
+        and contributors. Content licensed under
         <a
           class="underline"
           href="https://creativecommons.org/licenses/by/4.0/"
           rel="external"
         >
-          CC BY 4.0</a
-        >; code under
+          CC BY 4.0
+        </a>
+        ; code under
         <a
           class="underline"
           href={`${site.repo}/blob/main/LICENSE`}
           rel="external"
         >
-          MIT</a
-        >.
+          MIT
+        </a>
+        .
       </p>
       <p>
-        This site is itself a worked example of the spec. <a
-          class="underline"
-          href="/about/#dogfooding">See how →</a
-        >
+        This site is itself a worked example of the spec.{" "}
+        <a class="underline" href="/about/#dogfooding">
+          See how →
+        </a>
       </p>
     </div>
   </div>

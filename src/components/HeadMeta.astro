@@ -92,26 +92,22 @@ const ogImage = new URL(
   title={`${site.name} — RSS`}
   href="/rss.xml"
 />
-{
-  markdownUrl && (
-    <link
-      rel="alternate"
-      type="text/markdown"
-      title={`${title} — Markdown source`}
-      href={markdownUrl}
-    />
-  )
-}
-{
-  jsonldUrl && (
-    <link
-      rel="alternate"
-      type="application/ld+json"
-      title={`${title} — JSON-LD graph`}
-      href={jsonldUrl}
-    />
-  )
-}
+{markdownUrl && (
+  <link
+    rel="alternate"
+    type="text/markdown"
+    title={`${title} — Markdown source`}
+    href={markdownUrl}
+  />
+)}
+{jsonldUrl && (
+  <link
+    rel="alternate"
+    type="application/ld+json"
+    title={`${title} — JSON-LD graph`}
+    href={jsonldUrl}
+  />
+)}
 <link
   rel="ai-catalog"
   type="application/ai-catalog+json"
@@ -127,8 +123,6 @@ const ogImage = new URL(
 />
 <link rel="author" href="/humans.txt" />
 
-{
-  jsonLd && (
-    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-  )
-}
+{jsonLd && (
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
+)}

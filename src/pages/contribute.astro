@@ -16,8 +16,11 @@ import { site } from "~/lib/site";
     <article class="prose-spec mt-6">
       <h1 class="text-4xl font-bold tracking-tight text-ink-900">Contribute</h1>
       <p>
-        The spec is <a href={site.repo} rel="external">open on GitHub</a>.
-        Issues, pull requests, and even straight-up disagreements are welcome.
+        The spec is{" "}
+        <a href={site.repo} rel="external">
+          open on GitHub
+        </a>
+        . Issues, pull requests, and even straight-up disagreements are welcome.
         Three rules.
       </p>
 
@@ -30,41 +33,47 @@ import { site } from "~/lib/site";
 
       <h2>2. Stay platform-agnostic</h2>
       <p>
-        The spec describes outcomes, not implementations. “Set <code
-          >Content-Security-Policy</code
-        >” is in scope. “Add this to your <code>next.config.mjs</code>” is not —
-        link out to platform docs instead.
+        The spec describes outcomes, not implementations. “Set{" "}
+        <code>Content-Security-Policy</code>” is in scope. “Add this to your{" "}
+        <code>next.config.mjs</code>” is not — link out to platform docs
+        instead.
       </p>
 
       <h2>3. Be honest about status</h2>
       <p>
-        <strong>Required</strong> means the web platform breaks without it. <strong
-          >Recommended</strong
-        > means a modern site should do it. <strong>Optional</strong> means it depends.
-        <strong>Avoid</strong> means it is outdated or harmful. If a status is wrong,
-        fix it — with reasoning in the PR.
+        <strong>Required</strong> means the web platform breaks without it.{" "}
+        <strong>Recommended</strong> means a modern site should do it.{" "}
+        <strong>Optional</strong> means it depends.
+        <strong>Avoid</strong> means it is outdated or harmful. If a status is
+        wrong, fix it — with reasoning in the PR.
       </p>
 
       <h2>How to propose a change</h2>
       <ol>
         <li>
-          Open an <a href={`${site.repo}/issues`} rel="external">issue</a> describing
-          the topic, gap, or fix.
+          Open an{" "}
+          <a href={`${site.repo}/issues`} rel="external">
+            issue
+          </a>{" "}
+          describing the topic, gap, or fix.
         </li>
         <li>
-          For a new spec page, copy an existing file in <code
-            >src/content/spec/&lt;category&gt;/</code
-          > and adjust front-matter.
+          For a new spec page, copy an existing file in{" "}
+          <code>src/content/spec/&lt;category&gt;/</code> and adjust
+          front-matter.
         </li>
         <li>
-          Run <code>npm run dev</code> locally on port 31337 and check the page renders.
+          Run <code>npm run dev</code> locally on port 31337 and check the page
+          renders.
         </li>
         <li>Open a PR. The CI will type-check, build, and lint links.</li>
       </ol>
 
       <h2>Repository</h2>
       <p>
-        <a href={site.repo} rel="external">{site.repo}</a>
+        <a href={site.repo} rel="external">
+          {site.repo}
+        </a>
       </p>
     </article>
   </div>

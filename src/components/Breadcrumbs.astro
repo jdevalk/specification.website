@@ -11,25 +11,23 @@ const { crumbs } = Astro.props;
 
 <nav aria-label="Breadcrumb" class="text-sm text-ink-500">
   <ol class="flex flex-wrap items-center gap-x-1.5 gap-y-1">
-    {
-      crumbs.map((c, i) => (
-        <li class="flex items-center gap-1.5">
-          {c.href ? (
-            <a href={c.href} class="hover:text-accent-700">
-              {c.label}
-            </a>
-          ) : (
-            <span class="text-ink-700" aria-current="page">
-              {c.label}
-            </span>
-          )}
-          {i < crumbs.length - 1 && (
-            <span aria-hidden="true" class="text-ink-300">
-              /
-            </span>
-          )}
-        </li>
-      ))
-    }
+    {crumbs.map((c, i) => (
+      <li class="flex items-center gap-1.5">
+        {c.href ? (
+          <a href={c.href} class="hover:text-accent-700">
+            {c.label}
+          </a>
+        ) : (
+          <span class="text-ink-700" aria-current="page">
+            {c.label}
+          </span>
+        )}
+        {i < crumbs.length - 1 && (
+          <span aria-hidden="true" class="text-ink-300">
+            /
+          </span>
+        )}
+      </li>
+    ))}
   </ol>
 </nav>

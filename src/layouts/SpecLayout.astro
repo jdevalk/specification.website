@@ -112,90 +112,78 @@ const breadcrumbJsonLd = {
 
     <header class="mt-5 border-b border-ink-200 pb-6">
       <div class="flex flex-wrap items-center gap-2 text-xs">
-        {
-          cat && (
-            <a
-              href={`/spec/${category}/`}
-              class="rounded-full bg-accent-50 px-2.5 py-0.5 font-medium text-accent-800 no-underline hover:bg-accent-100"
-            >
-              {cat.title}
-            </a>
-          )
-        }
+        {cat && (
+          <a
+            href={`/spec/${category}/`}
+            class="rounded-full bg-accent-50 px-2.5 py-0.5 font-medium text-accent-800 no-underline hover:bg-accent-100"
+          >
+            {cat.title}
+          </a>
+        )}
         <StatusBadge status={status} />
-        {
-          updated && (
-            <span class="text-ink-500">
-              Updated <time datetime={updated}>{updated.slice(0, 10)}</time>
-            </span>
-          )
-        }
+        {updated && (
+          <span class="text-ink-500">
+            Updated <time datetime={updated}>{updated.slice(0, 10)}</time>
+          </span>
+        )}
       </div>
-      <h1
-        class="mt-3 text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl"
-      >
+      <h1 class="mt-3 text-3xl font-bold tracking-tight text-ink-900 sm:text-4xl">
         {title}
       </h1>
       <p class="mt-3 max-w-3xl text-lg leading-relaxed text-ink-600">
         {summary}
       </p>
-      {
-        appliesTo.length > 0 && appliesTo[0] !== "all" && (
-          <p class="mt-3 text-sm text-ink-500">
-            <span class="font-medium text-ink-700">Applies to:</span>{" "}
-            {appliesTo.join(", ")}
-          </p>
-        )
-      }
+      {appliesTo.length > 0 && appliesTo[0] !== "all" && (
+        <p class="mt-3 text-sm text-ink-500">
+          <span class="font-medium text-ink-700">Applies to:</span>{" "}
+          {appliesTo.join(", ")}
+        </p>
+      )}
     </header>
 
     <div class="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_240px]">
       <div class="prose-spec min-w-0">
         <slot />
 
-        {
-          related.length > 0 && (
-            <section class="not-prose mt-12 rounded-lg border border-ink-200 bg-ink-50 p-5">
-              <h2 class="mb-3 text-base font-semibold text-ink-900">
-                Related topics
-              </h2>
-              <ul class="space-y-1.5 text-sm">
-                {related.map((r) => (
-                  <li>
-                    <a
-                      class="text-accent-700 hover:text-accent-800"
-                      href={r.href}
-                    >
-                      {r.title}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+        {related.length > 0 && (
+          <section class="not-prose mt-12 rounded-lg border border-ink-200 bg-ink-50 p-5">
+            <h2 class="mb-3 text-base font-semibold text-ink-900">
+              Related topics
+            </h2>
+            <ul class="space-y-1.5 text-sm">
+              {related.map((r) => (
+                <li>
+                  <a
+                    class="text-accent-700 hover:text-accent-800"
+                    href={r.href}
+                  >
+                    {r.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
 
-        {
-          sources.length > 0 && (
-            <section class="mt-10 border-t border-ink-200 pt-6">
-              <h2 class="text-base font-semibold text-ink-900">
-                Sources &amp; further reading
-              </h2>
-              <ul class="mt-3 space-y-2 text-sm">
-                {sources.map((s) => (
-                  <li>
-                    <a href={s.url} rel="external">
-                      {s.title}
-                    </a>
-                    {s.publisher && (
-                      <span class="text-ink-500"> — {s.publisher}</span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            </section>
-          )
-        }
+        {sources.length > 0 && (
+          <section class="mt-10 border-t border-ink-200 pt-6">
+            <h2 class="text-base font-semibold text-ink-900">
+              Sources &amp; further reading
+            </h2>
+            <ul class="mt-3 space-y-2 text-sm">
+              {sources.map((s) => (
+                <li>
+                  <a href={s.url} rel="external">
+                    {s.title}
+                  </a>
+                  {s.publisher && (
+                    <span class="text-ink-500"> — {s.publisher}</span>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
       </div>
 
       <aside class="lg:sticky lg:top-28 lg:self-start">
@@ -205,14 +193,10 @@ const breadcrumbJsonLd = {
           </p>
           <div id="toc" class="mt-2 space-y-1 text-sm leading-snug"></div>
         </div>
-        <div
-          class="mt-4 rounded-lg border border-ink-200 bg-ink-50 p-4 text-xs text-ink-600"
-        >
-          {
-            /* Markdown source for agents is advertised in <head> (rel=alternate
+        <div class="mt-4 rounded-lg border border-ink-200 bg-ink-50 p-4 text-xs text-ink-600">
+          {/* Markdown source for agents is advertised in <head> (rel=alternate
               type=text/markdown) and via Accept: text/markdown content negotiation,
-              so it does not need a human-facing callout here. */
-          }
+              so it does not need a human-facing callout here. */}
           <p class="font-semibold text-ink-800">Spot a problem?</p>
           <a
             class="mt-1 inline-block text-accent-700 underline"
@@ -232,5 +216,6 @@ const breadcrumbJsonLd = {
     defer
     is:inline
     integrity={sri("/spec-toc.js")}
-    crossorigin="anonymous"></script>
+    crossorigin="anonymous"
+  ></script>
 </BaseLayout>

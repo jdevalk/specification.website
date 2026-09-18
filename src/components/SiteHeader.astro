@@ -4,12 +4,8 @@ import ThemeToggle from "./ThemeToggle.astro";
 const { pathname } = Astro.url;
 ---
 
-<header
-  class="sticky top-0 z-40 border-b border-ink-200 bg-ink-50/95 backdrop-blur supports-[backdrop-filter]:bg-ink-50/80"
->
-  <div
-    class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4"
-  >
+<header class="sticky top-0 z-40 border-b border-ink-200 bg-ink-50/95 backdrop-blur supports-[backdrop-filter]:bg-ink-50/80">
+  <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4">
     <a
       href="/"
       class="flex items-center gap-3 font-semibold text-ink-900 no-underline"
@@ -27,13 +23,14 @@ const { pathname } = Astro.url;
           stroke="#ffffff"
           stroke-width="6"
           stroke-linecap="round"
-          stroke-linejoin="round"></path>
+          stroke-linejoin="round"
+        ></path>
       </svg>
       <span class="leading-tight">
         <span class="block text-base">{site.shortName}</span>
-        <span class="hidden text-xs font-normal text-ink-500 sm:block"
-          >What a good website does.</span
-        >
+        <span class="hidden text-xs font-normal text-ink-500 sm:block">
+          What a good website does.
+        </span>
       </span>
     </a>
 
@@ -41,25 +38,29 @@ const { pathname } = Astro.url;
     <nav aria-label="Primary" class="hidden md:block">
       <ul class="flex items-center gap-5 text-sm">
         <li>
-          <a class="text-ink-700 hover:text-accent-700" href="/spec/"
-            >All topics</a
-          >
+          <a class="text-ink-700 hover:text-accent-700" href="/spec/">
+            All topics
+          </a>
         </li>
         <li>
-          <a class="text-ink-700 hover:text-accent-700" href="/checklist/"
-            >Checklist</a
-          >
+          <a class="text-ink-700 hover:text-accent-700" href="/checklist/">
+            Checklist
+          </a>
         </li>
         <li>
-          <a class="text-ink-700 hover:text-accent-700" href="/mcp/">MCP</a>
+          <a class="text-ink-700 hover:text-accent-700" href="/mcp/">
+            MCP
+          </a>
         </li>
         <li>
-          <a class="text-ink-700 hover:text-accent-700" href="/about/">About</a>
+          <a class="text-ink-700 hover:text-accent-700" href="/about/">
+            About
+          </a>
         </li>
         <li>
-          <a class="text-ink-700 hover:text-accent-700" href="/contribute/"
-            >Contribute</a
-          >
+          <a class="text-ink-700 hover:text-accent-700" href="/contribute/">
+            Contribute
+          </a>
         </li>
         <li>
           <button
@@ -80,24 +81,24 @@ const { pathname } = Astro.url;
               stroke-width="2.25"
               stroke-linecap="round"
               stroke-linejoin="round"
-              ><circle cx="11" cy="11" r="7"></circle><path d="m21 21-3.5-3.5"
-              ></path></svg
             >
+              <circle cx="11" cy="11" r="7"></circle>
+              <path d="m21 21-3.5-3.5"></path>
+            </svg>
             <span>Search</span>
-            <kbd
-              class="ml-0.5 hidden font-mono text-[10px] text-ink-500 lg:inline"
-              >⌘K</kbd
-            >
+            <kbd class="ml-0.5 hidden font-mono text-[10px] text-ink-500 lg:inline">
+              ⌘K
+            </kbd>
           </button>
         </li>
-        <li class="flex items-center"><ThemeToggle /></li>
+        <li class="flex items-center">
+          <ThemeToggle />
+        </li>
       </ul>
     </nav>
 
-    {
-      /* Mobile controls (< md) — theme toggle next to the hamburger. <details>
-        gives the menu a no-JS, no-CSP fallback. */
-    }
+    {/* Mobile controls (< md) — theme toggle next to the hamburger. <details>
+        gives the menu a no-JS, no-CSP fallback. */}
     <div class="flex items-center gap-4 md:hidden">
       <ThemeToggle />
       <button
@@ -118,9 +119,10 @@ const { pathname } = Astro.url;
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          ><circle cx="11" cy="11" r="7"></circle><path d="m21 21-3.5-3.5"
-          ></path></svg
         >
+          <circle cx="11" cy="11" r="7"></circle>
+          <path d="m21 21-3.5-3.5"></path>
+        </svg>
       </button>
       <details class="mobile-menu">
         <summary
@@ -138,12 +140,11 @@ const { pathname } = Astro.url;
             stroke-linecap="round"
             stroke-linejoin="round"
             aria-hidden="true"
-            ><line x1="3" y1="6" x2="21" y2="6"></line><line
-              x1="3"
-              y1="12"
-              x2="21"
-              y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg
           >
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
           <svg
             class="mobile-menu__icon-close"
             width="20"
@@ -155,12 +156,10 @@ const { pathname } = Astro.url;
             stroke-linecap="round"
             stroke-linejoin="round"
             aria-hidden="true"
-            ><line x1="18" y1="6" x2="6" y2="18"></line><line
-              x1="6"
-              y1="6"
-              x2="18"
-              y2="18"></line></svg
           >
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
         </summary>
         <div class="mobile-menu__panel">
           <nav
@@ -171,84 +170,98 @@ const { pathname } = Astro.url;
               <li>
                 <a
                   class="block rounded-md px-2 py-2 text-ink-800 hover:bg-ink-50"
-                  href="/spec/">All topics</a
+                  href="/spec/"
                 >
+                  All topics
+                </a>
               </li>
               <li>
                 <a
                   class="block rounded-md px-2 py-2 text-ink-800 hover:bg-ink-50"
-                  href="/checklist/">Checklist</a
+                  href="/checklist/"
                 >
+                  Checklist
+                </a>
               </li>
               <li>
                 <a
                   class="block rounded-md px-2 py-2 text-ink-800 hover:bg-ink-50"
-                  href="/search/">Search</a
+                  href="/search/"
                 >
+                  Search
+                </a>
               </li>
               <li>
                 <a
                   class="block rounded-md px-2 py-2 text-ink-800 hover:bg-ink-50"
-                  href="/changelog/">Changelog</a
+                  href="/changelog/"
                 >
+                  Changelog
+                </a>
               </li>
               <li>
                 <a
                   class="block rounded-md px-2 py-2 text-ink-800 hover:bg-ink-50"
-                  href="/considered/">Considered</a
+                  href="/considered/"
                 >
+                  Considered
+                </a>
               </li>
               <li>
                 <a
                   class="block rounded-md px-2 py-2 text-ink-800 hover:bg-ink-50"
-                  href="/mcp/">MCP server</a
+                  href="/mcp/"
                 >
+                  MCP server
+                </a>
               </li>
               <li>
                 <a
                   class="block rounded-md px-2 py-2 text-ink-800 hover:bg-ink-50"
-                  href="/about/">About</a
+                  href="/about/"
                 >
+                  About
+                </a>
               </li>
               <li>
                 <a
                   class="block rounded-md px-2 py-2 text-ink-800 hover:bg-ink-50"
-                  href="/contribute/">Contribute</a
+                  href="/contribute/"
                 >
+                  Contribute
+                </a>
               </li>
               <li>
                 <a
                   class="block rounded-md px-2 py-2 text-ink-800 hover:bg-ink-50"
                   href={site.repo}
-                  rel="external">GitHub</a
+                  rel="external"
                 >
+                  GitHub
+                </a>
               </li>
             </ul>
           </nav>
           <nav aria-label="Mobile categories" class="px-4 py-3">
-            <p
-              class="mb-1.5 text-xs font-semibold tracking-wide text-ink-500 uppercase"
-            >
+            <p class="mb-1.5 text-xs font-semibold tracking-wide text-ink-500 uppercase">
               Categories
             </p>
             <ul class="grid grid-cols-2 gap-1 text-sm">
-              {
-                categories.map((c) => (
-                  <li>
-                    <a
-                      href={`/spec/${c.slug}/`}
-                      class:list={[
-                        "block rounded-md px-2 py-2",
-                        pathname.startsWith(`/spec/${c.slug}`)
-                          ? "bg-accent-50 text-accent-800 ring-1 ring-inset ring-accent-200"
-                          : "text-ink-800 hover:bg-ink-50",
-                      ]}
-                    >
-                      {c.title}
-                    </a>
-                  </li>
-                ))
-              }
+              {categories.map((c) => (
+                <li>
+                  <a
+                    href={`/spec/${c.slug}/`}
+                    class:list={[
+                      "block rounded-md px-2 py-2",
+                      pathname.startsWith(`/spec/${c.slug}`)
+                        ? "bg-accent-50 text-accent-800 ring-1 ring-inset ring-accent-200"
+                        : "text-ink-800 hover:bg-ink-50",
+                    ]}
+                  >
+                    {c.title}
+                  </a>
+                </li>
+              ))}
             </ul>
           </nav>
         </div>
@@ -262,26 +275,24 @@ const { pathname } = Astro.url;
       class="mx-auto max-w-6xl overflow-x-auto overflow-y-hidden px-4"
     >
       <ul class="-mb-px flex items-center gap-5 text-sm whitespace-nowrap">
-        {
-          categories.map((c) => {
-            const active = pathname.startsWith(`/spec/${c.slug}`);
-            return (
-              <li>
-                <a
-                  href={`/spec/${c.slug}/`}
-                  class:list={[
-                    "inline-flex items-center border-b-2 px-0.5 py-2.5 transition-colors",
-                    active
-                      ? "border-accent-600 font-medium text-accent-800"
-                      : "border-transparent text-ink-600 hover:border-ink-300 hover:text-ink-900",
-                  ]}
-                >
-                  {c.title}
-                </a>
-              </li>
-            );
-          })
-        }
+        {categories.map((c) => {
+          const active = pathname.startsWith(`/spec/${c.slug}`);
+          return (
+            <li>
+              <a
+                href={`/spec/${c.slug}/`}
+                class:list={[
+                  "inline-flex items-center border-b-2 px-0.5 py-2.5 transition-colors",
+                  active
+                    ? "border-accent-600 font-medium text-accent-800"
+                    : "border-transparent text-ink-600 hover:border-ink-300 hover:text-ink-900",
+                ]}
+              >
+                {c.title}
+              </a>
+            </li>
+          );
+        })}
       </ul>
     </nav>
   </div>
