@@ -24,39 +24,44 @@ import { sri, pagefindComponentUiIntegrity } from "~/lib/integrity";
         Full-text search across every spec page. Type a topic, a header name, or
         a phrase — try
         <code class="rounded bg-ink-100 px-1.5 py-0.5 text-sm">CSP</code>,
-        <code class="rounded bg-ink-100 px-1.5 py-0.5 text-sm">aria-label</code
-        >, or <code class="rounded bg-ink-100 px-1.5 py-0.5 text-sm"
-          >cache-control</code
-        >.
+        <code class="rounded bg-ink-100 px-1.5 py-0.5 text-sm">aria-label</code>
+        , or{" "}
+        <code class="rounded bg-ink-100 px-1.5 py-0.5 text-sm">
+          cache-control
+        </code>
+        .
       </p>
     </header>
 
-    {
-      /* Inline Pagefind Component UI search, on a dedicated `page` instance so
-        it stays independent of the global ⌘K modal (which uses `default`). */
-    }
+    {/* Inline Pagefind Component UI search, on a dedicated `page` instance so
+        it stays independent of the global ⌘K modal (which uses `default`). */}
     <div id="search" class="mt-8">
       <pagefind-config instance="page" excerpt-length="30"></pagefind-config>
-      <pagefind-input instance="page" placeholder="Search the spec…" autofocus
+      <pagefind-input
+        instance="page"
+        placeholder="Search the spec…"
+        autofocus
       ></pagefind-input>
       <pagefind-summary instance="page" class="mt-4 block"></pagefind-summary>
       <pagefind-results
         instance="page"
         max-results="10"
         max-sub-results="3"
-        class="mt-2 block"></pagefind-results>
+        class="mt-2 block"
+      ></pagefind-results>
     </div>
 
     <noscript>
-      <p
-        class="mt-6 rounded-md border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900"
-      >
-        Search requires JavaScript. With JS off, browse <a
-          class="underline"
-          href="/spec/">all topics</a
-        > or use
-        <a class="underline" href="/llms-full.txt"><code>llms-full.txt</code></a
-        > as a single searchable file.
+      <p class="mt-6 rounded-md border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+        Search requires JavaScript. With JS off, browse{" "}
+        <a class="underline" href="/spec/">
+          all topics
+        </a>{" "}
+        or use
+        <a class="underline" href="/llms-full.txt">
+          <code>llms-full.txt</code>
+        </a>{" "}
+        as a single searchable file.
       </p>
     </noscript>
 
@@ -66,12 +71,14 @@ import { sri, pagefindComponentUiIntegrity } from "~/lib/integrity";
       type="module"
       is:inline
       integrity={pagefindComponentUiIntegrity}
-      crossorigin="anonymous"></script>
+      crossorigin="anonymous"
+    ></script>
     <script
       src="/search-page.js"
       type="text/javascript"
       defer
       integrity={sri("/search-page.js")}
-      crossorigin="anonymous"></script>
+      crossorigin="anonymous"
+    ></script>
   </div>
 </BaseLayout>

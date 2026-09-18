@@ -16,9 +16,7 @@ const { href, title, summary, status } = Astro.props;
   class="group block rounded-lg border border-ink-200 bg-ink-50 p-4 transition hover:border-accent-300 hover:shadow-sm"
 >
   <div class="flex items-start justify-between gap-3">
-    <h3
-      class="text-base font-semibold text-ink-900 group-hover:text-accent-700"
-    >
+    <h3 class="text-base font-semibold text-ink-900 group-hover:text-accent-700">
       {title}
     </h3>
     <StatusBadge status={status} />

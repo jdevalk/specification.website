@@ -19,37 +19,36 @@ import { sri } from "~/lib/integrity";
       may never have been here.
     </p>
     <p class="mt-2 text-sm text-ink-500">
-      Yes, this is a custom 404 — see <a
-        class="underline"
-        href="/spec/resilience/error-pages/">Error pages</a
-      >.
+      Yes, this is a custom 404 — see{" "}
+      <a class="underline" href="/spec/resilience/error-pages/">
+        Error pages
+      </a>
+      .
     </p>
     <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
       <a
         href="/"
         class="rounded-md bg-accent-700 px-4 py-2 text-sm font-medium text-white hover:bg-accent-800"
-        >Go home</a
       >
+        Go home
+      </a>
       <a
         href="/spec/"
         class="rounded-md border border-ink-300 bg-ink-50 px-4 py-2 text-sm font-medium text-ink-800 hover:border-ink-400"
-        >Browse the spec</a
       >
+        Browse the spec
+      </a>
     </div>
   </section>
 
-  {
-    /* Report the missing path to Plausible (production only). CSP-safe: external 'self' script. */
-  }
-  {
-    import.meta.env.PROD && (
-      <script
-        src="/track-404.js"
-        type="text/javascript"
-        defer
-        integrity={sri("/track-404.js")}
-        crossorigin="anonymous"
-      />
-    )
-  }
+  {/* Report the missing path to Plausible (production only). CSP-safe: external 'self' script. */}
+  {import.meta.env.PROD && (
+    <script
+      src="/track-404.js"
+      type="text/javascript"
+      defer
+      integrity={sri("/track-404.js")}
+      crossorigin="anonymous"
+    ></script>
+  )}
 </BaseLayout>

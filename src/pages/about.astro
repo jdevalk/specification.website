@@ -16,21 +16,23 @@ import { site } from "~/lib/site";
         About this spec
       </h1>
       <p>
-        The <strong>Website Specification</strong> is an attempt to answer one question:
-        <em
-          >regardless of the stack you build on, what should a good website do?</em
-        > Not a framework. Not a guide. A spec — what is required, what is recommended,
-        and what to avoid.
+        The <strong>Website Specification</strong> is an attempt to answer one
+        question:
+        <em>
+          regardless of the stack you build on, what should a good website do?
+        </em>{" "}
+        Not a framework. Not a guide. A spec — what is required, what is
+        recommended, and what to avoid.
       </p>
 
       <h2 id="why">Why this exists</h2>
       <p>
         The web is a layer cake of standards. WHATWG defines HTML. W3C ratifies
-        WCAG. The IETF publishes the RFCs behind security headers and <code
-          >/.well-known/</code
-        > URIs. Search engines publish their own rules. Browsers add their own quirks.
-        Designers, developers, and accessibility specialists each carry a slice of
-        the picture. Almost nobody carries the whole picture.
+        WCAG. The IETF publishes the RFCs behind security headers and{" "}
+        <code>/.well-known/</code> URIs. Search engines publish their own rules.
+        Browsers add their own quirks. Designers, developers, and accessibility
+        specialists each carry a slice of the picture. Almost nobody carries the
+        whole picture.
       </p>
       <p>
         This site collects the slices into one platform-agnostic specification —
@@ -40,16 +42,16 @@ import { site } from "~/lib/site";
       <h2 id="audience">Who it is for</h2>
       <ul>
         <li>
-          <strong>Engineers</strong> auditing or building a website and wanting a
-          single reference.
+          <strong>Engineers</strong> auditing or building a website and wanting
+          a single reference.
         </li>
         <li>
-          <strong>Designers and PMs</strong> trying to scope quality without inventing
-          it from scratch.
+          <strong>Designers and PMs</strong> trying to scope quality without
+          inventing it from scratch.
         </li>
         <li>
-          <strong>Agents</strong> — yes, AI agents — that need a machine-readable
-          description of what to check.
+          <strong>Agents</strong> — yes, AI agents — that need a
+          machine-readable description of what to check.
         </li>
       </ul>
 
@@ -60,16 +62,17 @@ import { site } from "~/lib/site";
       </p>
       <ul>
         <li>
-          <strong>Required</strong> — leaving it out breaks the web platform contract
-          (e.g. <code>&lt;title&gt;</code>, <code>charset</code>, HTTPS).
+          <strong>Required</strong> — leaving it out breaks the web platform
+          contract (e.g. <code>&lt;title&gt;</code>, <code>charset</code>,
+          HTTPS).
         </li>
         <li>
-          <strong>Recommended</strong> — meeting modern expectations of users, search
-          engines, agents, and browsers.
+          <strong>Recommended</strong> — meeting modern expectations of users,
+          search engines, agents, and browsers.
         </li>
         <li>
-          <strong>Optional</strong> — useful in some contexts, not all. Pick when
-          it applies.
+          <strong>Optional</strong> — useful in some contexts, not all. Pick
+          when it applies.
         </li>
         <li>
           <strong>Avoid</strong> — outdated, harmful, or actively superseded.
@@ -79,10 +82,9 @@ import { site } from "~/lib/site";
       <h2 id="how-its-built">How it is built</h2>
       <p>
         Static site, generated with Astro, deployed to Cloudflare Pages from
-        GitHub. The content lives in plain Markdown files under <code
-          >src/content/spec/</code
-        >. Sources are part of the schema — a page without a source link should
-        not be merged.
+        GitHub. The content lives in plain Markdown files under{" "}
+        <code>src/content/spec/</code>. Sources are part of the schema — a page
+        without a source link should not be merged.
       </p>
 
       <h2 id="dogfooding">Dogfooding</h2>
@@ -93,28 +95,38 @@ import { site } from "~/lib/site";
       </p>
       <ul>
         <li>
-          Strict <a href="/spec/security/content-security-policy/"
-            >Content-Security-Policy</a
-          > served as a response header.
+          Strict{" "}
+          <a href="/spec/security/content-security-policy/">
+            Content-Security-Policy
+          </a>{" "}
+          served as a response header.
         </li>
         <li>
-          Full set of <a href="/spec/security/">security headers</a> via Cloudflare
-          Pages’ <code>_headers</code>.
+          Full set of <a href="/spec/security/">security headers</a> via
+          Cloudflare Pages’ <code>_headers</code>.
         </li>
         <li>
-          <a href="/.well-known/security.txt"
-            ><code>/.well-known/security.txt</code></a
-          > for vulnerability reports.
+          <a href="/.well-known/security.txt">
+            <code>/.well-known/security.txt</code>
+          </a>{" "}
+          for vulnerability reports.
         </li>
         <li>
-          <a href="/llms.txt"><code>llms.txt</code></a> and <a
-            href="/llms-full.txt"><code>llms-full.txt</code></a
-          > for AI agents.
+          <a href="/llms.txt">
+            <code>llms.txt</code>
+          </a>{" "}
+          and{" "}
+          <a href="/llms-full.txt">
+            <code>llms-full.txt</code>
+          </a>{" "}
+          for AI agents.
         </li>
         <li>
-          <a href="/robots.txt"><code>robots.txt</code></a>, <a
-            href="/sitemap-index.xml">sitemap index</a
-          >, and <a href="/rss.xml">RSS feed</a>.
+          <a href="/robots.txt">
+            <code>robots.txt</code>
+          </a>
+          , <a href="/sitemap-index.xml">sitemap index</a>, and{" "}
+          <a href="/rss.xml">RSS feed</a>.
         </li>
         <li>
           JSON-LD structured data on every page; Open Graph and Twitter Cards
@@ -130,39 +142,49 @@ import { site } from "~/lib/site";
       <p>The spec draws on (and credits, on every applicable page):</p>
       <ul>
         <li>
-          <a href="https://developer.mozilla.org/" rel="external"
-            >MDN Web Docs</a
-          > — the canonical platform reference.
+          <a href="https://developer.mozilla.org/" rel="external">
+            MDN Web Docs
+          </a>{" "}
+          — the canonical platform reference.
         </li>
         <li>
-          <a href="https://developer.yoast.com/" rel="external"
-            >Yoast Developer Portal</a
-          > — SEO patterns and structured data.
+          <a href="https://developer.yoast.com/" rel="external">
+            Yoast Developer Portal
+          </a>{" "}
+          — SEO patterns and structured data.
         </li>
         <li>
           <a
             href="https://equalizedigital.com/accessibility-checker/documentation/"
-            rel="external">Equalize Digital — Accessibility Checker docs</a
-          > — practical accessibility problems and fixes.
+            rel="external"
+          >
+            Equalize Digital — Accessibility Checker docs
+          </a>{" "}
+          — practical accessibility problems and fixes.
         </li>
         <li>
-          <a href="https://wpaccessibility.org/" rel="external"
-            >WP Accessibility Knowledge Base</a
-          > — community documentation on accessibility patterns and pitfalls.
+          <a href="https://wpaccessibility.org/" rel="external">
+            WP Accessibility Knowledge Base
+          </a>{" "}
+          — community documentation on accessibility patterns and pitfalls.
         </li>
         <li>
-          <a href="https://en.wikipedia.org/wiki/Well-known_URI" rel="external"
-            >Wikipedia — Well-known URI</a
-          >, and the IETF RFCs it points at.
+          <a href="https://en.wikipedia.org/wiki/Well-known_URI" rel="external">
+            Wikipedia — Well-known URI
+          </a>
+          , and the IETF RFCs it points at.
         </li>
         <li>
-          <a href="https://isitagentready.com/" rel="external"
-            >Is It Agent Ready?</a
-          > — agent-readiness checks.
+          <a href="https://isitagentready.com/" rel="external">
+            Is It Agent Ready?
+          </a>{" "}
+          — agent-readiness checks.
         </li>
         <li>
-          <a href="https://joost.blog" rel="external">joost.blog</a> — long-running
-          writing on SEO, accessibility, and open source.
+          <a href="https://joost.blog" rel="external">
+            joost.blog
+          </a>{" "}
+          — long-running writing on SEO, accessibility, and open source.
         </li>
         <li>
           WHATWG, W3C, IETF, WCAG, IANA, and the people who write the standards.
@@ -171,24 +193,32 @@ import { site } from "~/lib/site";
 
       <h2 id="licensing">Licensing</h2>
       <p>
-        Content: <a
-          href="https://creativecommons.org/licenses/by/4.0/"
-          rel="external">CC BY 4.0</a
-        >. Code: <a href={`${site.repo}/blob/main/LICENSE`} rel="external"
-          >MIT</a
-        >. Use it, fork it, ship it.
+        Content:{" "}
+        <a href="https://creativecommons.org/licenses/by/4.0/" rel="external">
+          CC BY 4.0
+        </a>
+        . Code:{" "}
+        <a href={`${site.repo}/blob/main/LICENSE`} rel="external">
+          MIT
+        </a>
+        . Use it, fork it, ship it.
       </p>
 
       <h2 id="contact">Contact</h2>
       <p>
-        Maintained by <a href={site.author.url} rel="external"
-          >{site.author.name}</a
-        > and contributors. For security reports, please follow <a
-          href="/.well-known/security.txt"
-          ><code>/.well-known/security.txt</code></a
-        >. For everything else, <a href={`${site.repo}/issues`} rel="external"
-          >open an issue</a
-        >.
+        Maintained by{" "}
+        <a href={site.author.url} rel="external">
+          {site.author.name}
+        </a>{" "}
+        and contributors. For security reports, please follow{" "}
+        <a href="/.well-known/security.txt">
+          <code>/.well-known/security.txt</code>
+        </a>
+        . For everything else,{" "}
+        <a href={`${site.repo}/issues`} rel="external">
+          open an issue
+        </a>
+        .
       </p>
     </article>
   </div>

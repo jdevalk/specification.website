@@ -67,29 +67,24 @@ const steps = [
 ---
 
 <BaseLayout title={site.name} description={site.description} bare={false}>
-  <section
-    class="border-b border-ink-200 bg-gradient-to-b from-accent-100/70 to-ink-50"
-  >
+  <section class="border-b border-ink-200 bg-gradient-to-b from-accent-100/70 to-ink-50">
     <div class="mx-auto max-w-6xl px-4 py-16 sm:py-24">
       <div class="grid items-center gap-12 lg:grid-cols-[1fr_20rem]">
         <div>
-          <h1
-            class="max-w-4xl text-balance text-4xl font-bold tracking-tight text-ink-900 sm:text-5xl lg:text-6xl"
-          >
+          <h1 class="max-w-4xl text-balance text-4xl font-bold tracking-tight text-ink-900 sm:text-5xl lg:text-6xl">
             What a good website does.
           </h1>
-          <p
-            class="mt-5 max-w-2xl text-lg leading-relaxed text-ink-700 sm:text-xl"
-          >
+          <p class="mt-5 max-w-2xl text-lg leading-relaxed text-ink-700 sm:text-xl">
             A platform-agnostic specification of all the technical details that
-            matter for a website, from <code
-              class="rounded bg-ink-50 px-1.5 py-0.5 text-base text-accent-800 ring-1 ring-inset ring-ink-200"
-              >&lt;title&gt;</code
-            >
-            to <code
-              class="rounded bg-ink-50 px-1.5 py-0.5 text-base text-accent-800 ring-1 ring-inset ring-ink-200"
-              >/.well-known/security.txt</code
-            > to WCAG contrast. Written for humans and agents.
+            matter for a website, from{" "}
+            <code class="rounded bg-ink-50 px-1.5 py-0.5 text-base text-accent-800 ring-1 ring-inset ring-ink-200">
+              &lt;title&gt;
+            </code>
+            to{" "}
+            <code class="rounded bg-ink-50 px-1.5 py-0.5 text-base text-accent-800 ring-1 ring-inset ring-ink-200">
+              /.well-known/security.txt
+            </code>{" "}
+            to WCAG contrast. Written for humans and agents.
           </p>
           <div class="mt-7 flex flex-wrap items-center gap-3">
             <a
@@ -117,41 +112,35 @@ const steps = [
 
         <!-- How to use this site — sits beside the hero on large screens, stacks beneath it on mobile. -->
         <div class="rounded-xl border border-ink-200 bg-ink-50 p-6 shadow-sm">
-          <h2
-            class="text-xs font-semibold tracking-wide text-ink-500 uppercase"
-          >
+          <h2 class="text-xs font-semibold tracking-wide text-ink-500 uppercase">
             How to use this site
           </h2>
           <ol class="mt-4 space-y-4">
-            {
-              steps.map((s) => (
-                <li class="flex gap-3">
-                  <span class="mt-0.5 font-mono text-xs text-ink-500">
-                    {s.n}
-                  </span>
-                  <div>
-                    <h3 class="font-semibold text-ink-900">{s.title}</h3>
-                    <p class="mt-0.5 text-sm leading-relaxed text-ink-600">
-                      {s.title === "Audit" ? (
-                        <>
-                          Run the{" "}
-                          <a class="underline" href="/checklist/">
-                            checklist
-                          </a>{" "}
-                          against your site, or{" "}
-                          <a class="underline" href="#mcp">
-                            let your agent
-                          </a>{" "}
-                          do it. Each item is a yes/no.
-                        </>
-                      ) : (
-                        s.body
-                      )}
-                    </p>
-                  </div>
-                </li>
-              ))
-            }
+            {steps.map((s) => (
+              <li class="flex gap-3">
+                <span class="mt-0.5 font-mono text-xs text-ink-500">{s.n}</span>
+                <div>
+                  <h3 class="font-semibold text-ink-900">{s.title}</h3>
+                  <p class="mt-0.5 text-sm leading-relaxed text-ink-600">
+                    {s.title === "Audit" ? (
+                      <>
+                        Run the{" "}
+                        <a class="underline" href="/checklist/">
+                          checklist
+                        </a>{" "}
+                        against your site, or{" "}
+                        <a class="underline" href="#mcp">
+                          let your agent
+                        </a>{" "}
+                        do it. Each item is a yes/no.
+                      </>
+                    ) : (
+                      s.body
+                    )}
+                  </p>
+                </div>
+              </li>
+            ))}
           </ol>
         </div>
       </div>
@@ -166,38 +155,37 @@ const steps = [
       <a
         href="/changelog/"
         class="text-sm text-accent-700 hover:text-accent-800"
-        >Full changelog →</a
       >
+        Full changelog →
+      </a>
     </div>
     <ol class="mt-8 max-w-3xl space-y-7 border-l border-ink-200 pl-6">
-      {
-        recent.map((entry) => (
-          <li class="relative">
-            <span
-              class="absolute top-1.5 -left-[1.6875rem] h-2.5 w-2.5 rounded-full border-2 border-ink-50 bg-accent-600"
-              aria-hidden="true"
-            />
-            <a href={`/changelog/#${entry.id}`} class="group block">
-              <div class="flex items-center gap-2">
-                <span
-                  class:list={[
-                    "inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium",
-                    changeTypeColor[entry.data.type],
-                  ]}
-                >
-                  {changeTypeLabel[entry.data.type]}
-                </span>
-                <time class="text-xs text-ink-500" datetime={entry.data.date}>
-                  {dayFmt.format(new Date(entry.data.date))}
-                </time>
-              </div>
-              <h3 class="mt-1.5 font-semibold text-ink-900 group-hover:text-accent-700">
-                {entry.data.title}
-              </h3>
-            </a>
-          </li>
-        ))
-      }
+      {recent.map((entry) => (
+        <li class="relative">
+          <span
+            class="absolute top-1.5 -left-[1.6875rem] h-2.5 w-2.5 rounded-full border-2 border-ink-50 bg-accent-600"
+            aria-hidden="true"
+          />
+          <a href={`/changelog/#${entry.id}`} class="group block">
+            <div class="flex items-center gap-2">
+              <span
+                class:list={[
+                  "inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium",
+                  changeTypeColor[entry.data.type],
+                ]}
+              >
+                {changeTypeLabel[entry.data.type]}
+              </span>
+              <time class="text-xs text-ink-500" datetime={entry.data.date}>
+                {dayFmt.format(new Date(entry.data.date))}
+              </time>
+            </div>
+            <h3 class="mt-1.5 font-semibold text-ink-900 group-hover:text-accent-700">
+              {entry.data.title}
+            </h3>
+          </a>
+        </li>
+      ))}
     </ol>
   </section>
 
@@ -207,8 +195,9 @@ const steps = [
       <p class="mt-1 text-ink-600">What every page here is built on.</p>
       <div class="mt-8 grid gap-x-8 gap-y-10 md:grid-cols-3">
         <div class="flex gap-4">
-          <span class="font-mono text-sm font-semibold text-accent-700">01</span
-          >
+          <span class="font-mono text-sm font-semibold text-accent-700">
+            01
+          </span>
           <div>
             <h3 class="text-base font-semibold text-ink-900">
               Standards, not opinions
@@ -220,8 +209,9 @@ const steps = [
           </div>
         </div>
         <div class="flex gap-4">
-          <span class="font-mono text-sm font-semibold text-accent-700">02</span
-          >
+          <span class="font-mono text-sm font-semibold text-accent-700">
+            02
+          </span>
           <div>
             <h3 class="text-base font-semibold text-ink-900">
               Platform agnostic
@@ -234,16 +224,19 @@ const steps = [
           </div>
         </div>
         <div class="flex gap-4">
-          <span class="font-mono text-sm font-semibold text-accent-700">03</span
-          >
+          <span class="font-mono text-sm font-semibold text-accent-700">
+            03
+          </span>
           <div>
             <h3 class="text-base font-semibold text-ink-900">
               Built in the open
             </h3>
             <p class="mt-2 text-sm leading-relaxed text-ink-600">
-              Every page has an <a class="underline" href={site.repo}
-                >Edit on GitHub</a
-              > link. PRs welcome. Sources credited on every page.
+              Every page has an{" "}
+              <a class="underline" href={site.repo}>
+                Edit on GitHub
+              </a>{" "}
+              link. PRs welcome. Sources credited on every page.
             </p>
           </div>
         </div>
@@ -262,48 +255,60 @@ const steps = [
             Let your agent query the spec.
           </h2>
           <p class="mt-3 max-w-2xl text-ink-700">
-            The whole spec is available as an open <a
+            The whole spec is available as an open{" "}
+            <a
               class="underline"
               href="https://modelcontextprotocol.io/"
-              rel="external">MCP</a
-            > server (read-only, no auth), plus a published <a
+              rel="external"
+            >
+              MCP
+            </a>{" "}
+            server (read-only, no auth), plus a published{" "}
+            <a
               class="underline"
               href="/.well-known/agent-skills/specification-website/SKILL.md"
-              >Agent Skill</a
-            > that teaches any compatible agent when and how to use it. Per-page Markdown
-            is available via <code
-              class="rounded bg-ink-50 px-1.5 py-0.5 text-sm text-accent-800 ring-1 ring-inset ring-ink-200"
-              >/llms.txt</code
-            > and <code
-              class="rounded bg-ink-50 px-1.5 py-0.5 text-sm text-accent-800 ring-1 ring-inset ring-ink-200"
-              >Accept: text/markdown</code
-            > on any spec URL.
+            >
+              Agent Skill
+            </a>{" "}
+            that teaches any compatible agent when and how to use it. Per-page
+            Markdown is available via{" "}
+            <code class="rounded bg-ink-50 px-1.5 py-0.5 text-sm text-accent-800 ring-1 ring-inset ring-ink-200">
+              /llms.txt
+            </code>{" "}
+            and{" "}
+            <code class="rounded bg-ink-50 px-1.5 py-0.5 text-sm text-accent-800 ring-1 ring-inset ring-ink-200">
+              Accept: text/markdown
+            </code>{" "}
+            on any spec URL.
           </p>
           <div class="mt-5 flex flex-wrap items-center gap-3">
             <a
               href="/mcp/"
               class="inline-flex items-center gap-1.5 rounded-md bg-accent-700 px-4 py-2.5 text-sm font-medium text-white hover:bg-accent-800"
-              >Connect MCP →</a
             >
+              Connect MCP →
+            </a>
             <a
               href="/.well-known/agent-skills/specification-website/SKILL.md"
               class="inline-flex items-center gap-1.5 rounded-md border border-ink-300 bg-ink-50 px-4 py-2.5 text-sm font-medium text-ink-800 hover:border-ink-400"
-              >Agent Skill</a
             >
+              Agent Skill
+            </a>
             <a
               href="/llms.txt"
               class="inline-flex items-center gap-1.5 rounded-md border border-ink-300 bg-ink-50 px-4 py-2.5 text-sm font-medium text-ink-800 hover:border-ink-400"
-              >llms.txt</a
             >
+              llms.txt
+            </a>
             <a
               href="/spec/agent-readiness/"
               class="text-sm font-medium text-accent-700 hover:text-accent-800"
-              >Agent-readiness spec →</a
             >
+              Agent-readiness spec →
+            </a>
           </div>
         </div>
-        <pre
-          class="hidden overflow-x-auto rounded-lg border border-ink-200 bg-ink-900 p-4 text-xs leading-relaxed text-ink-100 lg:block"><code>{`{
+        <pre class="hidden overflow-x-auto rounded-lg border border-ink-200 bg-ink-900 p-4 text-xs leading-relaxed text-ink-100 lg:block"><code>{`{
   "mcpServers": {
     "specification-website": {
       "transport": "http",
@@ -326,32 +331,31 @@ const steps = [
       <a
         href="/spec/"
         class="hidden text-sm text-accent-700 hover:text-accent-800 sm:inline"
-        >All topics →</a
       >
+        All topics →
+      </a>
     </div>
     <ul class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        categories.map((c) => (
-          <li>
-            <a
-              href={`/spec/${c.slug}/`}
-              class="group block h-full rounded-xl border border-ink-200 bg-ink-50 p-5 transition hover:border-accent-300 hover:shadow-sm"
-            >
-              <div class="flex items-baseline justify-between gap-2">
-                <h3 class="text-lg font-semibold text-ink-900 group-hover:text-accent-700">
-                  {c.title}
-                </h3>
-                <span class="font-mono text-xs whitespace-nowrap text-ink-500">
-                  {counts[c.slug] ?? 0} topics
-                </span>
-              </div>
-              <p class="mt-1.5 text-sm leading-relaxed text-ink-600">
-                {c.summary}
-              </p>
-            </a>
-          </li>
-        ))
-      }
+      {categories.map((c) => (
+        <li>
+          <a
+            href={`/spec/${c.slug}/`}
+            class="group block h-full rounded-xl border border-ink-200 bg-ink-50 p-5 transition hover:border-accent-300 hover:shadow-sm"
+          >
+            <div class="flex items-baseline justify-between gap-2">
+              <h3 class="text-lg font-semibold text-ink-900 group-hover:text-accent-700">
+                {c.title}
+              </h3>
+              <span class="font-mono text-xs whitespace-nowrap text-ink-500">
+                {counts[c.slug] ?? 0} topics
+              </span>
+            </div>
+            <p class="mt-1.5 text-sm leading-relaxed text-ink-600">
+              {c.summary}
+            </p>
+          </a>
+        </li>
+      ))}
       <!-- Two action cells keep the grid evenly filled (12 cells) and give the scroll a next step. -->
       <li>
         <a

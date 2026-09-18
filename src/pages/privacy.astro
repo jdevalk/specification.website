@@ -24,29 +24,35 @@ const updated = "2026-07-30";
         This site is a static, publicly readable reference. There are no user
         accounts, no comments, no forms, and no transactions. We collect a small
         amount of aggregate analytics — see below — and nothing else. This page
-        exists because the spec lists a privacy policy as <strong
-          >required</strong
-        >, and because honest disclosure is the only kind worth publishing.
+        exists because the spec lists a privacy policy as{" "}
+        <strong>required</strong>, and because honest disclosure is the only
+        kind worth publishing.
       </p>
 
       <h2 id="data-controller">Data controller</h2>
       <p>
-        Joost de Valk (<a href="https://joost.blog" rel="external">joost.blog</a
-        >) operates this site as a personal open-source project. For privacy
-        questions, email <a href="mailto:privacy@specification.website"
-          >privacy@specification.website</a
-        >.
+        Joost de Valk (
+        <a href="https://joost.blog" rel="external">
+          joost.blog
+        </a>
+        ) operates this site as a personal open-source project. For privacy
+        questions, email{" "}
+        <a href="mailto:privacy@specification.website">
+          privacy@specification.website
+        </a>
+        .
       </p>
 
       <h2 id="what-we-collect">What we collect</h2>
       <p>
-        The site sets <strong>no cookies</strong> and stores nothing in your browser.
-        For ordinary browser visits, the only data we collect is aggregate page-view
-        analytics via
-        <a href="https://plausible.io" rel="external">Plausible</a> (separate server-side
-        aggregate logging for crawlers and MCP / A2A calls is described under <a
-          href="#logs-and-hosting">Logs and hosting</a
-        >):
+        The site sets <strong>no cookies</strong> and stores nothing in your
+        browser. For ordinary browser visits, the only data we collect is
+        aggregate page-view analytics via
+        <a href="https://plausible.io" rel="external">
+          Plausible
+        </a>{" "}
+        (separate server-side aggregate logging for crawlers and MCP / A2A calls
+        is described under <a href="#logs-and-hosting">Logs and hosting</a>):
       </p>
       <ul>
         <li>URL of the page you loaded.</li>
@@ -56,35 +62,34 @@ const updated = "2026-07-30";
           User-Agent string and discarded after the request.
         </li>
         <li>
-          Country, derived from your IP address. <strong
-            >Your IP address itself is never stored.</strong
-          >
+          Country, derived from your IP address.{" "}
+          <strong>Your IP address itself is never stored.</strong>
         </li>
       </ul>
       <p>
-        In two situations we also send Plausible a named <a
-          href="https://plausible.io/docs/custom-event-goals"
-          rel="external">custom event</a
-        > (to the same <code>plausible.io</code> endpoint, still with no cookies and
-        no identifier):
+        In two situations we also send Plausible a named{" "}
+        <a href="https://plausible.io/docs/custom-event-goals" rel="external">
+          custom event
+        </a>{" "}
+        (to the same <code>plausible.io</code> endpoint, still with no cookies
+        and no identifier):
       </p>
       <ul>
         <li>
-          <strong>Missing pages.</strong> When you reach a page that does not exist,
-          we send a <code>404</code> event with the path you tried to load, so we
-          can find and fix broken links.
+          <strong>Missing pages.</strong> When you reach a page that does not
+          exist, we send a <code>404</code> event with the path you tried to
+          load, so we can find and fix broken links.
         </li>
         <li>
-          <strong>Site search.</strong> When you use the search page or the ⌘K overlay,
-          we send a <code>Search</code> event with <strong
-            >the text you typed</strong
-          >, how many results it returned, and whether anything matched. This
-          shows us what people look for and which topics are missing. The query
-          is sent as aggregate event data — it is not joined to your IP, a
-          cookie, or any identifier, and nothing is stored in your browser. If
-          you would rather not send your search text, block <code
-            >plausible.io</code
-          > (see below) or browse without searching.
+          <strong>Site search.</strong> When you use the search page or the ⌘K
+          overlay, we send a <code>Search</code> event with{" "}
+          <strong>the text you typed</strong>, how many results it returned, and
+          whether anything matched. This shows us what people look for and which
+          topics are missing. The query is sent as aggregate event data — it is
+          not joined to your IP, a cookie, or any identifier, and nothing is
+          stored in your browser. If you would rather not send your search text,
+          block <code>plausible.io</code> (see below) or browse without
+          searching.
         </li>
       </ul>
       <p>What Plausible deliberately does not do:</p>
@@ -100,69 +105,73 @@ const updated = "2026-07-30";
       </ul>
       <p>
         Plausible is GDPR, CCPA, and PECR compliant by design and does not
-        require a cookie banner. See <a
-          href="https://plausible.io/data-policy"
-          rel="external">Plausible's data policy</a
-        > and
-        <a href="https://plausible.io/privacy" rel="external">privacy policy</a> for
-        the full detail. Aggregate statistics are stored on EU servers operated by
-        Plausible Insights OÜ in Estonia.
+        require a cookie banner. See{" "}
+        <a href="https://plausible.io/data-policy" rel="external">
+          Plausible's data policy
+        </a>{" "}
+        and
+        <a href="https://plausible.io/privacy" rel="external">
+          privacy policy
+        </a>{" "}
+        for the full detail. Aggregate statistics are stored on EU servers
+        operated by Plausible Insights OÜ in Estonia.
       </p>
       <p>Beyond analytics:</p>
       <ul>
         <li>No accounts, no login, no profile data.</li>
         <li>No forms — there is nothing to submit.</li>
         <li>
-          No third-party scripts other than the single Plausible request to <code
-            >plausible.io/js/script.js</code
-          >.
+          No third-party scripts other than the single Plausible request to{" "}
+          <code>plausible.io/js/script.js</code>.
         </li>
         <li>No advertising network.</li>
       </ul>
 
       <h2 id="logs-and-hosting">Logs and hosting</h2>
       <p>
-        The site is hosted on <a
-          href="https://pages.cloudflare.com/"
-          rel="external">Cloudflare Pages</a
-        >. Cloudflare may process request metadata (IP address, user-agent,
+        The site is hosted on{" "}
+        <a href="https://pages.cloudflare.com/" rel="external">
+          Cloudflare Pages
+        </a>
+        . Cloudflare may process request metadata (IP address, user-agent,
         requested URL, timestamp) as a normal part of serving the site and
         protecting it from abuse, governed by Cloudflare's own
-        <a href="https://www.cloudflare.com/privacypolicy/" rel="external"
-          >privacy policy</a
-        >. We do not receive a copy of that data and do not use it for
-        analytics.
+        <a href="https://www.cloudflare.com/privacypolicy/" rel="external">
+          privacy policy
+        </a>
+        . We do not receive a copy of that data and do not use it for analytics.
       </p>
       <p>
         We do record aggregate request metadata for three request streams in
         <a
           href="https://developers.cloudflare.com/analytics/analytics-engine/"
-          rel="external">Cloudflare Analytics Engine</a
+          rel="external"
         >
-        — an internal dashboard at <code>/admin/stats</code> (gated by Cloudflare
-        Access) reads it:
+          Cloudflare Analytics Engine
+        </a>
+        — an internal dashboard at <code>/admin/stats</code> (gated by
+        Cloudflare Access) reads it:
       </p>
       <ul>
         <li>
-          <strong>Crawler / AI-agent traffic:</strong> when a request matches a known
-          AI / LLM / search crawler User-Agent, carries a <code
-            >Signature-Agent</code
-          > header, is verified-bot per Cloudflare, or asks for <code
-            >text/markdown</code
-          >, we record the bot name, path, country, method, referer, and
-          User-Agent (truncated). No IP address is stored.
+          <strong>Crawler / AI-agent traffic:</strong> when a request matches a
+          known AI / LLM / search crawler User-Agent, carries a{" "}
+          <code>Signature-Agent</code> header, is verified-bot per Cloudflare,
+          or asks for <code>text/markdown</code>, we record the bot name, path,
+          country, method, referer, and User-Agent (truncated). No IP address is
+          stored.
         </li>
         <li>
-          <strong>MCP / A2A calls</strong> to <code
-            >mcp.specification.website</code
-          >: we record the JSON-RPC method, tool name, the first 500 bytes of
-          arguments, client name/version, protocol version, country, and
-          User-Agent (truncated). No IP address is stored.
+          <strong>MCP / A2A calls</strong> to{" "}
+          <code>mcp.specification.website</code>: we record the JSON-RPC method,
+          tool name, the first 500 bytes of arguments, client name/version,
+          protocol version, country, and User-Agent (truncated). No IP address
+          is stored.
         </li>
         <li>
-          <strong>Browser policy reports:</strong> the site uses the <a
-            href="/spec/security/reporting-endpoints/">Reporting API</a
-          >, so your browser may POST a structured report when a page violates a
+          <strong>Browser policy reports:</strong> the site uses the{" "}
+          <a href="/spec/security/reporting-endpoints/">Reporting API</a>, so
+          your browser may POST a structured report when a page violates a
           security policy (for example a Content Security Policy block) or uses
           a deprecated browser feature. We record the report type, the path it
           occurred on, the directive or feature involved, a short detail sample
@@ -184,31 +193,31 @@ const updated = "2026-07-30";
       <h2 id="websub">WebSub subscriptions</h2>
       <p>
         The site has a <a href="/spec/foundations/websub/">WebSub</a> hub at
-        <code>/websub</code>, which pushes updates to our <a href="/rss.xml"
-          >two</a
-        >
-        <a href="/changelog/rss.xml">feeds</a> to subscribers instead of making them
-        poll. Subscribing is the one thing on this site that stores data you give
-        us, so to be explicit about it:
+        <code>/websub</code>, which pushes updates to our{" "}
+        <a href="/rss.xml">two</a>
+        <a href="/changelog/rss.xml">feeds</a> to subscribers instead of making
+        them poll. Subscribing is the one thing on this site that stores data
+        you give us, so to be explicit about it:
       </p>
       <ul>
         <li>
-          <strong>What is stored:</strong> if you subscribe, we keep the callback
-          URL you supplied, the topic you subscribed to, the optional
-          <code>hub.secret</code> you chose (used only to sign deliveries to you,
-          never logged and never disclosed), and your lease expiry time. Nothing else
-          — no IP address, no User-Agent.
+          <strong>What is stored:</strong> if you subscribe, we keep the
+          callback URL you supplied, the topic you subscribed to, the optional
+          <code>hub.secret</code> you chose (used only to sign deliveries to
+          you, never logged and never disclosed), and your lease expiry time.
+          Nothing else — no IP address, no User-Agent.
         </li>
         <li>
-          <strong>How long:</strong> until the lease expires, at which point the row
-          is deleted. Leases last at most 30 days, so an abandoned subscription removes
-          itself. You can unsubscribe at any time by POSTing
+          <strong>How long:</strong> until the lease expires, at which point the
+          row is deleted. Leases last at most 30 days, so an abandoned
+          subscription removes itself. You can unsubscribe at any time by
+          POSTing
           <code>hub.mode=unsubscribe</code>, which deletes the row immediately
           once your callback confirms.
         </li>
         <li>
-          <strong>Who sees it:</strong> nobody outside the hub. Subscriber lists are
-          not published, not shared, and not fed into the
+          <strong>Who sees it:</strong> nobody outside the hub. Subscriber lists
+          are not published, not shared, and not fed into the
           <code>/admin/stats</code> dashboard.
         </li>
       </ul>
@@ -220,33 +229,43 @@ const updated = "2026-07-30";
 
       <h2 id="content-hosting">GitHub</h2>
       <p>
-        Source content lives on <a
+        Source content lives on{" "}
+        <a
           href="https://github.com/jdevalk/specification.website"
-          rel="external">GitHub</a
-        >. If you open an issue or pull request, that interaction is governed by
+          rel="external"
+        >
+          GitHub
+        </a>
+        . If you open an issue or pull request, that interaction is governed by
         <a
           href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement"
-          rel="external">GitHub's privacy statement</a
-        >, not this one.
+          rel="external"
+        >
+          GitHub's privacy statement
+        </a>
+        , not this one.
       </p>
 
       <h2 id="signals-we-respect">Signals we respect</h2>
       <ul>
         <li>
-          <strong
-            >Do Not Track / <a href="/spec/privacy/global-privacy-control/"
-              >Global Privacy Control</a
-            >:</strong
-          > Plausible does not respect DNT or GPC because the analytics it runs do
-          not constitute the kind of tracking those signals were designed to stop.
-          If you disagree, block <code>plausible.io</code> in your browser or use
-          an extension such as uBlock Origin — the site continues to work without
-          it.
+          <strong>
+            Do Not Track /{" "}
+            <a href="/spec/privacy/global-privacy-control/">
+              Global Privacy Control
+            </a>
+            :
+          </strong>{" "}
+          Plausible does not respect DNT or GPC because the analytics it runs do
+          not constitute the kind of tracking those signals were designed to
+          stop. If you disagree, block <code>plausible.io</code> in your browser
+          or use an extension such as uBlock Origin — the site continues to work
+          without it.
         </li>
         <li>
-          <strong>Browser content blockers:</strong> the Plausible request is blocked
-          by all common content blockers. We notice no difference; you get the same
-          site.
+          <strong>Browser content blockers:</strong> the Plausible request is
+          blocked by all common content blockers. We notice no difference; you
+          get the same site.
         </li>
       </ul>
 
@@ -264,8 +283,11 @@ const updated = "2026-07-30";
         change in the
         <a
           href="https://github.com/jdevalk/specification.website"
-          rel="external">repository</a
-        >.
+          rel="external"
+        >
+          repository
+        </a>
+        .
       </p>
 
       <h2 id="your-rights">Your rights</h2>
@@ -280,11 +302,14 @@ const updated = "2026-07-30";
       <h2 id="related">Related</h2>
       <ul>
         <li>
-          <a href="/spec/privacy/privacy-policy/"
-            >The spec page on privacy policies</a
-          > — what this page is required to cover, and why.
+          <a href="/spec/privacy/privacy-policy/">
+            The spec page on privacy policies
+          </a>{" "}
+          — what this page is required to cover, and why.
         </li>
-        <li><a href="/spec/privacy/">All privacy-category spec pages</a>.</li>
+        <li>
+          <a href="/spec/privacy/">All privacy-category spec pages</a>.
+        </li>
       </ul>
     </article>
   </div>

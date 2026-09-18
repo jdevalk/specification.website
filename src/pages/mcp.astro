@@ -27,11 +27,15 @@ const claudeJson = JSON.stringify(desktopConfig, null, 2);
         MCP server
       </h1>
       <p class="mt-2 max-w-2xl text-lg text-ink-600">
-        Connect any <a
+        Connect any{" "}
+        <a
           class="underline"
           href="https://modelcontextprotocol.io/"
-          rel="external">Model Context Protocol</a
-        >–aware agent and query the whole spec — by keyword, by category, by
+          rel="external"
+        >
+          Model Context Protocol
+        </a>
+        –aware agent and query the whole spec — by keyword, by category, by
         status, or page by page. Read-only. No authentication.
       </p>
     </header>
@@ -41,79 +45,109 @@ const claudeJson = JSON.stringify(desktopConfig, null, 2);
       <p>
         Streamable HTTP MCP, 2026-07-28 protocol revision. Stateless. Wide-open
         CORS. No authentication. The handshake-based revisions 2025-11-25,
-        2025-06-18 and 2025-03-26 are still answered via <code>initialize</code
-        >, under a published <code>Deprecation</code> and <code>Sunset</code>.
+        2025-06-18 and 2025-03-26 are still answered via <code>initialize</code>
+        , under a published <code>Deprecation</code> and <code>Sunset</code>.
       </p>
       <pre><code>{site.mcp.endpoint}</code></pre>
       <p>
-        Server card: <a href={site.mcp.serverCard}
-          ><code>{site.mcp.serverCard}</code></a
-        >. Landing page: <a href={site.mcp.landing} rel="external"
-          >{site.mcp.landing.replace("https://", "")}</a
-        >.
+        Server card:{" "}
+        <a href={site.mcp.serverCard}>
+          <code>{site.mcp.serverCard}</code>
+        </a>
+        . Landing page:{" "}
+        <a href={site.mcp.landing} rel="external">
+          {site.mcp.landing.replace("https://", "")}
+        </a>
+        .
       </p>
 
       <h2 id="tools">Tools</h2>
       <table>
-        <thead><tr><th>Tool</th><th>What it returns</th></tr></thead>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>What it returns</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr
-            ><td><code>search(query, limit?)</code></td><td
-              >Ranked spec pages with title, status, category, URL, and body
-              excerpts.</td
-            ></tr
-          >
-          <tr
-            ><td
-              ><code>list_topics({"{ category?, status?, limit? }"})</code></td
-            ><td>Filtered index — slug, title, status, summary, URL.</td></tr
-          >
-          <tr
-            ><td><code>get_topic({"{ slug }"})</code></td><td
-              >Full canonical Markdown for one page — frontmatter, sources,
-              body.</td
-            ></tr
-          >
-          <tr
-            ><td><code>get_checklist({"{ category?, status? }"})</code></td><td
-              >Tickable Markdown checklist grouped by category.</td
-            ></tr
-          >
-          <tr
-            ><td><code>get_categories()</code></td><td
-              >The ten top-level categories with topic counts.</td
-            ></tr
-          >
-          <tr
-            ><td><code>get_changes({"{ since?, type?, limit? }"})</code></td><td
-              >What changed since a date — new pages, status promotions,
+          <tr>
+            <td>
+              <code>search(query, limit?)</code>
+            </td>
+            <td>
+              Ranked spec pages with title, status, category, URL, and body
+              excerpts.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>list_topics({"{ category?, status?, limit? }"})</code>
+            </td>
+            <td>Filtered index — slug, title, status, summary, URL.</td>
+          </tr>
+          <tr>
+            <td>
+              <code>get_topic({"{ slug }"})</code>
+            </td>
+            <td>
+              Full canonical Markdown for one page — frontmatter, sources, body.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>get_checklist({"{ category?, status? }"})</code>
+            </td>
+            <td>Tickable Markdown checklist grouped by category.</td>
+          </tr>
+          <tr>
+            <td>
+              <code>get_categories()</code>
+            </td>
+            <td>The ten top-level categories with topic counts.</td>
+          </tr>
+          <tr>
+            <td>
+              <code>get_changes({"{ since?, type?, limit? }"})</code>
+            </td>
+            <td>
+              What changed since a date — new pages, status promotions,
               rewrites, removals — each resolved to the current topics to
-              re-audit. Re-check only the delta instead of the whole spec.</td
-            ></tr
-          >
+              re-audit. Re-check only the delta instead of the whole spec.
+            </td>
+          </tr>
         </tbody>
       </table>
 
       <h2 id="prompts">Prompts</h2>
       <table>
-        <thead><tr><th>Prompt</th><th>What it generates</th></tr></thead>
+        <thead>
+          <tr>
+            <th>Prompt</th>
+            <th>What it generates</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr
-            ><td><code>audit_url(url, focus?)</code></td><td
-              >An audit plan for a target URL against required spec items,
-              optionally narrowed to a category (e.g. <code>security</code
-              >).</td
-            ></tr
-          >
+          <tr>
+            <td>
+              <code>audit_url(url, focus?)</code>
+            </td>
+            <td>
+              An audit plan for a target URL against required spec items,
+              optionally narrowed to a category (e.g. <code>security</code>).
+            </td>
+          </tr>
         </tbody>
       </table>
 
       <h2 id="connect-claude">Connect from Claude Desktop</h2>
       <p>
-        Edit <code
-          >~/Library/Application Support/Claude/claude_desktop_config.json</code
-        > (macOS) or
-        <code>%APPDATA%\Claude\claude_desktop_config.json</code> (Windows) and add:
+        Edit{" "}
+        <code>
+          ~/Library/Application Support/Claude/claude_desktop_config.json
+        </code>{" "}
+        (macOS) or
+        <code>%APPDATA%\Claude\claude_desktop_config.json</code> (Windows) and
+        add:
       </p>
       <pre><code>{claudeJson}</code></pre>
       <p>Restart Claude Desktop; the tools appear under the connector menu.</p>
@@ -122,10 +156,14 @@ const claudeJson = JSON.stringify(desktopConfig, null, 2);
       <p>
         Any client that speaks Streamable HTTP MCP (2026-07-28 revision, or one
         of the older handshake-based revisions above) connects with one URL.
-        There is no client SDK to install and no token to manage. <a
+        There is no client SDK to install and no token to manage.{" "}
+        <a
           href="https://github.com/modelcontextprotocol/inspector"
-          rel="external">MCP Inspector</a
-        > is the fastest way to poke at the schema.
+          rel="external"
+        >
+          MCP Inspector
+        </a>{" "}
+        is the fastest way to poke at the schema.
       </p>
 
       <h2 id="example">Quick example — raw JSON-RPC</h2>
@@ -136,50 +174,59 @@ const claudeJson = JSON.stringify(desktopConfig, null, 2);
       <h2 id="design-notes">Design notes</h2>
       <ul>
         <li>
-          <strong>Single source of truth.</strong> Both this site and the MCP server
-          build from the same Markdown files in <code>src/content/spec/</code>.
-          The Worker bundles a JSON manifest at build time so there is no
-          runtime parsing and no drift.
+          <strong>Single source of truth.</strong> Both this site and the MCP
+          server build from the same Markdown files in{" "}
+          <code>src/content/spec/</code>. The Worker bundles a JSON manifest at
+          build time so there is no runtime parsing and no drift.
         </li>
         <li>
-          <strong>Stateless.</strong> No sessions, no SSE. Every request is independent.
+          <strong>Stateless.</strong> No sessions, no SSE. Every request is
+          independent.
         </li>
         <li>
-          <strong>No auth, no PII.</strong> Public read-only data; no cookies; no
-          logs that identify individual callers beyond Cloudflare's standard request
-          metadata.
+          <strong>No auth, no PII.</strong> Public read-only data; no cookies;
+          no logs that identify individual callers beyond Cloudflare's standard
+          request metadata.
         </li>
         <li>
-          <strong>It is itself a worked example</strong> of the <a
-            href="/spec/agent-readiness/mcp-and-tool-discovery/"
-            >MCP and tool discovery</a
-          > spec page. Source under <a
-            href={`${site.repo}/tree/main/mcp`}
-            rel="external">mcp/ in the repo</a
-          > (~600 lines of TypeScript).
+          <strong>It is itself a worked example</strong> of the{" "}
+          <a href="/spec/agent-readiness/mcp-and-tool-discovery/">
+            MCP and tool discovery
+          </a>{" "}
+          spec page. Source under{" "}
+          <a href={`${site.repo}/tree/main/mcp`} rel="external">
+            mcp/ in the repo
+          </a>{" "}
+          (~600 lines of TypeScript).
         </li>
       </ul>
 
       <h2 id="discoverability">Discoverability surfaces</h2>
       <ul>
         <li>
-          Server card at <a href={site.mcp.serverCard}
-            ><code>{site.mcp.serverCard}</code></a
-          >.
+          Server card at{" "}
+          <a href={site.mcp.serverCard}>
+            <code>{site.mcp.serverCard}</code>
+          </a>
+          .
         </li>
         <li>
-          <code>Link: …; rel="mcp"</code> response header on every page on this site.
+          <code>Link: …; rel="mcp"</code> response header on every page on this
+          site.
         </li>
         <li>
-          Entry in <a href="/.well-known/api-catalog"
-            ><code>/.well-known/api-catalog</code></a
-          > (RFC 9727).
+          Entry in{" "}
+          <a href="/.well-known/api-catalog">
+            <code>/.well-known/api-catalog</code>
+          </a>{" "}
+          (RFC 9727).
         </li>
         <li>
-          Cross-linked from the <a
-            href="/spec/agent-readiness/mcp-and-tool-discovery/"
-            >MCP and tool discovery</a
-          > spec page.
+          Cross-linked from the{" "}
+          <a href="/spec/agent-readiness/mcp-and-tool-discovery/">
+            MCP and tool discovery
+          </a>{" "}
+          spec page.
         </li>
       </ul>
     </article>

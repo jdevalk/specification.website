@@ -57,55 +57,51 @@ for (const item of rendered) {
       </h1>
       <p class="mt-2 text-ink-600">
         What changed in the spec — new topics, status changes, and honest
-        removals, newest first. Subscribe via <a
-          class="underline hover:text-accent-700"
-          href="/changelog/rss.xml">RSS</a
-        >.
+        removals, newest first. Subscribe via{" "}
+        <a class="underline hover:text-accent-700" href="/changelog/rss.xml">
+          RSS
+        </a>
+        .
       </p>
     </header>
 
     <div class="mt-10 space-y-12">
-      {
-        groups.map((group) => (
-          <section>
-            <h2 class="text-xs font-semibold tracking-wide text-ink-500 uppercase">
-              {group.label}
-            </h2>
-            <ol class="mt-4 space-y-8 border-l border-ink-200 pl-6">
-              {group.items.map(({ entry, Content }) => (
-                <li id={entry.id} class="relative scroll-mt-24">
+      {groups.map((group) => (
+        <section>
+          <h2 class="text-xs font-semibold tracking-wide text-ink-500 uppercase">
+            {group.label}
+          </h2>
+          <ol class="mt-4 space-y-8 border-l border-ink-200 pl-6">
+            {group.items.map(({ entry, Content }) => (
+              <li id={entry.id} class="relative scroll-mt-24">
+                <span
+                  class="absolute top-1.5 -left-[1.6875rem] h-2.5 w-2.5 rounded-full border-2 border-ink-50 bg-accent-600"
+                  aria-hidden="true"
+                />
+                <div class="flex flex-wrap items-center gap-2">
                   <span
-                    class="absolute top-1.5 -left-[1.6875rem] h-2.5 w-2.5 rounded-full border-2 border-ink-50 bg-accent-600"
-                    aria-hidden="true"
-                  />
-                  <div class="flex flex-wrap items-center gap-2">
-                    <span
-                      class:list={[
-                        "inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium",
-                        changeTypeColor[entry.data.type],
-                      ]}
-                    >
-                      {changeTypeLabel[entry.data.type]}
-                    </span>
-                    <time
-                      class="text-xs text-ink-500"
-                      datetime={entry.data.date}
-                    >
-                      {dayFmt.format(new Date(entry.data.date))}
-                    </time>
-                  </div>
-                  <h3 class="mt-2 text-lg font-semibold text-ink-900">
-                    {entry.data.title}
-                  </h3>
-                  <div class="prose-spec mt-1 text-ink-600">
-                    <Content />
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </section>
-        ))
-      }
+                    class:list={[
+                      "inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-medium",
+                      changeTypeColor[entry.data.type],
+                    ]}
+                  >
+                    {changeTypeLabel[entry.data.type]}
+                  </span>
+                  <time class="text-xs text-ink-500" datetime={entry.data.date}>
+                    {dayFmt.format(new Date(entry.data.date))}
+                  </time>
+                </div>
+                <h3 class="mt-2 text-lg font-semibold text-ink-900">
+                  {entry.data.title}
+                </h3>
+                <div class="prose-spec mt-1 text-ink-600">
+                  <Content />
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+      ))}
     </div>
   </div>
 </BaseLayout>

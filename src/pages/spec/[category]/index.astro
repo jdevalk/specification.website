@@ -47,18 +47,16 @@ all.sort(
     </header>
 
     <ul class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        all.map((entry) => (
-          <li>
-            <SpecCard
-              href={`/spec/${entry.data.category}/${entry.data.slug ?? entry.id.split("/").pop()}/`}
-              title={entry.data.title}
-              summary={entry.data.summary}
-              status={entry.data.status}
-            />
-          </li>
-        ))
-      }
+      {all.map((entry) => (
+        <li>
+          <SpecCard
+            href={`/spec/${entry.data.category}/${entry.data.slug ?? entry.id.split("/").pop()}/`}
+            title={entry.data.title}
+            summary={entry.data.summary}
+            status={entry.data.status}
+          />
+        </li>
+      ))}
     </ul>
   </div>
 </BaseLayout>

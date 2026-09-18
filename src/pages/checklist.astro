@@ -40,49 +40,47 @@ for (const k of Object.keys(grouped)) {
         >
           Markdown version
         </a>{" "}
-        — GitHub-style <code>- [ ]</code> task list, ready to paste into an issue
-        or a note.
+        — GitHub-style <code>- [ ]</code> task list, ready to paste into an
+        issue or a note.
       </p>
     </header>
 
     <div class="mt-8 space-y-10">
-      {
-        categories.map((c) => {
-          const items = grouped[c.slug] ?? [];
-          if (!items.length) return null;
-          return (
-            <section>
-              <h2 class="text-xl font-bold text-ink-900">{c.title}</h2>
-              <p class="text-sm text-ink-600">{c.summary}</p>
-              <ul class="mt-3 divide-y divide-ink-100 rounded-lg border border-ink-200 bg-ink-50">
-                {items.map((entry) => (
-                  <li class="flex items-start gap-3 px-4 py-3">
-                    <input
-                      type="checkbox"
-                      class="mt-1.5 h-4 w-4 rounded border-ink-300 text-accent-700 focus:ring-accent-500"
-                      aria-label={`Mark ${entry.data.title} done`}
-                    />
-                    <div class="flex-1">
-                      <div class="flex flex-wrap items-baseline gap-2">
-                        <a
-                          class="text-sm font-medium text-ink-900 hover:text-accent-700"
-                          href={`/spec/${entry.data.category}/${entry.data.slug ?? entry.id.split("/").pop()}/`}
-                        >
-                          {entry.data.title}
-                        </a>
-                        <StatusBadge status={entry.data.status} />
-                      </div>
-                      <p class="mt-0.5 text-sm text-ink-600">
-                        {entry.data.summary}
-                      </p>
+      {categories.map((c) => {
+        const items = grouped[c.slug] ?? [];
+        if (!items.length) return null;
+        return (
+          <section>
+            <h2 class="text-xl font-bold text-ink-900">{c.title}</h2>
+            <p class="text-sm text-ink-600">{c.summary}</p>
+            <ul class="mt-3 divide-y divide-ink-100 rounded-lg border border-ink-200 bg-ink-50">
+              {items.map((entry) => (
+                <li class="flex items-start gap-3 px-4 py-3">
+                  <input
+                    type="checkbox"
+                    class="mt-1.5 h-4 w-4 rounded border-ink-300 text-accent-700 focus:ring-accent-500"
+                    aria-label={`Mark ${entry.data.title} done`}
+                  />
+                  <div class="flex-1">
+                    <div class="flex flex-wrap items-baseline gap-2">
+                      <a
+                        class="text-sm font-medium text-ink-900 hover:text-accent-700"
+                        href={`/spec/${entry.data.category}/${entry.data.slug ?? entry.id.split("/").pop()}/`}
+                      >
+                        {entry.data.title}
+                      </a>
+                      <StatusBadge status={entry.data.status} />
                     </div>
-                  </li>
-                ))}
-              </ul>
-            </section>
-          );
-        })
-      }
+                    <p class="mt-0.5 text-sm text-ink-600">
+                      {entry.data.summary}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
     </div>
   </div>
 </BaseLayout>
