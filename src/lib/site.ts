@@ -136,11 +136,11 @@ export const consideredReasonColor: Record<string, string> = {
 // Shown as the intro under each group heading on /considered/.
 export const consideredReasonBlurb: Record<string, string> = {
   "too-early":
-    "The standard is real and final, but nothing implements it yet. Speccing it would mean recommending something no visitor, crawler, or cache would notice.",
+    "Promising, but adoption, browser support, or standardisation is not yet strong enough for a recommendation. Each entry explains what evidence would justify revisiting it.",
   "out-of-scope":
-    "Real and widely used, but not a property of a website you could check from the outside. These are ways of building a site, not things a good site does.",
+    "Addresses a concern outside this specification's scope, such as development workflows or specialised infrastructure. Each entry explains why it does not become a recommendation for websites.",
   "too-narrow":
-    "Real, implemented, and auditable — but it applies to too few sites to belong in a general specification.",
+    "Applies to a specialised use case, a particular product, or one implementation of a broader website outcome. Each entry explains why it does not warrant a standalone spec page.",
 };
 
 export const consideredReasonOrder = [
