@@ -7,7 +7,7 @@ status: recommended
 order: 150
 appliesTo: [all]
 relatedSlugs: [form-labels, form-errors, touch-target-size, meta-viewport, accessible-authentication, redundant-entry]
-updated: "2026-06-08T00:00:00.000Z"
+updated: "2026-09-19T00:00:00.000Z"
 sources:
   - title: "HTML Living Standard — The inputmode attribute"
     url: "https://html.spec.whatwg.org/multipage/interaction.html#input-modalities:-the-inputmode-attribute"
@@ -15,9 +15,9 @@ sources:
   - title: "HTML Living Standard — The enterkeyhint attribute"
     url: "https://html.spec.whatwg.org/multipage/interaction.html#input-modalities:-the-enterkeyhint-attribute"
     publisher: "WHATWG"
-  - title: "MDN — <input>: types"
-    url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/input#input_types"
-    publisher: "MDN"
+  - title: "HTML Living Standard — The autocorrect attribute"
+    url: "https://html.spec.whatwg.org/multipage/interaction.html#attr-autocorrect"
+    publisher: "WHATWG"
   - title: "MDN — text-size-adjust"
     url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/text-size-adjust"
     publisher: "MDN"
@@ -38,6 +38,8 @@ On a touch device, every text field summons an on-screen keyboard. Four attribut
 - **`inputmode`** tunes the keyboard layout without changing validation — e.g. `numeric` for a one-time code where `type="number"` would wrongly add a spinner and reject leading zeros.
 - **`enterkeyhint`** labels the Enter key: `search`, `go`, `next`, `send`, `done`.
 - **`autocapitalize` / `autocorrect` / `spellcheck`** stop the keyboard "fixing" emails, usernames, codes, and search queries.
+
+`autocorrect` is the one that looks like a Safari quirk and is not. It began as an Apple extension, and for years setting it did nothing in Chromium, so plenty of codebases carry it as iOS-only defensive clutter — or dropped it as vendor cruft. It is now defined in the HTML Standard and supported by every current engine, Chrome and Edge having shipped it in September 2026. The advice below applies on every platform, not just on iPhones.
 
 ## Why it matters
 
