@@ -26,8 +26,10 @@ export const WEBMCP_MANIFEST_PATH = "/webmcp-manifest.json";
 // Kept on one line and byte-stable: BaseLayout renders it with set:html, so
 // these exact bytes are what CSP hashes. Changing this string means recomputing
 // the sha256 in public/_headers — `npm run build` fails loudly if you forget.
+// Capture currentScript immediately; load only after deferred security scripts
+// have registered the default Trusted Types policy and search has initialised.
 export const WEBMCP_GUARD =
-  '(function(){var d=document.currentScript.dataset;if(!document.modelContext&&!navigator.modelContext)return;var s=document.createElement("script");s.src=d.webmcpSrc;s.integrity=d.webmcpSri;s.crossOrigin="anonymous";document.head.appendChild(s)})();';
+  '(function(){var d=document.currentScript.dataset;if(!document.modelContext&&!navigator.modelContext)return;function load(){var s=document.createElement("script");s.src=d.webmcpSrc;s.integrity=d.webmcpSri;s.crossOrigin="anonymous";document.head.appendChild(s)}if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",load,{once:true});else load()})();';
 
 let bodyPromise: Promise<string> | null = null;
 let integrityPromise: Promise<string> | null = null;

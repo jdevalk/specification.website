@@ -86,19 +86,21 @@ const webmcpSri = await webmcpIntegrity();
     }
     <script is:inline>(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark")t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t);var m=document.createElement("meta");m.name="theme-color";m.id="theme-color-meta";m.content=t==="dark"?"#0e0e13":"#15803d";document.head.appendChild(m)}catch(e){}})();</script>
     {
-      /* Trusted Types default policy, registered before any other script so it
-        exists before Pagefind's search UI mounts. DOMPurify (self-hosted, vendored
-        by scripts/generate-assets.mjs) backs it. Worked example for
+      /* Trusted Types default policy. Both external scripts defer in document
+        order, so the policy exists before Pagefind's search UI mounts. DOMPurify
+        (self-hosted, vendored by scripts/generate-assets.mjs) backs it. Worked example for
         /spec/security/trusted-types/. Both are script-src 'self'. */
     }
     <script
       is:inline
+      defer
       src="/vendor/purify.min.js"
       integrity={sri("/vendor/purify.min.js")}
       crossorigin="anonymous"
     ></script>
     <script
       is:inline
+      defer
       src="/trusted-types-policy.js"
       integrity={sri("/trusted-types-policy.js")}
       crossorigin="anonymous"
