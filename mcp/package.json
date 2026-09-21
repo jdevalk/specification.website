@@ -19,7 +19,7 @@
     "@cloudflare/workers-types": "^5.20260911.1",
     "typescript": "^7.0.2",
     "wrangler": "^4.131.0",
-    "yaml": "^2.6.0"
+    "yaml": "^2.9.1"
   },
   "overrides": {
     "sharp": "^0.35.4"
