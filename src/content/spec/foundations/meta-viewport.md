@@ -7,13 +7,13 @@ status: required
 order: 40
 appliesTo: [all]
 relatedSlugs: [doctype, meta-charset, theme-color, dynamic-viewport-units, mobile-form-inputs]
-updated: "2026-07-27T00:00:00.000Z"
+updated: "2026-09-22T00:00:00.000Z"
 sources:
   - title: "MDN — Viewport meta tag"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/name/viewport"
     publisher: "MDN"
-  - title: "CSS Device Adaptation Module — viewport meta"
-    url: "https://drafts.csswg.org/css-device-adapt/#viewport-meta"
+  - title: "CSS Viewport Module Level 1 — the viewport meta element"
+    url: "https://drafts.csswg.org/css-viewport-1/#viewport-meta"
     publisher: "W3C"
   - title: "MDN — env() and the safe-area-inset-* variables"
     url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/env"
