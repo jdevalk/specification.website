@@ -94,9 +94,9 @@ context.
    detail and the canonical URL. A feature newly reaching Baseline supports a promotion or
    a new page; thin support argues against `required`. But most newly-Baseline features are
    CSS/JS authoring conveniences with no auditable website outcome — those do **not** earn a
-   page or a PR (the subgrid/PR #82 rule under "Scope & status rules"). Note them in Slack
-   under "skipped, and why" so the Baseline firehose stays visible without generating PR
-   spam.
+   page or a PR (the subgrid/PR #82 rule under "Scope & status rules"). Keep routine
+   exclusions in internal scan notes; mention only consequential scope questions in the
+   maintainer summary.
 3. **Dead or stale citations** — sources on existing pages that 404, moved, or no longer
    say what the page claims. Spot-check a **rotating slice** each run, not every page
    every day. For MDN sources specifically, resolve the current canonical URL via the
@@ -116,7 +116,7 @@ context.
   user-facing outcome: container queries → components adapt to the space they are
   given; Popover API → native semantics, focus and dismissal users can rely on. If you
   cannot phrase the page's "Why it matters" in terms of visitors, crawlers, or agents
-  — rather than the developer — skip it and mention it in Slack instead.
+  — rather than the developer — skip it and keep the reason in internal scan notes.
 - Status bar: `required` only if the web platform contract breaks without it; otherwise
   `recommended`/`optional`; `avoid` for outdated/harmful. Default to `recommended`.
 - Primary sources only (WHATWG / W3C / IETF / IANA / WCAG / schema.org first; MDN /
@@ -132,13 +132,22 @@ context.
   well-sourced but you cannot find implementations, do not open the PR and do not silently
   drop it. Put it in Slack with what you checked (MDN/BCD, Chrome Platform Status, the
   relevant CDN or server docs) and let Joost decide. If he says add it, add it.
-- **Record every turn-down.** Anything you skip on adoption or scope grounds gets an entry
-  in `src/content/considered/` — `title`, `date`, `reason` (`too-early` | `out-of-scope` |
-  `too-narrow`), `sources`, `revisit` (what would change our mind), and a short body. That
-  register at `/considered/` is public and is the reason the Slack "skipped, and why"
-  section exists: the two should agree. Adding an entry there is a normal PR, and it is the
-  right output for a scan that found something real but premature. When the reason later
-  expires, delete the entry in the same PR that adds the spec page.
+- **Record only omissions that need explaining.** `/considered/` is a selective public
+  register, not the scan's rejection log. Before proposing an entry, explain why a reader
+  could reasonably expect the topic in this specification: its connection to existing
+  guidance or a direct website outcome, and what the reader gains from an explanation
+  of its absence. Finding it in the scan, in IANA, or in a Baseline update is not enough.
+  Do not open considered-entry PRs for routine vendor integrations, specialised
+  infrastructure, or implementation choices merely to illustrate a scope rule. Keep
+  those exclusions in internal scan notes or an existing PR/issue discussion. A familiar
+  confusion such as AGENTS.md versus website-facing agent discovery can qualify.
+- **A finding is not a decision.** For a credible candidate with thin adoption, follow
+  the maintainer-call rule above. Do not turn the question into a public rejection.
+  After the maintainer decides to defer or exclude a candidate whose omission needs
+  explaining, a considered entry may be proposed with `title`, `date`, `reason`
+  (`too-early` | `out-of-scope` | `too-narrow`), primary `sources`, a concrete `revisit`
+  condition, and a short explanation. When the reason expires, remove the entry in the
+  same PR that adds the spec page.
 
 ## Dedup (critical for a daily job)
 
@@ -174,8 +183,9 @@ DM the maintainer with:
 - New topics found → PR links (or "flagged, needs implementation decision").
 - Status changes → page + what moved + source + PR link.
 - Stale/dead citations → page + broken source + fix PR link.
-- Anything deliberately skipped, and why — plus whether it earned a `/considered/` entry
-  (and the PR link if so). Anything you skipped for thin adoption goes here as an explicit
-  question for Joost, not as a closed decision.
+- Consequential scope questions or credible candidates deferred for thin adoption,
+  with the evidence checked and the decision needed from Joost. Link a `/considered/`
+  proposal only when it meets the selective-register rule above. Routine exclusions
+  remain in internal scan notes and do not require public entries or a list in Slack.
 
 Keep it scannable: grouped, one line each, links inline.

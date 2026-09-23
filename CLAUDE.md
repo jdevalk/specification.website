@@ -175,10 +175,14 @@ So there are three honest shapes for a page, and all three are fine:
 
 **This particular call belongs to the maintainer, not to an agent.** If a topic is real and well-sourced but adoption looks thin, do not add the page and do not silently drop it either — surface it (Slack, for the daily scan; the PR description otherwise) and let Joost decide.
 
-When a topic is turned down, record it in **`src/content/considered/`** — the hand-curated collection rendered at [`/considered/`](src/pages/considered.astro). One file per topic:
+**Record only omissions that need explaining.** `src/content/considered/`, rendered at [`/considered/`](src/pages/considered.astro), is a selective register of credible candidates a reader could reasonably expect this specification to cover. An entry must explain that expectation by connecting the topic to existing guidance or a direct website outcome, and explain why the omission matters to readers. Being found by the scan, registered at IANA, or newly Baseline is not enough.
+
+Routine exclusions stay in internal scan notes or the existing PR/issue discussion. Do not create public entries for every vendor integration, specialised infrastructure protocol, or CSS/JavaScript implementation choice. A familiar source of confusion, such as AGENTS.md versus website-facing agent discovery, can still merit a short scope explanation. Thin adoption remains the maintainer's decision; a scan finding is not a decision already taken.
+
+For an omission that meets this bar, use one file per topic:
 
 - `title`, `date` (the decision), `reason` (`too-early` | `out-of-scope` | `too-narrow`), `sources`, and `revisit` — the last being _what would change our mind_, which is what keeps the register from becoming a graveyard.
-- A two-or-three-paragraph body: what the thing is, why it did not land, and — where the reasoning generalises — what it is the reference case for.
+- A short body: what the thing is, why a reader might expect it here, and why it did not land. Do not add an entry merely to illustrate a general scope rule.
 
 Being in `/considered/` is not a rejection forever. When the reason expires (something ships it; adoption broadens), delete the entry in the same PR that adds the spec page.
 
