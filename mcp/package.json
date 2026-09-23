@@ -16,7 +16,7 @@
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^5.20260911.1",
+    "@cloudflare/workers-types": "^5.20260918.1",
     "typescript": "^7.0.2",
     "wrangler": "^4.134.0",
     "yaml": "^2.6.0"
