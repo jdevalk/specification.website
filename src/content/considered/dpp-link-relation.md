@@ -1,12 +1,15 @@
 ---
-title: 'The "dpp" link relation (Digital Product Passport)'
-date: "2026-08-01"
-reason: out-of-scope
-revisit: "A product page on the open web advertising its passport directly — an HTTP `Link` header or a `<link rel=\"dpp\">` in the document — rather than only a resolver behind a QR code. ESPR delegated acts for textiles, footwear or batteries requiring a web-discoverable passport would produce that quickly."
+title: "Digital Product Passport discovery"
+date: "2026-09-23"
+reason: too-early
+revisit: "Documented use of passport links or schema.org's hasDigitalProductPassport on public product pages, together with an independent consumer that discovers and uses those links. A resolver implementation alone does not establish adoption of the on-page convention."
 sources:
   - title: "IANA Link Relation Types registry — dpp"
     url: "https://www.iana.org/assignments/link-relations/link-relations.xhtml"
     publisher: "IANA"
+  - title: "schema.org — hasDigitalProductPassport"
+    url: "https://schema.org/hasDigitalProductPassport"
+    publisher: "schema.org"
   - title: "UN Transparency Protocol — Identity Resolver"
     url: "https://untp.unece.org/docs/specification/IdentityResolver/"
     publisher: "UNECE"
@@ -15,8 +18,8 @@ sources:
     publisher: "IETF"
 ---
 
-IANA has registered `dpp` as a link relation type: "a link from a context URI that identifies a product to its digital product passport", on the authority of the UN Transparency Protocol. A Digital Product Passport is the machine-readable record of a product's materials, provenance and sustainability data that EU Ecodesign regulation will require for a widening list of categories, starting with textiles, footwear and batteries in 2026–2027. Three separate signals arrived within a few months of each other: the IANA registration, schema.org 30.0 adding EU Digital Product Passport examples aligned to UN/CEFACT codes, and the UNECE/ISO joint initiative. On the face of it that looks like a topic arriving.
+Digital Product Passport discovery has two relevant forms. The registered `dpp` link relation connects a product identifier to its passport. The UN Transparency Protocol describes returning such links in an identity resolver's **linkset**, using RFC 9264, which this spec also covers under [the api-catalog](/spec/well-known/api-catalog/). That resolver workflow addresses specialised product infrastructure; it does not by itself establish what an ordinary product page should publish. UNTP is scheme-neutral: GS1 identifiers and QR codes are examples, not requirements for every resolver.
 
-The problem is where the link actually lives. UNTP does not put `rel="dpp"` on the product's web page. It puts it in a **linkset** — RFC 9264, the same media type this spec already covers under [the api-catalog](/spec/well-known/api-catalog/) — returned by an identity resolver, extending the GS1 Digital Link resolver schema. The context URI is a GS1 product identifier, the client is a scanner following a QR code on physical packaging, and the passport itself comes back as a verifiable credential. None of that is a property of a website. A spec page here would have to recommend that ordinary product pages emit a `Link: <…>; rel="dpp"` header, and nobody is doing that, because the protocol does not ask them to.
+An on-page route is now available. [Schema.org 30.1](https://schema.org/docs/releases.html), released on 16 September 2026, added `DigitalProductPassport` and `hasDigitalProductPassport` for `Product` and `Offer`. The property accepts a URL or a nested passport object, so a product page can advertise a passport in its [structured data](/spec/seo/structured-data/). Schema.org currently marks the term as being in its “new” area and asks for implementation feedback. This makes website-level discovery relevant to the spec, even though the resolver-specific workflow remains outside its general recommendations.
 
-So this is not the usual too-early case of a good header nothing reads yet. It is a registered relation that is genuinely in use, in a place this spec does not describe. That could change: the regulation lands on manufacturers who already run product pages, and the cheapest way to make a passport discoverable to a crawler rather than a barcode scanner is to advertise it from the page. If that becomes the convention, it is a page — and the [`Link` header](/spec/agent-readiness/link-headers/) and [structured data](/spec/seo/structured-data/) topics are where it would connect.
+The decision is now **too early** for a standalone page about on-page discovery. The sources reviewed establish the vocabulary and resolver mechanisms, but do not establish broad adoption by public product pages and independent consumers of their passport markup. That is an evidence gap, not proof that nobody uses it. Documented publisher and consumer implementations would justify revisiting a recommendation connected to the [Link header](/spec/agent-readiness/link-headers/) and structured-data topics.
