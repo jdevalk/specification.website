@@ -1,8 +1,8 @@
 ---
 title: "Google Search profile badges"
-date: "2026-09-21"
+date: "2026-09-23"
 reason: out-of-scope
-revisit: "A machine-readable form of the same claim that more than one consumer reads — a registered link relation, a `rel=\"me\"`-style assertion, or structured data — rather than a downloadable image governed by one vendor's brand guidelines. If the badge is ever replaced by markup a site can be audited for, the topic returns as a structured-data question."
+revisit: "A distinct, interoperable profile-identity convention consumed by independent systems, beyond the ordinary hyperlink in the badge. If one emerges, assess it alongside existing link-relation and structured-data guidance."
 sources:
   - title: "Add a Search profile badge to your website"
     url: "https://developers.google.com/search/docs/appearance/search-profiles"
@@ -12,8 +12,8 @@ sources:
     publisher: "WHATWG"
 ---
 
-A Google Search profile collects a publisher's or creator's output from across the web — their site, YouTube, Instagram, TikTok, X, Facebook — into one destination at `profile.google.com/@handle`, which people can follow to make that content likelier to surface in Discover. On 16 September 2026 Google dropped the follower threshold for claiming one to 10,000 and, alongside that, published guidance for putting a **badge** on your own site so readers can find and follow the profile.
+A Google Search profile collects a publisher's or creator's output from across the web into one destination at `profile.google.com/@handle`. Readers can follow it to make the linked content more likely to appear for them in Discover. Google's guidance, updated on 16 September 2026, explains how to link to that profile using a **badge** on your own site.
 
-The badge is not a web convention. Technically it is an anchor wrapping a supplied SVG — `<a href="https://profile.google.com/@example"><img src="google-search-badge.svg" alt="Google Search"></a>` — with the asset downloaded from Google and its placement governed by Google's brand guidelines. Nothing about it is parsed, registered, or negotiated. No crawler reads it, no second consumer honours it, and there is no outcome to check from outside beyond "an image is present". That is marketing collateral, and this spec does not tell sites which vendors' logos to display, any more than it covers a newsletter badge or an app-store button.
+The badge is an ordinary HTML link wrapping a supplied image, with placement governed by Google's brand guidelines. Browsers and crawlers can process that hyperlink, and its destination and accessible name can be checked. Google's instructions also permit a plain text link. They do not define a separate badge protocol or additional machine-readable identity semantics. The badge therefore does not warrant its own spec page: existing link and image guidance covers its technical behaviour, while choosing to display a vendor's branding is outside this specification's scope.
 
-It is worth recording because the underlying question — _how does a site assert that an off-site profile belongs to it?_ — is a real one that the web already answers in vendor-neutral ways. Link relations carry that claim in a registered, machine-readable form, and `Organization` markup with `sameAs` says the same thing to anyone parsing [structured data](/spec/seo/structured-data/), not just to one search engine. Those are the routes a page here would describe. A downloadable badge is the reference case for the opposite: a vendor affordance rendered on your page, which changes how a product treats you rather than what your website is.
+The broader question of associating a site with an off-site identity belongs with link relations and [structured data](/spec/seo/structured-data/), such as `sameAs` on the relevant `Person` or `Organization`. Those mechanisms state relationships explicitly; an ordinary badge link does not acquire the same semantics merely by displaying a logo. We would revisit the topic if a distinct interoperable identity convention emerged, rather than treating this particular visual asset as a website requirement.
