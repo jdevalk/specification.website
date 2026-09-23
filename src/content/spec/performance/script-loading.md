@@ -7,7 +7,7 @@ status: recommended
 order: 85
 appliesTo: [all]
 relatedSlugs: [critical-css, core-web-vitals, preload-prefetch-preconnect, resource-hints, lazy-loading]
-updated: "2026-05-29T09:55:11.000Z"
+updated: "2026-09-20T00:00:00.000Z"
 sources:
   - title: "HTML Living Standard — The script element"
     url: "https://html.spec.whatwg.org/multipage/scripting.html#the-script-element"
@@ -15,8 +15,8 @@ sources:
   - title: "MDN — <script>"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/script"
     publisher: "MDN"
-  - title: "Chrome for Developers — Eliminate render-blocking resources"
-    url: "https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources"
+  - title: "Chrome for Developers — Render-blocking requests"
+    url: "https://developer.chrome.com/docs/performance/insights/render-blocking"
     publisher: "Google"
   - title: "web.dev — JavaScript module scripts"
     url: "https://web.dev/articles/modulepreload"
@@ -125,6 +125,6 @@ See [resource hints](/spec/performance/resource-hints/) for the decision table.
 
 - View source on every page — every `<script src>` should have `defer`, `async`, or `type="module"` unless it is a tiny inline script with a documented reason.
 - Chrome DevTools → Network → JS — column "Initiator" should show the script started loading during the initial HTML parse, not after.
-- Lighthouse "Eliminate render-blocking resources" reports zero offending scripts.
+- Lighthouse's "Render-blocking requests" insight reports zero offending scripts. (Before Lighthouse 13 this was the "Eliminate render-blocking resources" audit.)
 - WebPageTest filmstrip — the first paint should not be delayed by JavaScript download/execution.
 - For CSP compatibility, run [CSP Evaluator](https://csp-evaluator.withgoogle.com/) on production headers and confirm every `<script>` is allowed.

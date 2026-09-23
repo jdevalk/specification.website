@@ -7,7 +7,7 @@ status: recommended
 order: 80
 appliesTo: [all]
 relatedSlugs: [core-web-vitals, font-loading, preload-prefetch-preconnect]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-09-20T00:00:00.000Z"
 sources:
   - title: "web.dev — Extract critical CSS"
     url: "https://web.dev/articles/extract-critical-css"
@@ -18,8 +18,8 @@ sources:
   - title: "MDN — Render-blocking resources"
     url: "https://developer.mozilla.org/en-US/docs/Glossary/Render_blocking"
     publisher: "MDN"
-  - title: "Chrome for Developers — Eliminate render-blocking resources"
-    url: "https://developer.chrome.com/docs/lighthouse/performance/render-blocking-resources"
+  - title: "Chrome for Developers — Render-blocking requests"
+    url: "https://developer.chrome.com/docs/performance/insights/render-blocking"
     publisher: "Google"
 ---
 
@@ -75,5 +75,5 @@ Use `async` only for truly independent third-party scripts.
 ## Verification
 
 - DevTools → Performance → record a load. The "Render-Blocking" badge marks every blocking request.
-- Lighthouse "Eliminate render-blocking resources" lists them with estimated savings.
+- Lighthouse's "Render-blocking requests" insight lists them with estimated savings. (Before Lighthouse 13 this was the "Eliminate render-blocking resources" audit.)
 - View source: every non-critical `<link rel="stylesheet">` should be deferred; every `<script>` in `<head>` should have `defer` or `async`.
