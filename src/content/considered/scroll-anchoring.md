@@ -1,8 +1,8 @@
 ---
 title: "Scroll anchoring and overflow-anchor"
-date: "2026-09-19"
+date: "2026-09-23"
 reason: too-narrow
-revisit: "Evidence that opting out is a widespread anti-pattern — `overflow-anchor: none` showing up across real sites, or a measurable divergence between a site's Cumulative Layout Shift and what users experience while scrolling. Either would make this an `avoid` page rather than a missing `recommended` one."
+revisit: "Evidence that unnecessary use of `overflow-anchor: none` commonly harms readers, or that existing layout-stability guidance misses a widespread scrolling problem. A recommendation would need to distinguish harmful opt-outs from deliberate position management."
 sources:
   - title: "CSS Scroll Anchoring Module Level 1"
     url: "https://www.w3.org/TR/css-scroll-anchoring-1/"
@@ -12,8 +12,8 @@ sources:
     publisher: "MDN"
 ---
 
-Scroll anchoring is the browser behaviour that stops a page jumping under your thumb. When an image finally decodes, or an advert injects itself, or a late stylesheet reflows a paragraph — and it happens _above_ where you are reading — the browser compensates by adjusting the scroll offset, so the content you were looking at stays put. Chrome has done this since 2017 and Firefox since 2019. Safari 27 shipped it on 14 September 2026, which is the day the feature reached Baseline. Until that day, every iPhone reader got the jumping version of the web no matter what the author did.
+Scroll anchoring helps keep the content you are reading in place when content above it changes size. The browser selects an anchor and adjusts the scroll offset when that anchor moves, subject to the specification's suppression rules. Chrome has supported it since 2017 and Firefox since 2019; Safari 27 added support on 14 September 2026. Earlier Safari versions lacked this automatic compensation, but authors could still prevent many shifts by reserving space for images, adverts and embeds.
 
-That makes it a real, user-facing outcome, and the sort of thing this spec usually covers. It does not get a page because there is nothing for a site to do. The behaviour is on by default, in every engine, with no opt-in. The single authoring control the specification defines — `overflow-anchor` — exists only to switch it **off**, for the narrow cases where a scripted scroller does its own position management and the browser's compensation fights it. A page here would consist of one instruction: do not use this property. That is not a specification of what a good website does; it is a footnote.
+This does not warrant a standalone spec page because supporting browsers enable it by default, and the general website outcome is already covered by [Core Web Vitals](/spec/performance/core-web-vitals/). The `overflow-anchor` property lets authors exclude a scrolling box or part of its content from anchoring. That can be appropriate when a scripted scroller manages its own position, so a blanket instruction to avoid the property would also be wrong.
 
-The site-side half of the problem is already covered. Content jumping because space was not reserved for it is Cumulative Layout Shift, and reserving that space — `width`/`height` on images, explicit dimensions for embeds and late-loading content — belongs to [Core Web Vitals](/spec/performance/core-web-vitals/), where it already lives. Scroll anchoring is the browser's mitigation for a page that got that wrong; it is not a substitute for getting it right, and it does not help the shift a user sees inside the viewport. The reason to revisit is if the opt-out turns out to be common in the wild, because then the honest page is an `avoid` one about disabling it, not a `recommended` one about enabling something that is already on.
+Scroll anchoring compensates for some changes in layout; it does not prevent those changes or replace reserving space. Keeping an anchor in place also does not guarantee that every other visible element stays put. We would revisit a separate recommendation if evidence showed that unnecessary opt-outs commonly harm readers, or that existing layout-stability guidance misses a widespread scrolling problem. Any such advice would need to preserve legitimate uses of `overflow-anchor: none`.
