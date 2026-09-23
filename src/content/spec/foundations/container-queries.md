@@ -7,13 +7,13 @@ status: recommended
 order: 160
 appliesTo: [all]
 relatedSlugs: [css-containment, dynamic-viewport-units, anchor-positioning]
-updated: "2026-06-27T00:00:00.000Z"
+updated: "2026-09-22T00:00:00.000Z"
 sources:
-  - title: "CSS Containment Module Level 3"
-    url: "https://drafts.csswg.org/css-contain-3/"
+  - title: "CSS Conditional Rules Module Level 5 — container queries and style queries"
+    url: "https://drafts.csswg.org/css-conditional-5/#container-queries"
     publisher: "W3C CSS Working Group"
-  - title: "CSS Conditional Rules Module Level 5 — style queries"
-    url: "https://drafts.csswg.org/css-conditional-5/"
+  - title: "CSS Containment Module Level 2"
+    url: "https://drafts.csswg.org/css-contain-2/"
     publisher: "W3C CSS Working Group"
   - title: "MDN — @container"
     url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@container"
