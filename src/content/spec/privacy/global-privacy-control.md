@@ -6,8 +6,8 @@ summary: "Global Privacy Control is a browser-level signal that tells websites t
 status: recommended
 order: 30
 appliesTo: [all]
-relatedSlugs: [cookie-consent, privacy-policy, analytics-privacy]
-updated: "2026-07-29T00:00:00.000Z"
+relatedSlugs: [cookie-consent, privacy-policy, analytics-privacy, gpc-json]
+updated: "2026-09-24T00:00:00.000Z"
 sources:
   - title: "Global Privacy Control (GPC) — W3C Working Draft"
     url: "https://www.w3.org/TR/gpc/"
@@ -65,6 +65,8 @@ When the signal is present:
 - **Disclose your behaviour** in the privacy policy: state that you honour GPC and what that means in practice.
 
 For sites that serve both EU and US users, GPC should be treated as one of several inputs alongside cookie consent and any in-product privacy settings. The strictest preference wins.
+
+Once the signal is actually processed, you can say so in machine-readable form by publishing a [GPC support resource at `/.well-known/gpc.json`](/spec/well-known/gpc-json/). That file declares the origin's position for tooling that wants to ask without visiting; it is a declaration, not an implementation, so publish it second.
 
 ## Common mistakes
 
