@@ -42,7 +42,7 @@ By default, an origin's GPC support is **unknown**. The file's job is to replace
 
 The `Sec-GPC` header only tells you something when a user who has enabled GPC visits. There is no way, from the outside, to ask a site whether it honours the signal — a crawler cannot send a request and infer intent from the response body. The support resource is the answer to that question, at a fixed path, for anyone who wants to ask it without visiting.
 
-That matters to three audiences. Privacy extensions and GPC-aware browsers can show a user whether the site they are on has declared support. Regulators and researchers can survey compliance across a population of sites rather than testing them one at a time. And consent-management platforms and privacy tooling use it as the site's own statement of position, which is why the major CMPs publish it on their customers' behalf.
+That matters to three audiences. Privacy extensions and GPC-aware browsers can show a user whether the site they are on has declared support. Regulators and researchers can survey compliance across a population of sites rather than testing them one at a time. And consent-management platforms and privacy tooling use it as the site's own statement of position.
 
 It is also the cheapest possible part of a GPC implementation: a static file. If you have already done the hard part — actually processing the signal — declaring it costs one commit.
 
