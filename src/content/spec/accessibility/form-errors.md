@@ -6,7 +6,7 @@ summary: "When a form submission fails, errors must be identified in text, assoc
 status: required
 order: 110
 appliesTo: [all]
-relatedSlugs: [form-labels, aria-usage, color-contrast, mobile-form-inputs, accessible-authentication, redundant-entry]
+relatedSlugs: [form-labels, aria-usage, color-contrast, mobile-form-inputs, accessible-authentication, redundant-entry, status-messages]
 updated: "2026-07-28T00:00:00.000Z"
 sources:
   - title: "WCAG 3.3.1 — Error Identification (Level A)"
@@ -66,7 +66,7 @@ Rules:
 
 - **Identify the error in text.** "Email is required" — not just a red border.
 - **Tell the user how to fix it.** "Enter a date in the format DD/MM/YYYY", not "Invalid date".
-- **Announce dynamically inserted errors.** Use `role="alert"` (assertive) or a live region (`aria-live="polite"`) so screen readers hear the change.
+- **Announce dynamically inserted errors.** Use `role="alert"` (assertive) or a live region (`aria-live="polite"`) so screen readers hear the change — see [status messages](/spec/accessibility/status-messages/) for the mechanics.
 - **Set `aria-invalid="true"`** on the field — and remove it when the user corrects the value.
 - **Don't rely on colour alone.** Pair red with an icon, a word ("Error"), or a heavier border.
 - **Don't validate every keystroke.** Validate on blur or on submit; constant interruptions are unusable with a screen reader.

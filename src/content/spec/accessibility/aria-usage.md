@@ -6,7 +6,7 @@ summary: "ARIA can make custom widgets accessible, but the first rule of ARIA is
 status: recommended
 order: 80
 appliesTo: [all]
-relatedSlugs: [semantic-html, form-labels, keyboard-navigation]
+relatedSlugs: [semantic-html, form-labels, keyboard-navigation, status-messages]
 updated: "2026-08-21T00:00:00.000Z"
 sources:
   - title: "ARIA in HTML (W3C Recommendation)"
