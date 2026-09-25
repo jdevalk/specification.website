@@ -6,7 +6,7 @@ summary: "Use `:has()` together with `:user-invalid`, `:user-valid`, `:placehold
 status: recommended
 order: 160
 appliesTo: [all]
-relatedSlugs: [form-errors, form-labels, focus-indicators, semantic-html]
+relatedSlugs: [form-errors, form-labels, focus-indicators, semantic-html, status-messages]
 updated: "2026-07-28T00:00:00.000Z"
 sources:
   - title: "W3C Selectors Level 4 — Relational selector `:has()`"
