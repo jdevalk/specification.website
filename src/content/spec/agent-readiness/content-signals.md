@@ -7,7 +7,7 @@ status: optional
 order: 42
 appliesTo: [all]
 relatedSlugs: [robots-for-ai-crawlers, robots-txt, tdmrep, agent-readiness-overview, web-bot-auth]
-updated: "2026-07-28T00:00:00.000Z"
+updated: "2026-09-26T00:00:00.000Z"
 sources:
   - title: "IETF AI Preferences WG (aipref) — drafts"
     url: "https://datatracker.ietf.org/wg/aipref/documents/"
@@ -33,7 +33,7 @@ Allow: /
 Content-Signal: search=yes, ai-input=yes, ai-train=no
 ```
 
-The three values that are emerging as canonical:
+The three values validators read today:
 
 - **`search`** — whether the content may be indexed by search engines.
 - **`ai-input`** — whether the content may be fetched as live input to an AI system (retrieval-augmented generation, summarisation at query time).
@@ -43,14 +43,16 @@ Each takes `yes` or `no`. Multiple values are comma-separated on a single `Conte
 
 ## Status of the proposal
 
-This is **not yet a settled standard**, and the two halves of it are in very different health. The work is split across two efforts:
+This is **not yet a settled standard**. The work is split across two efforts:
 
-- The **IETF AI Preferences working group ([aipref](https://datatracker.ietf.org/wg/aipref/documents/))** is working on a vocabulary and protocol-level definition.
+- The **IETF AI Preferences working group ([aipref](https://datatracker.ietf.org/wg/aipref/documents/))** is defining both the vocabulary and the mechanism that attaches it to content.
 - The **IAB Tech Lab Content Signals project** has published a parallel specification aimed at industry adoption.
 
-Inside the IETF work, separate the *vocabulary* from the *attachment mechanism*. The vocabulary — what `search`, `ai-input` and `ai-train` mean — is alive and was being edited for publication as recently as April 2026 ([draft-ietf-aipref-vocab](https://datatracker.ietf.org/doc/draft-ietf-aipref-vocab/)). The document that would define how you actually bind those preferences to content over HTTP, [draft-ietf-aipref-attach](https://datatracker.ietf.org/doc/draft-ietf-aipref-attach/), **expired on 1 May 2026** and has not been reposted; its text has seen no edits in the working group's repository since September 2025. So the part of Content Signals a site can act on today — a line in `robots.txt` — currently rests on the IAB Tech Lab specification and on validator convention, not on a live IETF draft.
+Both IETF documents are currently active. [draft-ietf-aipref-vocab](https://datatracker.ietf.org/doc/draft-ietf-aipref-vocab/) reached revision 08 on 14 September 2026; [draft-ietf-aipref-attach](https://datatracker.ietf.org/doc/draft-ietf-aipref-attach/), which defines how a preference binds to content over HTTP, lapsed in mid-2026 and was reposted as revision 05 on 19 August 2026. Neither has been handed to the IESG, so neither is near publication as an RFC.
 
-That is not a reason to avoid it, but it is a reason to expect the syntax to move. Treat Content Signals as recommended-to-experiment-with, not as a finalised standard. The directive will be ignored by every crawler that does not yet parse it — which today is most of them.
+The part worth knowing is that **the IETF vocabulary does not use the names you put in `robots.txt`.** The draft labels its three usage categories `train-ai`, `ai-use` and `search`; the directive that validators and Cloudflare's published policy actually read spells the first two `ai-train` and `ai-input`. So the line you can deploy today rests on the IAB Tech Lab specification and on validator convention, and the two vocabularies will have to converge before an RFC lands.
+
+That is not a reason to avoid it, but it is a concrete reason to expect the syntax to move. Treat Content Signals as recommended-to-experiment-with, not as a finalised standard. The directive will be ignored by every crawler that does not yet parse it — which today is most of them.
 
 ## Why it matters
 
@@ -92,6 +94,7 @@ Content-Signal: search=yes, ai-input=yes, ai-train=yes
 - Putting the directive outside a group (no preceding `User-agent:` line). Some parsers will silently ignore it.
 - Conflicting with `Disallow:`. If you `Disallow: /` for a bot, that bot was never going to fetch the page to read your `Content-Signal:`. They contradict; pick one.
 - Inventing values beyond `yes` / `no`. The vocabulary is small on purpose.
+- Writing the IETF draft's labels (`train-ai`, `ai-use`) into `robots.txt`. Nothing reads those; the deployed directive uses `ai-train` and `ai-input`.
 - Treating it as a substitute for `Disallow:`. It is complementary.
 
 ## Verification
