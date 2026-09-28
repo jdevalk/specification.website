@@ -33,10 +33,10 @@
     "check:skill": "node scripts/check-skill.mjs --check"
   },
   "dependencies": {
-    "@astrojs/mdx": "^8.0.1",
+    "@astrojs/mdx": "^8.0.2",
     "@astrojs/rss": "^4.0.19",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.3.3",
+    "astro": "^7.3.5",
     "dompurify": "^3.4.14",
     "tailwindcss": "^4.3.0"
   },
