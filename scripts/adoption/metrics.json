@@ -1,0 +1,215 @@
+{
+  "$comment": "Maps spec page slugs to HTTP Archive custom-metric signals. Each metric lists one or more JSONPath conditions against the `custom_metrics` column of `httparchive.pages.YYYY_MM_01_desktop`. The fetch script builds one COUNTIF per metric; `combine: any` counts a page when at least one condition holds.",
+  "metrics": [
+    {
+      "conditions": [
+        {
+          "jsonPath": "$._well-known.\"/.well-known/gpc.json\".found",
+          "op": "eq",
+          "value": "true"
+        }
+      ],
+      "label": "/.well-known/gpc.json",
+      "slug": "gpc-json"
+    },
+    {
+      "conditions": [
+        {
+          "jsonPath": "$._well-known.\"/.well-known/security.txt\".found",
+          "op": "eq",
+          "value": "true"
+        }
+      ],
+      "label": "/.well-known/security.txt",
+      "slug": "security-txt"
+    },
+    {
+      "conditions": [
+        {
+          "jsonPath": "$._well-known.\"/.well-known/assetlinks.json\".found",
+          "op": "eq",
+          "value": "true"
+        }
+      ],
+      "label": "/.well-known/assetlinks.json",
+      "slug": "assetlinks-json"
+    },
+    {
+      "conditions": [
+        {
+          "jsonPath": "$._well-known.\"/.well-known/apple-app-site-association\".found",
+          "op": "eq",
+          "value": "true"
+        }
+      ],
+      "label": "/.well-known/apple-app-site-association",
+      "slug": "apple-app-site-association"
+    },
+    {
+      "conditions": [
+        {
+          "jsonPath": "$._well-known.\"/.well-known/change-password\".found",
+          "op": "eq",
+          "value": "true"
+        }
+      ],
+      "label": "/.well-known/change-password",
+      "slug": "change-password"
+    },
+    {
+      "conditions": [
+        {
+          "jsonPath": "$._well-known.\"/.well-known/webauthn\".found",
+          "op": "eq",
+          "value": "true"
+        }
+      ],
+      "label": "/.well-known/webauthn",
+      "slug": "webauthn"
+    },
+    {
+      "conditions": [
+        {
+          "jsonPath": "$._well-known.\"/.well-known/ai-catalog.json\".found",
+          "op": "eq",
+          "value": "true"
+        }
+      ],
+      "label": "/.well-known/ai-catalog.json (agent catalog)",
+      "slug": "api-catalog"
+    },
+    {
+      "conditions": [
+        {
+          "jsonPath": "$._well-known.\"/.well-known/ard.json\".found",
+          "op": "eq",
+          "value": "true"
+        }
+      ],
+      "label": "/.well-known/ard.json",
+      "note": "Measured from the October 2026 crawl onward (metric added September 2026).",
+      "slug": "agentic-resource-discovery"
+    },
+    {
+      "conditions": [
+        {
+          "jsonPath": "$._well-known.\"/.well-known/nodeinfo\".found",
+          "op": "eq",
+          "value": "true"
+        }
+      ],
+      "label": "/.well-known/nodeinfo",
+      "note": "Needs the well-known metric extension to land upstream first.",
+      "slug": "nodeinfo"
+    },
+    {
+      "conditions": [
+        {
+          "jsonPath": "$._well-known.\"/.well-known/webfinger\".found",
+          "op": "eq",
+          "value": "true"
+        }
+      ],
+      "label": "/.well-known/webfinger",
+      "note": "Needs the well-known metric extension to land upstream first.",
+      "slug": "webfinger"
+    },
+    {
+      "conditions": [
+        {
+          "jsonPath": "$._well-known.\"/.well-known/oauth-authorization-server\".found",
+          "op": "eq",
+          "value": "true"
+        }
+      ],
+      "label": "/.well-known/oauth-authorization-server",
+      "note": "Needs the well-known metric extension to land upstream first.",
+      "slug": "oauth-authorization-server"
+    },
+    {
+      "conditions": [
+        {
+          "jsonPath": "$._well-known.\"/.well-known/oauth-protected-resource\".found",
+          "op": "eq",
+          "value": "true"
+        }
+      ],
+      "label": "/.well-known/oauth-protected-resource",
+      "note": "Needs the well-known metric extension to land upstream first.",
+      "slug": "oauth-protected-resource"
+    },
+    {
+      "conditions": [
+        {
+          "jsonPath": "$._well-known.\"/.well-known/openid-configuration\".found",
+          "op": "eq",
+          "value": "true"
+        }
+      ],
+      "label": "/.well-known/openid-configuration",
+      "note": "Needs the well-known metric extension to land upstream first.",
+      "slug": "openid-configuration"
+    },
+    {
+      "conditions": [
+        {
+          "jsonPath": "$._well-known.\"/.well-known/traffic-advice\".found",
+          "op": "eq",
+          "value": "true"
+        }
+      ],
+      "label": "/.well-known/traffic-advice",
+      "note": "Needs the well-known metric extension to land upstream first.",
+      "slug": "traffic-advice"
+    },
+    {
+      "conditions": [
+        { "jsonPath": "$._llms-txt-valid.valid", "op": "eq", "value": "true" }
+      ],
+      "label": "/llms.txt (valid)",
+      "slug": "llms-txt"
+    },
+    {
+      "conditions": [
+        { "jsonPath": "$._robots_txt.status", "op": "eq", "value": "200" }
+      ],
+      "label": "/robots.txt (HTTP 200)",
+      "slug": "robots-txt"
+    },
+    {
+      "combine": "any",
+      "conditions": [
+        {
+          "jsonPath": "$._robots_txt.record_counts.by_useragent.\"gptbot\"",
+          "op": "exists"
+        },
+        {
+          "jsonPath": "$._robots_txt.record_counts.by_useragent.\"claudebot\"",
+          "op": "exists"
+        },
+        {
+          "jsonPath": "$._robots_txt.record_counts.by_useragent.\"ccbot\"",
+          "op": "exists"
+        },
+        {
+          "jsonPath": "$._robots_txt.record_counts.by_useragent.\"anthropic-ai\"",
+          "op": "exists"
+        },
+        {
+          "jsonPath": "$._robots_txt.record_counts.by_useragent.\"google-extended\"",
+          "op": "exists"
+        },
+        {
+          "jsonPath": "$._robots_txt.record_counts.by_useragent.\"perplexitybot\"",
+          "op": "exists"
+        },
+        {
+          "jsonPath": "$._robots_txt.record_counts.by_useragent.\"bytespider\"",
+          "op": "exists"
+        }
+      ],
+      "label": "robots.txt rules naming AI crawlers",
+      "slug": "robots-for-ai-crawlers"
+    }
+  ]
+}

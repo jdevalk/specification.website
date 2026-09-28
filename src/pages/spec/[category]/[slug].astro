@@ -1,6 +1,23 @@
 ---
 import { getCollection, render } from "astro:content";
 import SpecLayout from "~/layouts/SpecLayout.astro";
+import adoptionDataRaw from "~/data/adoption.json";
+
+interface AdoptionMetric {
+  label: string;
+  pages: number;
+  pagesPct: number;
+  origins: number;
+  originsPct: number;
+}
+
+interface AdoptionData {
+  crawl: string | null;
+  generatedAt: string | null;
+  metrics: Record<string, AdoptionMetric>;
+}
+
+const adoptionData = adoptionDataRaw as AdoptionData;
 
 export async function getStaticPaths() {
   const all = await getCollection("spec", ({ data }) => !data.draft);
@@ -32,6 +49,7 @@ const related = entry.data.relatedSlugs
   .filter((r): r is NonNullable<typeof r> => r !== null);
 
 const slug = entry.data.slug ?? entry.id.split("/").pop()!;
+const adoption = adoptionData.metrics[slug] ?? null;
 ---
 
 <SpecLayout
@@ -44,6 +62,8 @@ const slug = entry.data.slug ?? entry.id.split("/").pop()!;
   updated={entry.data.updated}
   appliesTo={entry.data.appliesTo}
   slug={slug}
+  adoption={adoption}
+  adoptionCrawl={adoptionData.crawl}
 >
   <Content />
 </SpecLayout>
