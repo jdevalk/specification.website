@@ -7,8 +7,9 @@ the spec pages render them automatically.
 ## One-time setup (Google Cloud)
 
 The HTTP Archive dataset is public, but BigQuery bills the _querying_ project,
-so you need a small GCP project of your own. One aggregation query per month
-fits comfortably inside the 1 TiB/month free tier.
+so you need a GCP project of your own. Every refresh first validates the query
+and estimates bytes processed with a free dry run. Executed aggregations have a
+default 100 GiB billing cap; the free tier is shared with other project usage.
 
 1. Create a GCP project and enable the BigQuery API.
 2. Create a service account (no keys needed) with the **BigQuery Job User**
@@ -32,12 +33,33 @@ fits comfortably inside the 1 TiB/month free tier.
   refreshed `src/data/adoption.json`.
 - Manually: `npm run adoption` (needs `GCP_PROJECT_ID` set and Application
   Default Credentials, e.g. via `gcloud auth application-default login`).
+- Validate only: `GCP_PROJECT_ID=your-project ADOPTION_DRY_RUN=1 npm run adoption`.
+  This performs a BigQuery dry run and prints the estimated bytes. It never runs
+  the aggregation or writes `src/data/adoption.json`.
+- Select a month explicitly with `ADOPTION_CRAWL=2026-09`; otherwise the script
+  browses recent partitions with the free table preview API and selects the
+  newest non-empty one. Availability does not establish crawl completeness.
+- Print SQL offline: `ADOPTION_PRINT_QUERY=1 npm run adoption`. No project or
+  credentials are needed; `ADOPTION_CRAWL` defaults to the current UTC month.
+- Override the execution cap with `ADOPTION_MAX_BYTES_BILLED` (a positive number
+  of bytes; default `107374182400`).
 - The workflow can also be triggered by hand via workflow_dispatch.
+
+The query reads `httparchive.crawl.pages`, restricted to one date, desktop
+clients, and root pages. It counts distinct `root_page` values, retaining the
+scheme and port instead of collapsing different origins to a hostname.
+
+Run regression checks with `node --test scripts/adoption/fetch-adoption.test.mjs`.
 
 ## Adding a topic
 
 Add an entry to `metrics.json`: the spec page `slug` plus one or more
-conditions against the `custom_metrics` JSON column. Find the exact key and
-field shapes in the [custom-metrics repo](https://github.com/HTTPArchive/custom-metrics/tree/main/dist).
-The script warns when a configured top-level key is missing from the crawl, so
-a typo surfaces on the first run instead of silently reading 0.
+conditions against a JSON field inside the `custom_metrics` STRUCT. Each
+condition supplies `field` (for example, `well_known`, `robots_txt`, or `other`)
+and a `jsonPath` relative to that field. llms.txt results live at
+`custom_metrics.other.llms_txt_validation`. Verify names against the live table
+schema and preview data; raw metric names differ from the stored field names.
+Find metric behaviour in the [custom-metrics repo](https://github.com/HTTPArchive/custom-metrics/tree/main/dist).
+A missing STRUCT field fails validation, while missing JSON properties still
+produce zero matches. The pending upstream metrics remain unmeasured until a
+crawl includes them.

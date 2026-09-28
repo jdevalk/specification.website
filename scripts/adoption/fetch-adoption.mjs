@@ -1,130 +1,96 @@
 #!/usr/bin/env node
 /**
- * Fetches HTTP Archive custom-metric adoption numbers for spec topics and
- * writes them to src/data/adoption.json, which the spec pages render.
- *
- * Reads its metric definitions from ./metrics.json. Each metric becomes one
- * COUNTIF over the latest `httparchive.pages.YYYY_MM_01_desktop` table, so a
- * full refresh is a single BigQuery aggregation query.
- *
- * Auth: Application Default Credentials. Locally that means
- * `gcloud auth application-default login`; in CI the adoption workflow
- * authenticates via Workload Identity Federation. Query billing lands on
- * GCP_PROJECT_ID (the httparchive dataset itself is public).
- *
- * Usage: GCP_PROJECT_ID=your-project node scripts/adoption/fetch-adoption.mjs
+ * Aggregate desktop root-page metrics from httparchive.crawl.pages.
+ * GCP_PROJECT_ID selects the querying project; ADC supplies credentials.
+ * ADOPTION_DRY_RUN=1 validates and estimates without executing or writing data.
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 import { BigQuery } from "@google-cloud/bigquery";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const projectId = process.env.GCP_PROJECT_ID;
-if (!projectId) {
-  console.error(
-    "error: GCP_PROJECT_ID is required (project billed for the query)",
-  );
-  process.exit(1);
+const defaultMaximumBytesBilled = String(100 * 1024 ** 3);
+
+function validateCrawl(crawl) {
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(crawl)) {
+    throw new Error("ADOPTION_CRAWL must be YYYY-MM");
+  }
+  return crawl;
 }
 
-const config = JSON.parse(readFileSync(resolve(here, "metrics.json"), "utf8"));
-const bigquery = new BigQuery({ projectId });
-
-/** Newest httparchive.pages crawl table that actually exists (data lands mid-month). */
-async function latestCrawlTable() {
-  const now = new Date();
+/** Browse one row per partition via the free tabledata.list API, not a query. */
+export async function latestCrawl(bigquery, now = new Date()) {
   for (let back = 0; back <= 6; back++) {
-    const d = new Date(
+    const date = new Date(
       Date.UTC(now.getUTCFullYear(), now.getUTCMonth() - back, 1),
     );
-    const suffix = `${d.getUTCFullYear()}_${String(d.getUTCMonth() + 1).padStart(2, "0")}_01_desktop`;
+    const crawl = date.toISOString().slice(0, 7);
     try {
-      await bigquery.query({
-        query: `SELECT 1 FROM \`httparchive.pages.${suffix}\` LIMIT 0`,
-        dryRun: false,
-      });
-      return suffix;
+      const [rows] = await bigquery
+        .dataset("crawl", { projectId: "httparchive" })
+        .table(`pages$${crawl.replace("-", "")}01`)
+        .getRows({ maxResults: 1, selectedFields: "date" });
+      if (rows.length) return crawl;
     } catch (error) {
       if (error?.code !== 404) throw error;
     }
   }
-  throw new Error(
-    "no httparchive.pages crawl table found in the last 6 months",
-  );
+  throw new Error("no HTTP Archive crawl found in the last 6 months");
+}
+
+function sqlString(value) {
+  return `'${String(value).replaceAll("\\", "\\\\").replaceAll("'", "\\'")}'`;
 }
 
 function conditionSql(condition) {
+  if (!/^[a-z_]+$/.test(condition.field)) {
+    throw new Error(`invalid custom_metrics field: ${condition.field}`);
+  }
+  const input = `custom_metrics.${condition.field}, ${sqlString(condition.jsonPath)}`;
   if (condition.op === "eq") {
-    return `JSON_VALUE(custom_metrics, '${condition.jsonPath}') = '${condition.value}'`;
+    return `JSON_VALUE(${input}) = ${sqlString(condition.value)}`;
   }
   if (condition.op === "exists") {
-    return `JSON_QUERY(custom_metrics, '${condition.jsonPath}') IS NOT NULL`;
+    // JSON null is a value for native JSON columns; it is not evidence of a rule.
+    return `COALESCE(JSON_TYPE(JSON_QUERY(${input})) != 'null', FALSE)`;
   }
   throw new Error(`unknown condition op: ${condition.op}`);
 }
 
-function metricSql(metric, index) {
-  const parts = metric.conditions.map(conditionSql);
-  const combined =
-    metric.combine === "all" ? parts.join(" AND ") : parts.join(" OR ");
-  return `COUNTIF(${combined}) AS pages_m${index}`;
-}
-
-/** Warn when a configured top-level custom-metric key is absent from the crawl. */
-async function checkKeys(table, keys) {
-  const [rows] = await bigquery.query({
-    query: `SELECT custom_metrics FROM \`httparchive.pages.${table}\` LIMIT 1`,
-  });
-  const parsed = JSON.parse(rows[0]?.custom_metrics ?? "{}");
-  const missing = [...new Set(keys)].filter((k) => !(k in parsed));
-  for (const key of missing) {
-    console.warn(
-      `warning: custom metric key "${key}" not present in crawl ${table}; ` +
-        `those adoption numbers will read 0. Available keys: ${Object.keys(parsed).slice(0, 12).join(", ")}…`,
-    );
-  }
-}
-
-/** Origins-based COUNTIF needs the host per hit; do it with a second pass over hosts. */
-function originsSql(metric, index) {
-  const parts = metric.conditions.map(conditionSql);
-  const combined =
-    metric.combine === "all" ? parts.join(" AND ") : parts.join(" OR ");
-  return `COUNT(DISTINCT IF(${combined}, NET.HOST(url), NULL)) AS origins_m${index}`;
-}
-
-function buildQuery(table) {
+export function buildQuery(config, crawl) {
+  validateCrawl(crawl);
   const selects = config.metrics
-    .flatMap((metric, i) => [metricSql(metric, i), originsSql(metric, i)])
+    .flatMap((metric, i) => {
+      if (!metric.conditions.length)
+        throw new Error(`no conditions: ${metric.slug}`);
+      const combined = metric.conditions
+        .map(conditionSql)
+        .join(metric.combine === "all" ? " AND " : " OR ");
+      return [
+        `COUNTIF(${combined}) AS pages_m${i}`,
+        `COUNT(DISTINCT IF(${combined}, root_page, NULL)) AS origins_m${i}`,
+      ];
+    })
     .join(",\n    ");
   return `SELECT
     COUNT(*) AS pages,
-    COUNT(DISTINCT NET.HOST(url)) AS origins,
+    COUNT(DISTINCT root_page) AS origins,
     ${selects}
-  FROM \`httparchive.pages.${table}\``;
+  FROM \`httparchive.crawl.pages\`
+  WHERE date = DATE '${crawl}-01'
+    AND client = 'desktop'
+    AND is_root_page`;
 }
 
-async function main() {
-  // Offline mode: print the generated SQL without touching BigQuery.
-  if (process.env.ADOPTION_PRINT_QUERY) {
-    console.log(buildQuery("2026_09_01_desktop"));
-    return;
+export function buildReport(config, crawl, row) {
+  const pagesTotal = Number(row?.pages);
+  const originsTotal = Number(row?.origins);
+  if (!(pagesTotal > 0) || !(originsTotal > 0)) {
+    throw new Error(
+      `crawl ${crawl} has no desktop root pages; keeping existing data`,
+    );
   }
-
-  const table = await latestCrawlTable();
-  const crawl = table.slice(0, 7).replace("_", "-");
-  console.log(`using crawl table httparchive.pages.${table}`);
-
-  const topKeys = config.metrics.flatMap((m) =>
-    m.conditions.map((c) => c.jsonPath.split(".")[1]),
-  );
-  await checkKeys(table, topKeys);
-
-  const query = buildQuery(table);
-  const [rows] = await bigquery.query({ query });
-  const row = rows[0];
-
   const metrics = {};
   config.metrics.forEach((metric, i) => {
     const pages = Number(row[`pages_m${i}`]);
@@ -132,24 +98,75 @@ async function main() {
     metrics[metric.slug] = {
       label: metric.label,
       pages,
-      pagesPct: roundPct(pages / Number(row.pages)),
+      pagesPct: roundPct(pages / pagesTotal),
       origins,
-      originsPct: roundPct(origins / Number(row.origins)),
+      originsPct: roundPct(origins / originsTotal),
     };
   });
-
-  const out = {
+  return {
     crawl,
     generatedAt: new Date().toISOString(),
-    source: "HTTP Archive monthly crawl (desktop), custom metrics",
-    pages: Number(row.pages),
-    origins: Number(row.origins),
+    source: "HTTP Archive monthly crawl (desktop root pages), custom metrics",
+    pages: pagesTotal,
+    origins: originsTotal,
     metrics,
   };
-  const dest = resolve(here, "../../src/data/adoption.json");
-  writeFileSync(dest, JSON.stringify(out, null, 2) + "\n");
+}
+
+export async function fetchAdoption(bigquery, config, options = {}) {
+  const crawl = validateCrawl(options.crawl || (await latestCrawl(bigquery)));
+  const maximumBytesBilled =
+    options.maximumBytesBilled || defaultMaximumBytesBilled;
+  if (!/^[1-9]\d*$/.test(maximumBytesBilled)) {
+    throw new Error("ADOPTION_MAX_BYTES_BILLED must be a positive integer");
+  }
+  const queryOptions = {
+    query: buildQuery(config, crawl),
+    location: "US",
+    useLegacySql: false,
+    maximumBytesBilled,
+  };
+  const [job] = await bigquery.createQueryJob({
+    ...queryOptions,
+    dryRun: true,
+  });
   console.log(
-    `wrote ${dest} (${config.metrics.length} metrics, crawl ${crawl})`,
+    `crawl ${crawl}: dry run passed; estimated bytes processed: ${job.metadata.statistics?.totalBytesProcessed ?? "unknown"}`,
+  );
+  if (options.dryRun) return null;
+
+  const [rows] = await bigquery.query(queryOptions);
+  return buildReport(config, crawl, rows[0]);
+}
+
+async function main() {
+  const config = JSON.parse(
+    readFileSync(resolve(here, "metrics.json"), "utf8"),
+  );
+  if (process.env.ADOPTION_PRINT_QUERY === "1") {
+    console.log(
+      buildQuery(
+        config,
+        process.env.ADOPTION_CRAWL || new Date().toISOString().slice(0, 7),
+      ),
+    );
+    return;
+  }
+  const projectId = process.env.GCP_PROJECT_ID;
+  if (!projectId)
+    throw new Error(
+      "GCP_PROJECT_ID is required (project billed for the query)",
+    );
+  const report = await fetchAdoption(new BigQuery({ projectId }), config, {
+    crawl: process.env.ADOPTION_CRAWL,
+    dryRun: process.env.ADOPTION_DRY_RUN === "1",
+    maximumBytesBilled: process.env.ADOPTION_MAX_BYTES_BILLED,
+  });
+  if (!report) return;
+  const dest = resolve(here, "../../src/data/adoption.json");
+  writeFileSync(dest, JSON.stringify(report, null, 2) + "\n");
+  console.log(
+    `wrote ${dest} (${config.metrics.length} metrics, crawl ${report.crawl})`,
   );
 }
 
@@ -157,7 +174,12 @@ function roundPct(ratio) {
   return Math.round(ratio * 100 * 1000) / 1000;
 }
 
-main().catch((error) => {
-  console.error(`error: ${error.message}`);
-  process.exit(1);
-});
+if (
+  process.argv[1] &&
+  import.meta.url === pathToFileURL(resolve(process.argv[1])).href
+) {
+  main().catch((error) => {
+    console.error(`error: ${error.message}`);
+    process.exitCode = 1;
+  });
+}

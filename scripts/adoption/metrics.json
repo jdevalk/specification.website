@@ -1,12 +1,13 @@
 {
-  "$comment": "Maps spec page slugs to HTTP Archive custom-metric signals. Each metric lists one or more JSONPath conditions against the `custom_metrics` column of `httparchive.pages.YYYY_MM_01_desktop`. The fetch script builds one COUNTIF per metric; `combine: any` counts a page when at least one condition holds.",
+  "$comment": "Maps spec slugs to HTTP Archive custom_metrics JSON fields in httparchive.crawl.pages. Each condition has a field within that STRUCT and a JSONPath relative to that field. combine: any counts a page when at least one condition holds.",
   "metrics": [
     {
       "conditions": [
         {
-          "jsonPath": "$._well-known.\"/.well-known/gpc.json\".found",
+          "jsonPath": "$.\"/.well-known/gpc.json\".found",
           "op": "eq",
-          "value": "true"
+          "value": "true",
+          "field": "well_known"
         }
       ],
       "label": "/.well-known/gpc.json",
@@ -15,9 +16,10 @@
     {
       "conditions": [
         {
-          "jsonPath": "$._well-known.\"/.well-known/security.txt\".found",
+          "jsonPath": "$.\"/.well-known/security.txt\".found",
           "op": "eq",
-          "value": "true"
+          "value": "true",
+          "field": "well_known"
         }
       ],
       "label": "/.well-known/security.txt",
@@ -26,9 +28,10 @@
     {
       "conditions": [
         {
-          "jsonPath": "$._well-known.\"/.well-known/assetlinks.json\".found",
+          "jsonPath": "$.\"/.well-known/assetlinks.json\".found",
           "op": "eq",
-          "value": "true"
+          "value": "true",
+          "field": "well_known"
         }
       ],
       "label": "/.well-known/assetlinks.json",
@@ -37,9 +40,10 @@
     {
       "conditions": [
         {
-          "jsonPath": "$._well-known.\"/.well-known/apple-app-site-association\".found",
+          "jsonPath": "$.\"/.well-known/apple-app-site-association\".found",
           "op": "eq",
-          "value": "true"
+          "value": "true",
+          "field": "well_known"
         }
       ],
       "label": "/.well-known/apple-app-site-association",
@@ -48,9 +52,10 @@
     {
       "conditions": [
         {
-          "jsonPath": "$._well-known.\"/.well-known/change-password\".found",
+          "jsonPath": "$.\"/.well-known/change-password\".found",
           "op": "eq",
-          "value": "true"
+          "value": "true",
+          "field": "well_known"
         }
       ],
       "label": "/.well-known/change-password",
@@ -59,9 +64,10 @@
     {
       "conditions": [
         {
-          "jsonPath": "$._well-known.\"/.well-known/webauthn\".found",
+          "jsonPath": "$.\"/.well-known/webauthn\".found",
           "op": "eq",
-          "value": "true"
+          "value": "true",
+          "field": "well_known"
         }
       ],
       "label": "/.well-known/webauthn",
@@ -70,9 +76,10 @@
     {
       "conditions": [
         {
-          "jsonPath": "$._well-known.\"/.well-known/ai-catalog.json\".found",
+          "jsonPath": "$.\"/.well-known/ai-catalog.json\".found",
           "op": "eq",
-          "value": "true"
+          "value": "true",
+          "field": "well_known"
         }
       ],
       "label": "/.well-known/ai-catalog.json (agent catalog)",
@@ -81,9 +88,10 @@
     {
       "conditions": [
         {
-          "jsonPath": "$._well-known.\"/.well-known/ard.json\".found",
+          "jsonPath": "$.\"/.well-known/ard.json\".found",
           "op": "eq",
-          "value": "true"
+          "value": "true",
+          "field": "well_known"
         }
       ],
       "label": "/.well-known/ard.json",
@@ -93,9 +101,10 @@
     {
       "conditions": [
         {
-          "jsonPath": "$._well-known.\"/.well-known/nodeinfo\".found",
+          "jsonPath": "$.\"/.well-known/nodeinfo\".found",
           "op": "eq",
-          "value": "true"
+          "value": "true",
+          "field": "well_known"
         }
       ],
       "label": "/.well-known/nodeinfo",
@@ -105,9 +114,10 @@
     {
       "conditions": [
         {
-          "jsonPath": "$._well-known.\"/.well-known/webfinger\".found",
+          "jsonPath": "$.\"/.well-known/webfinger\".found",
           "op": "eq",
-          "value": "true"
+          "value": "true",
+          "field": "well_known"
         }
       ],
       "label": "/.well-known/webfinger",
@@ -117,9 +127,10 @@
     {
       "conditions": [
         {
-          "jsonPath": "$._well-known.\"/.well-known/oauth-authorization-server\".found",
+          "jsonPath": "$.\"/.well-known/oauth-authorization-server\".found",
           "op": "eq",
-          "value": "true"
+          "value": "true",
+          "field": "well_known"
         }
       ],
       "label": "/.well-known/oauth-authorization-server",
@@ -129,9 +140,10 @@
     {
       "conditions": [
         {
-          "jsonPath": "$._well-known.\"/.well-known/oauth-protected-resource\".found",
+          "jsonPath": "$.\"/.well-known/oauth-protected-resource\".found",
           "op": "eq",
-          "value": "true"
+          "value": "true",
+          "field": "well_known"
         }
       ],
       "label": "/.well-known/oauth-protected-resource",
@@ -141,9 +153,10 @@
     {
       "conditions": [
         {
-          "jsonPath": "$._well-known.\"/.well-known/openid-configuration\".found",
+          "jsonPath": "$.\"/.well-known/openid-configuration\".found",
           "op": "eq",
-          "value": "true"
+          "value": "true",
+          "field": "well_known"
         }
       ],
       "label": "/.well-known/openid-configuration",
@@ -153,9 +166,10 @@
     {
       "conditions": [
         {
-          "jsonPath": "$._well-known.\"/.well-known/traffic-advice\".found",
+          "jsonPath": "$.\"/.well-known/traffic-advice\".found",
           "op": "eq",
-          "value": "true"
+          "value": "true",
+          "field": "well_known"
         }
       ],
       "label": "/.well-known/traffic-advice",
@@ -164,14 +178,24 @@
     },
     {
       "conditions": [
-        { "jsonPath": "$._llms-txt-valid.valid", "op": "eq", "value": "true" }
+        {
+          "jsonPath": "$.llms_txt_validation.valid",
+          "op": "eq",
+          "value": "true",
+          "field": "other"
+        }
       ],
       "label": "/llms.txt (valid)",
       "slug": "llms-txt"
     },
     {
       "conditions": [
-        { "jsonPath": "$._robots_txt.status", "op": "eq", "value": "200" }
+        {
+          "jsonPath": "$.status",
+          "op": "eq",
+          "value": "200",
+          "field": "robots_txt"
+        }
       ],
       "label": "/robots.txt (HTTP 200)",
       "slug": "robots-txt"
@@ -180,32 +204,39 @@
       "combine": "any",
       "conditions": [
         {
-          "jsonPath": "$._robots_txt.record_counts.by_useragent.\"gptbot\"",
-          "op": "exists"
+          "jsonPath": "$.record_counts.by_useragent.\"gptbot\"",
+          "op": "exists",
+          "field": "robots_txt"
         },
         {
-          "jsonPath": "$._robots_txt.record_counts.by_useragent.\"claudebot\"",
-          "op": "exists"
+          "jsonPath": "$.record_counts.by_useragent.\"claudebot\"",
+          "op": "exists",
+          "field": "robots_txt"
         },
         {
-          "jsonPath": "$._robots_txt.record_counts.by_useragent.\"ccbot\"",
-          "op": "exists"
+          "jsonPath": "$.record_counts.by_useragent.\"ccbot\"",
+          "op": "exists",
+          "field": "robots_txt"
         },
         {
-          "jsonPath": "$._robots_txt.record_counts.by_useragent.\"anthropic-ai\"",
-          "op": "exists"
+          "jsonPath": "$.record_counts.by_useragent.\"anthropic-ai\"",
+          "op": "exists",
+          "field": "robots_txt"
         },
         {
-          "jsonPath": "$._robots_txt.record_counts.by_useragent.\"google-extended\"",
-          "op": "exists"
+          "jsonPath": "$.record_counts.by_useragent.\"google-extended\"",
+          "op": "exists",
+          "field": "robots_txt"
         },
         {
-          "jsonPath": "$._robots_txt.record_counts.by_useragent.\"perplexitybot\"",
-          "op": "exists"
+          "jsonPath": "$.record_counts.by_useragent.\"perplexitybot\"",
+          "op": "exists",
+          "field": "robots_txt"
         },
         {
-          "jsonPath": "$._robots_txt.record_counts.by_useragent.\"bytespider\"",
-          "op": "exists"
+          "jsonPath": "$.record_counts.by_useragent.\"bytespider\"",
+          "op": "exists",
+          "field": "robots_txt"
         }
       ],
       "label": "robots.txt rules naming AI crawlers",
