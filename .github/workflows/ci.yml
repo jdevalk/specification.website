@@ -64,6 +64,9 @@ jobs:
       - name: Agent Skill drift check
         run: npm run check:skill
 
+      - name: Test adoption query
+        run: npm run test:adoption
+
       - name: Type-check (Astro)
         run: npx astro check
 

@@ -52,21 +52,65 @@ clients, root pages, and `rank <= 1000000`. It counts distinct `root_page` value
 retaining the scheme and port instead of collapsing different origins to a hostname.
 
 `llms.txt` is excluded because its metric requires reading the large
-`custom_metrics.other` JSON column. The remaining 16 topics use only
+`custom_metrics.other` JSON column. The nine measured topics use only
 `custom_metrics.well_known` and `custom_metrics.robots_txt`.
 
-Run regression checks with `node --test scripts/adoption/fetch-adoption.test.mjs`.
+Run regression checks with `npm run test:adoption` (also run by CI). To verify
+SQL behaviour in BigQuery with the recorded collector fixtures, run
+`ADOPTION_TEST_PROJECT=your-project npm run test:adoption`. This optional test
+reads only inline parameters, asserts a zero-byte dry run before execution, and
+never queries HTTP Archive or writes adoption data.
+
+## What the counts mean
+
+These are conservative detection signals, not full conformance checks. A 200
+response alone is insufficient: generic HTML and JSON catch-all pages must not
+count as adoption.
+
+| Topic                      | Required evidence, in addition to a successful response                                                                                                                              |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| GPC support resource       | The parsed `gpc` declaration is non-null. Both boolean values count as a published declaration; this does not establish that GPC is honoured.                                        |
+| security.txt               | The collector's `data.valid` field is true: required fields exist and singleton fields are not repeated. Values and expiry are not fully validated.                                  |
+| Asset Links                | A parsed deep-linking or credential-sharing relation is detected.                                                                                                                    |
+| Apple App Site Association | Parsed app-link or web-credential configuration is detected.                                                                                                                         |
+| Change password            | A followed redirect ends in 200, and the collector's deliberately nonexistent URL returns 404. Failed or missing probes are not positive evidence.                                   |
+| WebAuthn related origins   | A non-empty parsed `origins` array. Individual origins are not validated by the collector.                                                                                           |
+| ARD                        | At least one parsed entry at either `ai-catalog.json` or `ard.json`. An origin with both counts once. Empty manifests cannot be distinguished from parser defaults and are excluded. |
+| robots.txt                 | At least one parsed user-agent or sitemap directive. Empty or comments-only files are excluded.                                                                                      |
+| AI crawler rules           | A successful robots.txt response with a parsed group naming one of the configured AI crawlers. This detects a named group, not whether crawling is allowed or disallowed.            |
+
+The [well-known collector](https://github.com/HTTPArchive/custom-metrics/blob/65e46f181eded5e9aeb26b53b88681361093eae4/dist/well-known.js)
+and [robots.txt collector](https://github.com/HTTPArchive/custom-metrics/blob/1e9b5f6a8cd3576befcb770f46e210d2b0bfb243/dist/robots_txt.js)
+define the stored signals. `fixtures.json` records their outputs for mocked
+responses, including generic HTML, redirects, JSON catch-alls, valid documents,
+and failed probes. The live SQL test also checks rank, client, date, root-page
+filtering, and distinct-origin counts.
+
+The [RFC 9727 API Catalog](https://www.rfc-editor.org/rfc/rfc9727.html) uses
+`/.well-known/api-catalog`; it is not the AI Catalog. No corresponding collector
+signal exists, so the API Catalog topic is omitted. NodeInfo, WebFinger, OAuth
+authorisation-server metadata, OAuth protected-resource metadata, OpenID
+Configuration, and Traffic Advice are also omitted while their collector
+extension is pending. They must not be reported as zero adoption. Add them only
+after reviewing the collected fields and validating their detection rules.
+
+Older crawls may lack newer parser fields (including ARD entry counts); such
+responses cannot establish adoption under these rules. The denominator remains
+all sampled origins, so percentages describe detected signals in that sample
+and may undercount actual implementations.
 
 ## Adding a topic
 
 Add an entry to `metrics.json`: the spec page `slug` plus one or more
 conditions against a JSON field inside the `custom_metrics` STRUCT. Each
 condition supplies `field` (`well_known` or `robots_txt`) and a `jsonPath`
-relative to that field. Adding another column can substantially increase bytes
+relative to that field. Conditions combine with `all` by default; nested groups
+can use `any` for alternative signals. Supported operations are `eq`, `exists`,
+`positive`, and `nonempty-array`. Adding another column can substantially increase bytes
 processed; check the free dry-run estimate before extending the query. Verify
 names against the live table schema and preview data; raw metric names differ
 from the stored field names.
 Find metric behaviour in the [custom-metrics repo](https://github.com/HTTPArchive/custom-metrics/tree/main/dist).
-A missing STRUCT field fails validation, while missing JSON properties still
-produce zero matches. The pending upstream metrics remain unmeasured until a
-crawl includes them.
+A missing STRUCT field fails validation, while missing JSON properties produce
+no match. Missing collection is not evidence of zero real-world adoption; do
+not add placeholder metrics for fields the collector does not yet provide.

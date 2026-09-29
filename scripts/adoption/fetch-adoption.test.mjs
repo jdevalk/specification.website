@@ -132,3 +132,59 @@ test("offline SQL printing needs neither project configuration nor credentials",
   assert.match(sql, /httparchive\.crawl\.pages/);
   assert.throws(() => buildQuery(config, "2026-13"), /YYYY-MM/);
 });
+
+test("API Catalog is not measured using the unrelated AI Catalog", () => {
+  assert.ok(!config.metrics.some((metric) => metric.slug === "api-catalog"));
+  const ard = config.metrics.find(
+    (metric) => metric.slug === "agentic-resource-discovery",
+  );
+  const sql = buildQuery({ metrics: [ard] }, "2026-09");
+  assert.match(sql, /ai-catalog\.json/);
+  assert.match(sql, /ard\.json/);
+  assert.match(sql, /entries_count/);
+  assert.match(sql, /\) OR \(/);
+});
+
+test("uncollected topics cannot be published as zero adoption", () => {
+  const report = buildReport(config, "2026-09", {
+    pages: 100,
+    origins: 100,
+    ...Object.fromEntries(
+      config.metrics.flatMap((_, i) => [
+        [`pages_m${i}`, 0],
+        [`origins_m${i}`, 0],
+      ]),
+    ),
+  });
+  for (const slug of [
+    "api-catalog",
+    "nodeinfo",
+    "webfinger",
+    "oauth-authorization-server",
+    "oauth-protected-resource",
+    "openid-configuration",
+    "traffic-advice",
+    "llms-txt",
+  ]) {
+    assert.ok(!(slug in report.metrics), slug);
+  }
+});
+
+test("empty or invalid condition groups fail before querying", () => {
+  for (const condition of [
+    { conditions: [] },
+    {
+      combine: "none",
+      conditions: [{ field: "well_known", jsonPath: "$.x", op: "exists" }],
+    },
+  ]) {
+    assert.throws(
+      () =>
+        buildQuery(
+          { metrics: [{ slug: "bad", conditions: [condition] }] },
+          "2026-09",
+        ),
+      /condition/,
+    );
+  }
+});

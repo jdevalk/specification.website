@@ -44,6 +44,13 @@ function sqlString(value) {
 }
 
 function conditionSql(condition) {
+  if (condition.conditions) {
+    if (!condition.conditions.length) throw new Error("empty condition group");
+    if (condition.combine && !["all", "any"].includes(condition.combine)) {
+      throw new Error(`invalid condition combination: ${condition.combine}`);
+    }
+    return `(${condition.conditions.map(conditionSql).join(condition.combine === "any" ? " OR " : " AND ")})`;
+  }
   if (!/^[a-z_]+$/.test(condition.field)) {
     throw new Error(`invalid custom_metrics field: ${condition.field}`);
   }
@@ -55,6 +62,12 @@ function conditionSql(condition) {
     // JSON null is a value for native JSON columns; it is not evidence of a rule.
     return `COALESCE(JSON_TYPE(JSON_QUERY(${input})) != 'null', FALSE)`;
   }
+  if (condition.op === "positive") {
+    return `SAFE_CAST(JSON_VALUE(${input}) AS FLOAT64) > 0`;
+  }
+  if (condition.op === "nonempty-array") {
+    return `ARRAY_LENGTH(JSON_QUERY_ARRAY(${input})) > 0`;
+  }
   throw new Error(`unknown condition op: ${condition.op}`);
 }
 
@@ -64,9 +77,7 @@ export function buildQuery(config, crawl) {
     .flatMap((metric, i) => {
       if (!metric.conditions.length)
         throw new Error(`no conditions: ${metric.slug}`);
-      const combined = metric.conditions
-        .map(conditionSql)
-        .join(metric.combine === "all" ? " AND " : " OR ");
+      const combined = conditionSql(metric);
       return [
         `COUNTIF(${combined}) AS pages_m${i}`,
         `COUNT(DISTINCT IF(${combined}, root_page, NULL)) AS origins_m${i}`,

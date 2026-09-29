@@ -1,0 +1,912 @@
+{
+  "source": "HTTPArchive/custom-metrics dist/well-known.js at 65e46f181eded5e9aeb26b53b88681361093eae4; dist/robots_txt.js at 1e9b5f6a8cd3576befcb770f46e210d2b0bfb243. Recorded parser outputs from mocked responses; no live sites.",
+  "cases": [
+    {
+      "name": "html-200",
+      "well_known": {
+        "/.well-known/assetlinks.json": {
+          "error": "Unexpected token '<', \"<!doctype \"... is not valid JSON"
+        },
+        "/.well-known/apple-app-site-association": {
+          "error": "Unexpected token '<', \"<!doctype \"... is not valid JSON"
+        },
+        "/.well-known/gpc.json": {
+          "error": "Unexpected token '<', \"<!doctype \"... is not valid JSON"
+        },
+        "/.well-known/webauthn": {
+          "found": true,
+          "data": {
+            "origins": []
+          }
+        },
+        "/.well-known/ai-catalog.json": {
+          "found": true,
+          "data": {
+            "spec_version": null,
+            "has_host": false,
+            "entries_count": 0,
+            "entry_types": []
+          }
+        },
+        "/.well-known/ard.json": {
+          "found": true,
+          "data": {
+            "entries_count": 0,
+            "entry_types": []
+          }
+        },
+        "/.well-known/security.txt": {
+          "found": true,
+          "data": {
+            "status": 200,
+            "redirected": false,
+            "url": "https://example.com/.well-known/security.txt",
+            "content_type": "text/html",
+            "signed": false,
+            "all_required_exist": false,
+            "only_one_requirement_broken": false,
+            "valid": false
+          }
+        },
+        "/.well-known/change-password": {
+          "found": true,
+          "data": {
+            "status": 200,
+            "redirected": false,
+            "url": "https://example.com/.well-known/change-password"
+          }
+        },
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": true,
+          "data": {
+            "status": 200,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 200,
+        "content_type": "text/html",
+        "size": 50,
+        "size_kib": 0.048828125,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "other": 1
+          },
+          "by_useragent": {}
+        }
+      },
+      "expected": []
+    },
+    {
+      "name": "html-redirect",
+      "well_known": {
+        "/.well-known/security.txt": {
+          "found": true,
+          "data": {
+            "status": 200,
+            "redirected": true,
+            "url": "https://example.com/destination",
+            "content_type": "text/html",
+            "signed": false,
+            "all_required_exist": false,
+            "only_one_requirement_broken": false,
+            "valid": false
+          }
+        },
+        "/.well-known/change-password": {
+          "found": true,
+          "data": {
+            "status": 200,
+            "redirected": true,
+            "url": "https://example.com/destination"
+          }
+        },
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": true,
+          "data": {
+            "status": 200,
+            "redirected": true,
+            "url": "https://example.com/destination"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": true,
+        "status": 200,
+        "content_type": "text/html",
+        "size": 17,
+        "size_kib": 0.0166015625,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "other": 1
+          },
+          "by_useragent": {}
+        }
+      },
+      "expected": []
+    },
+    {
+      "name": "json-catch-all",
+      "well_known": {
+        "/.well-known/assetlinks.json": {
+          "error": "data.forEach is not a function"
+        },
+        "/.well-known/apple-app-site-association": {
+          "found": true,
+          "data": {
+            "app_links": false,
+            "web_credentials": false
+          }
+        },
+        "/.well-known/gpc.json": {
+          "found": true,
+          "data": {
+            "gpc": null
+          }
+        },
+        "/.well-known/webauthn": {
+          "found": true,
+          "data": {
+            "origins": []
+          }
+        },
+        "/.well-known/ai-catalog.json": {
+          "found": true,
+          "data": {
+            "spec_version": null,
+            "has_host": false,
+            "entries_count": 0,
+            "entry_types": []
+          }
+        },
+        "/.well-known/ard.json": {
+          "found": true,
+          "data": {
+            "entries_count": 0,
+            "entry_types": []
+          }
+        },
+        "/.well-known/security.txt": {
+          "found": true,
+          "data": {
+            "status": 200,
+            "redirected": false,
+            "url": "https://example.com/.well-known/security.txt",
+            "content_type": "text/plain",
+            "signed": false,
+            "all_required_exist": false,
+            "only_one_requirement_broken": false,
+            "valid": false
+          }
+        },
+        "/.well-known/change-password": {
+          "found": true,
+          "data": {
+            "status": 200,
+            "redirected": false,
+            "url": "https://example.com/.well-known/change-password"
+          }
+        },
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": true,
+          "data": {
+            "status": 200,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 200,
+        "content_type": "text/plain",
+        "size": 2,
+        "size_kib": 0.001953125,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "other": 1
+          },
+          "by_useragent": {}
+        }
+      },
+      "expected": []
+    },
+    {
+      "name": "missing-all",
+      "well_known": {
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": false,
+          "data": {
+            "status": 404,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 404,
+        "content_type": "text/plain",
+        "size": 9,
+        "size_kib": 0.0087890625,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "other": 1
+          },
+          "by_useragent": {}
+        }
+      },
+      "expected": []
+    },
+    {
+      "name": "/.well-known/gpc.json",
+      "well_known": {
+        "/.well-known/gpc.json": {
+          "found": true,
+          "data": {
+            "gpc": true
+          }
+        },
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": false,
+          "data": {
+            "status": 404,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 404,
+        "content_type": "text/plain",
+        "size": 9,
+        "size_kib": 0.0087890625,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "other": 1
+          },
+          "by_useragent": {}
+        }
+      },
+      "expected": ["gpc-json"]
+    },
+    {
+      "name": "/.well-known/security.txt",
+      "well_known": {
+        "/.well-known/security.txt": {
+          "found": true,
+          "data": {
+            "status": 200,
+            "redirected": false,
+            "url": "https://example.com/.well-known/security.txt",
+            "content_type": "text/plain",
+            "signed": false,
+            "contact": ["mailto:security@example.com"],
+            "expires": ["2030-01-01T00:00:00Z"],
+            "all_required_exist": true,
+            "only_one_requirement_broken": false,
+            "valid": true
+          }
+        },
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": false,
+          "data": {
+            "status": 404,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 404,
+        "content_type": "text/plain",
+        "size": 9,
+        "size_kib": 0.0087890625,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "other": 1
+          },
+          "by_useragent": {}
+        }
+      },
+      "expected": ["security-txt"]
+    },
+    {
+      "name": "/.well-known/assetlinks.json",
+      "well_known": {
+        "/.well-known/assetlinks.json": {
+          "found": true,
+          "data": {
+            "deep_linking": true,
+            "credential_sharing": false
+          }
+        },
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": false,
+          "data": {
+            "status": 404,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 404,
+        "content_type": "text/plain",
+        "size": 9,
+        "size_kib": 0.0087890625,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "other": 1
+          },
+          "by_useragent": {}
+        }
+      },
+      "expected": ["assetlinks-json"]
+    },
+    {
+      "name": "/.well-known/apple-app-site-association",
+      "well_known": {
+        "/.well-known/apple-app-site-association": {
+          "found": true,
+          "data": {
+            "app_links": true,
+            "web_credentials": false
+          }
+        },
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": false,
+          "data": {
+            "status": 404,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 404,
+        "content_type": "text/plain",
+        "size": 9,
+        "size_kib": 0.0087890625,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "other": 1
+          },
+          "by_useragent": {}
+        }
+      },
+      "expected": ["apple-app-site-association"]
+    },
+    {
+      "name": "/.well-known/change-password",
+      "well_known": {
+        "/.well-known/change-password": {
+          "found": true,
+          "data": {
+            "status": 200,
+            "redirected": true,
+            "url": "https://example.com/destination"
+          }
+        },
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": false,
+          "data": {
+            "status": 404,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 404,
+        "content_type": "text/plain",
+        "size": 9,
+        "size_kib": 0.0087890625,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "other": 1
+          },
+          "by_useragent": {}
+        }
+      },
+      "expected": ["change-password"]
+    },
+    {
+      "name": "/.well-known/webauthn",
+      "well_known": {
+        "/.well-known/webauthn": {
+          "found": true,
+          "data": {
+            "origins": ["https://example.com"]
+          }
+        },
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": false,
+          "data": {
+            "status": 404,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 404,
+        "content_type": "text/plain",
+        "size": 9,
+        "size_kib": 0.0087890625,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "other": 1
+          },
+          "by_useragent": {}
+        }
+      },
+      "expected": ["webauthn"]
+    },
+    {
+      "name": "/.well-known/ai-catalog.json",
+      "well_known": {
+        "/.well-known/ai-catalog.json": {
+          "found": true,
+          "data": {
+            "spec_version": "1.0",
+            "has_host": true,
+            "entries_count": 1,
+            "entry_types": ["application/mcp-server-card+json"]
+          }
+        },
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": false,
+          "data": {
+            "status": 404,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 404,
+        "content_type": "text/plain",
+        "size": 9,
+        "size_kib": 0.0087890625,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "other": 1
+          },
+          "by_useragent": {}
+        }
+      },
+      "expected": ["agentic-resource-discovery"]
+    },
+    {
+      "name": "/.well-known/ard.json",
+      "well_known": {
+        "/.well-known/ard.json": {
+          "found": true,
+          "data": {
+            "entries_count": 1,
+            "entry_types": ["application/mcp-server-card+json"]
+          }
+        },
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": false,
+          "data": {
+            "status": 404,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 404,
+        "content_type": "text/plain",
+        "size": 9,
+        "size_kib": 0.0087890625,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "other": 1
+          },
+          "by_useragent": {}
+        }
+      },
+      "expected": ["agentic-resource-discovery"]
+    },
+    {
+      "name": "/robots.txt",
+      "well_known": {
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": false,
+          "data": {
+            "status": 404,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 200,
+        "content_type": "text/plain",
+        "size": 38,
+        "size_kib": 0.037109375,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "user_agent": 1,
+            "disallow": 1
+          },
+          "by_useragent": {
+            "gptbot": {
+              "disallow": 1
+            }
+          }
+        }
+      },
+      "expected": ["robots-txt", "robots-for-ai-crawlers"]
+    },
+    {
+      "name": "both-ard-paths",
+      "well_known": {
+        "/.well-known/ai-catalog.json": {
+          "found": true,
+          "data": {
+            "spec_version": "1.0",
+            "has_host": true,
+            "entries_count": 1,
+            "entry_types": ["application/mcp-server-card+json"]
+          }
+        },
+        "/.well-known/ard.json": {
+          "found": true,
+          "data": {
+            "entries_count": 1,
+            "entry_types": ["application/mcp-server-card+json"]
+          }
+        },
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": false,
+          "data": {
+            "status": 404,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 404,
+        "content_type": "text/plain",
+        "size": 9,
+        "size_kib": 0.0087890625,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "other": 1
+          },
+          "by_useragent": {}
+        }
+      },
+      "expected": ["agentic-resource-discovery"]
+    },
+    {
+      "name": "gpc-false-declaration",
+      "well_known": {
+        "/.well-known/gpc.json": {
+          "found": true,
+          "data": {
+            "gpc": false
+          }
+        },
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": false,
+          "data": {
+            "status": 404,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 404,
+        "content_type": "text/plain",
+        "size": 9,
+        "size_kib": 0.0087890625,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "other": 1
+          },
+          "by_useragent": {}
+        }
+      },
+      "expected": ["gpc-json"]
+    },
+    {
+      "name": "empty-ard",
+      "well_known": {
+        "/.well-known/ard.json": {
+          "found": true,
+          "data": {
+            "entries_count": 0,
+            "entry_types": []
+          }
+        },
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": false,
+          "data": {
+            "status": 404,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 404,
+        "content_type": "text/plain",
+        "size": 9,
+        "size_kib": 0.0087890625,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "other": 1
+          },
+          "by_useragent": {}
+        }
+      },
+      "expected": []
+    },
+    {
+      "name": "failed-probe",
+      "well_known": {
+        "/.well-known/change-password": {
+          "found": true,
+          "data": {
+            "status": 200,
+            "redirected": true,
+            "url": "https://example.com/destination"
+          }
+        },
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": false,
+          "data": {
+            "status": 500,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 404,
+        "content_type": "text/plain",
+        "size": 9,
+        "size_kib": 0.0087890625,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "other": 1
+          },
+          "by_useragent": {}
+        }
+      },
+      "expected": []
+    },
+    {
+      "name": "missing-probe",
+      "well_known": {
+        "/.well-known/change-password": {
+          "found": true,
+          "data": {
+            "status": 200,
+            "redirected": true,
+            "url": "https://example.com/destination"
+          }
+        },
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "error": "network failure"
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 404,
+        "content_type": "text/plain",
+        "size": 9,
+        "size_kib": 0.0087890625,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "other": 1
+          },
+          "by_useragent": {}
+        }
+      },
+      "expected": []
+    },
+    {
+      "name": "robots-404-with-rules",
+      "well_known": {
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": false,
+          "data": {
+            "status": 404,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 404,
+        "content_type": "text/plain",
+        "size": 30,
+        "size_kib": 0.029296875,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "user_agent": 1,
+            "disallow": 1
+          },
+          "by_useragent": {
+            "gptbot": {
+              "disallow": 1
+            }
+          }
+        }
+      },
+      "expected": []
+    },
+    {
+      "name": "all-positive",
+      "well_known": {
+        "/.well-known/assetlinks.json": {
+          "found": true,
+          "data": {
+            "deep_linking": true,
+            "credential_sharing": false
+          }
+        },
+        "/.well-known/apple-app-site-association": {
+          "found": true,
+          "data": {
+            "app_links": true,
+            "web_credentials": false
+          }
+        },
+        "/.well-known/gpc.json": {
+          "found": true,
+          "data": {
+            "gpc": true
+          }
+        },
+        "/.well-known/webauthn": {
+          "found": true,
+          "data": {
+            "origins": ["https://example.com"]
+          }
+        },
+        "/.well-known/ai-catalog.json": {
+          "found": true,
+          "data": {
+            "spec_version": "1.0",
+            "has_host": true,
+            "entries_count": 1,
+            "entry_types": ["application/mcp-server-card+json"]
+          }
+        },
+        "/.well-known/ard.json": {
+          "found": true,
+          "data": {
+            "entries_count": 1,
+            "entry_types": ["application/mcp-server-card+json"]
+          }
+        },
+        "/.well-known/security.txt": {
+          "found": true,
+          "data": {
+            "status": 200,
+            "redirected": false,
+            "url": "https://example.com/.well-known/security.txt",
+            "content_type": "text/plain",
+            "signed": false,
+            "contact": ["mailto:security@example.com"],
+            "expires": ["2030-01-01T00:00:00Z"],
+            "all_required_exist": true,
+            "only_one_requirement_broken": false,
+            "valid": true
+          }
+        },
+        "/.well-known/change-password": {
+          "found": true,
+          "data": {
+            "status": 200,
+            "redirected": true,
+            "url": "https://example.com/destination"
+          }
+        },
+        "/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/": {
+          "found": false,
+          "data": {
+            "status": 404,
+            "redirected": false,
+            "url": "https://example.com/.well-known/resource-that-should-not-exist-whose-status-code-should-not-be-200/"
+          }
+        }
+      },
+      "robots_txt": {
+        "redirected": false,
+        "status": 200,
+        "content_type": "text/plain",
+        "size": 38,
+        "size_kib": 0.037109375,
+        "over_google_limit": false,
+        "comment_count": 0,
+        "record_counts": {
+          "by_type": {
+            "user_agent": 1,
+            "disallow": 1
+          },
+          "by_useragent": {
+            "gptbot": {
+              "disallow": 1
+            }
+          }
+        }
+      },
+      "expected": [
+        "gpc-json",
+        "security-txt",
+        "assetlinks-json",
+        "apple-app-site-association",
+        "change-password",
+        "webauthn",
+        "agentic-resource-discovery",
+        "robots-txt",
+        "robots-for-ai-crawlers"
+      ]
+    }
+  ]
+}
