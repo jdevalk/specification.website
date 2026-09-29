@@ -34,29 +34,29 @@
     "adoption": "node scripts/adoption/fetch-adoption.mjs"
   },
   "dependencies": {
-    "@astrojs/mdx": "^8.0.1",
+    "@astrojs/mdx": "^8.0.2",
     "@astrojs/rss": "^4.0.19",
     "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.3.3",
-    "dompurify": "^3.4.14",
+    "astro": "^7.3.5",
+    "dompurify": "^3.4.16",
     "tailwindcss": "^4.3.0",
     "@google-cloud/bigquery": "^8.0.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "@cloudflare/workers-types": "^5.20260918.1",
+    "@cloudflare/workers-types": "^5.20260925.1",
     "@eslint/js": "^10.0.1",
-    "@types/node": "^26.6.1",
-    "eslint": "^10.9.1",
+    "@types/node": "^26.6.2",
+    "eslint": "^10.11.0",
     "eslint-plugin-astro": "^3.2.1",
     "globals": "^17.12.0",
     "linkinator": "8.1.0",
     "pagefind": "^1.5.2",
-    "prettier": "^3.9.8",
-    "prettier-plugin-astro": "^1.0.1",
+    "prettier": "^3.9.9",
+    "prettier-plugin-astro": "^1.1.0",
     "sharp": "^0.35.4",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.69.0"
+    "typescript-eslint": "^8.70.1"
   },
   "overrides": {
     "esbuild": "^0.28.1"
