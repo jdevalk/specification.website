@@ -10,7 +10,7 @@ relatedSlugs:
   [well-known-overview, global-privacy-control, privacy-policy, cookie-consent]
 updated: "2026-09-24T00:00:00.000Z"
 sources:
-  - title: "Global Privacy Control (GPC) — §4 GPC Support Resource (W3C Working Draft, 17 September 2026)"
+  - title: "Global Privacy Control (GPC) — §4 GPC Support Resource (W3C Working Draft)"
     url: "https://www.w3.org/TR/gpc/"
     publisher: "W3C Privacy Working Group"
   - title: "IANA — Well-Known URIs Registry"
