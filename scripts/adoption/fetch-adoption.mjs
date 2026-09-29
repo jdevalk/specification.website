@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Aggregate desktop root-page metrics from httparchive.crawl.pages.
+ * Aggregate top-million desktop root-page metrics from httparchive.crawl.pages.
  * GCP_PROJECT_ID selects the querying project; ADC supplies credentials.
  * ADOPTION_DRY_RUN=1 validates and estimates without executing or writing data.
  */
@@ -80,7 +80,8 @@ export function buildQuery(config, crawl) {
   FROM \`httparchive.crawl.pages\`
   WHERE date = DATE '${crawl}-01'
     AND client = 'desktop'
-    AND is_root_page`;
+    AND is_root_page
+    AND rank <= 1000000`;
 }
 
 export function buildReport(config, crawl, row) {
@@ -106,7 +107,8 @@ export function buildReport(config, crawl, row) {
   return {
     crawl,
     generatedAt: new Date().toISOString(),
-    source: "HTTP Archive monthly crawl (desktop root pages), custom metrics",
+    source:
+      "HTTP Archive monthly crawl (desktop root pages, rank <= 1000000), custom metrics",
     pages: pagesTotal,
     origins: originsTotal,
     metrics,

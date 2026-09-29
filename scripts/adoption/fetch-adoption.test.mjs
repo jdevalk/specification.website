@@ -17,15 +17,16 @@ test("query uses current JSON fields and keeps HTTP and HTTPS origins distinct",
   const query = buildQuery(config, "2026-09");
   assert.match(query, /FROM `httparchive\.crawl\.pages`/);
   assert.match(query, /date = DATE '2026-09-01'/);
-  assert.match(query, /client = 'desktop'\s+AND is_root_page/);
+  assert.match(
+    query,
+    /client = 'desktop'\s+AND is_root_page\s+AND rank <= 1000000/,
+  );
   assert.match(
     query,
     /JSON_VALUE\(custom_metrics\.well_known, '\$\."\/\.well-known\/gpc.json"\.found'\)/,
   );
-  assert.match(
-    query,
-    /JSON_VALUE\(custom_metrics\.other, '\$\.llms_txt_validation\.valid'\)/,
-  );
+  assert.doesNotMatch(query, /custom_metrics\.other|llms_txt_validation/);
+  assert.ok(!config.metrics.some((metric) => metric.slug === "llms-txt"));
   assert.match(query, /COUNT\(DISTINCT root_page\)/);
   assert.doesNotMatch(query, /NET\.HOST|\$\._|JSON_VALUE\(custom_metrics,/);
 });

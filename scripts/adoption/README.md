@@ -1,8 +1,10 @@
 # HTTP Archive adoption data
 
 Monthly adoption percentages for spec topics, pulled from the HTTP Archive's
-custom metrics via BigQuery. The numbers land in `src/data/adoption.json` and
-the spec pages render them automatically.
+custom metrics via BigQuery, limited to desktop root pages ranked in the top
+million (`rank <= 1000000`). The percentages describe this sample, not the entire
+crawl. The numbers land in `src/data/adoption.json`, and the spec pages render
+them automatically.
 
 ## One-time setup (Google Cloud)
 
@@ -46,8 +48,12 @@ default 100 GiB billing cap; the free tier is shared with other project usage.
 - The workflow can also be triggered by hand via workflow_dispatch.
 
 The query reads `httparchive.crawl.pages`, restricted to one date, desktop
-clients, and root pages. It counts distinct `root_page` values, retaining the
-scheme and port instead of collapsing different origins to a hostname.
+clients, root pages, and `rank <= 1000000`. It counts distinct `root_page` values,
+retaining the scheme and port instead of collapsing different origins to a hostname.
+
+`llms.txt` is excluded because its metric requires reading the large
+`custom_metrics.other` JSON column. The remaining 16 topics use only
+`custom_metrics.well_known` and `custom_metrics.robots_txt`.
 
 Run regression checks with `node --test scripts/adoption/fetch-adoption.test.mjs`.
 
@@ -55,10 +61,11 @@ Run regression checks with `node --test scripts/adoption/fetch-adoption.test.mjs
 
 Add an entry to `metrics.json`: the spec page `slug` plus one or more
 conditions against a JSON field inside the `custom_metrics` STRUCT. Each
-condition supplies `field` (for example, `well_known`, `robots_txt`, or `other`)
-and a `jsonPath` relative to that field. llms.txt results live at
-`custom_metrics.other.llms_txt_validation`. Verify names against the live table
-schema and preview data; raw metric names differ from the stored field names.
+condition supplies `field` (`well_known` or `robots_txt`) and a `jsonPath`
+relative to that field. Adding another column can substantially increase bytes
+processed; check the free dry-run estimate before extending the query. Verify
+names against the live table schema and preview data; raw metric names differ
+from the stored field names.
 Find metric behaviour in the [custom-metrics repo](https://github.com/HTTPArchive/custom-metrics/tree/main/dist).
 A missing STRUCT field fails validation, while missing JSON properties still
 produce zero matches. The pending upstream metrics remain unmeasured until a

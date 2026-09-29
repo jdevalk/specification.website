@@ -179,18 +179,6 @@
     {
       "conditions": [
         {
-          "jsonPath": "$.llms_txt_validation.valid",
-          "op": "eq",
-          "value": "true",
-          "field": "other"
-        }
-      ],
-      "label": "/llms.txt (valid)",
-      "slug": "llms-txt"
-    },
-    {
-      "conditions": [
-        {
           "jsonPath": "$.status",
           "op": "eq",
           "value": "200",

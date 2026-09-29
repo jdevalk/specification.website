@@ -4,5 +4,5 @@
   "metrics": {},
   "origins": 0,
   "pages": 0,
-  "source": "HTTP Archive monthly crawl (desktop), custom metrics"
+  "source": "HTTP Archive monthly crawl (desktop root pages, rank <= 1000000), custom metrics"
 }
