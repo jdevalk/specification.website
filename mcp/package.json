@@ -22,6 +22,9 @@
     "yaml": "^2.9.1"
   },
   "overrides": {
-    "sharp": "^0.35.4"
+    "sharp": "^0.35.4",
+    "miniflare": {
+      "undici": "7.29.1"
+    }
   }
 }
