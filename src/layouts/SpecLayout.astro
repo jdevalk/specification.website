@@ -28,6 +28,7 @@ interface Props {
     originsPct: number;
   } | null;
   adoptionCrawl?: string | null;
+  adoptionSampleSize?: number;
 }
 
 const {
@@ -42,6 +43,7 @@ const {
   slug,
   adoption = null,
   adoptionCrawl = null,
+  adoptionSampleSize = 0,
 } = Astro.props;
 
 const adoptionLabel =
@@ -161,8 +163,8 @@ const breadcrumbJsonLd = {
         <p class="mt-3 text-sm text-ink-500">
           Adoption:{" "}
           <span class="font-medium text-ink-700">{adoptionLabel}</span> of
-          origins ranked in the top million in the HTTP Archive {crawlLabel}{" "}
-          desktop crawl
+          {adoptionSampleSize.toLocaleString("en-GB")} websites in the HTTP
+          Archive {crawlLabel} desktop sample
         </p>
       )}
       {appliesTo.length > 0 && appliesTo[0] !== "all" && (

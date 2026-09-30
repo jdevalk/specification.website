@@ -14,6 +14,7 @@ interface AdoptionMetric {
 interface AdoptionData {
   crawl: string | null;
   generatedAt: string | null;
+  origins: number;
   metrics: Record<string, AdoptionMetric>;
 }
 
@@ -64,6 +65,7 @@ const adoption = adoptionData.metrics[slug] ?? null;
   slug={slug}
   adoption={adoption}
   adoptionCrawl={adoptionData.crawl}
+  adoptionSampleSize={adoptionData.origins}
 >
   <Content />
 </SpecLayout>
