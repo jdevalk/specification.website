@@ -10,7 +10,7 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 import { BigQuery } from "@google-cloud/bigquery";
 
 const here = dirname(fileURLToPath(import.meta.url));
-const defaultMaximumBytesBilled = String(100 * 1024 ** 3);
+const defaultMaximumBytesBilled = String(112 * 1024 ** 3);
 
 function validateCrawl(crawl) {
   if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(crawl)) {

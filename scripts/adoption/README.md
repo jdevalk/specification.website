@@ -11,7 +11,11 @@ them automatically.
 The HTTP Archive dataset is public, but BigQuery bills the _querying_ project,
 so you need a GCP project of your own. Every refresh first validates the query
 and estimates bytes processed with a free dry run. Executed aggregations have a
-default 100 GiB billing cap; the free tier is shared with other project usage.
+default 112 GiB billing cap; the free tier is shared with other project usage.
+BigQuery checks an upper-bound estimate for this clustered table before running
+it. The September 2026 query was rejected at 100 GiB but succeeded at 112 GiB,
+actually processing 1,634,231,969 bytes (1.522 GiB). The cap is a ceiling, not the
+expected scan size; future monthly scans may differ.
 
 1. Create a GCP project and enable the BigQuery API.
 2. Create a service account (no keys needed) with the **BigQuery Job User**
@@ -44,7 +48,7 @@ default 100 GiB billing cap; the free tier is shared with other project usage.
 - Print SQL offline: `ADOPTION_PRINT_QUERY=1 npm run adoption`. No project or
   credentials are needed; `ADOPTION_CRAWL` defaults to the current UTC month.
 - Override the execution cap with `ADOPTION_MAX_BYTES_BILLED` (a positive number
-  of bytes; default `107374182400`).
+  of bytes; default `120259084288`).
 - The workflow can also be triggered by hand via workflow_dispatch.
 
 The query reads `httparchive.crawl.pages`, restricted to one date, desktop

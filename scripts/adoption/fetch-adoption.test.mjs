@@ -45,7 +45,7 @@ test("dry run validates but never executes the aggregation or returns publishabl
       calls++;
       assert.equal(options.dryRun, true);
       assert.equal(options.useLegacySql, false);
-      assert.equal(options.maximumBytesBilled, "107374182400");
+      assert.equal(options.maximumBytesBilled, "120259084288");
       return [{ metadata: { statistics: { totalBytesProcessed: "123" } } }];
     },
     async query() {

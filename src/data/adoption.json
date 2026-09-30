@@ -1,8 +1,72 @@
 {
-  "crawl": null,
-  "generatedAt": null,
-  "metrics": {},
-  "origins": 0,
-  "pages": 0,
-  "source": "HTTP Archive monthly crawl (desktop root pages, rank <= 1000000), custom metrics"
+  "crawl": "2026-09",
+  "generatedAt": "2026-09-30T19:03:52.787Z",
+  "source": "HTTP Archive monthly crawl (desktop root pages, rank <= 1000000), custom metrics",
+  "pages": 668524,
+  "origins": 668523,
+  "metrics": {
+    "gpc-json": {
+      "label": "gpc.json with a boolean declaration",
+      "pages": 40017,
+      "pagesPct": 5.986,
+      "origins": 40017,
+      "originsPct": 5.986
+    },
+    "security-txt": {
+      "label": "security.txt passing the collector’s field checks",
+      "pages": 17997,
+      "pagesPct": 2.692,
+      "origins": 17997,
+      "originsPct": 2.692
+    },
+    "assetlinks-json": {
+      "label": "/.well-known/assetlinks.json",
+      "pages": 37595,
+      "pagesPct": 5.624,
+      "origins": 37595,
+      "originsPct": 5.624
+    },
+    "apple-app-site-association": {
+      "label": "/.well-known/apple-app-site-association",
+      "pages": 81422,
+      "pagesPct": 12.179,
+      "origins": 81422,
+      "originsPct": 12.179
+    },
+    "change-password": {
+      "label": "change-password redirect with a successful missing-URL check",
+      "pages": 3910,
+      "pagesPct": 0.585,
+      "origins": 3910,
+      "originsPct": 0.585
+    },
+    "webauthn": {
+      "label": "webauthn with a non-empty origins array",
+      "pages": 345,
+      "pagesPct": 0.052,
+      "origins": 345,
+      "originsPct": 0.052
+    },
+    "agentic-resource-discovery": {
+      "label": "AI Catalog or ARD manifest with at least one entry",
+      "pages": 0,
+      "pagesPct": 0,
+      "origins": 0,
+      "originsPct": 0
+    },
+    "robots-txt": {
+      "label": "robots.txt with parsed user-agent or sitemap directives",
+      "pages": 499464,
+      "pagesPct": 74.711,
+      "origins": 499463,
+      "originsPct": 74.711
+    },
+    "robots-for-ai-crawlers": {
+      "label": "robots.txt rules naming AI crawlers",
+      "pages": 87304,
+      "pagesPct": 13.059,
+      "origins": 87303,
+      "originsPct": 13.059
+    }
+  }
 }
