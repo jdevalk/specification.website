@@ -41,7 +41,7 @@
     "astro": "^7.3.5",
     "dompurify": "^3.4.16",
     "tailwindcss": "^4.3.0",
-    "@google-cloud/bigquery": "^8.0.0"
+    "@google-cloud/bigquery": "^9.1.0"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
