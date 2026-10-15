@@ -6,7 +6,7 @@ summary: "Monitor the site from outside your own infrastructure, combine synthet
 status: recommended
 order: 50
 appliesTo: [all]
-relatedSlugs: [error-pages, maintenance-pages, third-party-scripts]
+relatedSlugs: [error-pages, maintenance-pages, third-party-scripts, ipv6]
 updated: "2026-10-15T12:00:00.000Z"
 sources:
   - title: "Google SRE Book — Monitoring Distributed Systems"

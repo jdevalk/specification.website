@@ -6,8 +6,8 @@ summary: "Serve every page over HTTPS using TLS 1.2 or 1.3, redirect plain HTTP 
 status: required
 order: 10
 appliesTo: [all]
-relatedSlugs: [hsts, caa-records, content-security-policy, mixed-content]
-updated: "2026-08-21T00:00:00.000Z"
+relatedSlugs: [tls-configuration, hsts, caa-records, content-security-policy, mixed-content, dane]
+updated: "2026-10-15T00:00:00.000Z"
 sources:
   - title: "RFC 9846 — The Transport Layer Security (TLS) Protocol Version 1.3"
     url: "https://www.rfc-editor.org/rfc/rfc9846"
@@ -64,6 +64,8 @@ Cipher and protocol checklist:
 - ECDHE key exchange only, on TLS 1.2 as well as 1.3.
 - Hybrid post-quantum key agreement offered on TLS 1.3 — `X25519MLKEM768`.
 - A complete certificate chain — serve the intermediate, not just the leaf.
+
+The remaining TLS parameters that scanners test one by one (TLS compression, renegotiation, 0-RTT, Extended Main Secret, cipher order, signature hashes, and certificate key size) are covered in [TLS configuration hardening](/spec/security/tls-configuration/).
 
 That third line is stricter than the familiar "forward secrecy only" rule, and the difference is where TLS 1.2 configurations tend to be out of date. RFC 10015 says clients and servers **MUST NOT** offer or select RSA key exchange, static finite-field Diffie-Hellman, _or ephemeral finite-field Diffie-Hellman_ in TLS 1.2 — so `DHE` suites are now disallowed even though they are forward-secret, on the grounds that finite-field groups are slow, historically misconfigured, and no longer worth maintaining alongside the elliptic-curve equivalents. Static `ECDH` is a `SHOULD NOT`. In practice this leaves `ECDHE`, which is what a current Mozilla "Intermediate" configuration already gives you.
 

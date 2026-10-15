@@ -6,8 +6,8 @@ summary: "Compress text responses with brotli where supported, gzip everywhere e
 status: required
 order: 60
 appliesTo: [all]
-relatedSlugs: [cache-control, vary, http3, conditional-requests, compression-dictionary-transport]
-updated: "2026-07-09T00:00:00.000Z"
+relatedSlugs: [cache-control, vary, http3, conditional-requests, compression-dictionary-transport, tls-configuration]
+updated: "2026-10-15T00:00:00.000Z"
 sources:
   - title: "RFC 7932 — Brotli Compressed Data Format"
     url: "https://www.rfc-editor.org/rfc/rfc7932"
@@ -70,6 +70,7 @@ Text resources — HTML, CSS, JavaScript, JSON, SVG, XML — compress to 20–30
 - Compressing images or video. Pure waste.
 - Missing `Vary: Accept-Encoding` behind a CDN. Cache poisoning waiting to happen.
 - Brotli at quality 11 on dynamic responses. The encode cost erases the wire saving.
+- Compressing a response that reflects attacker-controlled input next to a secret. This is the BREACH attack: an attacker who can inject text into a page (through a query parameter, say) and watch the size of the encrypted response can recover a secret on the same page, such as a CSRF token, one character at a time, because a guess that matches the secret compresses better. The fix is narrow, not a reason to switch compression off: mask per-request secrets with a fresh random value on every response (most frameworks' CSRF protection already does), keep secrets out of responses that echo user input, or skip compression on those specific responses. Static assets and pages without secrets are not affected. Scanners that flag "HTTP compression enabled" as a risk on every site, as Internet.nl does, are measuring something much broader than the actual exposure.
 
 ## Verification
 

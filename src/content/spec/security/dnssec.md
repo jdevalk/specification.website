@@ -6,7 +6,7 @@ summary: "DNSSEC cryptographically signs DNS records so resolvers can verify the
 status: optional
 order: 120
 appliesTo: [all]
-relatedSlugs: [caa-records, https-tls, hsts, for-sale-dns]
+relatedSlugs: [caa-records, https-tls, hsts, for-sale-dns, dane, rpki]
 updated: "2026-08-08T00:00:00.000Z"
 sources:
   - title: "RFC 4033 — DNS Security Introduction and Requirements"
@@ -35,7 +35,7 @@ DNSSEC signs; it does not encrypt. The signatures let a resolver detect a tamper
 
 Plain DNS is unauthenticated. Anyone on the network path — a coffee-shop router, a compromised ISP, a malicious resolver — can lie about which IP your domain points to, where mail should go, or what TXT records exist. That undermines TLS issuance (because Domain Validation depends on DNS or HTTP that depends on DNS), email security (SPF, DKIM, DMARC live in TXT records), and CAA enforcement.
 
-DNSSEC closes the cache-poisoning and on-path spoofing surface for any resolver that validates. It is also a prerequisite for protocols like DANE, which pin TLS keys in DNS.
+DNSSEC closes the cache-poisoning and on-path spoofing surface for any resolver that validates. It is also a prerequisite for [DANE](/spec/security/dane/), which pins TLS keys in DNS; for websites no browser checks it yet, but for mail it is DNSSEC's most useful application.
 
 The honest caveat: DNSSEC is operationally tricky. A misconfiguration — a missing `DS` record after a key rollover, an expired signature — takes your whole domain offline for validating resolvers, which is much worse than the average outage. The benefit is real but only worth taking on with tooling that handles rollovers automatically.
 
