@@ -570,7 +570,7 @@ export async function webmcpManifest() {
         summary: e.data.summary,
         order: e.data.order,
         url: `${site.url}/spec/${e.data.category}/${slug}/`,
-        mdUrl: `${site.url}/spec/${e.data.category}/${slug}.md`,
+        mdUrl: `/spec/${e.data.category}/${slug}.md`,
       };
     })
     .sort(
