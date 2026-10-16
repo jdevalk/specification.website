@@ -80,5 +80,5 @@ The API is early — implementations are shipping behind flags and via polyfill.
 - `typeof navigator.modelContext?.registerTool === 'function'` in a console on a supporting browser.
 - On a browser *without* the API, the network panel shows no request for the tool bundle at all — not a request whose script returns early.
 - The browser's agent UI lists your registered tools by name and description.
-- Calling a registered tool from a test agent returns the string the tool's `execute()` resolved with — not an MCP-shaped `{ content: [...] }` payload, which belongs to server-side MCP, not WebMCP.
+- Calling a registered tool from a test agent returns a JSON-serialisable result. The tool's `execute()` can resolve a string, object, array, or another JSON-serialisable value; `document.modelContext.executeTool()` returns that value serialised as JSON. An MCP-shaped `{ content: [...] }` envelope is not required.
 - If you ship a parallel HTTP MCP server, the tool names match across both surfaces.

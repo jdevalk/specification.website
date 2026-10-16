@@ -75,6 +75,9 @@ jobs:
         env:
           NODE_ENV: production
 
+      - name: Test generated WebMCP tools
+        run: npm run test:webmcp
+
       - name: Upload build artefact
         uses: actions/upload-artifact@v7
         with:

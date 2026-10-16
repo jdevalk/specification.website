@@ -68,10 +68,11 @@ let manifestPromise: any = null;
 // Fetched once, on the first tool call that needs it. Tools that only drive
 // the UI (open_search, open_checklist) never trigger it.
 function wmcFetchManifest(manifestUrl: string, signal: any): Promise<any> {
+  if (signal && signal.aborted) return Promise.reject(signal.reason);
   if (!manifestPromise) {
+    // This request serves every caller; cancelling one must not abort it.
     manifestPromise = fetch(manifestUrl, {
       headers: { Accept: "application/json" },
-      signal: signal,
     })
       .then(function (res: any) {
         if (!res.ok) throw new Error("HTTP " + res.status);
@@ -82,7 +83,26 @@ function wmcFetchManifest(manifestUrl: string, signal: any): Promise<any> {
         throw err;
       });
   }
-  return manifestPromise;
+  if (!signal) return manifestPromise;
+  // Cancel only this caller's wait, and detach its listener when settled.
+  return new Promise(function (resolve, reject) {
+    function aborted() {
+      signal.removeEventListener("abort", aborted);
+      reject(signal.reason);
+    }
+    signal.addEventListener("abort", aborted, { once: true });
+    manifestPromise.then(
+      function (manifest: any) {
+        signal.removeEventListener("abort", aborted);
+        if (signal.aborted) reject(signal.reason);
+        else resolve(manifest);
+      },
+      function (err: any) {
+        signal.removeEventListener("abort", aborted);
+        reject(err);
+      },
+    );
+  });
 }
 
 function wmcToolError(

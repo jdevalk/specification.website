@@ -34,7 +34,8 @@
     "adoption": "node scripts/adoption/fetch-adoption.mjs",
     "test:adoption": "node --test scripts/adoption/*.test.mjs",
     "test:diagnostics": "node scripts/test-diagnostics.mjs",
-    "webmcp:schema": "node scripts/emit-webmcp-schema.mjs"
+    "webmcp:schema": "node scripts/emit-webmcp-schema.mjs",
+    "test:webmcp": "node --test scripts/test-webmcp.mjs"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.0.3",
