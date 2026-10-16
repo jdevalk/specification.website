@@ -85,4 +85,15 @@ export default [
       "@typescript-eslint/no-unused-vars": ["error", { caughtErrors: "none" }],
     },
   },
+
+  // src/lib/webmcp.ts emits its helper/execute functions verbatim into
+  // /webmcp.js via Function.toString(). Their `var` style and loose `any`
+  // types are the shipped browser code, not build-time style — don't lint
+  // them as if they were.
+  {
+    files: ["src/lib/webmcp.ts"],
+    rules: {
+      "no-var": "off",
+    },
+  },
 ];

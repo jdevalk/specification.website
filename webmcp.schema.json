@@ -1,0 +1,149 @@
+{
+  "tools": [
+    {
+      "name": "search_spec",
+      "title": "Search the spec",
+      "description": "Search The Website Specification for matching topics. Returns ranked results with title, status, category, canonical URL, and a one-line summary. Use this when the user asks about a topic by keyword (e.g. \"CSP\", \"alt text\", \"llms.txt\").",
+      "annotations": {
+        "readOnlyHint": true
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Free-text query.",
+            "minLength": 1
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Maximum results to return.",
+            "minimum": 1,
+            "maximum": 25,
+            "default": 5
+          }
+        },
+        "required": ["query"]
+      }
+    },
+    {
+      "name": "list_topics",
+      "title": "List spec topics",
+      "description": "List spec topics, optionally filtered by category and/or status. Returns title, status, category, summary, and URL per topic. Use this when the user wants the canonical list (e.g. \"all required SEO topics\"). Results are paged — follow page/page_size to walk the whole list.",
+      "annotations": {
+        "readOnlyHint": true
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": [
+              "foundations",
+              "seo",
+              "accessibility",
+              "security",
+              "well-known",
+              "agent-readiness",
+              "performance",
+              "privacy",
+              "resilience",
+              "i18n"
+            ],
+            "description": "Restrict to one category."
+          },
+          "status": {
+            "type": "string",
+            "enum": ["required", "recommended", "optional", "avoid"],
+            "description": "Restrict to one status."
+          },
+          "page": {
+            "type": "integer",
+            "description": "Page of results to return.",
+            "minimum": 1,
+            "default": 1
+          },
+          "page_size": {
+            "type": "integer",
+            "description": "Topics per page.",
+            "minimum": 1,
+            "maximum": 50,
+            "default": 10
+          }
+        }
+      }
+    },
+    {
+      "name": "get_topic",
+      "title": "Read a spec topic",
+      "description": "Fetch the Markdown for one spec page by its slug, returned as lines you can page through. Use this after search_spec or list_topics to read the canonical guidance.",
+      "annotations": {
+        "readOnlyHint": true
+      },
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string",
+            "description": "Kebab-case slug, as listed by list_topics or search_spec. Examples: 'content-security-policy', 'meta-robots', 'llms-txt'.",
+            "minLength": 1
+          },
+          "offset": {
+            "type": "integer",
+            "description": "First line to return (0-based).",
+            "minimum": 0,
+            "default": 0
+          },
+          "limit": {
+            "type": "integer",
+            "description": "Maximum lines to return.",
+            "minimum": 1,
+            "maximum": 500,
+            "default": 120
+          }
+        },
+        "required": ["slug"]
+      }
+    },
+    {
+      "name": "open_search",
+      "title": "Open site search",
+      "description": "Open the on-page ⌘K search overlay so the user can search the spec interactively. Optionally pre-fills a query. UI action — does not return results; use search_spec for that.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Optional initial query to pre-fill."
+          }
+        }
+      }
+    },
+    {
+      "name": "open_checklist",
+      "title": "Open the checklist",
+      "description": "Navigate the user to the full spec checklist page. Optionally jumps to a category section via URL hash. UI action — does not return data.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "category": {
+            "type": "string",
+            "enum": [
+              "foundations",
+              "seo",
+              "accessibility",
+              "security",
+              "well-known",
+              "agent-readiness",
+              "performance",
+              "privacy",
+              "resilience",
+              "i18n"
+            ],
+            "description": "Optional category to scroll to."
+          }
+        }
+      }
+    }
+  ]
+}

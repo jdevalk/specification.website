@@ -1,0 +1,217 @@
+[
+  {
+    "expectedCall": [
+      { "arguments": { "query": "CSP" }, "functionName": "search_spec" }
+    ],
+    "messages": [
+      {
+        "content": "What does the spec say about CSP?",
+        "role": "user",
+        "type": "message"
+      }
+    ],
+    "name": "Direct keyword search"
+  },
+  {
+    "expectedCall": [
+      {
+        "arguments": { "query": { "$pattern": "sitemap" } },
+        "functionName": "search_spec"
+      }
+    ],
+    "messages": [
+      {
+        "content": "Find me the sitemap guidance.",
+        "role": "user",
+        "type": "message"
+      }
+    ],
+    "name": "Search by meaning with pattern"
+  },
+  {
+    "expectedCall": [
+      {
+        "arguments": { "category": "seo", "status": "required" },
+        "functionName": "list_topics"
+      }
+    ],
+    "messages": [
+      {
+        "content": "Show me all required SEO topics.",
+        "role": "user",
+        "type": "message"
+      }
+    ],
+    "name": "Filtered topic list"
+  },
+  {
+    "expectedCall": [
+      {
+        "arguments": { "category": "accessibility", "page": 2, "page_size": 5 },
+        "functionName": "list_topics"
+      }
+    ],
+    "messages": [
+      {
+        "content": "Show me the second page of accessibility topics, five per page.",
+        "role": "user",
+        "type": "message"
+      }
+    ],
+    "name": "Paginated topic list"
+  },
+  {
+    "expectedCall": [
+      { "arguments": { "slug": "llms-txt" }, "functionName": "get_topic" }
+    ],
+    "messages": [
+      {
+        "content": "Read the llms.txt guidance.",
+        "role": "user",
+        "type": "message"
+      }
+    ],
+    "name": "Read a topic by slug"
+  },
+  {
+    "expectedCall": [
+      {
+        "arguments": { "slug": "https" },
+        "functionName": "get_topic",
+        "mockOutput": "…truncated after line 120 of 210; call get_topic with offset=120 to continue."
+      },
+      {
+        "arguments": { "offset": 120, "slug": "https" },
+        "functionName": "get_topic"
+      }
+    ],
+    "messages": [
+      {
+        "content": "Read the full HTTPS page, including the parts past the truncation.",
+        "role": "user",
+        "type": "message"
+      }
+    ],
+    "name": "Read a long topic across pages"
+  },
+  {
+    "expectedCall": [
+      {
+        "ordered": [
+          {
+            "arguments": { "query": { "$pattern": "meta robots" } },
+            "functionName": "search_spec",
+            "mockOutput": "1. Meta robots — required · seo\n   https://specification.website/spec/seo/meta-robots/"
+          },
+          {
+            "arguments": { "slug": "meta-robots" },
+            "functionName": "get_topic"
+          }
+        ]
+      }
+    ],
+    "messages": [
+      {
+        "content": "Find the page about meta robots and read it.",
+        "role": "user",
+        "type": "message"
+      }
+    ],
+    "name": "Search then read journey"
+  },
+  {
+    "expectedCall": [
+      {
+        "arguments": { "query": { "$pattern": "quantum|seo" } },
+        "functionName": "search_spec"
+      }
+    ],
+    "messages": [
+      {
+        "content": "Read the page about quantum SEO.",
+        "role": "user",
+        "type": "message"
+      },
+      {
+        "arguments": { "slug": "quantum-seo" },
+        "name": "get_topic",
+        "role": "model",
+        "type": "functioncall"
+      },
+      {
+        "name": "get_topic",
+        "response": {
+          "result": {
+            "code": "NOT_FOUND",
+            "error": "No spec page with slug \"quantum-seo\".",
+            "suggestion": "Use search_spec to find the right slug."
+          }
+        },
+        "role": "user",
+        "type": "functionresponse"
+      }
+    ],
+    "name": "Unknown slug recovery"
+  },
+  {
+    "expectedCall": [{ "arguments": {}, "functionName": "list_topics" }],
+    "messages": [
+      {
+        "content": "Is there anything in the spec about AMP?",
+        "role": "user",
+        "type": "message"
+      },
+      {
+        "arguments": { "query": "AMP" },
+        "name": "search_spec",
+        "role": "model",
+        "type": "functioncall"
+      },
+      {
+        "name": "search_spec",
+        "response": {
+          "result": {
+            "code": "NOT_FOUND",
+            "error": "No spec pages matched \"AMP\".",
+            "suggestion": "Try broader keywords, or call list_topics to browse by category."
+          }
+        },
+        "role": "user",
+        "type": "functionresponse"
+      }
+    ],
+    "name": "Empty search recovery"
+  },
+  {
+    "expectedCall": [
+      {
+        "arguments": { "category": "privacy" },
+        "functionName": "open_checklist"
+      }
+    ],
+    "messages": [
+      {
+        "content": "Take me to the privacy checklist.",
+        "role": "user",
+        "type": "message"
+      }
+    ],
+    "name": "Open the checklist for a category"
+  },
+  {
+    "expectedCall": [
+      {
+        "arguments": { "query": { "$pattern": "canonical" } },
+        "functionName": "open_search"
+      }
+    ],
+    "messages": [
+      {
+        "content": "Search the site for canonical URLs.",
+        "role": "user",
+        "type": "message"
+      }
+    ],
+    "name": "Open site search with a query"
+  }
+]

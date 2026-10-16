@@ -118,6 +118,66 @@ const claudeJson = JSON.stringify(desktopConfig, null, 2);
         </tbody>
       </table>
 
+      <h2 id="webmcp">Browser tools (WebMCP)</h2>
+      <p>
+        The same lookup surface is also exposed in the browser via{" "}
+        <a href="/spec/agent-readiness/webmcp/">WebMCP</a>:{" "}
+        <code>/webmcp.js</code> registers tools on{" "}
+        <code>document.modelContext</code> for in-browser agents, generated at
+        build time from the same content collection. Tool names and intent
+        mirror the HTTP server above. A browser without a WebMCP implementation
+        downloads none of it — a small inline guard injects the script only when
+        the API is present.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>Tool</th>
+            <th>What it does</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <code>search_spec(query, limit?)</code>
+            </td>
+            <td>
+              Ranked keyword search over the spec — title, status, category,
+              URL, summary.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>
+                list_topics({"{ category?, status?, page?, page_size? }"})
+              </code>
+            </td>
+            <td>Paged topic index with the same filters as the HTTP tool.</td>
+          </tr>
+          <tr>
+            <td>
+              <code>get_topic({"{ slug, offset?, limit? }"})</code>
+            </td>
+            <td>
+              One spec page as Markdown, returned in line pages with a
+              continuation hint.
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <code>open_search({"{ query? }"})</code>
+            </td>
+            <td>Opens the on-page ⌘K search overlay for the user.</td>
+          </tr>
+          <tr>
+            <td>
+              <code>open_checklist({"{ category? }"})</code>
+            </td>
+            <td>Navigates the user to the checklist page.</td>
+          </tr>
+        </tbody>
+      </table>
+
       <h2 id="prompts">Prompts</h2>
       <table>
         <thead>
