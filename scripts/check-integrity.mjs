@@ -13,7 +13,12 @@
 // A stale hash would break search once Integrity-Policy is enforced (and today
 // silently disables the check). On mismatch this prints the value to paste and
 // exits non-zero, failing the build.
-import { readFileSync } from "node:fs";
+//
+// It also walks the built HTML and checks that every SRI-pinned script URL
+// carries `?v=<slice of its hash>` (hashVersion() in src/lib/integrity.ts) and
+// that the hash matches the file it points at, so a changed file always gets a
+// new URL rather than colliding with a visitor's stale cached copy.
+import { readFileSync, readdirSync } from "node:fs";
 import { createHash } from "node:crypto";
 import { join } from "node:path";
 
@@ -109,10 +114,42 @@ if (!guard) {
   }
 }
 
+// Every SRI-pinned script in the built HTML must use a versioned URL that
+// matches the bytes actually served at that path.
+const hashVersion = (integrity) =>
+  integrity.slice(7, 19).replace(/[^A-Za-z0-9]/g, "_");
+const htmlFiles = readdirSync(join(root, "dist"), { recursive: true }).filter(
+  (f) => String(f).endsWith(".html"),
+);
+const seen = new Map();
+for (const rel of htmlFiles) {
+  const html = readFileSync(join(root, "dist", String(rel)), "utf8");
+  for (const [tag] of html.matchAll(/<script\b[^>]*>/g)) {
+    const integrity = (tag.match(/\b(?:data-webmcp-sri|integrity)="([^"]+)"/) ||
+      [])[1];
+    if (!integrity) continue;
+    const src = (tag.match(/\b(?:data-webmcp-src|src)="([^"]+)"/) || [])[1];
+    if (!src) continue;
+    const [path, query = ""] = src.split("?");
+    if (query !== `v=${hashVersion(integrity)}`) {
+      fail(
+        `${rel}: ${src} is not versioned by its hash.\n     Expected: ${path}?v=${hashVersion(integrity)}`,
+      );
+      continue;
+    }
+    if (seen.has(src)) continue;
+    seen.set(src, integrity);
+    if (built384(join("dist", path)) !== integrity) {
+      fail(`${rel}: integrity for ${path} does not match dist${path}.`);
+    }
+  }
+}
+if (seen.size === 0) fail("no SRI-pinned scripts found in dist/**/*.html.");
+
 if (failed) {
   console.error("\ncheck-integrity: FAILED");
   process.exit(1);
 }
 console.log(
-  "✓ check-integrity: pagefind.js + component-ui + WebMCP guard pinned and CSP-allowed.",
+  `✓ check-integrity: pagefind.js + component-ui + WebMCP guard pinned and CSP-allowed; ${seen.size} script URLs versioned by hash.`,
 );

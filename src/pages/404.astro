@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "~/layouts/BaseLayout.astro";
-import { sri } from "~/lib/integrity";
+import { pinned } from "~/lib/integrity";
 ---
 
 <BaseLayout
@@ -44,10 +44,9 @@ import { sri } from "~/lib/integrity";
   {/* Report the missing path to Plausible (production only). CSP-safe: external 'self' script. */}
   {import.meta.env.PROD && (
     <script
-      src="/track-404.js"
+      {...pinned("/track-404.js")}
       type="text/javascript"
       defer
-      integrity={sri("/track-404.js")}
       crossorigin="anonymous"
     ></script>
   )}

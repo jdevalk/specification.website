@@ -22,15 +22,20 @@
         link.setAttribute("data-pagefind-css", "");
         document.head.appendChild(link);
       }
-      var script = document.createElement("script");
-      script.type = "module";
-      script.src = "/pagefind/pagefind-component-ui.js";
       // SRI + CORS mode so this injected script satisfies Integrity-Policy
       // (which blocks both un-hashed and no-cors script requests). The hash must
       // match pagefindComponentUiIntegrity in src/lib/integrity.ts; both are
-      // verified against the built file by scripts/check-integrity.mjs.
-      script.integrity =
+      // verified against the built file by scripts/check-integrity.mjs. The URL
+      // carries a slice of it (hashVersion() in integrity.ts) so a Pagefind bump
+      // can't collide with a stale cached copy.
+      var integrity =
         "sha384-sgK6d6muVu9zgs2S4M4GuLq6M9fV5OMX7x2wloOZiDmbOgYhQa+tf8Ukevo/kjeq";
+      var script = document.createElement("script");
+      script.type = "module";
+      script.src =
+        "/pagefind/pagefind-component-ui.js?v=" +
+        integrity.slice(7, 19).replace(/[^A-Za-z0-9]/g, "_");
+      script.integrity = integrity;
       script.crossOrigin = "anonymous";
       script.onload = function () {
         // The custom elements register asynchronously after the module

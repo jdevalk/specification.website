@@ -3,7 +3,7 @@ import BaseLayout from "./BaseLayout.astro";
 import Breadcrumbs from "~/components/Breadcrumbs.astro";
 import StatusBadge from "~/components/StatusBadge.astro";
 import { categoryFor, site } from "~/lib/site";
-import { sri } from "~/lib/integrity";
+import { pinned } from "~/lib/integrity";
 
 interface Source {
   title: string;
@@ -245,11 +245,10 @@ const breadcrumbJsonLd = {
   </article>
 
   <script
-    src="/spec-toc.js"
+    {...pinned("/spec-toc.js")}
     type="text/javascript"
     defer
     is:inline
-    integrity={sri("/spec-toc.js")}
     crossorigin="anonymous"
   ></script>
 </BaseLayout>
