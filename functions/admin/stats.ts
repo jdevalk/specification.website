@@ -17,6 +17,17 @@ const AGENT = "sw_agent_log";
 const MCP = "sw_mcp_log";
 const REPORT = "sw_report_log";
 
+// SRI for /admin-stats.js. Hardcoded (this is an edge Function, not an Astro
+// render); scripts/check-integrity.mjs verifies it matches public/admin-stats.js
+// on every build.
+const ADMIN_STATS_SRI =
+  "sha384-XUWxtbHAb/brkCdgXgjE9OLsRhBFCUFd5U2oRGnojav+W3oVhEbH80w/ji0pEn44";
+
+/** Cache-busting slice of an SRI hash; mirrors hashVersion() in src/lib/integrity.ts. */
+function hashVersion(integrity: string): string {
+  return integrity.slice(7, 19).replace(/[^A-Za-z0-9]/g, "_");
+}
+
 // Include direct .md URLs and the legacy Accept-header flag in historical data.
 const AGENT_MARKDOWN = "(blob10 IN ('markdown', '1') OR blob4 LIKE '%.md')";
 const AGENT_MIME = `if(${AGENT_MARKDOWN}, 'markdown', 'html')`;
@@ -938,10 +949,9 @@ function renderDashboard(
     </div>
   </div>
 
-  <!-- SRI so this satisfies Integrity-Policy. Hardcoded (this is an edge
-       Function, not an Astro render); scripts/check-integrity.mjs verifies it
-       matches public/admin-stats.js on every build. -->
-  <script src="/admin-stats.js" defer integrity="sha384-XUWxtbHAb/brkCdgXgjE9OLsRhBFCUFd5U2oRGnojav+W3oVhEbH80w/ji0pEn44" crossorigin="anonymous"></script>
+  <!-- SRI so this satisfies Integrity-Policy; the URL carries a slice of it so
+       a deploy can't collide with a stale cached copy. See ADMIN_STATS_SRI. -->
+  <script src="/admin-stats.js?v=${hashVersion(ADMIN_STATS_SRI)}" defer integrity="${ADMIN_STATS_SRI}" crossorigin="anonymous"></script>
 </body>
 </html>`;
 }

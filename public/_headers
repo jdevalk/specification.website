@@ -28,7 +28,8 @@
 #
 # Integrity-Policy-Report-Only: every first-party script now carries an SRI
 # `integrity` attribute (src/lib/integrity.ts, the pagefind*/webmcp hashes, and
-# the admin-stats.js literal), so this report-only policy should fire *no*
+# the admin-stats.js literal), and its URL a `?v=` slice of that hash so a
+# deploy never pairs a new hash with a stale cached copy, so this report-only policy should fire *no*
 # violations in normal browsing — it is a regression tripwire: a report to
 # /reports means a script shipped without integrity. Flip to enforcing
 # `Integrity-Policy` once the /reports stream confirms a clean run. Worked
@@ -57,12 +58,11 @@
   tdm-reservation: 0
   Link: </llms.txt>; rel="describedby"; type="text/markdown"; title="Site index for LLMs", </llms-full.txt>; rel="alternate"; type="text/markdown"; title="Full content as Markdown", </.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json", </.well-known/mcp/server-card.json>; rel="mcp"; type="application/json"; title="MCP server card", <https://mcp.specification.website/mcp>; rel="related"; title="MCP endpoint", </.well-known/agent-card.json>; rel="service-desc"; type="application/json"; title="A2A agent card", <https://mcp.specification.website/a2a/v1>; rel="related"; title="A2A endpoint", </.well-known/agent-skills/index.json>; rel="agent-skills"; type="application/json"; title="Agent Skills discovery index", </.well-known/ai-catalog.json>; rel="ai-catalog"; type="application/ai-catalog+json"; title="Agentic Resource Discovery catalog", </sitemap-index.xml>; rel="sitemap"; type="application/xml", </rss.xml>; rel="alternate"; type="application/rss+xml"; title="Feed of spec changes", </changelog/rss.xml>; rel="alternate"; type="application/rss+xml"; title="Changelog feed", </.well-known/security.txt>; rel="security"; type="text/plain"
 
-# Self-hosted Plausible tracker. Not fingerprinted and refreshed in place by
-# the daily job, so keep the cache short: the HTML's SRI hash updates in the
-# same deploy, and a long-lived stale copy would fail the integrity check.
+# Self-hosted Plausible tracker, refreshed in place by the daily job. No short
+# cache needed: like every SRI-pinned script, the HTML loads it as
+# /js/plausible.js?v=<slice of its hash>, so new bytes get a new URL.
 /js/plausible.js
   Content-Type: text/javascript; charset=utf-8
-  Cache-Control: public, max-age=600, must-revalidate
 
 # Feeds — WebSub discovery.
 #
