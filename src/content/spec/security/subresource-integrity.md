@@ -90,5 +90,5 @@ This site ships `Integrity-Policy-Report-Only: blocked-destinations=(script)` (s
 
 - View source. Every `<script src="https://…">` and external `<link rel="stylesheet">` should have an `integrity` and `crossorigin` attribute.
 - Tamper with a byte of the file (via a local proxy) and confirm the browser refuses to run it; the console reports "Failed to find a valid digest".
-- Use a tool like [SRI Hash Generator](https://www.srihash.org/) to compute hashes for ad-hoc checks.
+- Use a tool like [SRI Hash Generator](https://srihash.org/) to compute hashes for ad-hoc checks.
 - Audit dependency upgrades: any time a third-party file URL changes, the hash must change with it.
