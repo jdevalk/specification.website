@@ -7,7 +7,7 @@ status: required
 order: 20
 appliesTo: [all]
 relatedSlugs: [lazy-loading, core-web-vitals, preload-prefetch-preconnect]
-updated: "2026-08-08T00:00:00.000Z"
+updated: "2026-10-17T00:00:00.000Z"
 sources:
   - title: "HTML Standard — 4.8.4 Images"
     url: "https://html.spec.whatwg.org/multipage/images.html"
@@ -56,6 +56,16 @@ Keep the `<picture>` chain anyway. "Widely available" describes browser versions
 </picture>
 ```
 
+**Consider JPEG XL as a further `<source>`.** Since October 2026 it decodes by default in Chrome and Edge 155, Firefox 158 and Safari 17 — weeks of cross-engine support, not years, so it belongs in the chain and never as the only `src`. It is not just a third rival to AVIF. Its distinctive ability is lossless JPEG transcoding: an existing JPEG can be re-encoded smaller and reconstructed bit for bit, so a back catalogue converts without a further generation of quality loss. It also decodes progressively, showing a usable preview of a large photo before the download finishes (Safari renders only once the file is complete). AVIF tends to win at aggressive, low-bitrate compression and JPEG XL at high fidelity and lossless; encode both and compare per class of image rather than declaring a winner.
+
+```html
+<picture>
+  <source srcset="photo.jxl" type="image/jxl">
+  <source srcset="photo.avif" type="image/avif">
+  <img src="photo.jpg" width="1200" height="800" alt="…">
+</picture>
+```
+
 **Serve responsive sizes.** Generate the same image at several widths and let `srcset` plus `sizes` pick the right one. A 4000px image in a 400px slot wastes ~99% of the bytes.
 
 **Always set `width` and `height`.** The browser computes the aspect ratio and reserves the slot, preventing CLS when the image loads.
@@ -71,6 +81,7 @@ Keep the `<picture>` chain anyway. "Widely available" describes browser versions
 - Omitting `width` and `height`, then wondering why CLS is poor.
 - Single fixed `src` with no `srcset` — mobile users download the desktop image.
 - Serving an "optimised" image that is still 1MB because compression was set to 100.
+- Ordering `<source>` elements by habit. The browser takes the first type it supports, not the smallest file, so put first whichever format your own measurements show is smaller for that image.
 
 ## Verification
 
