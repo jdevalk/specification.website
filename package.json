@@ -40,7 +40,7 @@
   "dependencies": {
     "@astrojs/mdx": "^8.0.3",
     "@astrojs/rss": "^4.0.19",
-    "@google-cloud/bigquery": "^9.2.0",
+    "@google-cloud/bigquery": "^9.3.0",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^7.3.8",
     "dompurify": "^3.4.16",
