@@ -7,7 +7,7 @@ status: required
 order: 20
 appliesTo: [all]
 relatedSlugs: [lazy-loading, core-web-vitals, preload-prefetch-preconnect]
-updated: "2026-08-08T00:00:00.000Z"
+updated: "2026-10-19T00:00:00.000Z"
 sources:
   - title: "HTML Standard — 4.8.4 Images"
     url: "https://html.spec.whatwg.org/multipage/images.html"
@@ -55,6 +55,8 @@ Keep the `<picture>` chain anyway. "Widely available" describes browser versions
   <img src="photo.jpg" width="1200" height="800" alt="…">
 </picture>
 ```
+
+**Treat JPEG XL as an extra source, not a replacement.** [Chrome 155](https://developer.chrome.com/blog/jpeg-xl-in-chrome) (6 October 2026) and [Firefox 158](https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/158) (13 October 2026) turned on JPEG XL decoding, joining Safari, which has supported it since version 17. Shipping in all three engines is not the same as Baseline, though: Edge has not enabled it, so JPEG XL is still limited availability. Nor is it simply a better AVIF. Its strengths lie elsewhere: it can recompress an existing JPEG losslessly into a smaller file and rebuild the original exactly, it decodes progressively, and it holds up at high fidelity. For an ordinary lossy photo at web quality, AVIF is often still the smaller file, so compare the two on your own images. To offer it, add a `<source srcset="photo.jxl" type="image/jxl">` to the chain. The browser takes the first type it supports, so put the sources in your order of preference. If you negotiate format on the `Accept` request header instead, Firefox now lists `image/jxl` there, and the response needs [`Vary: Accept`](/spec/performance/vary/) so caches keep the variants apart.
 
 **Serve responsive sizes.** Generate the same image at several widths and let `srcset` plus `sizes` pick the right one. A 4000px image in a 400px slot wastes ~99% of the bytes.
 
