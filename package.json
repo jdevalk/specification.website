@@ -11,7 +11,7 @@
   },
   "homepage": "https://specification.website",
   "engines": {
-    "node": ">=22.22.3"
+    "node": ">=22.22.0"
   },
   "scripts": {
     "prepare": "git config core.hooksPath .githooks || true",

@@ -43,7 +43,7 @@ It is _not_ a framework. It is _not_ a tutorial. It is a spec, in the same way t
 
 ## Development
 
-Requirements: Node.js 22.22.3+, npm. Cloudflare Pages uses the version pinned in `.node-version`.
+Requirements: Node.js 22.22+, npm.
 
 ```bash
 npm install
