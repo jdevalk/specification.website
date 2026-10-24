@@ -19,6 +19,7 @@
     "^https?://developer\\.android\\.com/",
     "^https?://(www\\.)?example\\.com/",
     "^https?://github\\.com/",
-    "^https?://mcp\\.specification\\.website/a2a/"
+    "^https?://mcp\\.specification\\.website/a2a/",
+    "^https?://digital-strategy\\.ec\\.europa\\.eu/"
   ]
 }
