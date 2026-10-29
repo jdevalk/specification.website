@@ -7,13 +7,13 @@ status: recommended
 order: 40
 appliesTo: [all]
 relatedSlugs: [robots-txt, content-signals, tdmrep, agent-readiness-overview, llms-txt, web-bot-auth]
-updated: "2026-05-29T12:14:17.000Z"
+updated: "2026-10-29T00:00:00.000Z"
 sources:
   - title: "OpenAI — GPTBot"
     url: "https://platform.openai.com/docs/bots"
     publisher: "OpenAI"
   - title: "Anthropic — Crawlers"
-    url: "https://support.anthropic.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler"
+    url: "https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler"
     publisher: "Anthropic"
   - title: "Google — Google-Extended"
     url: "https://developers.google.com/crawling/docs/crawlers-fetchers/google-common-crawlers#google-extended"
@@ -32,7 +32,9 @@ The big ones, as of 2026:
 - **GPTBot** — OpenAI training crawler.
 - **OAI-SearchBot** — OpenAI retrieval crawler used by ChatGPT browsing.
 - **ChatGPT-User** — on-demand fetches when a ChatGPT user asks for a URL.
-- **ClaudeBot** — Anthropic training and retrieval crawler.
+- **ClaudeBot** — Anthropic training crawler.
+- **Claude-SearchBot** — Anthropic search-indexing crawler.
+- **Claude-User** — on-demand fetches when a Claude user's question needs a page.
 - **anthropic-ai** — legacy Anthropic user-agent, still seen.
 - **Google-Extended** — opts out of Gemini and Vertex training without affecting Search.
 - **Applebot-Extended** — opts out of Apple Intelligence training without affecting Siri/Spotlight.
@@ -72,6 +74,12 @@ Allow: /
 User-agent: ChatGPT-User
 Allow: /
 
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
 User-agent: PerplexityBot
 Allow: /
 
@@ -91,7 +99,7 @@ Rules of thumb:
 ## Common mistakes
 
 - Blocking `*` and forgetting that this also blocks Google.
-- Blocking only `GPTBot` and assuming no OpenAI surface can see your site — `OAI-SearchBot` and `ChatGPT-User` are separate.
+- Blocking only `GPTBot` and assuming no OpenAI surface can see your site — `OAI-SearchBot` and `ChatGPT-User` are separate. The same split applies to Anthropic: `ClaudeBot`, `Claude-SearchBot` and `Claude-User` are governed independently.
 - Leaving stale user-agents from 2023 lists. Names change; the vendor docs are the source of truth.
 - Treating disallow as deletion. Content already in training sets stays there.
 
