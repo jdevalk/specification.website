@@ -16,10 +16,10 @@ sources:
     url: "https://www.w3.org/WAI/WCAG22/Understanding/name-role-value.html"
     publisher: "W3C"
   - title: "Accessibility Checker — Empty Link"
-    url: "https://equalizedigital.com/accessibility-checker/documentation/empty-link/"
+    url: "https://equalizedigital.com/accessibility-checker/empty-link/"
     publisher: "Equalize Digital"
   - title: "Accessibility Checker — Empty Button"
-    url: "https://equalizedigital.com/accessibility-checker/documentation/empty-button/"
+    url: "https://equalizedigital.com/accessibility-checker/empty-button/"
     publisher: "Equalize Digital"
 ---
 

@@ -16,7 +16,7 @@ sources:
     url: "https://www.w3.org/WAI/WCAG22/Understanding/language-of-parts.html"
     publisher: "W3C"
   - title: "Accessibility Checker — Missing Language Declaration"
-    url: "https://equalizedigital.com/accessibility-checker/documentation/missing-language-declaration/"
+    url: "https://equalizedigital.com/accessibility-checker/missing-language-declaration/"
     publisher: "Equalize Digital"
   - title: "MDN — The lang global attribute"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/lang"
