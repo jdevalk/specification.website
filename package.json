@@ -48,10 +48,10 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
-    "@cloudflare/workers-types": "^5.20261023.1",
+    "@cloudflare/workers-types": "^5.20261030.1",
     "@eslint/js": "^10.0.1",
-    "@sentry/browser": "^11.8.0",
-    "@types/node": "^26.6.5",
+    "@sentry/browser": "^11.10.0",
+    "@types/node": "^26.6.6",
     "esbuild": "^0.28.2",
     "eslint": "^10.13.0",
     "eslint-plugin-astro": "^3.2.1",
@@ -59,10 +59,10 @@
     "linkinator": "8.1.0",
     "pagefind": "^1.5.2",
     "prettier": "^3.9.10",
-    "prettier-plugin-astro": "^1.1.1",
+    "prettier-plugin-astro": "^1.1.2",
     "sharp": "^0.35.5",
     "typescript": "^6.0.3",
-    "typescript-eslint": "^8.72.0",
+    "typescript-eslint": "^8.72.1",
     "webmcp-types": "^0.1.10"
   },
   "overrides": {
