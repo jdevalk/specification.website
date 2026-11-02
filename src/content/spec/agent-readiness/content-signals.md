@@ -7,7 +7,7 @@ status: optional
 order: 42
 appliesTo: [all]
 relatedSlugs: [robots-for-ai-crawlers, robots-txt, tdmrep, agent-readiness-overview, web-bot-auth]
-updated: "2026-09-26T00:00:00.000Z"
+updated: "2026-11-02T00:00:00.000Z"
 sources:
   - title: "IETF AI Preferences WG (aipref) — drafts"
     url: "https://datatracker.ietf.org/wg/aipref/documents/"
@@ -57,11 +57,13 @@ The part worth knowing is that **the IETF vocabulary does not use the names you 
 
 That is not a reason to avoid it, but it is a concrete reason to expect the syntax to move. Treat Content Signals as recommended-to-experiment-with, not as a finalised standard. The directive will be ignored by every crawler that does not yet parse it — which today is most of them.
 
+**The provider commitments announced in October 2026 are not for this directive.** On 30 October, [Google](https://developers.google.com/search/blog/2026/10/ai-training-control) and [Microsoft](https://blogs.bing.com/search/2026/10/your-content-your-choice-clearer-preferences-for-training-and-grounding/) announced support for a different mechanism: a `User-agent: __usage_ai-training` group, which expresses a training preference using only existing `robots.txt` syntax. It covers training alone and says nothing about search or AI input, which `Content-Signal` does. See [the shared training preference](/spec/agent-readiness/robots-for-ai-crawlers/#a-shared-training-preference) for how it works.
+
 ## Why it matters
 
 - **A declarative opt-in / opt-out at the right layer.** Existing `User-agent: GPTBot / Disallow:` directives are coarse — they block a specific bot from fetching anything. Content Signals separates *what* the bot may do from *who* the bot is.
 - **Validators already check for it.** [isitagentready.com](https://isitagentready.com/) explicitly looks for `Content-Signal:` lines in `robots.txt`. Sites that want a clean agent-readiness scorecard should add them.
-- **Some major model providers have signalled future support.** Cloudflare, Google, and others have published positions on the IETF drafts.
+- **It expresses more than training.** A single line separates search, AI input and AI training, which no shared mechanism with announced provider support does yet.
 
 ## How to implement
 
@@ -99,6 +101,7 @@ Content-Signal: search=yes, ai-input=yes, ai-train=yes
 - Inventing values beyond `yes` / `no`. The vocabulary is small on purpose.
 - Writing the IETF draft's labels (`train-ai`, `ai-use`) in a `Content-Signal` directive. Nothing reads those; the deployed directive uses `ai-train` and `ai-input`.
 - Treating it as a substitute for `Disallow:`. It is complementary.
+- Assuming Google's or Microsoft's announced training-preference support means they read `ai-train=no`. Those announcements cover the `__usage_ai-training` token, so a site that wants to reach them needs that group.
 
 ## Verification
 
