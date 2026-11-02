@@ -19,7 +19,7 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Global_attributes/hidden"
     publisher: "MDN"
   - title: "Chrome for Developers — hidden=until-found and the beforematch event"
-    url: "https://developer.chrome.com/articles/hidden-until-found"
+    url: "https://developer.chrome.com/docs/css-ui/hidden-until-found"
     publisher: "Google"
 ---
 

@@ -16,7 +16,7 @@ sources:
     url: "https://www.w3.org/WAI/WCAG22/Understanding/link-purpose-link-only.html"
     publisher: "W3C"
   - title: "Accessibility Checker — Ambiguous Anchor Text"
-    url: "https://equalizedigital.com/accessibility-checker/documentation/ambiguous-anchor-text/"
+    url: "https://equalizedigital.com/accessibility-checker/ambiguous-anchor-text/"
     publisher: "Equalize Digital"
   - title: "WP Accessibility — Content and images: Links"
     url: "https://wpaccessibility.org/"
