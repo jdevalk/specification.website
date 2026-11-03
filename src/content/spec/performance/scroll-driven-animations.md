@@ -7,7 +7,7 @@ status: optional
 order: 125
 appliesTo: [all]
 relatedSlugs: [view-transitions, core-web-vitals, visibility-aware-rendering, reduced-motion]
-updated: "2026-08-01T00:00:00.000Z"
+updated: "2026-11-03T00:00:00.000Z"
 sources:
   - title: "CSS Scroll-driven Animations Module Level 1"
     url: "https://drafts.csswg.org/scroll-animations-1/"
@@ -76,7 +76,7 @@ For a top-of-page reading-progress bar, use `scroll()` instead:
   animation: progress linear;
   animation-timeline: scroll(root block);
 }
-@keyframes progress { to { transform: scaleX(1); } }
+@keyframes progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 ```
 
 ## Common mistakes
@@ -93,3 +93,4 @@ For a top-of-page reading-progress bar, use `scroll()` instead:
 - Toggle `prefers-reduced-motion: reduce` in DevTools → Rendering. The motion must disappear, not merely shorten.
 - Run a Lighthouse or Web Vitals check. INP should be unaffected; if it regresses, you are animating the wrong property.
 - Confirm the page still works with JavaScript disabled — scroll-driven animations are pure CSS and should degrade gracefully where unsupported.
+- Baseline: scroll-driven animations became newly available across major browsers on 27 October 2026 (Chrome and Edge 115, Safari 26, Firefox 159). Older versions ignore `animation-timeline`, so the animation runs on its normal duration: with none set, the reveal above jumps straight to its end state. Gate anything that would look wrong that way, such as the progress bar, behind `@supports (animation-timeline: scroll())`.
