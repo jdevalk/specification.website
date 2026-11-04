@@ -38,6 +38,8 @@ Anonymous shorthands cover the common cases without naming a timeline:
 
 The colour status is `optional` because nothing breaks if you ship none of this. Where motion is part of the design, however, it is the right answer: it replaces a category of janky JavaScript with a declarative primitive that the compositor can run.
 
+Scroll-driven animations became Baseline newly available on 27 October 2026 (Chrome and Edge 115, Safari 26, Firefox 159). Older versions ignore `animation-timeline`, so the animation runs on its normal duration: with none set, a reveal jumps straight to its end state. Gate anything that would look wrong that way, such as the progress bar below, behind `@supports (animation-timeline: scroll())`.
+
 ## Why it matters
 
 - **Off the main thread.** Compositor-only properties (`transform`, `opacity`, `filter`) animate without touching JavaScript or layout. No INP cost, no scroll-listener debouncing, no `requestAnimationFrame` loop.
@@ -93,4 +95,3 @@ For a top-of-page reading-progress bar, use `scroll()` instead:
 - Toggle `prefers-reduced-motion: reduce` in DevTools → Rendering. The motion must disappear, not merely shorten.
 - Run a Lighthouse or Web Vitals check. INP should be unaffected; if it regresses, you are animating the wrong property.
 - Confirm the page still works with JavaScript disabled — scroll-driven animations are pure CSS and should degrade gracefully where unsupported.
-- Baseline: scroll-driven animations became newly available across major browsers on 27 October 2026 (Chrome and Edge 115, Safari 26, Firefox 159). Older versions ignore `animation-timeline`, so the animation runs on its normal duration: with none set, the reveal above jumps straight to its end state. Gate anything that would look wrong that way, such as the progress bar, behind `@supports (animation-timeline: scroll())`.
