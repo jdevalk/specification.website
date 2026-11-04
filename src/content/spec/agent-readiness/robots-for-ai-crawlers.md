@@ -6,8 +6,8 @@ summary: "Major AI vendors publish named user-agents for their crawlers. Setting
 status: recommended
 order: 40
 appliesTo: [all]
-relatedSlugs: [robots-txt, content-signals, tdmrep, agent-readiness-overview, llms-txt, web-bot-auth]
-updated: "2026-11-02T00:00:00.000Z"
+relatedSlugs: [robots-txt, meta-robots, content-signals, tdmrep, agent-readiness-overview, llms-txt, web-bot-auth]
+updated: "2026-11-04T00:00:00.000Z"
 sources:
   - title: "OpenAI — GPTBot"
     url: "https://platform.openai.com/docs/bots"
@@ -39,7 +39,7 @@ The big ones, as of 2026:
 - **Claude-SearchBot** — Anthropic search-indexing crawler.
 - **Claude-User** — on-demand fetches when a Claude user's question needs a page.
 - **anthropic-ai** — legacy Anthropic user-agent, still seen.
-- **Google-Extended** — opts out of Gemini and Vertex training without affecting Search.
+- **Google-Extended** — opts out of training and grounding in Gemini Apps and Vertex AI, without affecting Search.
 - **Applebot-Extended** — opts out of Apple Intelligence training without affecting Siri/Spotlight.
 - **PerplexityBot** — Perplexity retrieval crawler.
 - **Bytespider** — ByteDance crawler, widely used for training.
@@ -121,6 +121,7 @@ This site does not publish the group: it has no training opt-out to express, and
 
 - Blocking `*` and forgetting that this also blocks Google.
 - Blocking only `GPTBot` and assuming no OpenAI surface can see your site — `OAI-SearchBot` and `ChatGPT-User` are separate. The same split applies to Anthropic: `ClaudeBot`, `Claude-SearchBot` and `Claude-User` are governed independently.
+- Blocking `Google-Extended` to stay out of AI Overviews. It does not govern Search, so it has no effect there. AI Overviews, AI Mode and generative AI in Discover have their own [Search generative AI control](https://support.google.com/webmasters/answer/16908024), set per property in Search Console rather than in robots.txt. That control leaves classic results and ranking alone and does not cover training, so the two settings answer different questions. To limit individual pages instead, use the preview rules in [meta robots](/spec/seo/meta-robots/).
 - Leaving stale user-agents from 2023 lists. Names change; the vendor docs are the source of truth.
 - Treating disallow as deletion. Content already in training sets stays there.
 - Using `User-agent: __usage_ai-training` to keep a crawler out. It states a preference about training, not a crawling rule.
