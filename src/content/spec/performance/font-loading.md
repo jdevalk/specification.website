@@ -9,6 +9,9 @@ appliesTo: [all]
 relatedSlugs: [preload-prefetch-preconnect, critical-css, core-web-vitals, text-wrap]
 updated: "2026-08-01T00:00:00.000Z"
 sources:
+  - title: "CSS Fonts Module Level 4"
+    url: "https://www.w3.org/TR/css-fonts-4/"
+    publisher: "W3C"
   - title: "MDN — @font-face"
     url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face"
     publisher: "MDN"
@@ -18,9 +21,6 @@ sources:
   - title: "MDN — font-display"
     url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@font-face/font-display"
     publisher: "MDN"
-  - title: "web.dev — Avoid invisible text during font loading"
-    url: "https://web.dev/articles/avoid-invisible-text"
-    publisher: "web.dev"
 ---
 
 ## What it is
