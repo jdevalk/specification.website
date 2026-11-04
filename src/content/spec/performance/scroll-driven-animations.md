@@ -7,7 +7,7 @@ status: optional
 order: 125
 appliesTo: [all]
 relatedSlugs: [view-transitions, core-web-vitals, visibility-aware-rendering, reduced-motion]
-updated: "2026-08-01T00:00:00.000Z"
+updated: "2026-11-03T00:00:00.000Z"
 sources:
   - title: "CSS Scroll-driven Animations Module Level 1"
     url: "https://drafts.csswg.org/scroll-animations-1/"
@@ -37,6 +37,8 @@ Anonymous shorthands cover the common cases without naming a timeline:
 - `animation-timeline: view()` — bind to this element's own viewport intersection.
 
 The colour status is `optional` because nothing breaks if you ship none of this. Where motion is part of the design, however, it is the right answer: it replaces a category of janky JavaScript with a declarative primitive that the compositor can run.
+
+Scroll-driven animations became Baseline newly available on 27 October 2026 (Chrome and Edge 115, Safari 26, Firefox 159). Older versions ignore `animation-timeline`, so the animation runs on its normal duration: with none set, a reveal jumps straight to its end state. Gate anything that would look wrong that way, such as the progress bar below, behind `@supports (animation-timeline: scroll())`.
 
 ## Why it matters
 
@@ -76,7 +78,7 @@ For a top-of-page reading-progress bar, use `scroll()` instead:
   animation: progress linear;
   animation-timeline: scroll(root block);
 }
-@keyframes progress { to { transform: scaleX(1); } }
+@keyframes progress { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 ```
 
 ## Common mistakes
