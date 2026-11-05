@@ -15,7 +15,7 @@ sources:
   - title: "web.dev — User-centric performance metrics"
     url: "https://web.dev/articles/user-centric-performance-metrics"
     publisher: "web.dev"
-  - title: "Google SRE Workbook — SLO engineering case studies"
+  - title: "Google SRE Workbook — Implementing SLOs"
     url: "https://sre.google/workbook/implementing-slos/"
     publisher: "Google SRE"
 ---
