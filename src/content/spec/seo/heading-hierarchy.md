@@ -15,7 +15,7 @@ sources:
   - title: "WCAG — Headings and Labels (2.4.6)"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels.html"
     publisher: "W3C"
-  - title: "Section Headings — ARIA Authoring Practices"
+  - title: "W3C WAI Tutorials — Headings"
     url: "https://www.w3.org/WAI/tutorials/page-structure/headings/"
     publisher: "W3C WAI"
   - title: "MDN — Heading elements"
