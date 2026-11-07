@@ -16,7 +16,7 @@ sources:
     url: "https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag"
     publisher: "Google Search Central"
   - title: "Bing Webmaster — Robots meta tag"
-    url: "https://www.bing.com/webmasters/help/which-robots-metatags-does-bing-support-5198d240"
+    url: "https://www.bing.com/webmasters/help/robots-meta-tags-and-attributes-that-bing-supports-5198d240"
     publisher: "Bing"
   - title: "MDN — <meta name=\"robots\">"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/meta/name"
