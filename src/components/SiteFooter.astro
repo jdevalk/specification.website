@@ -114,11 +114,11 @@ import { site, categories } from "~/lib/site";
     </div>
     <div class="mt-10 flex flex-col gap-3 border-t border-ink-200 pt-6 text-xs text-ink-500 md:flex-row md:items-center md:justify-between">
       <p>
-        © {new Date().getFullYear()}
+        © {new Date().getFullYear()}{" "}
         <a class="underline" href={site.author.url}>
           {site.author.name}
         </a>{" "}
-        and contributors. Content licensed under
+        and contributors. Content licensed under{" "}
         <a
           class="underline"
           href="https://creativecommons.org/licenses/by/4.0/"
@@ -126,7 +126,7 @@ import { site, categories } from "~/lib/site";
         >
           CC BY 4.0
         </a>
-        ; code under
+        ; code under{" "}
         <a
           class="underline"
           href={`${site.repo}/blob/main/LICENSE`}
