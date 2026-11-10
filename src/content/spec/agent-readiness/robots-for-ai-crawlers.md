@@ -9,9 +9,12 @@ appliesTo: [all]
 relatedSlugs: [robots-txt, meta-robots, content-signals, tdmrep, agent-readiness-overview, llms-txt, web-bot-auth]
 updated: "2026-11-04T00:00:00.000Z"
 sources:
-  - title: "OpenAI — GPTBot"
-    url: "https://platform.openai.com/docs/bots"
+  - title: "OpenAI — Overview of OpenAI Crawlers"
+    url: "https://developers.openai.com/api/docs/bots"
     publisher: "OpenAI"
+  - title: "Perplexity — Perplexity Crawlers"
+    url: "https://docs.perplexity.ai/docs/resources/perplexity-crawlers"
+    publisher: "Perplexity"
   - title: "Anthropic — Crawlers"
     url: "https://support.claude.com/en/articles/8896518-does-anthropic-crawl-data-from-the-web-and-how-can-site-owners-block-the-crawler"
     publisher: "Anthropic"
@@ -33,7 +36,7 @@ The robots.txt file (see [robots.txt](/spec/seo/robots-txt/)) accepts rules per 
 The big ones, as of 2026:
 
 - **GPTBot** — OpenAI training crawler.
-- **OAI-SearchBot** — OpenAI retrieval crawler used by ChatGPT browsing.
+- **OAI-SearchBot** — OpenAI search crawler; surfaces sites in ChatGPT search results.
 - **ChatGPT-User** — on-demand fetches when a ChatGPT user asks for a URL.
 - **ClaudeBot** — Anthropic training crawler.
 - **Claude-SearchBot** — Anthropic search-indexing crawler.
@@ -41,7 +44,8 @@ The big ones, as of 2026:
 - **anthropic-ai** — legacy Anthropic user-agent, still seen.
 - **Google-Extended** — opts out of training and grounding in Gemini Apps and Vertex AI, without affecting Search.
 - **Applebot-Extended** — opts out of Apple Intelligence training without affecting Siri/Spotlight.
-- **PerplexityBot** — Perplexity retrieval crawler.
+- **PerplexityBot** — Perplexity search crawler; surfaces and links sites in Perplexity results.
+- **Perplexity-User** — on-demand fetches when a Perplexity user's question needs a page.
 - **Bytespider** — ByteDance crawler, widely used for training.
 - **CCBot** — Common Crawl, the dataset behind many open models.
 
@@ -84,6 +88,9 @@ User-agent: Claude-User
 Allow: /
 
 User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
 Allow: /
 
 User-agent: *
