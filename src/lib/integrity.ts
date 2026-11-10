@@ -70,11 +70,11 @@ export function pinned(servedPath: string): { src: string; integrity: string } {
 
 /** Pagefind runtime (/pagefind/pagefind.js), pulled in via dynamic import(). */
 export const pagefindIntegrity =
-  "sha384-oWDbZtddm6imqwKspZTD9CKGLSoOfvCVazIPigUPcSHDVGymVJvsBvvI3lFJNjm2";
+  "sha384-bz1+nJXypc0dEwvmU9yrWrl1HGUG/USPGkGa3k/jgberfguakX/TQn1LV5DqQ1+N";
 
 /** Pagefind Component UI (/pagefind/pagefind-component-ui.js), loaded via <script src>. */
 export const pagefindComponentUiIntegrity =
-  "sha384-sgK6d6muVu9zgs2S4M4GuLq6M9fV5OMX7x2wloOZiDmbOgYhQa+tf8Ukevo/kjeq";
+  "sha384-Mk7uykEQ0bnOxflTpx9gE+54oy+D2TVwYB4KRW24sdBy4+r8UdFg0Bn9x9VnqluT";
 
 /**
  * Inline import map attaching pagefindIntegrity to the dynamic import of

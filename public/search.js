@@ -29,7 +29,7 @@
       // carries a slice of it (hashVersion() in integrity.ts) so a Pagefind bump
       // can't collide with a stale cached copy.
       var integrity =
-        "sha384-sgK6d6muVu9zgs2S4M4GuLq6M9fV5OMX7x2wloOZiDmbOgYhQa+tf8Ukevo/kjeq";
+        "sha384-Mk7uykEQ0bnOxflTpx9gE+54oy+D2TVwYB4KRW24sdBy4+r8UdFg0Bn9x9VnqluT";
       var script = document.createElement("script");
       script.type = "module";
       script.src =
