@@ -7,7 +7,7 @@ status: recommended
 order: 40
 appliesTo: [all]
 relatedSlugs: [offline-support, favicons]
-updated: "2026-07-09T00:00:00.000Z"
+updated: "2026-11-11T00:00:00.000Z"
 sources:
   - title: "W3C — Web Application Manifest"
     url: "https://www.w3.org/TR/appmanifest/"
@@ -78,6 +78,8 @@ Required fields for installability in Chromium browsers:
 - `theme_color` and `background_color` — the first themes the OS chrome, the second paints the splash screen before the page loads.
 
 The fields alone are not enough: installability also requires the page be served over HTTPS (or `localhost` in development). Serve the manifest file itself with `Content-Type: application/manifest+json`.
+
+**Offer installation in the page, in this order.** The manifest makes the app installable through browser UI you do not control. The Web Install API adds an in-page path, and the fallback chain is the implementation: the declarative `<install>` element (browser-rendered, needs no JavaScript) where supported; `navigator.install()` behind your own button where you need custom UI — both end in the browser's consent UI, never a silent install; and the legacy `beforeinstallprompt` event as the final Chromium path. The target app's manifest needs a stable `id` for the API to address it. Feature-detect down the chain, and where none of it exists the browser's own install affordance is the fallback — never gate content or features on an install prompt appearing.
 
 ## Common mistakes
 

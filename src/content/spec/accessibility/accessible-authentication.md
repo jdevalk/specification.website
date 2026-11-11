@@ -7,7 +7,7 @@ status: recommended
 order: 115
 appliesTo: [all]
 relatedSlugs:
-  [form-labels, form-errors, mobile-form-inputs, webauthn, redundant-entry, consistent-help]
+  [form-labels, form-errors, mobile-form-inputs, webauthn, redundant-entry, consistent-help, passkeys]
 updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "WCAG 3.3.8 — Accessible Authentication (Minimum) (Level AA)"
