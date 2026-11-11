@@ -7,7 +7,7 @@ status: recommended
 order: 70
 appliesTo: [all]
 relatedSlugs: [title, meta-description, open-graph, no-vary-search]
-updated: "2026-07-09T00:00:00.000Z"
+updated: "2026-11-11T00:00:00.000Z"
 sources:
   - title: "RFC 6596 — The Canonical Link Relation"
     url: "https://www.rfc-editor.org/rfc/rfc6596"
@@ -63,7 +63,7 @@ Rules:
 - **Use absolute URLs.** Include the scheme (`https://`) and host. Relative canonicals are allowed by the spec but more error-prone; absolute is the safer default.
 - **Match the scheme you actually serve.** If the site is HTTPS everywhere, canonicals must say `https://`.
 - **Pick one host and stick to it.** Either `example.com` or `www.example.com`, never both. Redirect the other.
-- **Be consistent about trailing slashes.** If `/articles/` and `/articles` resolve to the same content, pick one and canonicalise to it. Mixed is the worst case.
+- **Be consistent about trailing slashes, and enforce it.** If `/articles/` and `/articles` resolve to the same content, pick one, canonicalise to it, and permanently redirect the other to it (301 or 308). A canonical alone leaves both URLs live with only a hint between them; the redirect removes the duplicate. Mixed is the worst case.
 - **Strip tracking parameters** from the canonical. The canonical of `/page?utm_source=newsletter` is `/page`.
 - **Avoid loops.** Page A canonical to B, B canonical to A is a contradiction.
 - **One per page.** Multiple canonicals are ignored.
@@ -96,4 +96,5 @@ Link: <https://example.com/whitepaper.pdf>; rel="canonical"
 - View source on a few pages with query parameters. The canonical should ignore the parameters and point to the clean URL.
 - Run `document.querySelector('link[rel=canonical]').href` in DevTools.
 - Crawl the site and list canonical targets. Every target should return 200 OK, not a redirect.
+- Request the non-preferred form of a URL. It should return a single permanent redirect to the canonical form.
 - In Google Search Console, the "URL Inspection" tool shows the user-declared canonical and the Google-selected canonical. When they differ, something else is overriding your hint.
