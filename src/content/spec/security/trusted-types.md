@@ -6,7 +6,7 @@ summary: "Trusted Types make the browser reject plain strings at DOM injection s
 status: recommended
 order: 95
 appliesTo: [all]
-relatedSlugs: [content-security-policy, subresource-integrity, reporting-endpoints, x-xss-protection]
+relatedSlugs: [content-security-policy, subresource-integrity, reporting-endpoints, x-xss-protection, sanitizer-api]
 updated: "2026-06-23T10:00:00.000Z"
 sources:
   - title: "Trusted Types (W3C Working Draft)"
