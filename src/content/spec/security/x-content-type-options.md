@@ -16,7 +16,7 @@ sources:
     url: "https://fetch.spec.whatwg.org/#x-content-type-options-header"
     publisher: "WHATWG"
   - title: "OWASP Secure Headers Project"
-    url: "https://owasp.org/www-project-secure-headers/"
+    url: "https://owasp.org/projects/secure-headers-project"
     publisher: "OWASP"
 ---
 
