@@ -44,7 +44,7 @@ Forms are where the web transacts, and every field a user must type by hand is f
 
 - Inventing token-like values (`autocomplete="firstname"`, `"email-address"`). Unknown tokens are ignored; the field silently falls back to heuristics.
 - Putting the token in `name` or `id` (`name="cc_number"`) and omitting the attribute. Some managers pattern-match names, which is exactly the unreliable path the attribute exists to replace.
-- A single combined name or address field. Autofill fills fields, not prose; combined fields get partial, mis-split values or nothing.
+- A single combined field for several purposes — name, street, and city in one box. Autofill fills one purpose per field, so combined fields get partial or mis-split values. A full-name field is not this mistake: `autocomplete="name"` exists precisely for it, and splitting into `given-name` and `family-name` is only needed when the parts are used separately.
 - `autocomplete="off"` on the whole form via a framework default or a compliance cargo cult, breaking password managers and address fill at once.
 - Styling `:autofill` by changing layout properties, or removing the autofilled-field highlight without a non-colour replacement indicator, so users cannot tell which values the browser supplied.
 
