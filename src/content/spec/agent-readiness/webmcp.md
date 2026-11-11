@@ -7,7 +7,7 @@ status: optional
 order: 88
 appliesTo: [all]
 relatedSlugs: [mcp-and-tool-discovery, agent-skills-discovery, agent-readiness-overview, structured-data-for-agents]
-updated: "2026-10-16T00:00:00.000Z"
+updated: "2026-11-11T00:00:00.000Z"
 sources:
   - title: "WebMCP — W3C Web Machine Learning Community Group"
     url: "https://webmachinelearning.github.io/webmcp/"
@@ -57,7 +57,7 @@ mc?.registerTool({
 - **No new transport.** Nothing to host, nothing to scale, no auth headers to wire up. The browser is the transport.
 - **Composes with MCP.** A site can ship both: an HTTP MCP server for headless agents and a WebMCP surface for in-browser agents. Same tool names, same schemas, same intent.
 
-The API is early — implementations are shipping behind flags and via polyfill. Treat WebMCP as `optional` until at least one major browser exposes it without a flag. The cost of being early is low; the design follows MCP closely so most code will port forward.
+The API is early — implementations are shipping behind flags and via polyfill. The Chromium preview requires version 146.0.7672.0 or later and the `#enable-webmcp-testing` flag. Treat WebMCP as `optional` until at least one major browser exposes it without a flag. The cost of being early is low; the design follows MCP closely so most code will port forward.
 
 ## How to implement
 
@@ -66,6 +66,8 @@ The API is early — implementations are shipping behind flags and via polyfill.
 - **Mirror your server-side MCP tools.** If you already publish `search_docs` on an HTTP MCP server, register a tool with the same name, description, and input schema in the browser. An agent that knows the server-side tool will recognise the browser one immediately.
 - **Use the `annotations` field** to declare safety properties. The WebMCP surface defines `readOnlyHint` (the tool only reads data), `consequentialHint` (executing it commits a significant, real-world, or non-reversible action — bookings, payments, deletions), and `untrustedContentHint` (the output includes user- or third-party-authored text, which the agent must treat as untrusted). Newer implementations also expose `debugging` for developer-tooling-only tools. All hints default to `false`: declare a hint only when it is `true`, never declare `: false`. The agent uses these to decide whether to confirm with the user and how to sandbox the output.
 - **Keep `execute()` small and its errors structured.** A tool is a thin call into existing site functionality (search, navigation, account actions), not a bespoke pipeline. On failure, resolve a structured payload (`{ error, code, retryable }`) rather than rejecting: an unhandled rejection surfaces to the agent as a generic `UnknownError` with the reason discarded. Never report a failure as a success string.
+- **Consider the declarative form API first.** A plain HTML form becomes a tool by adding `toolname` and `tooldescription` attributes: the browser synthesises the input schema from the form's controls (per-field descriptions come from `toolparamdescription`, falling back to the control's `<label>`), and `toolautosubmit` lets the agent submit it. An agent submission surfaces as a submit event with `agentInvoked` set; call `preventDefault()` on it first — otherwise the form still navigates — then `respondWith(promise)` to return a result or an error to the agent. For many sites this covers the valuable tools — search, contact, booking — with no JavaScript tool code at all.
+- **Manage the tool lifecycle explicitly.** There is no `unregisterTool()`: pass an `AbortSignal` at registration and abort it when the page or component goes away, so tools do not leak across views or collide on re-registration. Use `exposedTo` to control which origins may discover tools registered for cross-origin frames.
 - **Document the tools.** Add them to your [agent skills index](/spec/agent-readiness/agent-skills-discovery/) so agents that read the site's discovery surfaces — not just ones already in the browser — know they exist.
 
 ## Common mistakes
@@ -73,6 +75,7 @@ The API is early — implementations are shipping behind flags and via polyfill.
 - Registering tools that bypass the site's own access controls. A WebMCP tool runs as the logged-in user; treat it like any other JavaScript-callable action and apply the same authorisation checks server-side.
 - Feature-detecting inside the bundle rather than before it. The early return is correct but it runs too late — the bytes are already on the wire and parsed. Guard the load, then guard the call.
 - Designing tools that only make sense in the browser. If a server-side MCP server can do the same job, ship both — agents should be able to use whichever transport they have.
+- Registering the same tool twice — once declaratively through form attributes and once imperatively (some framework integrations register on your behalf) — leaving the agent with duplicates it cannot disambiguate.
 - Treating annotations as cosmetic. `readOnlyHint` and `consequentialHint` change agent behaviour; declare them honestly, and never declare a hint as `: false` — omission already means `false`.
 
 ## Verification

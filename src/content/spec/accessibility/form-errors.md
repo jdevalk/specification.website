@@ -7,7 +7,7 @@ status: required
 order: 110
 appliesTo: [all]
 relatedSlugs: [form-labels, aria-usage, color-contrast, mobile-form-inputs, accessible-authentication, redundant-entry, status-messages]
-updated: "2026-07-28T00:00:00.000Z"
+updated: "2026-11-11T00:00:00.000Z"
 sources:
   - title: "WCAG 3.3.1 — Error Identification (Level A)"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html"
@@ -67,8 +67,9 @@ Rules:
 - **Identify the error in text.** "Email is required" — not just a red border.
 - **Tell the user how to fix it.** "Enter a date in the format DD/MM/YYYY", not "Invalid date".
 - **Announce dynamically inserted errors.** Use `role="alert"` (assertive) or a live region (`aria-live="polite"`) so screen readers hear the change — see [status messages](/spec/accessibility/status-messages/) for the mechanics.
-- **Set `aria-invalid="true"`** on the field — and remove it when the user corrects the value.
+- **Set `aria-invalid="true"`** on the field — and set it back to `"false"` when the user corrects the value. Initialise fields with an explicit `aria-invalid="false"` rather than omitting the attribute: some screen readers announce an unset state on a required field as if it were already invalid.
 - **Don't rely on colour alone.** Pair red with an icon, a word ("Error"), or a heavier border.
+- **Time the error state to interaction, in both channels.** Style invalid fields with `:user-invalid`, never `:invalid`: `:invalid` matches a pristine required field, so the form opens already shouting at the user. `:user-invalid` (Baseline newly available since November 2023, widely available since May 2026) matches only after interaction or a submit attempt. Flip the visual state and `aria-invalid` at the same moment — blur, change, or the failed submit — so what sighted users see and what the accessibility tree says never disagree.
 - **Don't validate every keystroke.** Validate on blur or on submit; constant interruptions are unusable with a screen reader.
 
 ## Common mistakes
