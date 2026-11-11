@@ -40,7 +40,7 @@ INP is a Core Web Vital, and its failures are rarely mysterious in retrospect: a
 
 ## Common mistakes
 
-- Yielding with `setTimeout(0)` and concluding the page is responsive: the continuation queues behind everything else, so under load the work still starves input — it just does so in smaller pieces.
+- Yielding with `setTimeout(0)` and concluding the scheduling is now correct. The yield does let input and rendering run between slices — but the continuation rejoins the back of the task queue, so under load unrelated tasks delay the remaining work, and deeply nested timeouts get clamped besides. `scheduler.yield()` exists precisely to resume the continuation ahead of that queue.
 - Breaking up rendering work but not third-party work: tag managers, consent tooling, and chat widgets are frequent top long-task sources and the least examined.
 - Treating hydration or initialisation as exempt because it happens "at load": a 2-second blocked main thread during load is also delayed input for the user already trying to scroll or tap.
 - Optimising the lab's INP with synthetic clicks while field LoAF data points at different scripts entirely.
