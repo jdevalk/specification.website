@@ -1,6 +1,6 @@
 # Contributing to The Website Specification
 
-Thanks for considering a contribution. The spec is open: issues, pull requests, and even straight-up disagreements are welcome. There are three rules.
+Thanks for considering a contribution. The spec is open: issues, pull requests, and even straight-up disagreements are welcome. There are four rules.
 
 ## 1. Cite your sources
 
@@ -30,6 +30,10 @@ If a topic only makes sense on a specific platform, it probably belongs in that 
 - **Avoid** — outdated, harmful, or superseded.
 
 If a status is wrong, fix it — with reasoning in the PR description.
+
+## 4. Be aggressively current
+
+Browser support moves monthly, and an undated support claim rots silently. When a page states what browsers support, name the Baseline status and the date it changed ("Baseline newly available since October 2026"), checked against current data (webstatus.dev, MDN's compatibility data), not memory. When you touch a page for any other reason, refresh its support claims as part of the same change.
 
 ## How to propose a change
 
