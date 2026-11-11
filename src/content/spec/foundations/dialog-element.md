@@ -19,7 +19,7 @@ sources:
 
 ## What it is
 
-The `<dialog>` element is HTML's native dialog box. Opened with `showModal()`, it renders in the top layer above all other content, makes the rest of the page inert, moves focus into itself, and closes on Esc. Opened with `show()`, it is a non-modal panel that leaves the page interactive. A `<form method="dialog">` inside it closes the dialog on submit and exposes the submitter's value as `returnValue`. The element has been Baseline widely available since March 2022.
+The `<dialog>` element is HTML's native dialog box. Opened with `showModal()`, it renders in the top layer above all other content, makes the rest of the page inert, moves focus into itself, and closes on Esc. Opened with `show()`, it is a non-modal panel that leaves the page interactive. A `<form method="dialog">` inside it closes the dialog on submit and exposes the submitter's value as `returnValue`. The element has been Baseline widely available since September 2024, having become newly available across the core browsers in March 2022.
 
 It is not interchangeable with its two neighbours, and picking by appearance is the classic error. A [popover](/spec/foundations/popover-api/) is non-modal by design: light-dismiss, no inert background, no focus trap — right for menus, tooltips, and toasts, wrong for a decision the user must not ignore. A styled `<div role="dialog">` is the third option and the worst: the role announces "dialog" to assistive technology while providing none of the behaviour — no top layer, no inertness, no Esc handling, no focus management — until you reimplement all of it, correctly, including the edge cases. The platform element exists so that you do not have to.
 
