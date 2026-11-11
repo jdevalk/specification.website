@@ -15,7 +15,7 @@ sources:
   - title: "MDN — Permissions-Policy"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Permissions-Policy"
     publisher: "MDN"
-  - title: "web.dev — Permissions Policy"
+  - title: "Chrome for Developers — Control browser features with Permissions Policy"
     url: "https://developer.chrome.com/docs/privacy-security/permissions-policy"
     publisher: "Chrome for Developers"
 ---

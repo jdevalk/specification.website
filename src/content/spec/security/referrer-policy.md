@@ -9,13 +9,13 @@ appliesTo: [all]
 relatedSlugs: [content-security-policy, permissions-policy, cookie-attributes]
 updated: "2026-05-29T09:13:20.000Z"
 sources:
-  - title: "Referrer Policy (W3C Editor's Draft)"
+  - title: "Referrer Policy (W3C Candidate Recommendation)"
     url: "https://www.w3.org/TR/referrer-policy/"
     publisher: "W3C"
   - title: "MDN — Referrer-Policy"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Referrer-Policy"
     publisher: "MDN"
-  - title: "web.dev — A new default Referrer-Policy for Chrome"
+  - title: "web.dev — Referer and Referrer-Policy best practices"
     url: "https://web.dev/articles/referrer-best-practices"
     publisher: "web.dev"
 ---

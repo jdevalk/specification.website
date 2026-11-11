@@ -16,7 +16,7 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Clear-Site-Data"
     publisher: "MDN"
   - title: "OWASP Secure Headers Project — Clear-Site-Data"
-    url: "https://owasp.org/www-project-secure-headers/"
+    url: "https://owasp.org/projects/secure-headers-project"
     publisher: "OWASP"
 ---
 
