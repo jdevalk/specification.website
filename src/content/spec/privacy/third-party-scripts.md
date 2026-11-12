@@ -13,7 +13,7 @@ sources:
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CSP"
     publisher: "MDN"
   - title: "EDPB Guidelines 2/2023 on Technical Scope of Art. 5(3) ePrivacy Directive"
-    url: "https://edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-22023-technical-scope-art-53-eprivacy-directive_en"
+    url: "https://www.edpb.europa.eu/documents/guideline/guidelines-22023-on-technical-scope-of-art-53-of-eprivacy-directive_en"
     publisher: "EDPB"
   - title: "MDN — Subresource Integrity"
     url: "https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity"
