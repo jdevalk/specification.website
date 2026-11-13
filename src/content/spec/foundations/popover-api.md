@@ -7,7 +7,7 @@ status: recommended
 order: 130
 appliesTo: [all]
 relatedSlugs: [semantic-html, aria-usage, keyboard-navigation, focus-indicators, anchor-positioning, invoker-commands, customizable-select, dialog-element]
-updated: "2026-06-08T00:00:00.000Z"
+updated: "2026-11-13T00:00:00.000Z"
 sources:
   - title: "HTML Standard — Popover"
     url: "https://html.spec.whatwg.org/multipage/popover.html"
@@ -15,7 +15,7 @@ sources:
   - title: "MDN — Popover API"
     url: "https://developer.mozilla.org/en-US/docs/Web/API/Popover_API"
     publisher: "MDN"
-  - title: "Introducing the Popover API"
+  - title: "Popover API lands in Baseline"
     url: "https://web.dev/blog/popover-api"
     publisher: "web.dev"
   - title: "Open UI — Popover explainer"
@@ -87,4 +87,4 @@ For programmatic control, the element exposes `showPopover()`, `hidePopover()`, 
 - DevTools accessibility tree shows the popover as an exposed overlay tied to its trigger.
 - Pressing Escape closes an `auto` popover; clicking outside dismisses it; focus returns to the trigger.
 - The popover renders above every transformed and `overflow: hidden` ancestor — proof it is in the top layer.
-- `caniuse.com/mdn-html_global_attributes_popover` — supported in all major browsers since 2024.
+- Support: the `popover` attribute has shipped in every engine since Firefox 125 (April 2024), after Chrome 114 and Safari 17, and has been Baseline newly available since January 2025. Check `caniuse.com/mdn-html_global_attributes_popover` for the current picture.
