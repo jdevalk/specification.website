@@ -10,7 +10,7 @@ relatedSlugs: [cookie-consent, third-party-scripts, data-minimization, privacy-p
 updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "EDPB — Report of the work undertaken by the supervisory authorities within the 101 Task Force"
-    url: "https://www.edpb.europa.eu/system/files/2023-04/edpb_20230328_report_101task_force_en.pdf"
+    url: "https://www.edpb.europa.eu/system/files/documents/2023-04/edpb_20230328_report_101task_force_en.pdf"
     publisher: "EDPB"
   - title: "CNIL — Use of Google Analytics and data transfers to the United States (archived)"
     url: "https://web.archive.org/web/20230706035343/https://www.cnil.fr/en/use-google-analytics-and-data-transfers-united-states-cnil-orders-website-manageroperator-comply"

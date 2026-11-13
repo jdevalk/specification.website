@@ -9,7 +9,7 @@ appliesTo: [all]
 relatedSlugs: [well-known-overview, link-headers, llms-txt, machine-readable-formats, a2a-agent-cards]
 updated: "2026-07-09T00:00:00.000Z"
 sources:
-  - title: "RFC 9727 — Publishing Organisation API Information"
+  - title: "RFC 9727 — api-catalog: A Well-Known URI and Link Relation to Help Discovery of APIs"
     url: "https://www.rfc-editor.org/rfc/rfc9727"
     publisher: "IETF"
   - title: "RFC 9264 — Linkset: Media Types and a Link Relation Type for Link Sets"
@@ -66,7 +66,7 @@ The path is registered in the [IANA Well-Known URIs Registry](https://www.iana.o
 
 - **One predictable fetch surfaces every machine-readable resource.** Agents that obey `/.well-known/api-catalog` get a typed list of feeds, sitemaps, llms.txt, OpenAPI specs, terms of service, licence URLs — without scraping HTML.
 - **Pairs with the `Link` header.** Advertise `Link: </.well-known/api-catalog>; rel="api-catalog"` and the agent never has to guess the path. See [HTTP Link headers](/spec/agent-readiness/link-headers/).
-- **Standards-track.** RFC 9727 (May 2024) is final, not a draft. The IANA registration anchors the path.
+- **Standards-track.** RFC 9727 (June 2025) is final, not a draft. The IANA registration anchors the path.
 - **Cheap to ship.** A small static JSON file.
 
 ## How to implement

@@ -12,7 +12,7 @@ sources:
   - title: "RFC 8288 — Web Linking"
     url: "https://www.rfc-editor.org/rfc/rfc8288"
     publisher: "IETF"
-  - title: "RFC 9727 — Publishing Organisation API Information"
+  - title: "RFC 9727 — api-catalog: A Well-Known URI and Link Relation to Help Discovery of APIs"
     url: "https://www.rfc-editor.org/rfc/rfc9727"
     publisher: "IETF"
   - title: "RFC 9264 — Linkset: Media Types and a Link Relation Type for Link Sets"

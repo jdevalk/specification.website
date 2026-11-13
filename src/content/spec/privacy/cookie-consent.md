@@ -17,7 +17,7 @@ relatedSlugs:
 updated: "2026-07-09T00:00:00.000Z"
 sources:
   - title: "EDPB Guidelines 03/2022 on deceptive design patterns in social media"
-    url: "https://edpb.europa.eu/our-work-tools/our-documents/guidelines/guidelines-032022-deceptive-design-patterns-social-media_en"
+    url: "https://www.edpb.europa.eu/documents/guideline/guidelines-032022-on-deceptive-design-patterns-in-social-media-platform_en"
     publisher: "EDPB"
   - title: "ICO — Cookies and similar technologies"
     url: "https://ico.org.uk/for-organisations/direct-marketing-and-privacy-and-electronic-communications/guide-to-pecr/cookies-and-similar-technologies/"
