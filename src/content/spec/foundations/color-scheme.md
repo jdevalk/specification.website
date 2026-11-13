@@ -7,7 +7,7 @@ status: recommended
 order: 95
 appliesTo: [all]
 relatedSlugs: [theme-color, favicons, pwa-manifest, forced-colors, text-wrap, contrast-color]
-updated: "2026-06-30T00:00:00.000Z"
+updated: "2026-11-12T00:00:00.000Z"
 sources:
   - title: "HTML Living Standard — Standard metadata names: color-scheme"
     url: "https://html.spec.whatwg.org/multipage/semantics.html#meta-color-scheme"
@@ -54,6 +54,8 @@ With `color-scheme: light dark` (or just `dark` if your site is dark-only), the 
 - gives scrollbars the right contrast against your background;
 - treats `currentColor` defaults sensibly for things you forgot to style.
 
+Leaving it out does not guarantee a light page, either. Browsers have started darkening pages that declare no scheme, for visitors who ask for it: Chrome on Android has an [Auto Dark Theme](https://developer.chrome.com/blog/auto-dark-theme), and Safari 27.3 (in beta as of November 2026) adds [Adaptive Dark Mode](https://webkit.org/blog/18541/introducing-adaptive-dark-mode/), which inverts the luminosity of pages it judges to be light. Safari leaves a page untouched once it declares `light dark`. So the declaration also decides whose dark mode a visitor gets: the one you designed, or one the browser generates.
+
 It is distinct from [`<meta name="theme-color">`](/spec/foundations/theme-color/). `theme-color` paints the **browser chrome around** the page (address bar, task switcher, PWA title bar). `color-scheme` styles the **page surface itself** and its native controls. Both should ship; neither replaces the other.
 
 ## How to implement
@@ -79,6 +81,10 @@ body { background: var(--bg); color: var(--fg); }
 
 CSS's `light-dark()` function reads the *used* colour scheme from `color-scheme` and picks the matching value. It replaces most cases where you would have reached for `@media (prefers-color-scheme: dark)`.
 
+`color-scheme` is Baseline widely available (since August 2024). `light-dark()` has been Baseline newly available since May 2024 and becomes widely available in November 2026.
+
+Use `only light` when the page has no dark styles and must not be darkened, such as a palette that carries meaning. It is the documented opt-out from both automatic darkening features, although Safari 27.3 beta 1 does not honour the `only` keyword yet. A dark theme of your own serves those visitors better than an opt-out.
+
 If your site has a theme switcher independent of the OS preference, update both the meta tag and the root CSS dynamically — or use a CSS custom property for the scheme and toggle it.
 
 ## Common mistakes
@@ -86,6 +92,7 @@ If your site has a theme switcher independent of the OS preference, update both 
 - Setting `<meta name="theme-color">` for dark mode but forgetting `color-scheme`. The browser chrome is dark; the page underneath still flashes white on load.
 - Using `only dark` — invalid; pick `dark` and accept the light fallback.
 - Setting `color-scheme: dark` on a site that has not been audited in dark mode. Form controls and scrollbars will recolour and you will discover broken contrast in production.
+- Declaring `light dark` to switch off automatic darkening without writing any dark styles. You have told the browser the page handles dark mode, so it paints a dark canvas and light default text around your hard-coded light colours. Declare only what you built.
 - Forgetting `light dark` order matters. The first value is the *preferred* scheme when the user has no preference set.
 
 ## Verification
