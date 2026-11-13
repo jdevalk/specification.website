@@ -7,7 +7,7 @@ status: recommended
 order: 150
 appliesTo: [all]
 relatedSlugs: [color-scheme, font-loading, core-web-vitals]
-updated: "2026-06-25T00:00:00.000Z"
+updated: "2026-11-13T00:00:00.000Z"
 sources:
   - title: "CSS Text Module Level 4 — the text-wrap shorthand"
     url: "https://drafts.csswg.org/css-text-4/#text-wrap"
@@ -69,4 +69,4 @@ Unlike `balance`, `pretty` is not free: it deliberately trades layout speed for 
 ## Verification
 
 - In a supporting browser, resize a balanced heading: the lines stay evenly filled rather than leaving a one-word last line.
-- `caniuse.com/css-text-wrap-balance` — `balance` is Baseline across Chromium, Firefox, and Safari; `pretty` has narrower support.
+- Support: `balance` has been Baseline newly available since May 2024, when Safari 17.5 joined Chrome 114 and Firefox 121, and becomes Baseline widely available in November 2026. `pretty` is not Baseline: Chrome 117 and Safari 26 (September 2025) ship it, Firefox does not. Check `caniuse.com/css-text-wrap-balance` for the current picture.

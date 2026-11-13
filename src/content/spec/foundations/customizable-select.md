@@ -9,8 +9,8 @@ appliesTo: [all]
 relatedSlugs: [popover-api, anchor-positioning, native-interactive-elements, dialog-element]
 updated: "2026-11-11T00:00:00.000Z"
 sources:
-  - title: "Open UI — Select explainer"
-    url: "https://open-ui.org/components/select/"
+  - title: "Open UI — Customizable Select Element (Explainer)"
+    url: "https://open-ui.org/components/customizable-select.explainer/"
     publisher: "Open UI"
   - title: "MDN — Styling a select element with CSS"
     url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Customizable_select"
