@@ -7,13 +7,13 @@ status: recommended
 order: 135
 appliesTo: [all]
 relatedSlugs: [core-web-vitals, scrollbar-gutter, meta-viewport, view-transitions, container-queries]
-updated: "2026-06-08T00:00:00.000Z"
+updated: "2026-11-16T00:00:00.000Z"
 sources:
   - title: "CSS Values and Units Module Level 4 — Viewport-relative lengths"
     url: "https://drafts.csswg.org/css-values-4/#viewport-relative-lengths"
     publisher: "W3C CSSWG"
-  - title: "MDN — Viewport-percentage lengths"
-    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length#viewport-percentage_lengths"
+  - title: "MDN — <length>: relative length units based on viewport"
+    url: "https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Values/length#relative_length_units_based_on_viewport"
     publisher: "MDN"
   - title: "web.dev — The large, small, and dynamic viewport units"
     url: "https://web.dev/blog/viewport-units"
@@ -39,7 +39,7 @@ The three height units differ in which mobile viewport they measure:
 
 On a phone, the browser's toolbar collapses as you scroll down and reappears as you scroll up, so the visible height changes during a single page view. The original `vh` unit resolved to the *largest* possible height. An element set to `height: 100vh` is therefore taller than the screen whenever the toolbar is showing — its bottom edge sits behind the URL bar, hiding a "Continue" button, cutting off a full-screen menu, or leaving a strip that only appears after scrolling.
 
-The dynamic units fix this without JavaScript. For years the workaround was a `resize` listener writing a `--vh` custom property on every frame — janky, and a needless main-thread cost that works against [Core Web Vitals](/spec/performance/core-web-vitals/). The units replace all of it. They are [Baseline](https://web.dev/baseline) and supported in every current browser engine.
+The dynamic units fix this without JavaScript. For years the workaround was a `resize` listener writing a `--vh` custom property on every frame — janky, and a needless main-thread cost that works against [Core Web Vitals](/spec/performance/core-web-vitals/). The units replace all of it. They are [Baseline](https://web.dev/baseline) widely available since June 2025, having reached every engine by December 2022.
 
 ## How to implement
 

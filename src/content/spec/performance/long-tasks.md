@@ -7,9 +7,12 @@ status: recommended
 order: 15
 appliesTo: [all]
 relatedSlugs: [core-web-vitals, script-loading, visibility-aware-rendering]
-updated: "2026-11-11T00:00:00.000Z"
+updated: "2026-11-16T00:00:00.000Z"
 sources:
-  - title: "Long Tasks API"
+  - title: "Long Animation Frames API"
+    url: "https://www.w3.org/TR/long-animation-frames/"
+    publisher: "W3C"
+  - title: "Long Tasks API (W3C Discontinued Draft, October 2026)"
     url: "https://www.w3.org/TR/longtasks-1/"
     publisher: "W3C"
   - title: "web.dev — Optimize long tasks"
@@ -22,7 +25,7 @@ sources:
 
 ## What it is
 
-A long task is any task that occupies the main thread for more than 50 milliseconds. While it runs, the browser cannot respond to input or paint the response to it — which is why long tasks are the unit [Interaction to Next Paint](/spec/performance/core-web-vitals/) is made of. The 50 ms figure is not an aspiration; it is the platform's own definition, from the Long Tasks API, and the threshold the related Long Animation Frames (LoAF) API reports against.
+A long task is any task that occupies the main thread for more than 50 milliseconds. While it runs, the browser cannot respond to input or paint the response to it — which is why long tasks are the unit [Interaction to Next Paint](/spec/performance/core-web-vitals/) is made of. The 50 ms figure is not an aspiration; it is the platform's own definition. It originated in the Long Tasks API — which the W3C published as a Discontinued Draft on 20 October 2026, so it will not advance further — and it is the threshold the Long Animation Frames (LoAF) API, the specification still being developed, reports against.
 
 The misconception is that responsiveness is a property of how *much* JavaScript a page runs. It is a property of how the work is *scheduled*: the same total computation, sliced so the main thread yields between pieces, leaves gaps in which input is handled and frames are painted. Total work determines load; task length determines whether the page feels alive while it happens.
 
@@ -33,7 +36,7 @@ INP is a Core Web Vital, and its failures are rarely mysterious in retrospect: a
 ## How to implement
 
 - **Budget by task, not by page.** Nothing synchronous on the main thread should run past 50 ms. As a working heuristic: under 50 ms, run it; 50–250 ms of work, slice it and yield between slices; beyond that, move it off the main thread to a Web Worker.
-- **Yield with `scheduler.yield()`.** Awaiting it returns control to the browser so pending input and rendering can run, then resumes your task ahead of lower-priority queued work — unlike `setTimeout(0)`, which rejoins the back of the queue. Check a deadline (`performance.now()` against a 50 ms budget) or an abort signal each iteration rather than yielding on every step; yielding itself is not free. The Scheduler API is not yet universal — Chrome and Edge since version 129, Firefox since 142, Safari has not shipped it — so feature-detect and fall back to a `setTimeout` or message-channel yield.
+- **Yield with `scheduler.yield()`.** Awaiting it returns control to the browser so pending input and rendering can run, then resumes your task ahead of lower-priority queued work — unlike `setTimeout(0)`, which rejoins the back of the queue. Check a deadline (`performance.now()` against a 50 ms budget) or an abort signal each iteration rather than yielding on every step; yielding itself is not free. The Scheduler API is not Baseline as of November 2026 — Chrome and Edge since version 129 (September 2024), Firefox since 142 (August 2025), Safari has not shipped it — so feature-detect and fall back to a `setTimeout` or message-channel yield.
 - **Schedule by priority where you can.** `scheduler.postTask()` with `user-blocking`, `user-visible`, and `background` priorities lets input-critical work jump the queue ahead of analytics and prefetch bookkeeping on the same API surface.
 - **Do not create the tasks in the first place.** Defer non-critical scripts (see [script loading](/spec/performance/script-loading/)), split initialisation so first render is not gated on every feature's setup, and keep event handlers thin: record the intent, do the heavy state and DOM work in yielded slices.
 - **Measure in the field, not only in the lab.** A lab trace shows your machine's tasks. LoAF entries (`long-animation-frame`, over 50 ms) with their script attribution show your users': aggregate by source in your real-user monitoring and fix the offenders by total blocking contribution, not by count.
