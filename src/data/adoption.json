@@ -1,72 +1,72 @@
 {
-  "crawl": "2026-09",
-  "generatedAt": "2026-09-30T19:03:52.787Z",
+  "crawl": "2026-11",
+  "generatedAt": "2026-11-18T15:05:15.220Z",
   "source": "HTTP Archive monthly crawl (desktop root pages, rank <= 1000000), custom metrics",
-  "pages": 668524,
-  "origins": 668523,
+  "pages": 646703,
+  "origins": 646703,
   "metrics": {
     "gpc-json": {
       "label": "gpc.json with a boolean declaration",
-      "pages": 40017,
-      "pagesPct": 5.986,
-      "origins": 40017,
-      "originsPct": 5.986
+      "pages": 39281,
+      "pagesPct": 6.074,
+      "origins": 39281,
+      "originsPct": 6.074
     },
     "security-txt": {
       "label": "security.txt passing the collector’s field checks",
-      "pages": 17997,
-      "pagesPct": 2.692,
-      "origins": 17997,
-      "originsPct": 2.692
+      "pages": 18257,
+      "pagesPct": 2.823,
+      "origins": 18257,
+      "originsPct": 2.823
     },
     "assetlinks-json": {
       "label": "/.well-known/assetlinks.json",
-      "pages": 37595,
-      "pagesPct": 5.624,
-      "origins": 37595,
-      "originsPct": 5.624
+      "pages": 38442,
+      "pagesPct": 5.944,
+      "origins": 38442,
+      "originsPct": 5.944
     },
     "apple-app-site-association": {
       "label": "/.well-known/apple-app-site-association",
-      "pages": 81422,
-      "pagesPct": 12.179,
-      "origins": 81422,
-      "originsPct": 12.179
+      "pages": 82363,
+      "pagesPct": 12.736,
+      "origins": 82363,
+      "originsPct": 12.736
     },
     "change-password": {
       "label": "change-password redirect with a successful missing-URL check",
-      "pages": 3910,
-      "pagesPct": 0.585,
-      "origins": 3910,
-      "originsPct": 0.585
+      "pages": 3938,
+      "pagesPct": 0.609,
+      "origins": 3938,
+      "originsPct": 0.609
     },
     "webauthn": {
       "label": "webauthn with a non-empty origins array",
-      "pages": 345,
-      "pagesPct": 0.052,
-      "origins": 345,
-      "originsPct": 0.052
+      "pages": 369,
+      "pagesPct": 0.057,
+      "origins": 369,
+      "originsPct": 0.057
     },
     "agentic-resource-discovery": {
       "label": "AI Catalog or ARD manifest with at least one entry",
-      "pages": 0,
-      "pagesPct": 0,
-      "origins": 0,
-      "originsPct": 0
+      "pages": 2302,
+      "pagesPct": 0.356,
+      "origins": 2302,
+      "originsPct": 0.356
     },
     "robots-txt": {
       "label": "robots.txt with parsed user-agent or sitemap directives",
-      "pages": 499464,
-      "pagesPct": 74.711,
-      "origins": 499463,
-      "originsPct": 74.711
+      "pages": 484412,
+      "pagesPct": 74.905,
+      "origins": 484412,
+      "originsPct": 74.905
     },
     "robots-for-ai-crawlers": {
       "label": "robots.txt rules naming AI crawlers",
-      "pages": 87304,
-      "pagesPct": 13.059,
-      "origins": 87303,
-      "originsPct": 13.059
+      "pages": 85052,
+      "pagesPct": 13.152,
+      "origins": 85052,
+      "originsPct": 13.152
     }
   }
 }
