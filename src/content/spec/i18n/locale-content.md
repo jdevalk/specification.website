@@ -7,14 +7,17 @@ status: recommended
 order: 40
 appliesTo: [all]
 relatedSlugs: [hreflang, lang-attribute, rtl-support, plural-rules]
-updated: "2026-05-29T18:54:03.000Z"
+updated: "2026-11-19T00:00:00.000Z"
 sources:
+  - title: "ECMA-402 — ECMAScript Internationalization API Specification"
+    url: "https://tc39.es/ecma402/"
+    publisher: "Ecma International"
+  - title: "W3C i18n — Date formats"
+    url: "https://www.w3.org/International/questions/qa-date-format"
+    publisher: "W3C"
   - title: "MDN — Intl"
     url: "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl"
     publisher: "MDN"
-  - title: "W3C i18n — Working with language and locale"
-    url: "https://www.w3.org/International/articlelist"
-    publisher: "W3C"
   - title: "MDN — Accept-Language header"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Accept-Language"
     publisher: "MDN"
@@ -24,7 +27,7 @@ sources:
 
 Locale-aware content adapts the *presentation* of data to the user's conventions. "9/5/2026" means September 5 in en-US and May 9 in en-GB. "1,000" is one thousand in English and one in German. "10:30 PM" is unfamiliar where 24-hour clocks dominate. Currency symbols, decimal separators, list separators, sort order, plural rules, and unit systems all vary.
 
-The spec is `ECMA-402` (Internationalisation API), exposed in JavaScript as the [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) namespace. Equivalent ICU-backed libraries exist for every server platform.
+The spec is [ECMA-402](https://tc39.es/ecma402/) (the ECMAScript Internationalization API), exposed in JavaScript as the [`Intl`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl) namespace. Equivalent ICU-backed libraries exist for every server platform.
 
 ## Why it matters
 
@@ -49,7 +52,7 @@ new Intl.RelativeTimeFormat(locale, { numeric: "auto" }).format(-1, "day");
 // → "yesterday"
 
 new Intl.ListFormat(locale, { type: "conjunction" }).format(["a", "b", "c"]);
-// → "a, b, and c"
+// → "a, b and c"
 ```
 
 **Format on the server too.** Send pre-formatted strings in initial HTML so users without JavaScript still see the right output, and so the page does not flash with a server-formatted value being rewritten on hydration. Most languages have an ICU binding: `Intl` in Node and Deno, `babel.dates` in Python, `java.text.MessageFormat` in Java, `NumberFormatter` in PHP.
