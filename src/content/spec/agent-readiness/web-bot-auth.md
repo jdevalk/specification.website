@@ -6,7 +6,7 @@ summary: "Web Bot Auth lets a bot prove who it is by signing each HTTP request w
 status: optional
 order: 45
 appliesTo: [all]
-relatedSlugs: [robots-for-ai-crawlers, content-signals, agent-readiness-overview, link-headers, well-known-overview, universal-commerce-protocol]
+relatedSlugs: [robots-for-ai-crawlers, content-signals, agent-readiness-overview, link-headers, well-known-overview, universal-commerce-protocol, agent-name-service]
 updated: "2026-09-10T00:00:00.000Z"
 sources:
   - title: "RFC 9421 — HTTP Message Signatures"
