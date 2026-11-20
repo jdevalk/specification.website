@@ -7,7 +7,7 @@ status: recommended
 order: 95
 appliesTo: [all]
 relatedSlugs: [theme-color, favicons, pwa-manifest, forced-colors, text-wrap, contrast-color]
-updated: "2026-11-12T00:00:00.000Z"
+updated: "2026-11-20T00:00:00.000Z"
 sources:
   - title: "HTML Living Standard — Standard metadata names: color-scheme"
     url: "https://html.spec.whatwg.org/multipage/semantics.html#meta-color-scheme"
@@ -81,7 +81,7 @@ body { background: var(--bg); color: var(--fg); }
 
 CSS's `light-dark()` function reads the *used* colour scheme from `color-scheme` and picks the matching value. It replaces most cases where you would have reached for `@media (prefers-color-scheme: dark)`.
 
-`color-scheme` is Baseline widely available (since August 2024). `light-dark()` has been Baseline newly available since May 2024 and becomes widely available in November 2026.
+`color-scheme` is Baseline widely available (since August 2024). `light-dark()` has been Baseline widely available since 13 November 2026 (newly available from May 2024).
 
 Use `only light` when the page has no dark styles and must not be darkened, such as a palette that carries meaning. It is the documented opt-out from both automatic darkening features, although Safari 27.3 beta 1 does not honour the `only` keyword yet. A dark theme of your own serves those visitors better than an opt-out.
 
