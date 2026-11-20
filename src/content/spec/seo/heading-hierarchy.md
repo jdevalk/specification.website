@@ -9,8 +9,8 @@ appliesTo: [all]
 relatedSlugs: [internal-linking, breadcrumbs, structured-data]
 updated: "2026-07-01T00:00:00.000Z"
 sources:
-  - title: "HTML Living Standard — Headings and sections"
-    url: "https://html.spec.whatwg.org/multipage/sections.html#headings-and-sections"
+  - title: "HTML Living Standard — Headings and outlines"
+    url: "https://html.spec.whatwg.org/multipage/sections.html#headings-and-outlines-2"
     publisher: "WHATWG"
   - title: "WCAG — Headings and Labels (2.4.6)"
     url: "https://www.w3.org/WAI/WCAG22/Understanding/headings-and-labels.html"
