@@ -9,8 +9,8 @@ appliesTo: [all]
 relatedSlugs: [robots-txt, canonical-url, redirects, soft-404, xml-sitemaps, server-side-rendering]
 updated: "2026-05-29T09:55:11.000Z"
 sources:
-  - title: "HTML Living Standard — Standard metadata names: robots"
-    url: "https://html.spec.whatwg.org/multipage/semantics.html#meta-robots"
+  - title: "HTML Living Standard — Other metadata names"
+    url: "https://html.spec.whatwg.org/multipage/semantics.html#other-metadata-names"
     publisher: "WHATWG"
   - title: "Google Search Central — Robots meta tag, data-nosnippet, and X-Robots-Tag"
     url: "https://developers.google.com/search/docs/crawling-indexing/robots-meta-tag"
