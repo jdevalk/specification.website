@@ -1,6 +1,6 @@
 ---
 title: "New page: Agent Name Service — verifiable agent identity"
-date: "2026-11-19"
+date: "2026-11-20"
 type: added
 relatedSlugs: [agent-name-service]
 ---
