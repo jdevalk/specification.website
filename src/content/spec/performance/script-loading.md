@@ -7,7 +7,7 @@ status: recommended
 order: 85
 appliesTo: [all]
 relatedSlugs: [critical-css, core-web-vitals, preload-prefetch-preconnect, resource-hints, lazy-loading]
-updated: "2026-09-20T00:00:00.000Z"
+updated: "2026-11-16T00:00:00.000Z"
 sources:
   - title: "HTML Living Standard — The script element"
     url: "https://html.spec.whatwg.org/multipage/scripting.html#the-script-element"
@@ -18,7 +18,7 @@ sources:
   - title: "Chrome for Developers — Render-blocking requests"
     url: "https://developer.chrome.com/docs/performance/insights/render-blocking"
     publisher: "Google"
-  - title: "web.dev — JavaScript module scripts"
+  - title: "web.dev — Preload modules"
     url: "https://web.dev/articles/modulepreload"
     publisher: "web.dev"
 ---
