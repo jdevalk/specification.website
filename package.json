@@ -43,7 +43,7 @@
     "@google-cloud/bigquery": "^9.6.1",
     "@tailwindcss/vite": "^4.3.5",
     "astro": "^7.4.13",
-    "dompurify": "^3.4.17",
+    "dompurify": "^3.4.18",
     "tailwindcss": "^4.3.0"
   },
   "devDependencies": {
