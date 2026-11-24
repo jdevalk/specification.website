@@ -7,7 +7,7 @@ status: recommended
 order: 140
 appliesTo: [all]
 relatedSlugs: [popover-api, native-interactive-elements, scroll-driven-animations, container-queries]
-updated: "2026-06-24T00:00:00.000Z"
+updated: "2026-11-22T00:00:00.000Z"
 sources:
   - title: "CSS Anchor Positioning Module Level 1"
     url: "https://drafts.csswg.org/css-anchor-position-1/"
@@ -69,7 +69,7 @@ Use it to position non-blocking UI relative to its trigger. Treat it as progress
 }
 ```
 
-`position-try-fallbacks` lists alternatives the browser tries in order until the element fits. `position-visibility: anchors-visible` hides the element when its anchor scrolls out of view, so a detached tooltip does not linger.
+`position-try-fallbacks` lists alternatives the browser tries in order until the element fits. `position-visibility: anchor-visible` hides the element when its anchor scrolls out of view, so a detached tooltip does not linger. It is the property's initial value in the specification, so you rarely need to write it. If you do, note that it was spelled `anchors-visible` until the specification renamed it in 2026: Chrome 157 and Safari 27 accept the new spelling, Firefox so far only the old one, and all three still accept the old one as a legacy alias.
 
 ## Common mistakes
 
@@ -83,4 +83,4 @@ Use it to position non-blocking UI relative to its trigger. Treat it as progress
 - `@supports (anchor-name: --x)` gates the enhancement; confirm the fallback layout is acceptable on its own.
 - In DevTools, inspect the anchored element and confirm its inset values resolve against the anchor.
 - Scroll and resize the viewport: the element should follow its anchor and flip via fallbacks rather than clipping.
-- Baseline: CSS anchor positioning became newly available across browsers in early 2026 — verify your target support before relying on it without a fallback.
+- Support: the core of anchor positioning (`anchor-name`, `anchor()`, `position-area`, `@position-try`) has shipped in every engine since Firefox 147 (13 January 2026), after Chrome 125 and Safari 26. It is not yet Baseline: as of November 2026 the feature is still listed as limited availability, because Firefox has not shipped the renamed `position-visibility` values. Keep the fallback.
