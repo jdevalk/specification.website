@@ -4,7 +4,7 @@ slug: agentic-commerce-protocol
 category: agent-readiness
 summary: "An ACP seller publishes its API base URL, protocol versions and commerce capabilities at `/.well-known/acp.json`. Discovery has a released schema and live implementations, although its RFC still says Proposal and the URI is not IANA-registered."
 status: optional
-order: 86
+order: 83
 appliesTo: [all]
 relatedSlugs: [universal-commerce-protocol, mcp-and-tool-discovery, structured-data-for-agents, well-known-overview, cache-control, agent-readiness-overview]
 updated: "2026-11-25T00:00:00.000Z"
