@@ -6,8 +6,8 @@ summary: "The /.well-known/ path prefix is a standardised place to publish site-
 status: recommended
 order: 10
 appliesTo: [all]
-relatedSlugs: [change-password, openid-configuration, oauth-authorization-server, oauth-protected-resource, webfinger, apple-app-site-association, assetlinks-json, nodeinfo, api-catalog, webauthn, gpc-json, web-bot-auth]
-updated: "2026-07-09T12:00:00.000Z"
+relatedSlugs: [change-password, openid-configuration, oauth-authorization-server, oauth-protected-resource, webfinger, apple-app-site-association, assetlinks-json, nodeinfo, api-catalog, webauthn, gpc-json, web-bot-auth, agentic-commerce-protocol]
+updated: "2026-11-25T00:00:00.000Z"
 sources:
   - title: "RFC 8615 — Well-Known Uniform Resource Identifiers (URIs)"
     url: "https://www.rfc-editor.org/rfc/rfc8615"
@@ -31,6 +31,8 @@ https://example.com/.well-known/webfinger?resource=acct:user@example.com
 
 The names allowed under `/.well-known/` are not arbitrary. IANA maintains a public registry; new names go through a review process. If you publish at a name that is not registered, you are claiming a path that may later be assigned to someone else.
 
+Some deployed protocols use names before registration. This specification documents [ACP discovery](/spec/agent-readiness/agentic-commerce-protocol/) as one such convention, with its unregistered status explicit. That records implementation practice; it does not make the name registered or remove the allocation risk. Assess that risk when adopting such a protocol, and use registered names when designing a new discovery mechanism.
+
 ## Why it matters
 
 - **Discoverability.** Clients, browsers, password managers, federated servers, mobile operating systems and crawlers know exactly where to look. They do not need configuration per site.
@@ -53,10 +55,10 @@ Some capabilities span **several** well-known URIs that reference each other, so
 - Publishing under `/well-known/` (no leading dot). The spec requires `/.well-known/`.
 - Serving the file with `Content-Type: text/html` because a framework wrapped it.
 - Requiring authentication, blocking by user-agent, or rate-limiting probes so aggressively that legitimate clients fail.
-- Using a name not in the IANA registry. Custom names belong elsewhere.
+- Inventing an unregistered name, or assuming a deployed convention is registered. Custom names belong elsewhere; an existing protocol using an unregistered name needs an explicit assessment of the allocation risk.
 
 ## Verification
 
 - `curl -I https://example.com/.well-known/<name>` should return `200` and the correct content type.
-- Confirm the name appears in the [IANA registry](https://www.iana.org/assignments/well-known-uris/well-known-uris.xhtml).
+- Check the [IANA registry](https://www.iana.org/assignments/well-known-uris/well-known-uris.xhtml). If an existing protocol uses an unregistered name, record that fact rather than describing it as registered.
 - Probe from a network outside your own to catch firewall and WAF rules.
