@@ -31,3 +31,10 @@ enabled = true
 [[analytics_engine_datasets]]
 binding = "MCP_LOG"
 dataset = "sw_mcp_log"
+
+# Public feedback submission: approximate per-location cap, shared by callers.
+# The dedicated FEEDBACK_GITHUB_TOKEN secret needs Issues: write on this repo.
+[[ratelimits]]
+name = "FEEDBACK_RATE_LIMITER"
+namespace_id = "1911495501"
+simple = { limit = 3, period = 60 }

@@ -1,3 +1,4 @@
+import { REPORT_FEEDBACK_TOOL } from './feedback';
 import type { Category, Page, Manifest, Status, ChangelogEntry } from './types';
 
 // --- helpers ------------------------------------------------------------
@@ -455,6 +456,7 @@ const FILTERS_ECHO_PROPERTIES = {
 };
 
 export const TOOLS = [
+  REPORT_FEEDBACK_TOOL,
   {
     name: 'search',
     title: 'Search the spec',

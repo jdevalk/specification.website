@@ -8,7 +8,7 @@
   "scripts": {
     "build:data": "node scripts/build-data.mjs",
     "pretest": "npm run build:data",
-    "test": "node --experimental-strip-types --import ./ts-resolve-hook.mjs scripts/test-protocol.mjs",
+    "test": "node --experimental-strip-types --import ./ts-resolve-hook.mjs scripts/test-protocol.mjs && node --test scripts/test-feedback.mjs",
     "predev": "npm run build:data",
     "dev": "wrangler dev --port 31338",
     "predeploy": "npm run build:data",
@@ -17,6 +17,8 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20261120.1",
+    "esbuild": "0.28.2",
+    "miniflare": "5.20261118.0-beta",
     "typescript": "^7.0.2",
     "wrangler": "^4.165.0",
     "yaml": "^2.9.1"

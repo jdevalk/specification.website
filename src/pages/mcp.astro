@@ -36,7 +36,7 @@ const claudeJson = JSON.stringify(desktopConfig, null, 2);
           Model Context Protocol
         </a>
         –aware agent and query the whole spec — by keyword, by category, by
-        status, or page by page. Read-only. No authentication.
+        status, or page by page. Reference tools are read-only and public.
       </p>
     </header>
 
@@ -59,6 +59,17 @@ const claudeJson = JSON.stringify(desktopConfig, null, 2);
           {site.mcp.landing.replace("https://", "")}
         </a>
         .
+      </p>
+
+      <h2 id="feedback">Report MCP feedback</h2>
+      <p>
+        <code>report_feedback</code> creates a public GitHub issue with the
+        affected tool, reproduction steps, expected and actual behaviour, and a
+        proposed fix. Authorise publication and remove private information
+        before submitting. Reports need maintainer review before implementation;
+        submitting feedback does not change code. The operator must configure
+        GitHub access before submissions work. See{" "}
+        <a href="/privacy/#mcp-feedback">data handling</a>.
       </p>
 
       <h2 id="tools">Tools</h2>
@@ -244,9 +255,9 @@ const claudeJson = JSON.stringify(desktopConfig, null, 2);
           independent.
         </li>
         <li>
-          <strong>No auth, no PII.</strong> Public read-only data; no cookies;
-          no logs that identify individual callers beyond Cloudflare's standard
-          request metadata.
+          <strong>Public reference tools.</strong> Read-only reference data; no
+          cookies; no logs that identify individual callers beyond Cloudflare's
+          standard request metadata.
         </li>
         <li>
           <strong>It is itself a worked example</strong> of the{" "}

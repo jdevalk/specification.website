@@ -26,6 +26,7 @@ Tools:
 
 | Tool | Purpose |
 |---|---|
+| `report_feedback({ title, tool_name, problem, steps_to_reproduce, expected_behavior, actual_behavior, proposed_fix })` | Submit a public GitHub issue for maintainer review when enabled by the operator. Requires user authorisation to publish; remove private data and secrets. Never retry an uncertain submission automatically. |
 | `search(query, limit?)` | Full-text search across every page. |
 | `list_topics({ category?, status?, limit? })` | Filtered index — slug, title, status, summary, URL. |
 | `get_topic({ slug })` | Full canonical Markdown for one page, including its cited sources. |

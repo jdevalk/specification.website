@@ -2,7 +2,7 @@
   "name": "specification-website",
   "title": "The Website Specification",
   "version": "0.2.0",
-  "description": "Read-only MCP server exposing every spec page of specification.website as queryable tools — search, list_topics, get_topic, get_checklist, get_categories, get_changes — plus an `audit_url` prompt for URL audits.",
+  "description": "MCP server exposing every spec page of specification.website as queryable tools — search, list_topics, get_topic, get_checklist, get_categories, get_changes — plus an `audit_url` prompt for URL audits.",
   "vendor": {
     "name": "Joost de Valk",
     "url": "https://joost.blog"
@@ -24,6 +24,7 @@
     "logging": true
   },
   "tools": [
+    { "name": "report_feedback", "description": "Create a public GitHub issue with reproduction details and a proposed fix after user authorisation; requires operator configuration." },
     { "name": "search", "description": "Full-text search across every spec page." },
     { "name": "list_topics", "description": "List spec topics, optionally filtered by category and/or status." },
     { "name": "get_topic", "description": "Fetch full canonical Markdown for a single spec page by slug." },

@@ -3,7 +3,7 @@
 // Streamable HTTP transport (the modern MCP transport): the client POSTs
 // JSON-RPC 2.0 messages to /mcp and gets back JSON-RPC responses. No
 // sessions, no server-initiated messages, no SSE — this server is stateless
-// and read-only.
+// with read-only reference tools and an optional GitHub feedback writer.
 //
 // DUAL-ERA (spec: 2026-07-28 basic/versioning#backward-compatibility).
 // Revision 2026-07-28 removed the `initialize` handshake: every request now
@@ -36,8 +36,9 @@ import {
 } from './tools';
 import { handleA2aRpc, AGENT_CARD } from './a2a';
 import type { Manifest, RpcRequest, RpcResponse } from './types';
+import { reportFeedback, type FeedbackConfig } from './feedback';
 
-interface Env {
+interface Env extends FeedbackConfig {
   MCP_LOG?: AnalyticsEngineDataset;
 }
 
@@ -104,7 +105,7 @@ const SERVER_INFO = {
   version: '0.2.0',
   title: 'The Website Specification',
   description:
-    'Read-only MCP server exposing The Website Specification — search, list, fetch, and checklist tools over every spec page, plus an audit_url prompt.',
+    'MCP server exposing The Website Specification — search, list, fetch, and checklist tools over every spec page, plus an audit_url prompt and public GitHub feedback submission.',
   websiteUrl: 'https://specification.website',
   icons: [
     {
@@ -118,7 +119,8 @@ const SERVER_INFO = {
 // Natural-language guidance for the calling model. Returned by both eras —
 // `initialize` (legacy) and `server/discover` (modern) — so keep it one string.
 const SERVER_INSTRUCTIONS =
-  'Read-only MCP server for The Website Specification at https://specification.website. ' +
+  'MCP server for The Website Specification at https://specification.website. Reference tools are read-only. ' +
+  'Use report_feedback to report MCP issues with reproduction details and a proposed fix after the user authorises a public GitHub issue. Never include secrets or private data. Reports require maintainer review before implementation. ' +
   'Use `search` for free-text queries, `list_topics` for filtered lists, `get_topic` to fetch ' +
   'a single page as Markdown, and `get_checklist` for audit-style output. ' +
   'Spec items have one of four statuses: `required` (platform contract breaks without it), ' +
@@ -203,7 +205,7 @@ function err(
 // (basic/versioning), and is answered in that shape.
 export const LEGACY_ONLY_METHODS = ['ping', 'logging/setLevel'];
 
-function handleRpc(req: RpcRequest): RpcResponse | null {
+async function handleRpc(req: RpcRequest, env: Env): Promise<RpcResponse | null> {
   const { id, method, params = {} } = req;
 
   switch (method) {
@@ -260,6 +262,11 @@ function handleRpc(req: RpcRequest): RpcResponse | null {
       const args = (params.arguments as Record<string, unknown>) ?? {};
       try {
         switch (name) {
+          case 'report_feedback':
+            if (id === undefined || id === null) {
+              throw new Error('Feedback submission requires a JSON-RPC request ID.');
+            }
+            return complete(id, await reportFeedback(args, env));
           case 'search':
             return complete(id, searchTool(manifest, args as { query: string; limit?: number }));
           case 'list_topics':
@@ -335,7 +342,7 @@ function htmlLanding(): Response {
 </head>
 <body>
 <h1>The Website Specification — MCP server</h1>
-<p>Streamable HTTP MCP endpoint at <code>POST /mcp</code>. Stateless, read-only, no authentication.</p>
+<p>Streamable HTTP MCP endpoint at <code>POST /mcp</code>. Stateless. Public reference tools are read-only; report_feedback publishes GitHub issues.</p>
 
 <h2>Connect (Claude Desktop, MCP-aware clients)</h2>
 <pre>{
@@ -356,6 +363,9 @@ function htmlLanding(): Response {
   <li><code>get_categories()</code> — taxonomy with counts</li>
   <li><code>get_changes({ since?, type?, limit? })</code> — spec changelog, resolved to current topics</li>
 </ul>
+
+<h2>Feedback</h2>
+<p><code>report_feedback</code> creates a public GitHub issue with reproduction details and a proposed fix for maintainer review. Requires operator configuration and user authorisation to publish.</p>
 
 <h2>Prompts</h2>
 <ul>
@@ -582,14 +592,18 @@ async function handleMcp(request: Request, env: Env): Promise<Response> {
 
   // Batch or single
   if (Array.isArray(body)) {
-    const responses = body
-      .map((r) => {
-        const req = r as RpcRequest;
-        const resp = handleRpc(req);
-        logMcpCall(env, request, req, resp, 'remote');
-        return resp;
-      })
-      .filter((r): r is RpcResponse => r !== null);
+    const responses: RpcResponse[] = [];
+    for (const r of body) {
+      const req = r as RpcRequest;
+      const response = req.method === 'tools/call' && req.params?.name === 'report_feedback'
+        ? complete(req.id, {
+          isError: true,
+          content: [{ type: 'text', text: 'Call report_feedback as a single JSON-RPC request, not in a batch.' }],
+        })
+        : await handleRpc(req, env);
+      logMcpCall(env, request, req, response, 'remote');
+      if (response !== null) responses.push(response);
+    }
     if (responses.length === 0) {
       return new Response(null, { status: 202, headers: CORS_HEADERS });
     }
@@ -617,7 +631,7 @@ async function handleMcp(request: Request, env: Env): Promise<Response> {
   const response =
     isModern && LEGACY_ONLY_METHODS.includes(req.method)
       ? err(req.id, -32601, `Method not found: ${req.method}`)
-      : handleRpc(req);
+      : await handleRpc(req, env);
   logMcpCall(env, request, req, response, 'remote');
   if (response === null) {
     // Streamable HTTP requires accepted notifications to return 202 with no body.
@@ -692,7 +706,8 @@ function logMcpCall(
     if (method === 'tools/call') {
       toolName = String((params as Record<string, unknown>).name || '');
       try {
-        args = JSON.stringify((params as Record<string, unknown>).arguments || {}).slice(0, 500);
+        // Feedback can contain private details; never copy its arguments to analytics.
+        args = toolName === 'report_feedback' ? '' : JSON.stringify((params as Record<string, unknown>).arguments || {}).slice(0, 500);
       } catch {
         args = '';
       }
