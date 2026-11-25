@@ -44,7 +44,7 @@ export const GET: APIRoute = async () => {
   lines.push("");
   lines.push("For richer access, two named surfaces are available:");
   lines.push(
-    "  - MCP server at `https://mcp.specification.website/mcp` — stateless Streamable HTTP, no auth, with `search`, `list_topics`, `get_topic`, `get_checklist`, and `audit_url` tools. Server card: " +
+    "  - MCP server at `https://mcp.specification.website/mcp` — stateless Streamable HTTP, no auth, with read-only `search`, `list_topics`, `get_topic`, `get_checklist`, `get_categories`, and `get_changes` tools. The `audit_url` prompt (via `prompts/get`) returns an audit plan for a URL. The `report_feedback` tool creates a public GitHub issue after user authorisation. Server card: " +
       site.url +
       "/.well-known/mcp/server-card.json.",
   );
