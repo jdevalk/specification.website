@@ -6,8 +6,8 @@ summary: "A store that wants AI agents to check out on a shopper's behalf publis
 status: optional
 order: 84
 appliesTo: [all]
-relatedSlugs: [mcp-and-tool-discovery, a2a-agent-cards, web-bot-auth, structured-data-for-agents, well-known-overview, cache-control, agent-readiness-overview]
-updated: "2026-10-28T00:00:00.000Z"
+relatedSlugs: [mcp-and-tool-discovery, a2a-agent-cards, web-bot-auth, structured-data-for-agents, well-known-overview, cache-control, agent-readiness-overview, agentic-commerce-protocol]
+updated: "2026-11-25T00:00:00.000Z"
 sources:
   - title: "IANA — Well-Known URIs registry (ucp)"
     url: "https://www.iana.org/assignments/well-known-uris/well-known-uris.xhtml"
@@ -37,6 +37,8 @@ A business advertises its support by publishing a **business profile** at `/.wel
 The platform on the other side (the agent's host) publishes its own profile and names it on each request in a `UCP-Agent` header. The business fetches it, works out the intersection of capabilities both sides support, and proceeds.
 
 The common wrong belief is that this file makes your products visible to AI shopping assistants. It does not. The profile contains no products, prices or stock. Product discovery still depends on your [structured data](/spec/agent-readiness/structured-data-for-agents/) and merchant feeds. UCP comes later: it is the contract for _transacting_ once an agent has decided what to buy. A profile on a store whose product pages an agent cannot parse is a checkout with no way in.
+
+[Agentic Commerce Protocol (ACP) discovery](/spec/agent-readiness/agentic-commerce-protocol/) serves a similar purpose at `/.well-known/acp.json`, with a different schema and negotiation flow. Publishing a UCP profile does not implement ACP discovery, or vice versa. Support the protocols your agent integrations use; a seller can publish both. Unlike UCP, the ACP discovery URI is not IANA-registered as of 25 November 2026.
 
 This site does not ship it: we sell nothing, so there is no checkout to expose.
 
