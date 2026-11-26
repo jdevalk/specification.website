@@ -39,7 +39,7 @@ Link: </llms.txt>; rel="describedby"; type="text/markdown"; title="Site index fo
       </rss.xml>; rel="alternate"; type="application/rss+xml"
 ```
 
-Multiple links may be sent as comma-separated entries inside a single `Link` header (the form above) or as several `Link` headers. Both are valid per [RFC 8288 §3](https://www.rfc-editor.org/rfc/rfc8288#section-3).
+Multiple links may be sent as comma-separated entries inside a single `Link` header (the form above) or as several `Link` headers. Both are valid per [RFC 8288 §3](https://www.rfc-editor.org/rfc/rfc8288.html#section-3).
 
 ## Why it matters
 

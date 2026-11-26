@@ -16,7 +16,7 @@ sources:
     url: "https://www.rfc-editor.org/rfc/rfc9110.html#name-retry-after"
     publisher: "IETF"
   - title: "RFC 6585 — Additional HTTP Status Codes: 429 Too Many Requests"
-    url: "https://www.rfc-editor.org/rfc/rfc6585#section-4"
+    url: "https://www.rfc-editor.org/rfc/rfc6585.html#section-4"
     publisher: "IETF"
   - title: "Google Search Central — Temporarily pause or disable a website"
     url: "https://developers.google.com/search/docs/crawling-indexing/pause-online-business"

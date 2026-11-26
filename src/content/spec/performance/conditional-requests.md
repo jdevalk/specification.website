@@ -10,10 +10,10 @@ relatedSlugs: [cache-control, vary, compression, markdown-source-endpoints, stab
 updated: "2026-06-09T11:00:00.000Z"
 sources:
   - title: "RFC 9110 §13 — Conditional Requests"
-    url: "https://www.rfc-editor.org/rfc/rfc9110#section-13"
+    url: "https://www.rfc-editor.org/rfc/rfc9110.html#section-13"
     publisher: "IETF"
   - title: "RFC 9110 §8.8 — Validator Fields (ETag, Last-Modified)"
-    url: "https://www.rfc-editor.org/rfc/rfc9110#section-8.8"
+    url: "https://www.rfc-editor.org/rfc/rfc9110.html#section-8.8"
     publisher: "IETF"
   - title: "MDN — HTTP conditional requests"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Conditional_requests"

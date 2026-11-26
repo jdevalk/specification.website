@@ -7,7 +7,7 @@ status: optional
 order: 50
 appliesTo: [all]
 relatedSlugs: [well-known-overview, assetlinks-json]
-updated: "2026-05-29T09:13:20.000Z"
+updated: "2026-11-26T00:00:00.000Z"
 sources:
   - title: "Apple — Supporting associated domains"
     url: "https://developer.apple.com/documentation/xcode/supporting-associated-domains"
@@ -80,4 +80,4 @@ Rules:
 curl -I https://example.com/.well-known/apple-app-site-association
 ```
 
-You should see `200 OK` and `Content-Type: application/json`. Apple's [App Search API Validation Tool](https://search.developer.apple.com/appsearch-validation-tool/) and the on-device "Diagnostics" build flag both report whether AASA loaded successfully.
+You should see `200 OK` and `Content-Type: application/json`. Apple retired its web-based App Search API Validation Tool, so checking how Apple itself reads the file now happens on Apple hardware. On a Mac, `sudo swcutil dl -d example.com` confirms the file can be downloaded and `swcutil verify` tests a URL against its patterns. On a device in Developer Mode, Settings > Developer > Universal Links > Diagnostics reports whether a given URL is valid for an installed app. Both are described in Apple's [TN3155: Debugging universal links](https://developer.apple.com/documentation/technotes/tn3155-debugging-universal-links).

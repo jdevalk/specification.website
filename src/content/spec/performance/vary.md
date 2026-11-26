@@ -17,10 +17,10 @@ relatedSlugs:
 updated: "2026-09-10T00:00:00.000Z"
 sources:
   - title: "RFC 9110 §12.5.5 — Vary"
-    url: "https://www.rfc-editor.org/rfc/rfc9110#name-vary"
+    url: "https://www.rfc-editor.org/rfc/rfc9110.html#name-vary"
     publisher: "IETF"
   - title: "RFC 9111 §4.1 — Calculating Cache Keys with the Vary Header Field"
-    url: "https://www.rfc-editor.org/rfc/rfc9111#name-calculating-cache-keys-with"
+    url: "https://www.rfc-editor.org/rfc/rfc9111.html#name-calculating-cache-keys-with"
     publisher: "IETF"
   - title: "MDN — Vary"
     url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Vary"
