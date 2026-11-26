@@ -107,7 +107,7 @@ Add the per-page link on every page that has a JSON-LD endpoint. Add the schemam
 **Be honest in the index about the registration gap.** The `rel="schemamap"` value is not in the [IANA Link Relations Registry](https://www.iana.org/assignments/link-relations/link-relations.xhtml). [HTTP Link headers](/spec/agent-readiness/link-headers/) explicitly warns against inventing custom `rel` values for that reason. Two ways to handle it:
 
 - **In HTML `<head>` only.** Ship `rel="schemamap"` in the page — that link tag *is* the proposal under test. Do not add it to the global HTTP `Link` header until the relation is registered. This site takes that route.
-- **Use a URI-form `rel` instead.** Per [RFC 8288 §2.1.1](https://www.rfc-editor.org/rfc/rfc8288#section-2.1.1), a `rel` value that is a URI does not require IANA registration. This site exposes the schemamap entry in `/.well-known/api-catalog` under `https://specification.website/schemas/schemamap/0.1#index`, so any client that reads the api-catalog finds it without depending on a bare-name relation at all.
+- **Use a URI-form `rel` instead.** Per [RFC 8288 §2.1.1](https://www.rfc-editor.org/rfc/rfc8288.html#section-2.1.1), a `rel` value that is a URI does not require IANA registration. This site exposes the schemamap entry in `/.well-known/api-catalog` under `https://specification.website/schemas/schemamap/0.1#index`, so any client that reads the api-catalog finds it without depending on a bare-name relation at all.
 
 Registration is the prerequisite for promoting any of this beyond `optional`. Until then, treat schemamap as an opt-in proposal you can audit and walk back from.
 
