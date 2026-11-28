@@ -7,7 +7,7 @@ status: optional
 order: 45
 appliesTo: [all]
 relatedSlugs: [third-party-scripts, cookie-consent, security/cookie-attributes, security/permissions-policy]
-updated: "2026-07-05T10:00:00.000Z"
+updated: "2026-11-28T10:00:00.000Z"
 sources:
   - title: "The Storage Access API"
     url: "https://privacycg.github.io/storage-access/"
@@ -18,15 +18,18 @@ sources:
   - title: "MDN — Document: requestStorageAccess() method"
     url: "https://developer.mozilla.org/en-US/docs/Web/API/Document/requestStorageAccess"
     publisher: "MDN"
+  - title: "Next steps for Privacy Sandbox and tracking protections in Chrome"
+    url: "https://privacysandbox.com/news/privacy-sandbox-next-steps/"
+    publisher: "Google"
 ---
 
 ## What it is
 
-The Storage Access API lets cross-site content loaded in a third-party context — embedded in an `<iframe>` — request access to its own unpartitioned cookies and storage: the state it would have as a first-party document but is denied when embedded. An embed calls `document.hasStorageAccess()` to check, and `document.requestStorageAccess()`, behind a user gesture, to ask. The browser grants or denies, sometimes after prompting the user. It is standardised by the W3C Privacy Community Group and ships in Chrome, Firefox, Safari, and Edge.
+The Storage Access API lets cross-site content loaded in a third-party context — embedded in an `<iframe>` — request access to its own unpartitioned cookies: the state it would have as a first-party document but is denied when embedded. An embed calls `document.hasStorageAccess()` to check, and `document.requestStorageAccess()`, behind a user gesture, to ask. The browser grants or denies, sometimes after prompting the user. It is standardised by the W3C Privacy Community Group and has been Baseline Widely available since June 2026, having reached every major engine in December 2023. That covers cookies only: the extension that also unlocks `localStorage`, IndexedDB and other non-cookie storage is Chromium-only (Chrome 125, May 2024), so do not build on it.
 
 ## Why it matters
 
-Browsers are phasing out unrestricted third-party cookies to stop cross-site tracking. Firefox (Total Cookie Protection) and Safari (Intelligent Tracking Prevention) partition or block them by default, and Chrome is moving the same way. That also breaks legitimate cross-site flows: single sign-on with a federated identity provider, a shared account or comment widget, or personalisation served from a sibling domain. The old workaround — telling visitors to disable tracking protection or add an exception — trades every user's privacy for one site's convenience, and increasingly does not work at all. The Storage Access API is the standards-track replacement: it restores access for the specific, legitimate case behind an explicit user gesture, without reopening the site to tracking.
+Firefox (Total Cookie Protection) and Safari (Intelligent Tracking Prevention) partition or block third-party cookies by default to stop cross-site tracking. Chrome does not: Google dropped its plan to phase them out in April 2025, and Chrome still sends them by default, blocking them only in Incognito or when the user chooses to. So an embed that relies on its cookies can work in every Chrome test and still be broken for Safari and Firefox visitors. The blocking also breaks legitimate cross-site flows: single sign-on with a federated identity provider, a shared account or comment widget, or personalisation served from a sibling domain. The old workaround — telling visitors to disable tracking protection or add an exception — trades every user's privacy for one site's convenience, and increasingly does not work at all. The Storage Access API is the standards-track replacement: it restores access for the specific, legitimate case behind an explicit user gesture, without reopening the site to tracking.
 
 ## How to implement
 
@@ -34,7 +37,7 @@ Browsers are phasing out unrestricted third-party cookies to stop cross-site tra
 - From the embed, call `hasStorageAccess()`; if it is false, call `requestStorageAccess()` inside a click or tap handler — it requires transient activation (a user gesture). Await the promise, load the credentialed view on success, and degrade gracefully on rejection.
 - Cookies must be `SameSite=None; Secure` to travel cross-site (see [cookie attributes](/spec/security/cookie-attributes/)), and the whole flow works only in a secure (HTTPS) context.
 - The embedding page must permit it: an `allow-storage-access-by-user-activation` sandbox token on a sandboxed iframe, and no `storage-access` [Permissions-Policy](/spec/security/permissions-policy/) blocking it.
-- For already-granted permissions and passive resources, the `Sec-Fetch-Storage-Access` request header and `Activate-Storage-Access` response header let the server skip a round trip; add `Vary: Sec-Fetch-Storage-Access` when you branch on it.
+- For already-granted permissions and passive resources, the `Sec-Fetch-Storage-Access` request header and `Activate-Storage-Access` response header let the server skip a round trip; add `Vary: Sec-Fetch-Storage-Access` when you branch on it. These headers are not Baseline — Chrome and Edge 133 (February 2025) and Firefox 147 (January 2026) send them, Safari does not — so treat them as an optimisation on top of the JavaScript flow, never a replacement.
 
 ## Common mistakes
 
